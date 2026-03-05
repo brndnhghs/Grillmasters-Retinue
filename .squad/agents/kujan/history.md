@@ -105,3 +105,30 @@ Sample ready for use.
 
 **Total corrections: 5** (1 date fix, 4 clarity/hygiene fixes)
 
+### 📌 2026-03-05T00:30:00Z: OTel Modules Readiness Assessment **[COMPLETED]**
+
+**Task:** Assess 8 OTel runtime modules for Phase 3 activation (Issue #194 PRD, Phase 3).
+
+**Modules assessed:**
+1. `otel-init.ts` — High-level one-call setup ✅
+2. `otel-metrics.ts` — 11 metric recording functions ✅
+3. `otel-bridge.ts` — EventBus→OTel span bridge ✅
+4. `event-bus.ts` — Cross-session pub/sub ✅
+5. `squad-observer.ts` — .squad/ directory watcher ✅
+6. `cost-tracker.ts` — Token/cost aggregation ✅
+7. `event-payloads.ts` — Typed payload contracts ✅
+8. `telemetry.ts` — Privacy-first collector ✅
+
+**Status:** 🟢 **READY FOR ACTIVATION**
+
+**Key findings:**
+- All 8 modules compile cleanly (npm run build: ✅)
+- Zero missing dependencies — OTel packages correctly marked optional
+- Activation path clear: call `initSquadTelemetry()` at coordinator startup
+- No-op overhead for non-OTel consumers (optional infrastructure)
+- Package.json exports all 8 runtime modules (✅ checked)
+
+**Activation recommendation:** Wire OTel in coordinator startup, call `shutdown()` on graceful exit. Risk: 🟢 Low (opt-in, type-safe, isolated errors in event handlers).
+
+**Deliverable:** `.squad/decisions/inbox/kujan-otel-readiness.md` — structured report with module-by-module assessment, dependency matrix, and integration points.
+
