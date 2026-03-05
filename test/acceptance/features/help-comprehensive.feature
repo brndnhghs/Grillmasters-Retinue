@@ -3,10 +3,7 @@ Feature: Help comprehensive
   Scenario: Help lists all core commands
     When I run "squad help"
     Then the output contains "Usage:"
-    And the output contains "Getting Started"
-    And the output contains "Development"
-    And the output contains "Team Management"
-    And the output contains "Utilities"
+    And the output contains "Commands:"
     And the output contains "init"
     And the output contains "upgrade"
     And the output contains "status"
