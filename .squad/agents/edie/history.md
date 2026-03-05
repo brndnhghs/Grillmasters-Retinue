@@ -188,3 +188,12 @@ All four agents shipped Phase 2 in parallel: Fortier wired TTFT/duration/through
 - **Testability:** Constant is module-scoped, not exported. For testing, prefer integration tests that verify workflow installation behavior rather than unit-testing the constant
 - **Verdict:** APPROVED. Type system is correct, build is clean, no `noUncheckedIndexedAccess` violations
 📌 Team update (2026-03-05T10-35-50Z): PR #201 workflow filter approved by all reviewers — framework/scaffolding distinction, implementation pattern validated, test coverage noted — decided by Keaton, Fenster, Hockney, Edie
+
+### Builder type surface — SDK-First Squad Mode (#194 Phase 1)
+- Created `packages/squad-sdk/src/builders/types.ts` — 8 definition interfaces (`TeamDefinition`, `AgentDefinition`, `RoutingDefinition`, `CeremonyDefinition`, `HooksDefinition`, `CastingDefinition`, `TelemetryDefinition`, `SquadSDKConfig`) plus shared primitives (`AgentRef`, `ScheduleExpression`, `BuilderModelId`, `AgentCapability`)
+- Created `packages/squad-sdk/src/builders/index.ts` — 8 builder functions (`defineTeam`, `defineAgent`, `defineRouting`, `defineCeremony`, `defineHooks`, `defineCasting`, `defineTelemetry`, `defineSquad`) with manual runtime validation (no zod — not in dependency tree)
+- `assertObject` narrows to `object` not `Record<string, unknown>` — using `Record` would widen typed parameters and lose interface property types under `noUncheckedIndexedAccess`
+- All builder types use `readonly` properties and `readonly` arrays — immutable contracts
+- Types re-exported from `src/types.ts` barrel (type-only, zero runtime). `RoutingRule` aliased as `BuilderRoutingRule` to avoid collision with existing `RoutingRule` exports from `runtime/config.ts`
+- Functions + types exported from `src/index.ts` barrel. Subpath export `./builders` added to `package.json` (types-first condition)
+- Build clean (`tsc --noEmit` zero errors, `npm run build` emits all `.js` + `.d.ts` + `.d.ts.map`), 3512/3554 tests pass (41 failures pre-existing)
