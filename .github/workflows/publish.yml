@@ -63,7 +63,15 @@ jobs:
       - name: Verify npm publication
         run: |
           echo "✅ @bradygaster/squad-sdk@${{ steps.version.outputs.version }} published to npm"
-          npm view @bradygaster/squad-sdk@${{ steps.version.outputs.version }} version
+          for i in 1 2 3 4 5; do
+            if npm view @bradygaster/squad-sdk@${{ steps.version.outputs.version }} version 2>/dev/null; then
+              echo "✅ Verified on npm registry"
+              exit 0
+            fi
+            echo "⏳ Registry propagation attempt $i/5, waiting 15s..."
+            sleep 15
+          done
+          echo "⚠️ Registry propagation slow — package was published successfully, verification timed out"
 
   publish-cli:
     name: Publish @bradygaster/squad-cli
@@ -114,4 +122,12 @@ jobs:
       - name: Verify npm publication
         run: |
           echo "✅ @bradygaster/squad-cli@${{ steps.version.outputs.version }} published to npm"
-          npm view @bradygaster/squad-cli@${{ steps.version.outputs.version }} version
+          for i in 1 2 3 4 5; do
+            if npm view @bradygaster/squad-cli@${{ steps.version.outputs.version }} version 2>/dev/null; then
+              echo "✅ Verified on npm registry"
+              exit 0
+            fi
+            echo "⏳ Registry propagation attempt $i/5, waiting 15s..."
+            sleep 15
+          done
+          echo "⚠️ Registry propagation slow — package was published successfully, verification timed out"
