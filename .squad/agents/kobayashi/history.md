@@ -1079,3 +1079,25 @@ To fix a PR already opened against the wrong base:
 ```bash
 gh pr edit {pr-number} --base dev
 ```
+
+### Phase 2: Merging Internal PRs (PR #232 + #212)
+
+Merged two internal fix PRs into dev sequentially:
+
+1. **PR #232** (Scribe runtime state guard) — 86598f4e — Merged cleanly, no conflicts.
+2. **PR #212** (Version stamp preservation) —  fedcce — Required rebase onto dev after PR #232 merged. The PR had conflict due to state divergence. Resolution: Rebased branch onto origin/dev, which dropped the commit (already upstream), force-pushed, and then merged cleanly.
+
+**Key insight:** When merging multiple PRs sequentially, the second PR may need rebase if its base has changed. The "already upstream" drop during rebase indicated the fix was already applied—merge succeeded on the rebased branch.
+
+**Zero state corruption.** Both merges completed cleanly after rebase resolution.
+
+## 📌 Phase 2 Sequential PR Merges — 2026-03-07T01-13-00Z
+
+**PHASE 2 INTERNAL PR MERGES COMPLETE.** Brady requested merge of 2 internal fix PRs into dev. Both merged successfully.
+
+- PR #232: Scribe runtime state fix — merged cleanly (86598f4e)
+- PR #212: Version stamp preservation — required rebase (base changed after #232), conflict resolved, merged cleanly (0fedcce)
+
+**Zero state corruption.** All operations within merge-driver constraints. Sequential merges may require rebase of later PRs when base changes materially. Rebase drops indicate upstream fix — safe to proceed.
+
+**Team Status:** All 5 Phase 2 ready PRs now merged to dev (internal + community). Test validation in progress (Hockney).

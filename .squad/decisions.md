@@ -2867,3 +2867,24 @@ This sample is intentional: I'm designing it to compound future work. Once we ha
 **What:** Agents must cross-verify each other's work before shipping. Review gates are non-optional. Charters should be updated when agents realize their processes are producing errors.
 **Why:** User request — multiple features vanished or broke recently. Prevention over correction.
 
+
+### 2026-03-07: Phase 2 Sequential PR Merges (PR #232 + #212)
+**By:** Kobayashi (Git & Release)
+**Status:** Implemented
+**What:** Merge PR #232 (Scribe fix) and PR #212 (version stamp preservation) sequentially into dev. PR #232 merged cleanly (86598f4e). PR #212 required rebase after #232 merged (base changed), resolved conflicts, and merged cleanly (0fedcce).
+**Why:** Sequential merges may require rebase if base changes materially. Rebase that drops commits means the fix was already upstream - safe to proceed. Force-push after rebase is safe in isolated PR resolution.
+**Impact:** Both fixes now in dev. Zero state corruption.
+
+### 2026-03-07: Phase 2 Community PR Merge Process
+**By:** Keaton (Lead)
+**Status:** Completed
+**What:** Merge 3 community PRs from external contributors: PR #230 (EmmittJ - CLI wire-up), PR #217 (williamhallatt - TUI /init fix), PR #219 (williamhallatt - fork contribution docs). All showed UNSTABLE merge state but GitHub reported MERGEABLE. All merged cleanly.
+**Why:** Fork-first contributor workflow now standardized. External contributors can work in parallel with internal agents. Merge conflicts due to base drift, not code conflicts - low-friction, normal pattern.
+**Impact:** Fork contributor procedure documented in CONTRIBUTING.md (PR #219). Team ready to onboard more community contributors. 52+ tests passing across all 3 PRs.
+
+### 2026-03-07: Fix: squad.agent.md excluded from TEMPLATE_MANIFEST upgrade loop
+**By:** Fenster (Core Dev)
+**PR:** #212 (Closes #195)
+**What:** squad.agent.md excluded from the TEMPLATE_MANIFEST.filter(f => f.overwriteOnUpgrade) loop in upgrade.ts. Already handled explicitly with copy + stampVersion() earlier in function.
+**Why:** Manifest loop overwrites the version-stamped file with raw template, resetting version to 0.0.0-source. Caused isAlreadyCurrent to never pass - all 30+ files re-copied on every upgrade.
+**Impact:** Any future manifest entries requiring post-copy transformation must also be excluded and handled individually.

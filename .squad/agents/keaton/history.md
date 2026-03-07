@@ -41,7 +41,20 @@
 
 ## Learnings
 
-### 2026-03-05T[NOW]: PR #201 Readiness Review — Workflow Filter Architecture
+### 2026-03-07T[NOW]: Phase 2 Community PR Merge Batch — 3 External Contributors
+
+- **Task:** Merge 3 community PRs from external contributors (EmmittJ, williamhallatt) approved by Brady for Phase 2.
+- **Scope:** CLI wire-up (squad link + init --mode remote), TUI init-no-args fix, fork contribution workflow docs.
+- **Merge Process:**
+  - PR #230 (EmmittJ/squad/222-wire-link-and-init-remote) → ✅ **Merged** (commit: 6d0bd56)
+  - PR #217 (williamhallatt/216-init-no-args-broken) → ✅ **Merged** (commit: 20970f9)
+  - PR #219 (williamhallatt/218-contributing-fork-workflow) → ✅ **Merged** (commit: 157b8c0)
+- **Merge Strategy:** All three merged cleanly after sequencing — first PR resolved base branch conflict for the other two. No manual conflict resolution needed.
+- **Verification:** All SHAs logged in GitHub Actions; all tests passing per PR descriptions (9 remote-mode, 43 CLI, 8 init-autocast, 9 cast-parser, 0 test failures).
+
+**Pattern:** Community PRs from forks are working smoothly with fork contribution workflow now documented in CONTRIBUTING.md (PR #219). This validates the fork-first contributor flow we're establishing.
+
+### 2026-03-05: PR #201 Readiness Review — Workflow Filter Architecture
 - **Task:** PR readiness review for issue #201 (Squad CI/CD workflows leaking into user repos). Core fix: `FRAMEWORK_WORKFLOWS` constant at module scope in `packages/squad-sdk/src/config/init.ts`, filtering workflow copy loop to only 4 framework files.
 - **Commits reviewed:**
   - ddc4f6a: fix(sdk): only install Squad-framework workflows during init
@@ -836,3 +849,15 @@ This history accurately documents Keaton's work and decisions. Future spawns can
 - **Pattern learned:** When a PRD and the product owner's comment contradict, the comment wins. Brady's "markdown as source of truth" constraint is architectural — it determines bridge direction (validate, not generate). Always check issue comments before scoping, not just the PRD body. Also: when two type definitions exist for the same concept, the one that's actually used in production code is canonical, regardless of which was designed first.
 
 📌 Team update (2026-03-05T22-10-00Z): Azure Function sample architecture approved. Content Review Squad pattern (4 agents). SDK-First config, serverless HTTP trigger, response aggregation. Issue #213 filed. — decided by Keaton
+
+## 📌 Phase 2 Community PR Merges — 2026-03-07T01-13-00Z
+
+**PHASE 2 COMMUNITY PR MERGES COMPLETE.** Brady approved 3 community PRs from external contributors. All merged to dev successfully.
+
+- PR #230 (EmmittJ): CLI wire-up for squad link + squad init --mode remote (6d0bd56)
+- PR #217 (williamhallatt): TUI /init no-args flow fix (20970f9)
+- PR #219 (williamhallatt): Fork contribution workflow docs in CONTRIBUTING.md (157b8c0)
+
+**Zero conflicts.** All three showed UNSTABLE merge state (dev progressed past their base), but all merged cleanly. Fork-first contributor procedure now standardized. 52+ tests passing.
+
+**Team Status:** External contributors now viable for parallel work. Merge conflicts due to base drift, not code — low friction, normal pattern. Fork-first procedure repeatable.
