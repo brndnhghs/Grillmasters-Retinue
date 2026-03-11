@@ -118,7 +118,7 @@ const team = defineTeam({
   name: 'Platform Squad',
   description: 'Full-stack engineering team',
   projectContext: 'React/Node monorepo, TypeScript strict mode',
-  members: ['@edie', '@mcmanus', '@fenster'],
+  members: ['@amon', '@marbas', '@vassago'],
 });
 ```
 
@@ -140,8 +140,8 @@ interface TeamDefinition {
 Define a single agent with role, tools, model, and capabilities.
 
 ```typescript
-const edie = defineAgent({
-  name: 'edie',
+const amon = defineAgent({
+  name: 'amon',
   role: 'TypeScript Engineer',
   model: 'claude-sonnet-4',
   tools: ['grep', 'edit', 'powershell', 'view'],
@@ -181,8 +181,8 @@ Define routing rules with pattern matching and tier assignment.
 ```typescript
 const routing = defineRouting({
   rules: [
-    { pattern: 'feature-*', agents: ['@edie'], tier: 'standard' },
-    { pattern: 'docs-*', agents: ['@mcmanus'], tier: 'lightweight' },
+    { pattern: 'feature-*', agents: ['@amon'], tier: 'standard' },
+    { pattern: 'docs-*', agents: ['@marbas'], tier: 'lightweight' },
   ],
   defaultAgent: '@coordinator',
   fallback: 'coordinator',
@@ -217,7 +217,7 @@ const standup = defineCeremony({
   name: 'standup',
   trigger: 'schedule',
   schedule: '0 9 * * 1-5',
-  participants: ['@edie', '@mcmanus'],
+  participants: ['@amon', '@marbas'],
   agenda: 'Yesterday / Today / Blockers',
 });
 ```
@@ -271,9 +271,9 @@ Define casting configuration — universe allowlists and overflow behavior.
 
 ```typescript
 const casting = defineCasting({
-  allowlistUniverses: ['The Usual Suspects', 'Breaking Bad'],
+  allowlistUniverses: ['The Solomonic Demonology', 'Breaking Bad'],
   overflowStrategy: 'generic',
-  capacity: { 'The Usual Suspects': 8 },
+  capacity: { 'The Solomonic Demonology': 8 },
 });
 ```
 

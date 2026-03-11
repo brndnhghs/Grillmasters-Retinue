@@ -57,8 +57,8 @@ function scaffoldSquadDir(root: string): void {
 
 | Name | Role | Charter | Status |
 |------|------|---------|--------|
-| Keaton | Lead | \`.squad/agents/keaton/charter.md\` | ✅ Active |
-| Fenster | Core Dev | \`.squad/agents/fenster/charter.md\` | ✅ Active |
+| Bael | Lead | \`.squad/agents/bael/charter.md\` | ✅ Active |
+| Vassago | Core Dev | \`.squad/agents/vassago/charter.md\` | ✅ Active |
 `);
 
   writeFileSync(join(identityDir, 'now.md'), `---
@@ -97,8 +97,8 @@ async function createShellHarness(opts?: {
 }): Promise<ShellHarness> {
   const {
     agents = [
-      { name: 'Keaton', role: 'Lead' },
-      { name: 'Fenster', role: 'Core Dev' },
+      { name: 'Bael', role: 'Lead' },
+      { name: 'Vassago', role: 'Core Dev' },
     ],
     withSquadDir = true,
     version = '0.0.0-test',
@@ -253,7 +253,7 @@ describe('Journey: session-store persistence', () => {
     const s2 = createSession();
     s2.messages.push(
       { role: 'user', content: 'msg2a', timestamp: new Date() },
-      { role: 'agent', agentName: 'Keaton', content: 'msg2b', timestamp: new Date() },
+      { role: 'agent', agentName: 'Bael', content: 'msg2b', timestamp: new Date() },
     );
     saveSession(tempDir, s2);
 
@@ -363,7 +363,7 @@ describe('Journey: /sessions command in shell', () => {
     const session = createSession();
     session.messages.push(
       { role: 'user', content: 'what should we build?', timestamp: new Date() },
-      { role: 'agent', agentName: 'Keaton', content: 'A REST API.', timestamp: new Date() },
+      { role: 'agent', agentName: 'Bael', content: 'A REST API.', timestamp: new Date() },
     );
     saveSession(shell.tempDir, session);
 
@@ -410,7 +410,7 @@ describe('Journey: /resume command in shell', () => {
     const session = createSession();
     session.messages.push(
       { role: 'user', content: 'plan the sprint', timestamp: new Date() },
-      { role: 'agent', agentName: 'Fenster', content: 'Here is the plan.', timestamp: new Date() },
+      { role: 'agent', agentName: 'Vassago', content: 'Here is the plan.', timestamp: new Date() },
     );
     saveSession(shell.tempDir, session);
 
@@ -455,7 +455,7 @@ describe('Journey: I came back the next day', () => {
     // Simulate agent response
     shell1.api().addMessage({
       role: 'agent',
-      agentName: 'Keaton',
+      agentName: 'Bael',
       content: 'I recommend using JWT tokens with refresh rotation.',
       timestamp: new Date(),
     });
@@ -463,15 +463,15 @@ describe('Journey: I came back the next day', () => {
     expect(shell1.hasText('JWT tokens')).toBe(true);
 
     // User asks follow-up
-    await shell1.submit('@Fenster implement the token service');
+    await shell1.submit('@Vassago implement the token service');
     expect(shell1.dispatched).toHaveBeenCalledTimes(2);
 
     // Save session before exit (as the real shell does on /quit)
     const dayOneSession = createSession();
     dayOneSession.messages = [
       { role: 'user', content: 'design the authentication module', timestamp: new Date() },
-      { role: 'agent', agentName: 'Keaton', content: 'I recommend using JWT tokens with refresh rotation.', timestamp: new Date() },
-      { role: 'user', content: '@Fenster implement the token service', timestamp: new Date() },
+      { role: 'agent', agentName: 'Bael', content: 'I recommend using JWT tokens with refresh rotation.', timestamp: new Date() },
+      { role: 'user', content: '@Vassago implement the token service', timestamp: new Date() },
     ];
     saveSession(tempDir, dayOneSession);
 
@@ -489,7 +489,7 @@ describe('Journey: I came back the next day', () => {
     // Previous messages are accessible
     expect(latestSession!.messages[0]!.content).toBe('design the authentication module');
     expect(latestSession!.messages[1]!.content).toBe('I recommend using JWT tokens with refresh rotation.');
-    expect(latestSession!.messages[2]!.content).toBe('@Fenster implement the token service');
+    expect(latestSession!.messages[2]!.content).toBe('@Vassago implement the token service');
 
     // Start a new shell instance (same temp dir)
     let restoredData: SessionData | undefined;
@@ -550,7 +550,7 @@ describe('Journey: I came back the next day', () => {
     const sessionB = createSession();
     sessionB.messages.push(
       { role: 'user', content: 'session beta work', timestamp: new Date() },
-      { role: 'agent', agentName: 'Keaton', content: 'beta response', timestamp: new Date() },
+      { role: 'agent', agentName: 'Bael', content: 'beta response', timestamp: new Date() },
     );
     saveSession(tempDir, sessionB);
 

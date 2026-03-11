@@ -29,7 +29,7 @@ const config = loadConfig(squadPath);
 **Cast the team from a universe:**
 ```typescript
 const casting = new CastingEngine({
-  universe: 'usual-suspects',
+  universe: 'solomonic-demonology',
   agentCount: config.agents.length,
 });
 
@@ -37,9 +37,9 @@ const cast = casting.castTeam({
   roles: config.agents.map(a => a.role),
 });
 // → [
-//   { role: 'lead', agentName: 'Keaton' },
-//   { role: 'frontend', agentName: 'McManus' },
-//   { role: 'backend', agentName: 'Verbal' },
+//   { role: 'lead', agentName: 'Bael' },
+//   { role: 'frontend', agentName: 'marbas' },
+//   { role: 'backend', agentName: 'Agares' },
 //   ...
 // ]
 ```
@@ -73,11 +73,11 @@ roster.forEach(m => {
 6. Terminal prints a clean roster:
    ```
    🎭 Team Roster:
-     Keaton — lead
-     McManus — frontend
-     Verbal — backend
-     Fenster — tester
-     Kobayashi — scribe
+     Bael — lead
+     marbas — frontend
+     Agares — backend
+     Vassago — tester
+     Barbatos — scribe
    ```
 
 ## Acceptance Criteria
@@ -99,9 +99,9 @@ npm start
 
 # Expected output:
 # 🎭 Team Roster:
-#   Keaton — lead
-#   McManus — frontend
-#   Verbal — backend
+#   Bael — lead
+#   marbas — frontend
+#   Agares — backend
 #   ...
 
 # Verify casting is deterministic

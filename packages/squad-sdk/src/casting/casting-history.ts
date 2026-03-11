@@ -65,7 +65,7 @@ export class CastingHistory {
 
   /**
    * Return casting records that include a specific agent name.
-   * Useful for answering "when was Verbal last cast?"
+   * Useful for answering "when was Agares last cast?"
    */
   getAgentHistory(agentName: string): CastingRecord[] {
     return this.records.filter((r) =>

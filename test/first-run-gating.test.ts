@@ -34,8 +34,8 @@ function makeMessage(overrides: Partial<ShellMessage> & { content: string; role:
 }
 
 function writeTeamMd(root: string, agents: Array<{ name: string; role: string }> = [
-  { name: 'Fenster', role: 'Core Dev' },
-  { name: 'Hockney', role: 'Tester' },
+  { name: 'Vassago', role: 'Core Dev' },
+  { name: 'Samigina', role: 'Tester' },
 ]): void {
   const squadDir = join(root, '.squad');
   mkdirSync(squadDir, { recursive: true });
@@ -150,7 +150,7 @@ describe('#607.2 — First-run hint appears on initial session only', () => {
   it('firstRunElement renders when isFirstRun is true and roster is non-empty', () => {
     const bannerReady = true;
     const isFirstRun = true;
-    const rosterAgents = [{ name: 'Keaton', role: 'Lead', emoji: '👑' }];
+    const rosterAgents = [{ name: 'Bael', role: 'Lead', emoji: '👑' }];
     const showFirstRun = bannerReady && isFirstRun;
     const showAssembled = showFirstRun && rosterAgents.length > 0;
     expect(showFirstRun).toBe(true);
@@ -289,8 +289,8 @@ describe('#607.4 — "Your squad is assembled" requires non-empty roster', () =>
 
   it('non-empty roster → firstRunElement shows assembled message', () => {
     const rosterAgents = [
-      { name: 'Keaton', role: 'Lead', emoji: '👑' },
-      { name: 'Fenster', role: 'Core Dev', emoji: '🔧' },
+      { name: 'Bael', role: 'Lead', emoji: '👑' },
+      { name: 'Vassago', role: 'Core Dev', emoji: '🔧' },
     ];
     const isFirstRun = true;
     const bannerReady = true;
@@ -566,8 +566,8 @@ describe('#625 — Redundant init messaging eliminated', () => {
     const bannerReady = true;
     const isFirstRun = true;
     const rosterAgents = [
-      { name: 'Keaton', role: 'Lead', emoji: '👑' },
-      { name: 'Fenster', role: 'Core Dev', emoji: '🔧' },
+      { name: 'Bael', role: 'Lead', emoji: '👑' },
+      { name: 'Vassago', role: 'Core Dev', emoji: '🔧' },
     ];
 
     const shouldRenderFirstRun = bannerReady && isFirstRun;

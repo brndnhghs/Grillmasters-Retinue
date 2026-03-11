@@ -82,7 +82,7 @@ Tell the coordinator what you want:
 
 - `"use opus for this"` — one-off premium
 - `"always use haiku"` — session-wide cost savings
-- `"use gpt-5.2-codex for Fenster"` — agent-specific override
+- `"use gpt-5.2-codex for Vassago"` — agent-specific override
 
 ## Sample Prompts
 

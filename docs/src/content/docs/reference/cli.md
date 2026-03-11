@@ -131,12 +131,12 @@ All shell commands start with `/`.
 ### Addressing Agents
 
 ```
-squad > @Keaton, analyze the architecture
-squad > Keaton, set up the database schema
+squad > @Bael, analyze the architecture
+squad > Bael, set up the database schema
 squad > Build a blog post about our casting system
 ```
 
-Agent name matching is **case-insensitive** — `@keaton`, `@Keaton`, and `@KEATON` all route to the same agent. Name an agent to route directly. Omit the name and the coordinator routes to the best fit.
+Agent name matching is **case-insensitive** — `@bael`, `@Bael`, and `@BAEL` all route to the same agent. Name an agent to route directly. Omit the name and the coordinator routes to the best fit.
 
 ### Keyboard Shortcuts
 

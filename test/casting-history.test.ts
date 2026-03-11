@@ -26,7 +26,7 @@ function makeMember(name: string, role: 'lead' | 'developer' | 'tester' = 'devel
   };
 }
 
-const defaultConfig: CastingConfig = { universe: 'usual-suspects', teamSize: 3 };
+const defaultConfig: CastingConfig = { universe: 'solomonic-demonology', teamSize: 3 };
 
 describe('CastingHistory', () => {
   let history: CastingHistory;
@@ -39,9 +39,9 @@ describe('CastingHistory', () => {
 
   describe('recordCast', () => {
     it('should record a cast and return a CastingRecord', () => {
-      const team = [makeMember('Keyser', 'lead'), makeMember('McManus')];
+      const team = [makeMember('Bael', 'lead'), makeMember('marbas')];
       const record = history.recordCast(team, defaultConfig);
-      expect(record.universe).toBe('usual-suspects');
+      expect(record.universe).toBe('solomonic-demonology');
       expect(record.teamSize).toBe(2);
       expect(record.members).toHaveLength(2);
     });
@@ -70,9 +70,9 @@ describe('CastingHistory', () => {
     });
 
     it('should record member name and role only', () => {
-      const team = [makeMember('Verbal', 'tester')];
+      const team = [makeMember('Agares', 'tester')];
       const record = history.recordCast(team, defaultConfig);
-      expect(record.members[0]).toEqual({ name: 'Verbal', role: 'tester' });
+      expect(record.members[0]).toEqual({ name: 'Agares', role: 'tester' });
     });
 
     it('should increment history size after each record', () => {
@@ -119,14 +119,14 @@ describe('CastingHistory', () => {
 
   describe('getAgentHistory', () => {
     it('should return only records containing the given agent', () => {
-      history.recordCast([makeMember('Keyser', 'lead'), makeMember('Verbal')], defaultConfig);
+      history.recordCast([makeMember('Bael', 'lead'), makeMember('Agares')], defaultConfig);
       history.recordCast([makeMember('Danny', 'lead')], { universe: 'oceans-eleven' });
-      history.recordCast([makeMember('Verbal', 'tester')], defaultConfig);
+      history.recordCast([makeMember('Agares', 'tester')], defaultConfig);
 
-      const verbalHistory = history.getAgentHistory('Verbal');
+      const verbalHistory = history.getAgentHistory('Agares');
       expect(verbalHistory).toHaveLength(2);
       verbalHistory.forEach((r) =>
-        expect(r.members.some((m) => m.name === 'Verbal')).toBe(true),
+        expect(r.members.some((m) => m.name === 'Agares')).toBe(true),
       );
     });
 
@@ -136,9 +136,9 @@ describe('CastingHistory', () => {
     });
 
     it('should be case-sensitive', () => {
-      history.recordCast([makeMember('Verbal')], defaultConfig);
-      expect(history.getAgentHistory('verbal')).toEqual([]);
-      expect(history.getAgentHistory('Verbal')).toHaveLength(1);
+      history.recordCast([makeMember('Agares')], defaultConfig);
+      expect(history.getAgentHistory('agares')).toEqual([]);
+      expect(history.getAgentHistory('Agares')).toHaveLength(1);
     });
   });
 
@@ -160,8 +160,8 @@ describe('CastingHistory', () => {
     it('should round-trip through serialize/deserialize', () => {
       const ts = new Date('2025-06-01T10:00:00Z');
       history.recordCast(
-        [makeMember('Keyser', 'lead'), makeMember('Fenster', 'tester')],
-        { universe: 'usual-suspects', teamSize: 2 },
+        [makeMember('Bael', 'lead'), makeMember('Vassago', 'tester')],
+        { universe: 'solomonic-demonology', teamSize: 2 },
         ts,
       );
       const serialized = history.serializeHistory();
@@ -214,12 +214,12 @@ describe('CastingHistory', () => {
   describe('integration with CastingEngine', () => {
     it('should record a team produced by CastingEngine', () => {
       const engine = new CastingEngine();
-      const config: CastingConfig = { universe: 'usual-suspects', teamSize: 4 };
+      const config: CastingConfig = { universe: 'solomonic-demonology', teamSize: 4 };
       const team = engine.castTeam(config);
       const record = history.recordCast(team, config);
       expect(record.teamSize).toBe(4);
       expect(record.members).toHaveLength(4);
-      // All names should be from usual-suspects universe
+      // All names should be from solomonic-demonology universe
       for (const m of record.members) {
         expect(m.name).toBeTruthy();
         expect(m.role).toBeTruthy();
@@ -228,7 +228,7 @@ describe('CastingHistory', () => {
 
     it('should track multiple casts from different universes', () => {
       const engine = new CastingEngine();
-      const cfg1: CastingConfig = { universe: 'usual-suspects', teamSize: 3 };
+      const cfg1: CastingConfig = { universe: 'solomonic-demonology', teamSize: 3 };
       const cfg2: CastingConfig = { universe: 'oceans-eleven', teamSize: 5 };
 
       history.recordCast(engine.castTeam(cfg1), cfg1);
@@ -236,7 +236,7 @@ describe('CastingHistory', () => {
 
       const all = history.getCastHistory();
       expect(all).toHaveLength(2);
-      expect(all[0].universe).toBe('usual-suspects');
+      expect(all[0].universe).toBe('solomonic-demonology');
       expect(all[1].universe).toBe('oceans-eleven');
     });
 

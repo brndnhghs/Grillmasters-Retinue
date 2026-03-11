@@ -52,8 +52,8 @@ function scaffoldSquadDir(root: string): void {
 
 | Name | Role | Charter | Status |
 |------|------|---------|--------|
-| Keaton | Lead | \`.squad/agents/keaton/charter.md\` | ✅ Active |
-| Fenster | Core Dev | \`.squad/agents/fenster/charter.md\` | ✅ Active |
+| Bael | Lead | \`.squad/agents/bael/charter.md\` | ✅ Active |
+| Vassago | Core Dev | \`.squad/agents/vassago/charter.md\` | ✅ Active |
 `);
 
   writeFileSync(join(identityDir, 'now.md'), `---
@@ -89,8 +89,8 @@ async function createShellHarness(opts?: {
 }): Promise<ShellHarness> {
   const {
     agents = [
-      { name: 'Keaton', role: 'Lead' },
-      { name: 'Fenster', role: 'Core Dev' },
+      { name: 'Bael', role: 'Lead' },
+      { name: 'Vassago', role: 'Core Dev' },
     ],
     withSquadDir = true,
     version = '0.0.0-test',
@@ -199,8 +199,8 @@ describe('Journey: My first conversation (#384)', { timeout: 30_000 }, () => {
     });
 
     it('lists the team agents by name', () => {
-      expect(shell.hasText('Keaton')).toBe(true);
-      expect(shell.hasText('Fenster')).toBe(true);
+      expect(shell.hasText('Bael')).toBe(true);
+      expect(shell.hasText('Vassago')).toBe(true);
     });
 
     it('shows how many agents are ready', () => {
@@ -266,7 +266,7 @@ describe('Journey: My first conversation (#384)', { timeout: 30_000 }, () => {
       await shell.submit('What should we build first?');
       shell.api().addMessage({
         role: 'agent',
-        agentName: 'Keaton',
+        agentName: 'Bael',
         content: 'Great question! Let me outline a plan for you.',
         timestamp: new Date(),
       });
@@ -278,12 +278,12 @@ describe('Journey: My first conversation (#384)', { timeout: 30_000 }, () => {
       await shell.submit('What should we build first?');
       shell.api().addMessage({
         role: 'agent',
-        agentName: 'Keaton',
+        agentName: 'Bael',
         content: 'Here is the plan.',
         timestamp: new Date(),
       });
       await tick(120);
-      expect(shell.hasText('Keaton')).toBe(true);
+      expect(shell.hasText('Bael')).toBe(true);
       expect(shell.hasText('Here is the plan.')).toBe(true);
     });
 
@@ -291,7 +291,7 @@ describe('Journey: My first conversation (#384)', { timeout: 30_000 }, () => {
       await shell.submit('What should we build first?');
       shell.api().addMessage({
         role: 'agent',
-        agentName: 'Keaton',
+        agentName: 'Bael',
         content: 'Start with the API layer.',
         timestamp: new Date(),
       });
@@ -349,25 +349,25 @@ describe('Journey: My first conversation (#384)', { timeout: 30_000 }, () => {
   // ── Step 7: User tries @agent routing for the first time ──────────────
 
   describe('Step 7 — First @agent direct message', () => {
-    it('@Keaton message dispatches as direct_agent', async () => {
-      await shell.submit('@Keaton can you review my code?');
+    it('@Bael message dispatches as direct_agent', async () => {
+      await shell.submit('@Bael can you review my code?');
       expect(shell.dispatched).toHaveBeenCalledTimes(1);
       const parsed = shell.dispatched.mock.calls[0]![0] as ParsedInput;
       expect(parsed.type).toBe('direct_agent');
-      expect(parsed.agentName).toBe('Keaton');
+      expect(parsed.agentName).toBe('Bael');
       expect(parsed.content).toBe('can you review my code?');
     });
 
     it('@agent message appears in the conversation', async () => {
-      await shell.submit('@Fenster write a unit test');
-      expect(shell.hasText('@Fenster write a unit test')).toBe(true);
+      await shell.submit('@Vassago write a unit test');
+      expect(shell.hasText('@Vassago write a unit test')).toBe(true);
     });
 
     it('agent response to direct message appears in conversation', async () => {
-      await shell.submit('@Fenster write a unit test');
+      await shell.submit('@Vassago write a unit test');
       shell.api().addMessage({
         role: 'agent',
-        agentName: 'Fenster',
+        agentName: 'Vassago',
         content: 'On it! Writing a test for the auth module.',
         timestamp: new Date(),
       });

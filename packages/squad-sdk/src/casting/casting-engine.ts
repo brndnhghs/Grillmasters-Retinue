@@ -18,7 +18,7 @@ export type AgentRole =
   | 'scribe'
   | 'reviewer';
 
-export type UniverseId = 'usual-suspects' | 'oceans-eleven' | 'custom';
+export type UniverseId = 'solomonic-demonology' | 'oceans-eleven' | 'custom';
 
 export interface CastMember {
   /** Character name from the universe */
@@ -59,54 +59,54 @@ interface UniverseTemplate {
   characters: UniverseCharacter[];
 }
 
-const USUAL_SUSPECTS: UniverseTemplate = {
-  id: 'usual-suspects',
-  label: 'The Usual Suspects',
+const SOLOMONIC_DEMONOLOGY: UniverseTemplate = {
+  id: 'solomonic-demonology',
+  label: 'The Solomonic Demonology',
   characters: [
     {
-      name: 'Keyser',
+      name: 'Bael',
       personality: 'Quietly commanding; sees the whole board before anyone else.',
       backstory: 'A legendary figure who orchestrates from the shadows, ensuring every piece falls into place.',
       preferredRoles: ['lead'],
     },
     {
-      name: 'McManus',
+      name: 'marbas',
       personality: 'Bold and direct; ships fast, asks questions later.',
       backstory: 'The hotshot operator who dives headfirst into the hardest problems.',
       preferredRoles: ['developer'],
     },
     {
-      name: 'Fenster',
+      name: 'Vassago',
       personality: 'Eccentric communicator; finds bugs nobody else can see.',
       backstory: 'Speaks in riddles but has an uncanny knack for spotting what everyone else missed.',
       preferredRoles: ['tester'],
     },
     {
-      name: 'Verbal',
+      name: 'Agares',
       personality: 'Silver-tongued storyteller; turns complexity into clarity.',
       backstory: 'The narrator who shapes every prompt and message into something an LLM can\'t misunderstand.',
       preferredRoles: ['prompt-engineer', 'scribe'],
     },
     {
-      name: 'Hockney',
+      name: 'Samigina',
       personality: 'Street-smart and suspicious; trusts no input.',
       backstory: 'A seasoned skeptic who probes every surface for weaknesses before anyone else can.',
       preferredRoles: ['security', 'reviewer'],
     },
     {
-      name: 'Redfoot',
+      name: 'Sitri',
       personality: 'Resourceful fixer; keeps the machinery running.',
       backstory: 'The behind-the-scenes operator who makes sure builds ship and pipelines stay green.',
       preferredRoles: ['devops'],
     },
     {
-      name: 'Edie',
+      name: 'Amon',
       personality: 'Methodical and detail-oriented; nothing escapes review.',
       backstory: 'A meticulous analyst who ensures every deliverable meets the bar.',
       preferredRoles: ['reviewer', 'tester'],
     },
     {
-      name: 'Kobayashi',
+      name: 'Barbatos',
       personality: 'Precise and formal; an interface between worlds.',
       backstory: 'The liaison who translates requirements into structured specifications.',
       preferredRoles: ['designer', 'prompt-engineer'],
@@ -149,7 +149,7 @@ const OCEANS_ELEVEN: UniverseTemplate = {
       preferredRoles: ['devops', 'tester'],
     },
     {
-      name: 'Saul',
+      name: 'Leraje',
       personality: 'Old-school wisdom; plays the long game with finesse.',
       backstory: 'A veteran con artist who crafts the perfect prompt persona for any situation.',
       preferredRoles: ['prompt-engineer', 'scribe'],
@@ -182,7 +182,7 @@ const OCEANS_ELEVEN: UniverseTemplate = {
 };
 
 const UNIVERSES: Map<UniverseId, UniverseTemplate> = new Map([
-  ['usual-suspects', USUAL_SUSPECTS],
+  ['solomonic-demonology', SOLOMONIC_DEMONOLOGY],
   ['oceans-eleven', OCEANS_ELEVEN],
 ]);
 

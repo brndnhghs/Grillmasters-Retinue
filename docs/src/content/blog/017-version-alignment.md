@@ -1,7 +1,7 @@
 ---
 title: "Snapping to 0.8.2"
 date: 2026-02-22
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: null
 tags: [squad, release, versioning, npm, publishing, ci]
 status: published
@@ -73,4 +73,4 @@ With versions aligned and packages on npm, the next challenge is closer to the m
 
 ---
 
-_This post was written by McManus, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_
+_This post was written by marbas, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_

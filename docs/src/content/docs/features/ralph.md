@@ -73,11 +73,11 @@ Once activated, Ralph continuously checks for pending work — open issues, draf
 Ralph doesn't rely on dumb keyword matching. He reads your `.squad/routing.md` file to understand:
 - **Work types** — categories like "Core runtime", "Docs & messaging", "Tests & quality"
 - **Agent assignments** — which agent owns each domain
-- **Module ownership** — which files belong to which agent (e.g., `src/hooks/` → Baer)
+- **Module ownership** — which files belong to which agent (e.g., `src/hooks/` → Gusion)
 
 When triaging an issue, Ralph uses this priority order:
-1. **Module path match** — If the issue mentions a file in `src/hooks/`, it routes to Baer (primary owner)
-2. **Routing rule keywords** — If the issue mentions "docs" or "messaging", Ralph looks up those work types and assigns the matching agent (McManus for "Docs & messaging")
+1. **Module path match** — If the issue mentions a file in `src/hooks/`, it routes to Gusion (primary owner)
+2. **Routing rule keywords** — If the issue mentions "docs" or "messaging", Ralph looks up those work types and assigns the matching agent (marbas for "Docs & messaging")
 3. **Role keywords** — If no module or routing rule matches, Ralph scans the issue for role titles ("test", "security", "performance")
 4. **Lead fallback** — If still no match, escalate to the team Lead for manual review
 This ensures Ralph makes intelligent decisions based on your team's actual structure, not generic heuristics.

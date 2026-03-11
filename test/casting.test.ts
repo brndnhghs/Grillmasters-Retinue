@@ -19,7 +19,7 @@ describe('CastingEngine', () => {
   describe('getUniverses', () => {
     it('should return available universe IDs', () => {
       const ids = engine.getUniverses();
-      expect(ids).toContain('usual-suspects');
+      expect(ids).toContain('solomonic-demonology');
       expect(ids).toContain('oceans-eleven');
     });
 
@@ -30,10 +30,10 @@ describe('CastingEngine', () => {
   });
 
   describe('getUniverse', () => {
-    it('should return template for usual-suspects', () => {
-      const u = engine.getUniverse('usual-suspects');
+    it('should return template for solomonic-demonology', () => {
+      const u = engine.getUniverse('solomonic-demonology');
       expect(u).toBeDefined();
-      expect(u!.id).toBe('usual-suspects');
+      expect(u!.id).toBe('solomonic-demonology');
     });
 
     it('should return template for oceans-eleven', () => {
@@ -47,11 +47,11 @@ describe('CastingEngine', () => {
     });
   });
 
-  // --- castTeam: usual-suspects ---
+  // --- castTeam: solomonic-demonology ---
 
-  describe('castTeam — usual-suspects', () => {
+  describe('castTeam — solomonic-demonology', () => {
     it('should cast a team with default required roles', () => {
-      const team = engine.castTeam({ universe: 'usual-suspects' });
+      const team = engine.castTeam({ universe: 'solomonic-demonology' });
       expect(team.length).toBeGreaterThanOrEqual(3);
       const roles = team.map((m) => m.role);
       expect(roles).toContain('lead');
@@ -60,7 +60,7 @@ describe('CastingEngine', () => {
     });
 
     it('should generate CastMember objects with all fields', () => {
-      const team = engine.castTeam({ universe: 'usual-suspects' });
+      const team = engine.castTeam({ universe: 'solomonic-demonology' });
       for (const member of team) {
         expect(member.name).toBeTruthy();
         expect(member.role).toBeTruthy();
@@ -71,18 +71,18 @@ describe('CastingEngine', () => {
     });
 
     it('should respect teamSize', () => {
-      const team = engine.castTeam({ universe: 'usual-suspects', teamSize: 5 });
+      const team = engine.castTeam({ universe: 'solomonic-demonology', teamSize: 5 });
       expect(team).toHaveLength(5);
     });
 
     it('should clamp teamSize to available characters', () => {
-      const team = engine.castTeam({ universe: 'usual-suspects', teamSize: 100 });
-      expect(team.length).toBeLessThanOrEqual(8); // usual-suspects has 8 characters
+      const team = engine.castTeam({ universe: 'solomonic-demonology', teamSize: 100 });
+      expect(team.length).toBeLessThanOrEqual(8); // solomonic-demonology has 8 characters
     });
 
     it('should ensure teamSize is at least requiredRoles.length', () => {
       const team = engine.castTeam({
-        universe: 'usual-suspects',
+        universe: 'solomonic-demonology',
         teamSize: 1,
         requiredRoles: ['lead', 'developer', 'tester'],
       });
@@ -90,14 +90,14 @@ describe('CastingEngine', () => {
     });
 
     it('should assign unique characters to each role', () => {
-      const team = engine.castTeam({ universe: 'usual-suspects', teamSize: 6 });
+      const team = engine.castTeam({ universe: 'solomonic-demonology', teamSize: 6 });
       const names = team.map((m) => m.name);
       expect(new Set(names).size).toBe(names.length);
     });
 
     it('should fill required roles first', () => {
       const team = engine.castTeam({
-        universe: 'usual-suspects',
+        universe: 'solomonic-demonology',
         requiredRoles: ['security', 'prompt-engineer'],
       });
       const roles = team.map((m) => m.role);
@@ -106,7 +106,7 @@ describe('CastingEngine', () => {
     });
 
     it('should format displayName as "Name — Role"', () => {
-      const team = engine.castTeam({ universe: 'usual-suspects' });
+      const team = engine.castTeam({ universe: 'solomonic-demonology' });
       const lead = team.find((m) => m.role === 'lead')!;
       expect(lead.displayName).toMatch(/^\w+ — Lead$/);
     });
@@ -186,7 +186,7 @@ describe('CastingEngine', () => {
     it('should throw if more required roles than characters', () => {
       expect(() =>
         engine.castTeam({
-          universe: 'usual-suspects',
+          universe: 'solomonic-demonology',
           requiredRoles: [
             'lead', 'developer', 'tester', 'prompt-engineer',
             'security', 'devops', 'designer', 'scribe', 'reviewer',
@@ -201,7 +201,7 @@ describe('CastingEngine', () => {
   describe('edge cases', () => {
     it('should handle empty requiredRoles', () => {
       const team = engine.castTeam({
-        universe: 'usual-suspects',
+        universe: 'solomonic-demonology',
         requiredRoles: [],
         teamSize: 2,
       });
@@ -210,7 +210,7 @@ describe('CastingEngine', () => {
 
     it('should handle teamSize of 0 with empty requiredRoles', () => {
       const team = engine.castTeam({
-        universe: 'usual-suspects',
+        universe: 'solomonic-demonology',
         requiredRoles: [],
         teamSize: 0,
       });

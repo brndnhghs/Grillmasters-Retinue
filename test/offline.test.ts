@@ -158,8 +158,8 @@ describe('OfflineManager', () => {
 
     it('should reflect cached agents', () => {
       mgr.addCachedAgent('ralph');
-      mgr.addCachedAgent('fenster');
-      expect(mgr.getOfflineStatus().cachedAgents).toEqual(['ralph', 'fenster']);
+      mgr.addCachedAgent('vassago');
+      expect(mgr.getOfflineStatus().cachedAgents).toEqual(['ralph', 'vassago']);
     });
 
     it('should not duplicate cached agents', () => {

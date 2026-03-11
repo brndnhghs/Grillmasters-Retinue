@@ -26,4 +26,4 @@ Reusable patterns and heuristics learned through work. NOT transcripts — each 
 **Context:** v0.8.22 release incident where mangled version was published to npm.
 
 **Anti-Pattern:** `git reset --hard` with unstaged changes wipes work. Always commit or stash before switching branches.
-**Context:** Fortier's ESM runtime patch was lost during v0.8.24 sprint cleanup.
+**Context:** Paimon's ESM runtime patch was lost during v0.8.24 sprint cleanup.

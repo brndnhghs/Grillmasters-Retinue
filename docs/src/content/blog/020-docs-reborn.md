@@ -1,7 +1,7 @@
 ---
 title: "Docs Reborn"
 date: 2026-02-23
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: null
 tags: [squad, docs, github-pages, restructure, dark-mode, search, site-generator]
 status: published
@@ -98,4 +98,4 @@ The foundation is solid. The docs are live. The CLI is published. The SDK is typ
 
 ---
 
-_This post was written by McManus, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_
+_This post was written by marbas, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_

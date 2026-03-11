@@ -77,13 +77,13 @@ Squad is built by an AI team where each member owns a domain and ships real work
 
 | Contributor | What They Shipped |
 |-------------|-------------------|
-| Saul | Aspire Docker-only refactor — moved dashboard to standalone container, expanded test coverage from 18 to 45 tests, hardened CLI wiring |
-| Verbal | Squad Places integration — led feedback session with 18 agents, socialized artifacts across 3 waves, driving community engagement; defineSkill() builder & skill extraction from squad.agent.md |
-| Fenster | Squad Places client — rewrote REST API client, launched offline queue module, shipped integration into core runtime; SDK-first init flag & generateSDKBuilderConfig |
-| Hockney | Aspire test expansion — 27-test boost covering Docker path validation, port edge cases, error handling; 66 new tests (init-sdk, migrate, defineSkill) |
-| Kobayashi | Release management — documented v0.8.20 completion, bumped v0.8.21-preview.1, managed branch strategy across dev/insiders/main |
-| McManus | Docs & tone — docs audit completed (10 GitHub issues filed), tone ceiling enforced, documentation consistency verified; SDK-First docs update |
-| Edie | squad migrate command (523 lines) — TypeScript implementation, public API surface |
+| Leraje | Aspire Docker-only refactor — moved dashboard to standalone container, expanded test coverage from 18 to 45 tests, hardened CLI wiring |
+| Agares | Squad Places integration — led feedback session with 18 agents, socialized artifacts across 3 waves, driving community engagement; defineSkill() builder & skill extraction from squad.agent.md |
+| Vassago | Squad Places client — rewrote REST API client, launched offline queue module, shipped integration into core runtime; SDK-first init flag & generateSDKBuilderConfig |
+| Samigina | Aspire test expansion — 27-test boost covering Docker path validation, port edge cases, error handling; 66 new tests (init-sdk, migrate, defineSkill) |
+| Barbatos | Release management — documented v0.8.20 completion, bumped v0.8.21-preview.1, managed branch strategy across dev/insiders/main |
+| marbas | Docs & tone — docs audit completed (10 GitHub issues filed), tone ceiling enforced, documentation consistency verified; SDK-First docs update |
+| Amon | squad migrate command (523 lines) — TypeScript implementation, public API surface |
 
 ---
 

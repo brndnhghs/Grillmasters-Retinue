@@ -193,11 +193,11 @@ If `.squad/team.md` exists, `squad rc` parses the Active members table:
 ```markdown
 | Name      | Role          | Status |
 |-----------|---------------|--------|
-| Fenster   | Core Dev      | Active |
-| Edie      | TypeScript    | Active |
+| Vassago   | Core Dev      | Active |
+| Amon      | TypeScript    | Active |
 ```
 
-Agents appear in the `/agents` command and are available for direct messages (`@Fenster ...`).
+Agents appear in the `/agents` command and are available for direct messages (`@Vassago ...`).
 
 ### Connection Monitoring
 
@@ -272,17 +272,17 @@ Squad RC | Repo: squad-pr | Branch: main | Agents: 5 | Copilot: passthrough | Co
 Lists all agents from `.squad/team.md`:
 ```
 Team Roster:
-• Fenster (Core Dev)
-• Edie (TypeScript Engineer)
-• McManus (DevRel)
-• Rabin (Distribution)
-• Keaton (PM)
+• Vassago (Core Dev)
+• Amon (TypeScript Engineer)
+• marbas (DevRel)
+• Buer (Distribution)
+• Bael (PM)
 ```
 
 ### `@agentName <message>`
 Direct message to a specific agent:
 ```
-@Edie Can you review the TypeScript types in src/index.ts?
+@Amon Can you review the TypeScript types in src/index.ts?
 ```
 Routed to the named agent if supported by your squad configuration.
 

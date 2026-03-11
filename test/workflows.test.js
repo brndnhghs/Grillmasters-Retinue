@@ -8,7 +8,7 @@ const os = require('os');
 const CLI = path.join(__dirname, '..', 'index.js');
 const TEMPLATES_DIR = path.join(__dirname, '..', 'templates', 'workflows');
 
-// The three CI/CD workflows Kobayashi is building
+// The three CI/CD workflows Barbatos is building
 const CI_CD_WORKFLOWS = [
   'squad-ci.yml',
   'squad-preview.yml',
@@ -98,7 +98,7 @@ describe('CI/CD workflow templates (squad-ci, squad-preview, squad-release)', ()
       it(`${file} template exists`, (t) => {
         const templatePath = path.join(TEMPLATES_DIR, file);
         if (!fs.existsSync(templatePath)) {
-          t.skip(`${file} template not yet created by Kobayashi`);
+          t.skip(`${file} template not yet created by Barbatos`);
           return;
         }
         assert.ok(fs.existsSync(templatePath));

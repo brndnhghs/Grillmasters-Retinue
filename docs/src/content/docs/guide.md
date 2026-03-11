@@ -79,7 +79,7 @@ When you open Copilot and select **Squad** for the first time in a repo, there's
 
 1. **Squad identifies you** via `git config user.name` and uses your name in conversation.
 2. **You describe your project** — language, stack, what it does.
-3. **Squad casts a team** — agents get names from a single fictional universe (e.g., The Usual Suspects, Alien, Ocean's Eleven). The universe is selected deterministically based on team size, project shape, and what's been used before. Names are persistent identifiers — they don't change the agent's behavior or voice.
+3. **Squad casts a team** — agents get names from a single fictional universe (e.g., The Solomonic Demonology, Alien, Ocean's Eleven). The universe is selected deterministically based on team size, project shape, and what's been used before. Names are persistent identifiers — they don't change the agent's behavior or voice.
 4. **Squad proposes the team:**
 
 ```

@@ -247,10 +247,10 @@ export class BenchmarkSuite {
   private routingOp(): void {
     // Simulate routing rule evaluation
     const rules = [
-      { workType: 'feature-dev', agents: ['fenster'], patterns: [/feature/i, /feat/i] },
-      { workType: 'bug-fix', agents: ['kujan'], patterns: [/bug/i, /fix/i] },
-      { workType: 'testing', agents: ['verbal'], patterns: [/test/i, /spec/i] },
-      { workType: 'documentation', agents: ['mcmanus'], patterns: [/doc/i, /readme/i] },
+      { workType: 'feature-dev', agents: ['vassago'], patterns: [/feature/i, /feat/i] },
+      { workType: 'bug-fix', agents: ['valefor'], patterns: [/bug/i, /fix/i] },
+      { workType: 'testing', agents: ['agares'], patterns: [/test/i, /spec/i] },
+      { workType: 'documentation', agents: ['marbas'], patterns: [/doc/i, /readme/i] },
     ];
     const input = 'Implement a new feature for the routing module';
     for (const rule of rules) {
@@ -280,9 +280,9 @@ export class BenchmarkSuite {
     // Simulate export → serialize → deserialize → import round-trip
     const bundle = {
       config: { version: '1.0.0', models: {}, routing: { rules: [] } },
-      agents: [{ name: 'fenster', role: 'developer', content: '# Fenster' }],
+      agents: [{ name: 'vassago', role: 'developer', content: '# Vassago' }],
       skills: ['typescript', 'testing'],
-      routingRules: [{ pattern: 'feature/*', agent: 'fenster' }],
+      routingRules: [{ pattern: 'feature/*', agent: 'vassago' }],
       metadata: { version: '1.0.0', timestamp: new Date().toISOString(), source: 'test' },
     };
     const serialized = JSON.stringify(bundle);

@@ -216,9 +216,9 @@ describe('validateRelease', () => {
 
 describe('generateReleaseNotes', () => {
   const commits: CommitInfo[] = [
-    { sha: 'abc1234567', message: 'feat: add benchmarks', author: 'fenster', date: '2025-01-01', type: 'feat' },
-    { sha: 'def5678901', message: 'fix: routing crash', author: 'kujan', date: '2025-01-02', type: 'fix' },
-    { sha: 'ghi9012345', message: 'docs: update README', author: 'verbal', date: '2025-01-03', type: 'docs' },
+    { sha: 'abc1234567', message: 'feat: add benchmarks', author: 'vassago', date: '2025-01-01', type: 'feat' },
+    { sha: 'def5678901', message: 'fix: routing crash', author: 'valefor', date: '2025-01-02', type: 'fix' },
+    { sha: 'ghi9012345', message: 'docs: update README', author: 'agares', date: '2025-01-03', type: 'docs' },
   ];
 
   it('should include version and date in heading', () => {
@@ -252,7 +252,7 @@ describe('generateReleaseNotes', () => {
 
   it('should include breaking changes section', () => {
     const breakingCommits: CommitInfo[] = [
-      { sha: 'zzz0000000', message: 'feat!: remove old API', author: 'fenster', date: '2025-01-01', type: 'feat' },
+      { sha: 'zzz0000000', message: 'feat!: remove old API', author: 'vassago', date: '2025-01-01', type: 'feat' },
     ];
     const notes = generateReleaseNotes(makeManifest(), breakingCommits);
     expect(notes).toContain('Breaking Changes');

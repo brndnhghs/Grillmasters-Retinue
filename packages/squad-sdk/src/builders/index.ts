@@ -133,7 +133,7 @@ function assertModelPreference(value: unknown, field: string, builder: string): 
  * const team = defineTeam({
  *   name: 'Core Squad',
  *   description: 'The main engineering team',
- *   members: ['@edie', '@fenster', '@hockney'],
+ *   members: ['@amon', '@vassago', '@samigina'],
  * });
  * ```
  */
@@ -161,10 +161,10 @@ const CAPABILITY_LEVELS = ['expert', 'proficient', 'basic'] as const;
  * tools, and capability profile.
  *
  * ```ts
- * const edie = defineAgent({
- *   name: 'edie',
+ * const amon = defineAgent({
+ *   name: 'amon',
  *   role: 'TypeScript Engineer',
- *   charter: '.squad/agents/edie/charter.md',
+ *   charter: '.squad/agents/amon/charter.md',
  *   model: 'claude-sonnet-4',
  *   tools: ['grep', 'edit', 'powershell'],
  *   capabilities: [{ name: 'type-system', level: 'expert' }],
@@ -210,8 +210,8 @@ const FALLBACK_BEHAVIORS = ['ask', 'default-agent', 'coordinator'] as const;
  * ```ts
  * const routing = defineRouting({
  *   rules: [
- *     { pattern: 'feature-*', agents: ['@edie'], tier: 'standard', priority: 1 },
- *     { pattern: 'docs-*', agents: ['@mcmanus'], tier: 'lightweight' },
+ *     { pattern: 'feature-*', agents: ['@amon'], tier: 'standard', priority: 1 },
+ *     { pattern: 'docs-*', agents: ['@marbas'], tier: 'lightweight' },
  *   ],
  *   defaultAgent: '@coordinator',
  *   fallback: 'coordinator',
@@ -256,7 +256,7 @@ export function defineRouting(config: RoutingDefinition): RoutingDefinition {
  *   name: 'standup',
  *   trigger: 'schedule',
  *   schedule: '0 9 * * 1-5',
- *   participants: ['@edie', '@fenster', '@hockney'],
+ *   participants: ['@amon', '@vassago', '@samigina'],
  *   agenda: 'Yesterday / Today / Blockers',
  * });
  * ```
@@ -312,9 +312,9 @@ const OVERFLOW_STRATEGIES = ['reject', 'generic', 'rotate'] as const;
  *
  * ```ts
  * const casting = defineCasting({
- *   allowlistUniverses: ['The Usual Suspects', 'Breaking Bad'],
+ *   allowlistUniverses: ['The Solomonic Demonology', 'Breaking Bad'],
  *   overflowStrategy: 'generic',
- *   capacity: { 'The Usual Suspects': 8 },
+ *   capacity: { 'The Solomonic Demonology': 8 },
  * });
  * ```
  */
@@ -451,8 +451,8 @@ export function defineDefaults(config: DefaultsDefinition): DefaultsDefinition {
  * ```ts
  * export default defineSquad({
  *   version: '1.0.0',
- *   team: defineTeam({ name: 'Core', members: ['@edie'] }),
- *   agents: [defineAgent({ name: 'edie', role: 'TypeScript Engineer' })],
+ *   team: defineTeam({ name: 'Core', members: ['@amon'] }),
+ *   agents: [defineAgent({ name: 'amon', role: 'TypeScript Engineer' })],
  *   routing: defineRouting({ rules: [...] }),
  *   defaults: defineDefaults({ model: 'claude-sonnet-4' }),
  * });

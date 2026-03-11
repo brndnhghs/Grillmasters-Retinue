@@ -75,12 +75,12 @@ describe('Multi-line paste handling', () => {
       const multiLineAgent = 'Here is my analysis:\n- Point A\n- Point B\n- Point C';
       const { lastFrame } = render(
         h(MessageStream, {
-          messages: [makeMessage({ role: 'agent', content: multiLineAgent, agentName: 'Kovash' })],
-          agents: [makeAgent({ name: 'Kovash', role: 'core dev' })],
+          messages: [makeMessage({ role: 'agent', content: multiLineAgent, agentName: 'Eligos' })],
+          agents: [makeAgent({ name: 'Eligos', role: 'core dev' })],
         })
       );
       const frame = lastFrame()!;
-      expect(frame).toContain('Kovash');
+      expect(frame).toContain('Eligos');
       expect(frame).toContain('Here is my analysis:');
       expect(frame).toContain('- Point A');
       expect(frame).toContain('- Point B');
@@ -117,8 +117,8 @@ describe('Multi-line paste handling', () => {
       const { lastFrame } = render(
         h(MessageStream, {
           messages: [],
-          streamingContent: new Map([['Kovash', streamedMultiLine]]),
-          agents: [makeAgent({ name: 'Kovash', role: 'core dev' })],
+          streamingContent: new Map([['Eligos', streamedMultiLine]]),
+          agents: [makeAgent({ name: 'Eligos', role: 'core dev' })],
         })
       );
       const frame = lastFrame()!;
@@ -294,14 +294,14 @@ describe('Multi-line paste handling', () => {
         makeMessage({
           role: 'agent',
           content: 'Here is the explanation:\n1. First step\n2. Second step',
-          agentName: 'Kovash',
+          agentName: 'Eligos',
         }),
         makeMessage({ role: 'user', content: 'and this code?\nfunction foo() {\n  return 42;\n}' }),
       ];
       const { lastFrame } = render(
         h(MessageStream, {
           messages,
-          agents: [makeAgent({ name: 'Kovash', role: 'core dev' })],
+          agents: [makeAgent({ name: 'Eligos', role: 'core dev' })],
         })
       );
       const frame = lastFrame()!;

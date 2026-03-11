@@ -54,19 +54,19 @@ export default defineSquad({
   team: defineTeam({
     name: 'Core Squad',
     description: 'The main engineering team',
-    members: ['@edie', '@mcmanus'],
+    members: ['@amon', '@marbas'],
   }),
 
   agents: [
     defineAgent({
-      name: 'edie',
+      name: 'amon',
       role: 'TypeScript Engineer',
       model: 'claude-sonnet-4',
       tools: ['grep', 'edit', 'powershell'],
       capabilities: [{ name: 'type-system', level: 'expert' }],
     }),
     defineAgent({
-      name: 'mcmanus',
+      name: 'marbas',
       role: 'DevRel',
       model: 'claude-haiku-4.5',
       capabilities: [{ name: 'documentation', level: 'expert' }],
@@ -75,8 +75,8 @@ export default defineSquad({
 
   routing: defineRouting({
     rules: [
-      { pattern: 'feature-*', agents: ['@edie'], tier: 'standard' },
-      { pattern: 'docs-*', agents: ['@mcmanus'], tier: 'lightweight' },
+      { pattern: 'feature-*', agents: ['@amon'], tier: 'standard' },
+      { pattern: 'docs-*', agents: ['@marbas'], tier: 'lightweight' },
     ],
     defaultAgent: '@coordinator',
   }),
@@ -190,7 +190,7 @@ const team = defineTeam({
   name: 'Core Squad',
   description: 'The main engineering team',
   projectContext: 'Building a React/Node recipe app...',
-  members: ['@edie', '@fenster', '@hockney'],
+  members: ['@amon', '@vassago', '@samigina'],
 });
 ```
 
@@ -210,7 +210,7 @@ interface TeamDefinition {
 | `name` | string | ✅ | Team name (non-empty) |
 | `description` | string | ❌ | One-liner |
 | `projectContext` | string | ❌ | Injected into agent prompts; describe the codebase, tech stack, conventions |
-| `members` | string[] | ✅ | Agent refs (`"@edie"` or `"edie"`); order matters for routing fallback |
+| `members` | string[] | ✅ | Agent refs (`"@amon"` or `"amon"`); order matters for routing fallback |
 
 ---
 
@@ -219,8 +219,8 @@ interface TeamDefinition {
 Define a single agent with role, charter, model preference, tools, and capability profile.
 
 ```typescript
-const edie = defineAgent({
-  name: 'edie',
+const amon = defineAgent({
+  name: 'amon',
   role: 'TypeScript Engineer',
   charter: 'Expert in type systems and test-driven development',
   model: 'claude-sonnet-4',
@@ -276,9 +276,9 @@ Define typed routing rules with pattern matching, priority, and tier.
 ```typescript
 const routing = defineRouting({
   rules: [
-    { pattern: 'feature-*', agents: ['@edie'], tier: 'standard', priority: 1 },
-    { pattern: 'docs-*', agents: ['@mcmanus'], tier: 'lightweight' },
-    { pattern: 'test-*', agents: ['@edie', '@fenster'], tier: 'full' },
+    { pattern: 'feature-*', agents: ['@amon'], tier: 'standard', priority: 1 },
+    { pattern: 'docs-*', agents: ['@marbas'], tier: 'lightweight' },
+    { pattern: 'test-*', agents: ['@amon', '@vassago'], tier: 'full' },
   ],
   defaultAgent: '@coordinator',
   fallback: 'coordinator',
@@ -324,7 +324,7 @@ const standup = defineCeremony({
   name: 'standup',
   trigger: 'schedule',
   schedule: '0 9 * * 1-5',  // Cron: 9 AM weekdays
-  participants: ['@edie', '@mcmanus', '@fenster'],
+  participants: ['@amon', '@marbas', '@vassago'],
   agenda: 'Yesterday / Today / Blockers',
 });
 ```
@@ -395,10 +395,10 @@ Define casting configuration — universe allowlists and overflow strategy.
 
 ```typescript
 const casting = defineCasting({
-  allowlistUniverses: ['The Usual Suspects', 'Breaking Bad'],
+  allowlistUniverses: ['The Solomonic Demonology', 'Breaking Bad'],
   overflowStrategy: 'generic',
   capacity: {
-    'The Usual Suspects': 8,
+    'The Solomonic Demonology': 8,
     'Breaking Bad': 5,
   },
 });
@@ -582,8 +582,8 @@ Output:
 
   create  .squad/team.md
   create  .squad/routing.md
-  create  .squad/agents/edie/charter.md
-  create  .squad/agents/mcmanus/charter.md
+  create  .squad/agents/amon/charter.md
+  create  .squad/agents/marbas/charter.md
   create  .squad/ceremonies.md
   overwrite .squad/hooks.md
 ```
@@ -629,7 +629,7 @@ If validation fails:
 
 ```typescript
 defineAgent({
-  name: 'edie',
+  name: 'amon',
   // Missing required 'role' field
 });
 // BuilderValidationError: [defineAgent] "role" must be a non-empty string
@@ -654,7 +654,7 @@ Validation is:
 
 | Name | Role | Charter |
 |------|------|---------|
-| Edie | TypeScript Engineer | `.squad/agents/edie/charter.md` |
+| Amon | TypeScript Engineer | `.squad/agents/amon/charter.md` |
 ```
 
 You manually maintain this file and agent charters.
@@ -665,11 +665,11 @@ You manually maintain this file and agent charters.
 export default defineSquad({
   team: defineTeam({
     name: 'Core Squad',
-    members: ['@edie'],
+    members: ['@amon'],
   }),
   agents: [
     defineAgent({
-      name: 'edie',
+      name: 'amon',
       role: 'TypeScript Engineer',
     }),
   ],
@@ -718,12 +718,12 @@ export default defineSquad({
       Uses Vitest for testing, ESLint for linting.
       Deploys to Vercel (frontend) and AWS Lambda (backend).
     `,
-    members: ['@edie', '@mcmanus', '@fenster', '@hockney'],
+    members: ['@amon', '@marbas', '@vassago', '@samigina'],
   }),
 
   agents: [
     defineAgent({
-      name: 'edie',
+      name: 'amon',
       role: 'TypeScript Engineer',
       model: 'claude-sonnet-4',
       tools: ['grep', 'edit', 'powershell', 'view'],
@@ -735,7 +735,7 @@ export default defineSquad({
     }),
 
     defineAgent({
-      name: 'mcmanus',
+      name: 'marbas',
       role: 'DevRel',
       model: 'claude-haiku-4.5',
       tools: ['grep', 'view', 'edit'],
@@ -746,7 +746,7 @@ export default defineSquad({
     }),
 
     defineAgent({
-      name: 'fenster',
+      name: 'vassago',
       role: 'Test Lead',
       model: 'claude-sonnet-4',
       capabilities: [
@@ -756,7 +756,7 @@ export default defineSquad({
     }),
 
     defineAgent({
-      name: 'hockney',
+      name: 'samigina',
       role: 'Frontend Specialist',
       model: 'claude-opus-4.6',
       capabilities: [
@@ -770,23 +770,23 @@ export default defineSquad({
     rules: [
       {
         pattern: 'feature-*',
-        agents: ['@edie', '@hockney'],
+        agents: ['@amon', '@samigina'],
         tier: 'standard',
         priority: 1,
       },
       {
         pattern: 'docs-*',
-        agents: ['@mcmanus'],
+        agents: ['@marbas'],
         tier: 'lightweight',
       },
       {
         pattern: 'test-*',
-        agents: ['@fenster'],
+        agents: ['@vassago'],
         tier: 'standard',
       },
       {
         pattern: 'bug-*',
-        agents: ['@edie', '@fenster'],
+        agents: ['@amon', '@vassago'],
         tier: 'full',
         priority: 0,
       },
@@ -810,10 +810,10 @@ export default defineSquad({
   }),
 
   casting: defineCasting({
-    allowlistUniverses: ['The Usual Suspects', 'Breaking Bad'],
+    allowlistUniverses: ['The Solomonic Demonology', 'Breaking Bad'],
     overflowStrategy: 'generic',
     capacity: {
-      'The Usual Suspects': 8,
+      'The Solomonic Demonology': 8,
     },
   }),
 

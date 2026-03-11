@@ -40,7 +40,7 @@ async function main(): Promise<void> {
 
   const casting = new CastingEngine();
   const team = casting.castTeam({
-    universe: 'usual-suspects',
+    universe: 'solomonic-demonology',
     requiredRoles: ['developer', 'tester'],
     teamSize: 2,
   });

@@ -1,7 +1,7 @@
 ---
 title: "v0.4.1: Quick Quality Patch"
 date: 2026-02-15
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: 6
 tags: [squad, release, v0.4.1, patch, quality]
 status: published

@@ -296,12 +296,12 @@ describe('MarkdownMigration', () => {
 
 | Name | Role | Skills | Model |
 |------|------|--------|-------|
-| Keaton | Lead | architecture, design | claude-opus-4.5 |
+| Bael | Lead | architecture, design | claude-opus-4.5 |
 | Harper | Developer | typescript, testing | |
 `;
       const { agents, warnings } = parseTeamMarkdown(md);
       expect(agents).toHaveLength(2);
-      expect(agents[0].name).toBe('keaton');
+      expect(agents[0].name).toBe('bael');
       expect(agents[0].role).toBe('Lead');
       expect(agents[0].skills).toContain('architecture');
       expect(agents[0].model).toBe('claude-opus-4.5');
@@ -313,7 +313,7 @@ describe('MarkdownMigration', () => {
       const md = `
 ## Team Members
 
-### Keaton
+### Bael
 - **Role:** Lead
 - **Skills:** architecture, design
 - **Model:** claude-opus-4.5
@@ -427,7 +427,7 @@ Routing rules should prefer the lead agent for complex tasks.
 
 | Name | Role | Skills |
 |------|------|--------|
-| keaton | lead | architecture |
+| bael | lead | architecture |
 | harper | developer | typescript |
 `,
         routingMd: `
@@ -504,7 +504,7 @@ Default model tier is standard.
     it('should set roleMapping when agents have model preferences', () => {
       const parsed: MarkdownParseResult = {
         agents: [
-          { name: 'keaton', role: 'lead', skills: [], model: 'claude-opus-4.5' },
+          { name: 'bael', role: 'lead', skills: [], model: 'claude-opus-4.5' },
         ],
         routingRules: [],
         decisions: [],

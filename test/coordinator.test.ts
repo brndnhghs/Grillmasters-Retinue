@@ -31,7 +31,7 @@ function makeContext(overrides: Partial<CoordinatorContext> = {}): CoordinatorCo
   return {
     sessionId: 'test-session-1',
     config: DEFAULT_CONFIG,
-    activeAgents: ['fenster', 'verbal'],
+    activeAgents: ['vassago', 'agares'],
     ...overrides,
   };
 }
@@ -44,9 +44,9 @@ function makeConfig(overrides: Partial<SquadConfig> = {}): SquadConfig {
       ...DEFAULT_CONFIG.routing,
       ...overrides.routing,
       rules: overrides.routing?.rules ?? [
-        { workType: 'feature-dev', agents: ['fenster'], confidence: 'high' },
+        { workType: 'feature-dev', agents: ['vassago'], confidence: 'high' },
         { workType: 'testing', agents: ['tester'], confidence: 'high' },
-        { workType: 'documentation', agents: ['verbal', 'scribe'], confidence: 'medium' },
+        { workType: 'documentation', agents: ['agares', 'scribe'], confidence: 'medium' },
       ],
     },
   } as SquadConfig;
@@ -55,17 +55,17 @@ function makeConfig(overrides: Partial<SquadConfig> = {}): SquadConfig {
 function makeRouter(): CompiledRouter {
   return compileRoutingRules({
     rules: [
-      { workType: 'feature-dev', agents: ['fenster'], examples: ['new feature', 'implement'], confidence: 'high' },
-      { workType: 'bug-fix', agents: ['fenster'], examples: ['fix bug', 'patch'], confidence: 'high' },
+      { workType: 'feature-dev', agents: ['vassago'], examples: ['new feature', 'implement'], confidence: 'high' },
+      { workType: 'bug-fix', agents: ['vassago'], examples: ['fix bug', 'patch'], confidence: 'high' },
       { workType: 'testing', agents: ['tester'], examples: ['write tests', 'test coverage'], confidence: 'high' },
-      { workType: 'documentation', agents: ['verbal', 'scribe'], examples: ['write docs', 'update readme'], confidence: 'medium' },
+      { workType: 'documentation', agents: ['agares', 'scribe'], examples: ['write docs', 'update readme'], confidence: 'medium' },
     ],
   });
 }
 
 function makeFanOutDeps(results?: SpawnResult[]): FanOutDependencies {
   const defaultResults: SpawnResult[] = [{
-    agentName: 'fenster',
+    agentName: 'vassago',
     sessionId: 'session-1',
     status: 'success',
     startTime: new Date(),
@@ -73,7 +73,7 @@ function makeFanOutDeps(results?: SpawnResult[]): FanOutDependencies {
   }];
 
   return {
-    compileCharter: vi.fn().mockResolvedValue({ name: 'fenster', prompt: 'test' }),
+    compileCharter: vi.fn().mockResolvedValue({ name: 'vassago', prompt: 'test' }),
     resolveModel: vi.fn().mockResolvedValue('claude-sonnet-4.5'),
     createSession: vi.fn().mockResolvedValue({
       sessionId: 'session-1',
@@ -173,7 +173,7 @@ describe('SquadCoordinator', () => {
   });
 
   describe('handleMessage — routing', () => {
-    it('routes feature request to fenster (single agent)', async () => {
+    it('routes feature request to vassago (single agent)', async () => {
       const coord = new SquadCoordinator({
         config: makeConfig(),
         compiledRouter: makeRouter(),
@@ -181,7 +181,7 @@ describe('SquadCoordinator', () => {
       const result = await coord.handleMessage('implement a new feature for auth', makeContext());
       expect(result.strategy).toBe('single');
       expect(result.routing).toBeDefined();
-      expect(result.routing!.agents).toContain('fenster');
+      expect(result.routing!.agents).toContain('vassago');
     });
 
     it('routes docs request to multiple agents (multi strategy)', async () => {
@@ -336,7 +336,7 @@ describe('ModelFallbackExecutor', () => {
       const executor = new ModelFallbackExecutor();
       const result = await executor.execute(
         makeResolved(),
-        'fenster',
+        'vassago',
         async () => 'ok',
       );
       expect(result.value).toBe('ok');
@@ -349,7 +349,7 @@ describe('ModelFallbackExecutor', () => {
       const executor = new ModelFallbackExecutor();
       const result = await executor.execute(
         makeResolved({ model: 'claude-opus-4.6', tier: 'premium' }),
-        'fenster',
+        'vassago',
         async () => 42,
       );
       expect(result.tier).toBe('premium');
@@ -362,7 +362,7 @@ describe('ModelFallbackExecutor', () => {
       let callCount = 0;
       const result = await executor.execute(
         makeResolved(),
-        'fenster',
+        'vassago',
         async (model) => {
           callCount++;
           if (callCount === 1) throw new Error('rate limit');
@@ -380,7 +380,7 @@ describe('ModelFallbackExecutor', () => {
       await expect(
         executor.execute(
           makeResolved(),
-          'fenster',
+          'vassago',
           async () => { throw new Error('always fails'); },
         ),
       ).rejects.toThrow(/All models exhausted/);
@@ -391,12 +391,12 @@ describe('ModelFallbackExecutor', () => {
       try {
         await executor.execute(
           makeResolved(),
-          'fenster',
+          'vassago',
           async () => { throw new Error('fail'); },
         );
       } catch { /* expected */ }
 
-      const history = executor.getHistory('fenster');
+      const history = executor.getHistory('vassago');
       expect(history.length).toBeGreaterThan(0);
     });
   });
@@ -413,7 +413,7 @@ describe('ModelFallbackExecutor', () => {
       let triedModels: string[] = [];
       const result = await executor.execute(
         resolved,
-        'fenster',
+        'vassago',
         async (model) => {
           triedModels.push(model);
           if (model === 'claude-sonnet-4.5') throw new Error('fail');
@@ -437,7 +437,7 @@ describe('ModelFallbackExecutor', () => {
       let triedModels: string[] = [];
       const result = await executor.execute(
         resolved,
-        'fenster',
+        'vassago',
         async (model) => {
           triedModels.push(model);
           if (model === 'claude-sonnet-4.5') throw new Error('fail');
@@ -459,7 +459,7 @@ describe('ModelFallbackExecutor', () => {
       const executor = new ModelFallbackExecutor({ eventBus });
       await executor.execute(
         makeResolved(),
-        'fenster',
+        'vassago',
         async (model) => {
           if (model === 'claude-sonnet-4.5') throw new Error('rate limit');
           return 'ok';
@@ -468,7 +468,7 @@ describe('ModelFallbackExecutor', () => {
 
       const fallbackEvents = events.filter(e => e.payload.event === 'model.fallback');
       expect(fallbackEvents.length).toBe(1);
-      expect(fallbackEvents[0].payload.agentName).toBe('fenster');
+      expect(fallbackEvents[0].payload.agentName).toBe('vassago');
     });
 
     it('emits model.exhausted event when all models fail', async () => {
@@ -480,7 +480,7 @@ describe('ModelFallbackExecutor', () => {
       try {
         await executor.execute(
           makeResolved({ fallbackChain: ['claude-sonnet-4.5'] }),
-          'fenster',
+          'vassago',
           async () => { throw new Error('fail'); },
         );
       } catch { /* expected */ }
@@ -519,15 +519,15 @@ describe('ModelFallbackExecutor', () => {
       const executor = new ModelFallbackExecutor();
       await executor.execute(
         makeResolved(),
-        'fenster',
+        'vassago',
         async (model) => {
           if (model === 'claude-sonnet-4.5') throw new Error('fail');
           return 'ok';
         },
       );
-      expect(executor.getHistory('fenster').length).toBeGreaterThan(0);
+      expect(executor.getHistory('vassago').length).toBeGreaterThan(0);
       executor.clearHistory();
-      expect(executor.getHistory('fenster').length).toBe(0);
+      expect(executor.getHistory('vassago').length).toBe(0);
     });
   });
 });

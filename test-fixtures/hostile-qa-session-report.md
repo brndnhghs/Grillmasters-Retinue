@@ -1,7 +1,7 @@
 # Hostile QA Session Report — First 30 Seconds
 
 **Date:** 2026-02-24  
-**Agent:** Waingro (Hostile QA)  
+**Agent:** Purson (Hostile QA)  
 **Mission:** Product love sprint — test first-time user journey and file issues for every moment that isn't delightful
 
 ## Scope
@@ -81,7 +81,7 @@ Created `test-fixtures/hostile-qa-first-30-seconds.ps1`:
 
 ## Decision Document
 
-Filed `.squad/decisions/inbox/waingro-first-30-seconds-ux.md`:
+Filed `.squad/decisions/inbox/purson-first-30-seconds-ux.md`:
 - Proposes 3 UX standards for first 30 seconds
 - No stale entry points (single source of truth)
 - Help respects impatient users (≤10 lines default)

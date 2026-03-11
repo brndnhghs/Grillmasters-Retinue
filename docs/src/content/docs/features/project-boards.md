@@ -37,7 +37,7 @@ You should see `✓ Token scopes: repo, project, workflow` (or similar).
 
 Squad treats labels as the state machine and boards as a **read-mostly visualization**:
 
-1. **Labels drive state** — Issue gets `go:yes` + `squad:fenster` → state changes to "In Progress".
+1. **Labels drive state** — Issue gets `go:yes` + `squad:vassago` → state changes to "In Progress".
 2. **Board updates** — Squad syncs label changes to the project board automatically.
 3. **Board changes propagate** — If you drag an issue to "Done" on the board, Squad applies the corresponding label (`status:done`).
 

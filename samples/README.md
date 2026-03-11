@@ -6,7 +6,7 @@
 
 ## 1. hello-squad
 
-**The "hello world."** Resolves a `.squad/` directory, loads config, casts a team from the Usual Suspects universe, onboards each agent, and prints the roster. Zero async complexity, zero governance, zero tooling. Pure SDK mechanics: casting engine in, typed roster out. If someone has 5 minutes and wants to see Squad produce output, this is it.
+**The "hello world."** Resolves a `.squad/` directory, loads config, casts a team from the Solomonic Demonology universe, onboards each agent, and prints the roster. Zero async complexity, zero governance, zero tooling. Pure SDK mechanics: casting engine in, typed roster out. If someone has 5 minutes and wants to see Squad produce output, this is it.
 
 - **SDK APIs:** `resolveSquad()`, `loadConfig()`, `CastingEngine.castTeam()`, `onboardAgent()`
 - **Difficulty:** Beginner

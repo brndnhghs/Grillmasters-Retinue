@@ -88,8 +88,8 @@ describe('Squad Initialization', () => {
 
     it('should create agent directories with charter and history', async () => {
       const agents: InitAgentSpec[] = [
-        { name: 'lead', role: 'lead', displayName: 'Keaton' },
-        { name: 'developer', role: 'developer', displayName: 'Fenster' }
+        { name: 'lead', role: 'lead', displayName: 'Bael' },
+        { name: 'developer', role: 'developer', displayName: 'Vassago' }
       ];
 
       const options: InitOptions = {
@@ -109,7 +109,7 @@ describe('Squad Initialization', () => {
 
       // Verify charter files
       const leadCharter = await readFile(join(TEST_ROOT, '.squad', 'agents', 'lead', 'charter.md'), 'utf-8');
-      expect(leadCharter).toContain('# Keaton — Lead');
+      expect(leadCharter).toContain('# Bael — Lead');
       expect(leadCharter).toContain('Test Project');
       expect(leadCharter).toContain('A test project for Squad');
 
@@ -546,8 +546,8 @@ export default config;
         projectName: 'Real Project',
         projectDescription: 'A production application',
         agents: [
-          { name: 'keaton', role: 'lead', displayName: 'Keaton' },
-          { name: 'fenster', role: 'developer', displayName: 'Fenster' }
+          { name: 'bael', role: 'lead', displayName: 'Bael' },
+          { name: 'vassago', role: 'developer', displayName: 'Vassago' }
         ],
         configFormat: 'typescript',
         userName: 'Brady'
@@ -556,27 +556,27 @@ export default config;
       // 2. Onboard specialist
       await onboardAgent({
         teamRoot: TEST_ROOT,
-        agentName: 'verbal',
+        agentName: 'agares',
         role: 'scribe',
-        displayName: 'Verbal',
+        displayName: 'Agares',
         projectContext: 'Real Project - Documentation and History',
         userName: 'Brady'
       });
 
       // 3. Verify complete structure
       expect(existsSync(join(TEST_ROOT, 'squad.config.ts'))).toBe(true);
-      expect(existsSync(join(TEST_ROOT, '.squad', 'agents', 'keaton'))).toBe(true);
-      expect(existsSync(join(TEST_ROOT, '.squad', 'agents', 'fenster'))).toBe(true);
-      expect(existsSync(join(TEST_ROOT, '.squad', 'agents', 'verbal'))).toBe(true);
+      expect(existsSync(join(TEST_ROOT, '.squad', 'agents', 'bael'))).toBe(true);
+      expect(existsSync(join(TEST_ROOT, '.squad', 'agents', 'vassago'))).toBe(true);
+      expect(existsSync(join(TEST_ROOT, '.squad', 'agents', 'agares'))).toBe(true);
       expect(existsSync(join(TEST_ROOT, '.gitattributes'))).toBe(true);
 
       // 4. Verify all charters have proper context
-      const keatonCharter = await readFile(join(TEST_ROOT, '.squad', 'agents', 'keaton', 'charter.md'), 'utf-8');
-      expect(keatonCharter).toContain('Keaton');
+      const keatonCharter = await readFile(join(TEST_ROOT, '.squad', 'agents', 'bael', 'charter.md'), 'utf-8');
+      expect(keatonCharter).toContain('Bael');
       expect(keatonCharter).toContain('Real Project');
 
-      const verbalCharter = await readFile(join(TEST_ROOT, '.squad', 'agents', 'verbal', 'charter.md'), 'utf-8');
-      expect(verbalCharter).toContain('Verbal');
+      const verbalCharter = await readFile(join(TEST_ROOT, '.squad', 'agents', 'agares', 'charter.md'), 'utf-8');
+      expect(verbalCharter).toContain('Agares');
       expect(verbalCharter).toContain('Real Project');
     });
   });

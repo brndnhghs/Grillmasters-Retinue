@@ -223,7 +223,7 @@ function parseAgentCharter(squadDir: string, agentName: string): ParsedAgent {
   
   let parsedRole = role;
   
-  // Parse first h1 for role (e.g., "# Edie — TypeScript Engineer")
+  // Parse first h1 for role (e.g., "# Amon — TypeScript Engineer")
   for (const line of lines) {
     if (line.startsWith('# ')) {
       const match = line.match(/# \w+ — (.+)/);

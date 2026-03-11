@@ -53,8 +53,8 @@ function writeTeamMd(root: string): void {
 ## Members
 | Name | Role | Charter | Status |
 |------|------|---------|--------|
-| Fenster | Core Dev | \`.squad/agents/fenster/charter.md\` | ✅ Active |
-| Hockney | Tester | \`.squad/agents/hockney/charter.md\` | ✅ Active |
+| Vassago | Core Dev | \`.squad/agents/vassago/charter.md\` | ✅ Active |
+| Samigina | Tester | \`.squad/agents/samigina/charter.md\` | ✅ Active |
 `);
 }
 
@@ -62,7 +62,7 @@ function writeRoutingMd(root: string): void {
   const squadDir = join(root, '.squad');
   mkdirSync(squadDir, { recursive: true });
   writeFileSync(join(squadDir, 'routing.md'), `# Routing Rules
-Route feature work to Fenster, testing to Hockney.
+Route feature work to Vassago, testing to Samigina.
 `);
 }
 
@@ -195,7 +195,7 @@ describe('#597 — Coordinator prompt guards against missing team', () => {
       routingPath: join(tmpRoot, '.squad', 'routing.md'),
     };
     const prompt = buildCoordinatorPrompt(config);
-    expect(prompt).toContain('Fenster');
+    expect(prompt).toContain('Vassago');
     expect(prompt).toContain('Core Dev');
     expect(prompt).not.toContain('No team.md found');
   });
@@ -305,7 +305,7 @@ describe('#600 — Markdown inline rendering', () => {
 
   it('bold markdown (**text**) appears in rendered output', () => {
     const messages: ShellMessage[] = [
-      makeMessage({ role: 'agent', agentName: 'Fenster', content: 'This is **bold** text.' }),
+      makeMessage({ role: 'agent', agentName: 'Vassago', content: 'This is **bold** text.' }),
     ];
     const { lastFrame } = render(
       h(MessageStream, {
@@ -322,7 +322,7 @@ describe('#600 — Markdown inline rendering', () => {
 
   it('italic markdown (*text*) appears in rendered output', () => {
     const messages: ShellMessage[] = [
-      makeMessage({ role: 'agent', agentName: 'Fenster', content: 'This is *italic* text.' }),
+      makeMessage({ role: 'agent', agentName: 'Vassago', content: 'This is *italic* text.' }),
     ];
     const { lastFrame } = render(
       h(MessageStream, {
@@ -337,7 +337,7 @@ describe('#600 — Markdown inline rendering', () => {
 
   it('inline code (`code`) appears in rendered output', () => {
     const messages: ShellMessage[] = [
-      makeMessage({ role: 'agent', agentName: 'Fenster', content: 'Run `npm install` to fix.' }),
+      makeMessage({ role: 'agent', agentName: 'Vassago', content: 'Run `npm install` to fix.' }),
     ];
     const { lastFrame } = render(
       h(MessageStream, {
@@ -352,7 +352,7 @@ describe('#600 — Markdown inline rendering', () => {
 
   it('empty string renders without crash', () => {
     const messages: ShellMessage[] = [
-      makeMessage({ role: 'agent', agentName: 'Fenster', content: '' }),
+      makeMessage({ role: 'agent', agentName: 'Vassago', content: '' }),
     ];
     const { lastFrame } = render(
       h(MessageStream, {
@@ -366,7 +366,7 @@ describe('#600 — Markdown inline rendering', () => {
 
   it('content with no markdown renders unchanged', () => {
     const messages: ShellMessage[] = [
-      makeMessage({ role: 'agent', agentName: 'Fenster', content: 'Plain text with no formatting.' }),
+      makeMessage({ role: 'agent', agentName: 'Vassago', content: 'Plain text with no formatting.' }),
     ];
     const { lastFrame } = render(
       h(MessageStream, {
@@ -381,7 +381,7 @@ describe('#600 — Markdown inline rendering', () => {
 
   it('nested formatting (**bold *and italic***) renders without crash', () => {
     const messages: ShellMessage[] = [
-      makeMessage({ role: 'agent', agentName: 'Fenster', content: '**bold *and italic***' }),
+      makeMessage({ role: 'agent', agentName: 'Vassago', content: '**bold *and italic***' }),
     ];
     const { lastFrame } = render(
       h(MessageStream, {
@@ -719,7 +719,7 @@ describe('Round 2 REPL UX fixes', () => {
     });
 
     it('when rosterAgents.length > 0 AND isFirstRun, banner SHOULD show "Your squad is assembled"', () => {
-      const rosterAgents = [{ name: 'Fenster', role: 'Core Dev', emoji: '🔧' }];
+      const rosterAgents = [{ name: 'Vassago', role: 'Core Dev', emoji: '🔧' }];
       const isFirstRun = true;
       const bannerReady = true;
 
@@ -742,8 +742,8 @@ describe('Round 2 REPL UX fixes', () => {
 
     it('when agents exist with a lead, the @lead hint uses actual agent name', () => {
       const agents = [
-        { name: 'Keaton', role: 'Lead', emoji: '👑' },
-        { name: 'Fenster', role: 'Core Dev', emoji: '🔧' },
+        { name: 'Bael', role: 'Lead', emoji: '👑' },
+        { name: 'Vassago', role: 'Core Dev', emoji: '🔧' },
       ];
       const leadAgent = agents.find(a =>
         a.role?.toLowerCase().includes('lead') ||
@@ -751,15 +751,15 @@ describe('Round 2 REPL UX fixes', () => {
         a.role?.toLowerCase().includes('architect')
       )?.name ?? agents[0]?.name;
 
-      expect(leadAgent).toBe('Keaton');
+      expect(leadAgent).toBe('Bael');
       // Not a generic fallback
       expect(leadAgent).not.toBe('your lead');
     });
 
     it('leadAgent falls back to first agent when no lead/coordinator/architect role', () => {
       const agents = [
-        { name: 'Hockney', role: 'Tester', emoji: '🧪' },
-        { name: 'McManus', role: 'DevRel', emoji: '📣' },
+        { name: 'Samigina', role: 'Tester', emoji: '🧪' },
+        { name: 'marbas', role: 'DevRel', emoji: '📣' },
       ];
       const leadAgent = agents.find(a =>
         a.role?.toLowerCase().includes('lead') ||
@@ -767,7 +767,7 @@ describe('Round 2 REPL UX fixes', () => {
         a.role?.toLowerCase().includes('architect')
       )?.name ?? agents[0]?.name;
 
-      expect(leadAgent).toBe('Hockney');
+      expect(leadAgent).toBe('Samigina');
     });
   });
 
@@ -872,7 +872,7 @@ describe('Round 2 REPL UX fixes', () => {
 
     it('non-coordinator agents retain their original name', () => {
       const messages: ShellMessage[] = [
-        makeMessage({ role: 'agent', agentName: 'Fenster', content: 'Done.' }),
+        makeMessage({ role: 'agent', agentName: 'Vassago', content: 'Done.' }),
       ];
       const { lastFrame } = render(
         h(MessageStream, {
@@ -882,7 +882,7 @@ describe('Round 2 REPL UX fixes', () => {
         }),
       );
       const frame = lastFrame() ?? '';
-      expect(frame).toContain('Fenster:');
+      expect(frame).toContain('Vassago:');
       expect(frame).not.toContain('Squad:');
     });
   });

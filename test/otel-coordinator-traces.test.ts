@@ -110,7 +110,7 @@ describe('Coordinator routing tracing — route() spans', () => {
   });
 
   it('route() span includes message attribute for @mention', async () => {
-    await coordinator.route('@fenster fix the tests');
+    await coordinator.route('@vassago fix the tests');
     const spans = exporter.getFinishedSpans();
     const routeSpan = spans.find(
       (s) => s.name.includes('coordinator') || s.name.includes('route'),
@@ -126,7 +126,7 @@ describe('Coordinator routing tracing — route() spans', () => {
   });
 
   it('route() span includes target agents for @mention', async () => {
-    await coordinator.route('@fenster fix the tests');
+    await coordinator.route('@vassago fix the tests');
     const spans = exporter.getFinishedSpans();
     const routeSpan = spans.find(
       (s) => s.name.includes('coordinator') || s.name.includes('route'),
@@ -174,8 +174,8 @@ describe('Coordinator routing tracing — attributes per tier', () => {
   });
 
   it('@mention route includes agent names in attributes', async () => {
-    const result = await coordinator.route('@fenster fix build');
-    expect(result.agents).toContain('fenster');
+    const result = await coordinator.route('@vassago fix build');
+    expect(result.agents).toContain('vassago');
     const spans = exporter.getFinishedSpans();
     const routeSpan = spans.find(
       (s) => s.name.includes('coordinator') || s.name.includes('route'),

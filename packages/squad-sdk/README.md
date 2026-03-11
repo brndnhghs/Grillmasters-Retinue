@@ -85,7 +85,7 @@ Five tools let agents coordinate without calling you back. Here are the three yo
 ```typescript
 const tool = toolRegistry.getTool('squad_route');
 await tool.handler({
-  targetAgent: 'McManus',
+  targetAgent: 'marbas',
   task: 'Write a blog post on the new casting system',
   priority: 'high',
   context: 'Feature launches next week',
@@ -98,7 +98,7 @@ The lead routes a task to DevRel. A new session is created, context is passed, a
 
 ```typescript
 await tool.handler({
-  author: 'Keaton',
+  author: 'Bael',
   summary: 'Use PostgreSQL, not MongoDB',
   body: 'Chose PostgreSQL for: (1) transactions, (2) team expertise, (3) JSONB flexibility.',
   references: ['architecture-spike'],
@@ -213,7 +213,7 @@ Agents aren't `role-1`, `role-2`. They have names, personalities, and persistent
 
 ```typescript
 const casting = new CastingEngine({
-  universe: 'usual-suspects',
+  universe: 'solomonic-demonology',
   agentCount: 5,
 });
 
@@ -221,15 +221,15 @@ const cast = casting.castTeam({
   roles: ['lead', 'frontend', 'backend', 'tester', 'scribe'],
 });
 // → [
-//   { role: 'lead', agentName: 'Keaton' },
-//   { role: 'frontend', agentName: 'McManus' },
-//   { role: 'backend', agentName: 'Verbal' },
-//   { role: 'tester', agentName: 'Fenster' },
-//   { role: 'scribe', agentName: 'Kobayashi' },
+//   { role: 'lead', agentName: 'Bael' },
+//   { role: 'frontend', agentName: 'marbas' },
+//   { role: 'backend', agentName: 'Agares' },
+//   { role: 'tester', agentName: 'Vassago' },
+//   { role: 'scribe', agentName: 'Barbatos' },
 // ]
 ```
 
-Names are memorable ("Keaton handles routing"), persistent (same name every session), and extensible (add a sixth agent — the casting engine picks the next name from the universe). You build a relationship with your agents over time.
+Names are memorable ("Bael handles routing"), persistent (same name every session), and extensible (add a sixth agent — the casting engine picks the next name from the universe). You build a relationship with your agents over time.
 
 ---
 

@@ -29,7 +29,7 @@ export type AgentStatus = 'spawning' | 'active' | 'idle' | 'error' | 'destroyed'
  * Provides control and communication interface to the agent.
  */
 export interface AgentHandle {
-  /** Agent name (e.g., 'verbal', 'fenster') */
+  /** Agent name (e.g., 'agares', 'vassago') */
   agentName: string;
   /** Underlying session ID from Squad Client */
   sessionId: string;
@@ -59,7 +59,7 @@ export interface AgentHandle {
  * Options for spawning an agent.
  */
 export interface SpawnAgentOptions {
-  /** Agent name (e.g., 'verbal', 'fenster') */
+  /** Agent name (e.g., 'agares', 'vassago') */
   agentName: string;
   
   /** Task prompt to send to the agent */

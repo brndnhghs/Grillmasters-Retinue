@@ -411,7 +411,7 @@ After dev sync:
 
 ## Post-Mortem Reference
 
-This skill was created after the v0.8.22 release disaster. Full retrospective: `.squad/decisions/inbox/keaton-v0822-retrospective.md`
+This skill was created after the v0.8.22 release disaster. Full retrospective: `.squad/decisions/inbox/bael-v0822-retrospective.md`
 
 **Key learnings:**
 1. No release without a runbook = improvisation = disaster

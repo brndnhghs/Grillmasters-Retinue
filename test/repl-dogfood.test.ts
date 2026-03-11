@@ -230,14 +230,14 @@ function buildMonorepoFixture(root: string): void {
     projectName: 'my-monorepo',
     description: 'A multi-package TypeScript workspace with SDK, CLI, and shared utils.',
     agents: [
-      { name: 'Keaton', role: 'Lead' },
-      { name: 'Fenster', role: 'Core Dev' },
-      { name: 'Hockney', role: 'Tester' },
-      { name: 'Verbal', role: 'Prompt Engineer' },
-      { name: 'McManus', role: 'DevRel' },
+      { name: 'Bael', role: 'Lead' },
+      { name: 'Vassago', role: 'Core Dev' },
+      { name: 'Samigina', role: 'Tester' },
+      { name: 'Agares', role: 'Prompt Engineer' },
+      { name: 'marbas', role: 'DevRel' },
     ],
     focus: 'SDK v2 migration and CLI improvements',
-    routingMd: `# Routing Rules\n\n- SDK changes → Fenster\n- CLI changes → Keaton\n- Test coverage → Hockney\n- Docs → McManus\n`,
+    routingMd: `# Routing Rules\n\n- SDK changes → Vassago\n- CLI changes → Bael\n- Test coverage → Samigina\n- Docs → marbas\n`,
   });
 }
 
@@ -504,11 +504,11 @@ describe('Dogfood: Node.js monorepo', () => {
       const { lifecycle } = makeLifecycle(root);
       await lifecycle.initialize();
       const names = lifecycle.getDiscoveredAgents().map((a) => a.name);
-      expect(names).toContain('Keaton');
-      expect(names).toContain('Fenster');
-      expect(names).toContain('Hockney');
-      expect(names).toContain('Verbal');
-      expect(names).toContain('McManus');
+      expect(names).toContain('Bael');
+      expect(names).toContain('Vassago');
+      expect(names).toContain('Samigina');
+      expect(names).toContain('Agares');
+      expect(names).toContain('marbas');
     });
   });
 
@@ -530,23 +530,23 @@ describe('Dogfood: Node.js monorepo', () => {
   });
 
   describe('parseInput — monorepo queries', () => {
-    const knownAgents = ['Keaton', 'Fenster', 'Hockney', 'Verbal', 'McManus'];
+    const knownAgents = ['Bael', 'Vassago', 'Samigina', 'Agares', 'marbas'];
 
     it('"add a new workspace package for auth" → coordinator', () => {
       const result = parseInput('add a new workspace package for auth', knownAgents);
       expect(result.type).toBe('coordinator');
     });
 
-    it('"@Fenster fix the SDK build error in packages/sdk" → direct_agent', () => {
-      const result = parseInput('@Fenster fix the SDK build error in packages/sdk', knownAgents);
+    it('"@Vassago fix the SDK build error in packages/sdk" → direct_agent', () => {
+      const result = parseInput('@Vassago fix the SDK build error in packages/sdk', knownAgents);
       expect(result.type).toBe('direct_agent');
-      expect(result.agentName).toBe('Fenster');
+      expect(result.agentName).toBe('Vassago');
     });
 
-    it('"@Hockney add test coverage for the CLI package" → direct_agent', () => {
-      const result = parseInput('@Hockney add test coverage for the CLI package', knownAgents);
+    it('"@Samigina add test coverage for the CLI package" → direct_agent', () => {
+      const result = parseInput('@Samigina add test coverage for the CLI package', knownAgents);
       expect(result.type).toBe('direct_agent');
-      expect(result.agentName).toBe('Hockney');
+      expect(result.agentName).toBe('Samigina');
     });
 
     it('"/who" → slash_command (unknown command, handled gracefully)', () => {
@@ -584,21 +584,21 @@ describe('Dogfood: Node.js monorepo', () => {
   });
 
   describe('parseCoordinatorResponse — monorepo routing', () => {
-    it('routes SDK work to Fenster', () => {
-      const resp = `ROUTE: Fenster\nTASK: Fix the type error in packages/sdk/src/index.ts\nCONTEXT: Build is failing on CI`;
+    it('routes SDK work to Vassago', () => {
+      const resp = `ROUTE: Vassago\nTASK: Fix the type error in packages/sdk/src/index.ts\nCONTEXT: Build is failing on CI`;
       const decision = parseCoordinatorResponse(resp);
       expect(decision.type).toBe('route');
-      expect(decision.routes![0]!.agent).toBe('Fenster');
+      expect(decision.routes![0]!.agent).toBe('Vassago');
       expect(decision.routes![0]!.task).toContain('type error');
     });
 
     it('multi-agent routing for cross-package work', () => {
-      const resp = `MULTI:\n- Fenster: Update SDK types for the new auth flow\n- Keaton: Wire the CLI to use the new auth client`;
+      const resp = `MULTI:\n- Vassago: Update SDK types for the new auth flow\n- Bael: Wire the CLI to use the new auth client`;
       const decision = parseCoordinatorResponse(resp);
       expect(decision.type).toBe('multi');
       expect(decision.routes).toHaveLength(2);
-      expect(decision.routes![0]!.agent).toBe('Fenster');
-      expect(decision.routes![1]!.agent).toBe('Keaton');
+      expect(decision.routes![0]!.agent).toBe('Vassago');
+      expect(decision.routes![1]!.agent).toBe('Bael');
     });
 
     it('direct answer for factual team query', () => {
@@ -1051,7 +1051,7 @@ describe('Dogfood: First-run ceremony detection', () => {
     scaffoldSquad(root, {
       projectName: 'first-run-test',
       description: 'Testing first-run detection.',
-      agents: [{ name: 'Keaton', role: 'Lead' }],
+      agents: [{ name: 'Bael', role: 'Lead' }],
       firstRun: true,
     });
 

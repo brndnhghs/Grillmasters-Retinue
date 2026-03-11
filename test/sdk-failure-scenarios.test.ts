@@ -1,5 +1,5 @@
 /**
- * SDK Failure Scenario Tests — Waingro's QA
+ * SDK Failure Scenario Tests — Purson's QA
  *
  * Tests graceful degradation when the SDK fails in various ways:
  * - sendAndWait returns undefined (ghost response)
@@ -365,7 +365,7 @@ describe('SDK failure: malformed data', () => {
 
     for (const input of garbageInputs) {
       expect(() => {
-        const result = parseCoordinatorResponse(input, ['Brady', 'Kovash']);
+        const result = parseCoordinatorResponse(input, ['Brady', 'Eligos']);
         expect(result).toBeDefined();
         expect(result).toHaveProperty('type');
       }).not.toThrow();

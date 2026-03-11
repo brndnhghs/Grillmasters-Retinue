@@ -8,7 +8,7 @@
  * 📌 Proactive: Written from requirements while implementation is in progress.
  * Tests target the existing wrapTableContent / renderMarkdownInline pipeline
  * and the rendered MessageStream output. Some assertions may need adjustment
- * once Cheritto lands the header-bold implementation.
+ * once Botis lands the header-bold implementation.
  */
 
 import { describe, it, expect, vi, afterEach } from 'vitest';
@@ -31,21 +31,21 @@ function makeMessage(overrides: Partial<ShellMessage> & { content: string; role:
 const TABLE_WITH_HEADER = [
   '| Name | Role | Status |',
   '|------|------|--------|',
-  '| Fenster | Core Dev | Active |',
-  '| Hockney | Tester | Active |',
+  '| Vassago | Core Dev | Active |',
+  '| Samigina | Tester | Active |',
 ].join('\n');
 
 const TABLE_WITHOUT_SEPARATOR = [
   '| Name | Role | Status |',
-  '| Fenster | Core Dev | Active |',
-  '| Hockney | Tester | Active |',
+  '| Vassago | Core Dev | Active |',
+  '| Samigina | Tester | Active |',
 ].join('\n');
 
 const SINGLE_COLUMN_TABLE = [
   '| Name |',
   '|------|',
-  '| Fenster |',
-  '| Hockney |',
+  '| Vassago |',
+  '| Samigina |',
 ].join('\n');
 
 const EMPTY_TABLE = '';
@@ -53,7 +53,7 @@ const EMPTY_TABLE = '';
 const WIDE_TABLE = [
   '| Name | Role | Status | Description | Notes | Extra Column One | Extra Column Two |',
   '|------|------|--------|-------------|-------|------------------|------------------|',
-  '| Fenster | Core Dev | Active | Implements features | Good at TypeScript | Column data here | More data here |',
+  '| Vassago | Core Dev | Active | Implements features | Good at TypeScript | Column data here | More data here |',
 ].join('\n');
 
 // ============================================================================
@@ -75,7 +75,7 @@ describe('#673 — Table header styling', () => {
     const { lastFrame } = render(
       h(MessageStream, {
         messages: [
-          makeMessage({ role: 'agent', content: TABLE_WITH_HEADER, agentName: 'Fenster' }),
+          makeMessage({ role: 'agent', content: TABLE_WITH_HEADER, agentName: 'Vassago' }),
         ],
         processing: false,
         streamingContent: new Map(),
@@ -87,8 +87,8 @@ describe('#673 — Table header styling', () => {
     expect(frame).toContain('Role');
     expect(frame).toContain('Status');
     // Data rows should also appear
-    expect(frame).toContain('Fenster');
-    expect(frame).toContain('Hockney');
+    expect(frame).toContain('Vassago');
+    expect(frame).toContain('Samigina');
   });
 
   it('table without separator row renders normally (no crash)', () => {
@@ -96,7 +96,7 @@ describe('#673 — Table header styling', () => {
     const { lastFrame } = render(
       h(MessageStream, {
         messages: [
-          makeMessage({ role: 'agent', content: TABLE_WITHOUT_SEPARATOR, agentName: 'Fenster' }),
+          makeMessage({ role: 'agent', content: TABLE_WITHOUT_SEPARATOR, agentName: 'Vassago' }),
         ],
         processing: false,
         streamingContent: new Map(),
@@ -105,7 +105,7 @@ describe('#673 — Table header styling', () => {
     const frame = lastFrame()!;
     // Content should render without error
     expect(frame).toContain('Name');
-    expect(frame).toContain('Fenster');
+    expect(frame).toContain('Vassago');
   });
 
   it('NO_COLOR environment: headers still visually distinct (bold renders without color)', () => {
@@ -113,7 +113,7 @@ describe('#673 — Table header styling', () => {
     const { lastFrame } = render(
       h(MessageStream, {
         messages: [
-          makeMessage({ role: 'agent', content: TABLE_WITH_HEADER, agentName: 'Fenster' }),
+          makeMessage({ role: 'agent', content: TABLE_WITH_HEADER, agentName: 'Vassago' }),
         ],
         processing: false,
         streamingContent: new Map(),
@@ -125,7 +125,7 @@ describe('#673 — Table header styling', () => {
     expect(frame).toContain('Role');
     expect(frame).toContain('Status');
     // Data content also present
-    expect(frame).toContain('Hockney');
+    expect(frame).toContain('Samigina');
   });
 
   it('empty table: no crash', () => {
@@ -133,7 +133,7 @@ describe('#673 — Table header styling', () => {
     const { lastFrame } = render(
       h(MessageStream, {
         messages: [
-          makeMessage({ role: 'agent', content: EMPTY_TABLE, agentName: 'Fenster' }),
+          makeMessage({ role: 'agent', content: EMPTY_TABLE, agentName: 'Vassago' }),
         ],
         processing: false,
         streamingContent: new Map(),
@@ -147,7 +147,7 @@ describe('#673 — Table header styling', () => {
     const { lastFrame } = render(
       h(MessageStream, {
         messages: [
-          makeMessage({ role: 'agent', content: SINGLE_COLUMN_TABLE, agentName: 'Fenster' }),
+          makeMessage({ role: 'agent', content: SINGLE_COLUMN_TABLE, agentName: 'Vassago' }),
         ],
         processing: false,
         streamingContent: new Map(),
@@ -156,8 +156,8 @@ describe('#673 — Table header styling', () => {
     const frame = lastFrame()!;
     // Single-column header should render
     expect(frame).toContain('Name');
-    expect(frame).toContain('Fenster');
-    expect(frame).toContain('Hockney');
+    expect(frame).toContain('Vassago');
+    expect(frame).toContain('Samigina');
   });
 
   it('wide table that gets truncated: headers still styled after truncation', () => {
@@ -173,7 +173,7 @@ describe('#673 — Table header styling', () => {
     const { lastFrame } = render(
       h(MessageStream, {
         messages: [
-          makeMessage({ role: 'agent', content: WIDE_TABLE, agentName: 'Fenster' }),
+          makeMessage({ role: 'agent', content: WIDE_TABLE, agentName: 'Vassago' }),
         ],
         processing: false,
         streamingContent: new Map(),

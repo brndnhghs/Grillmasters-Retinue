@@ -87,7 +87,7 @@ describe('OTel Bridge — event type mapping', () => {
   it('converts squad.agent.spawn event to a span', async () => {
     const transport = createOTelTransport();
     await transport(
-      [{ name: 'squad.agent.spawn', properties: { agent: 'fenster', mode: 'standard' }, timestamp: Date.now() }],
+      [{ name: 'squad.agent.spawn', properties: { agent: 'vassago', mode: 'standard' }, timestamp: Date.now() }],
       '',
     );
     const spans = exporter.getFinishedSpans();
@@ -132,14 +132,14 @@ describe('OTel Bridge — event type mapping', () => {
   it('maps event properties to span attributes', async () => {
     const transport = createOTelTransport();
     await transport(
-      [{ name: 'squad.agent.spawn', properties: { agent: 'fenster', mode: 'standard' }, timestamp: Date.now() }],
+      [{ name: 'squad.agent.spawn', properties: { agent: 'vassago', mode: 'standard' }, timestamp: Date.now() }],
       '',
     );
     const spans = exporter.getFinishedSpans();
     const spawnSpan = spans.find((s) => s.name === 'squad.agent.spawn');
     expect(spawnSpan).toBeDefined();
     const attrs = spawnSpan!.attributes;
-    expect(attrs['agent']).toBe('fenster');
+    expect(attrs['agent']).toBe('vassago');
     expect(attrs['mode']).toBe('standard');
   });
 
@@ -176,7 +176,7 @@ describe('OTel Bridge — event type mapping', () => {
       [
         { name: 'squad.init', timestamp: Date.now() },
         { name: 'squad.run', timestamp: Date.now() },
-        { name: 'squad.agent.spawn', properties: { agent: 'edie' }, timestamp: Date.now() },
+        { name: 'squad.agent.spawn', properties: { agent: 'amon' }, timestamp: Date.now() },
       ],
       '',
     );

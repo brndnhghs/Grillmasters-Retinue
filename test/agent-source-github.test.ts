@@ -24,7 +24,7 @@ function makeFetcher(
 }
 
 const CHARTER_VERBAL = `## Identity
-**Name:** Verbal
+**Name:** Agares
 **Role:** Prompt Engineer
 
 ## Model
@@ -36,7 +36,7 @@ const CHARTER_VERBAL = `## Identity
 `;
 
 const CHARTER_FENSTER = `## Identity
-**Name:** Fenster
+**Name:** Vassago
 **Role:** Code Architect
 `;
 
@@ -71,12 +71,12 @@ describe('GitHubAgentSource', () => {
     it('should return manifests for agent directories with charters', async () => {
       const fetcher = makeFetcher(
         [
-          { name: 'verbal', type: 'dir' },
-          { name: 'fenster', type: 'dir' },
+          { name: 'agares', type: 'dir' },
+          { name: 'vassago', type: 'dir' },
         ],
         {
-          '.squad/agents/verbal/charter.md': CHARTER_VERBAL,
-          '.squad/agents/fenster/charter.md': CHARTER_FENSTER,
+          '.squad/agents/agares/charter.md': CHARTER_VERBAL,
+          '.squad/agents/vassago/charter.md': CHARTER_FENSTER,
         },
       );
       const source = new GitHubAgentSource('acme/repo', { fetcher });
@@ -84,19 +84,19 @@ describe('GitHubAgentSource', () => {
       const agents = await source.listAgents();
 
       expect(agents).toHaveLength(2);
-      expect(agents[0].name).toBe('Verbal');
+      expect(agents[0].name).toBe('Agares');
       expect(agents[0].role).toBe('Prompt Engineer');
       expect(agents[0].source).toBe('github');
-      expect(agents[1].name).toBe('Fenster');
+      expect(agents[1].name).toBe('Vassago');
     });
 
     it('should skip files (non-directories)', async () => {
       const fetcher = makeFetcher(
         [
-          { name: 'verbal', type: 'dir' },
+          { name: 'agares', type: 'dir' },
           { name: 'README.md', type: 'file' },
         ],
-        { '.squad/agents/verbal/charter.md': CHARTER_VERBAL },
+        { '.squad/agents/agares/charter.md': CHARTER_VERBAL },
       );
       const source = new GitHubAgentSource('acme/repo', { fetcher });
 
@@ -148,14 +148,14 @@ describe('GitHubAgentSource', () => {
   describe('getAgent', () => {
     it('should return full agent definition', async () => {
       const fetcher = makeFetcher([], {
-        '.squad/agents/verbal/charter.md': CHARTER_VERBAL,
+        '.squad/agents/agares/charter.md': CHARTER_VERBAL,
       });
       const source = new GitHubAgentSource('acme/repo', { fetcher });
 
-      const agent = await source.getAgent('verbal');
+      const agent = await source.getAgent('agares');
 
       expect(agent).not.toBeNull();
-      expect(agent!.name).toBe('Verbal');
+      expect(agent!.name).toBe('Agares');
       expect(agent!.role).toBe('Prompt Engineer');
       expect(agent!.charter).toBe(CHARTER_VERBAL);
       expect(agent!.model).toBe('claude-sonnet-4.5');
@@ -165,12 +165,12 @@ describe('GitHubAgentSource', () => {
 
     it('should include history when available', async () => {
       const fetcher = makeFetcher([], {
-        '.squad/agents/verbal/charter.md': CHARTER_VERBAL,
-        '.squad/agents/verbal/history.md': '# History\n- Created team',
+        '.squad/agents/agares/charter.md': CHARTER_VERBAL,
+        '.squad/agents/agares/history.md': '# History\n- Created team',
       });
       const source = new GitHubAgentSource('acme/repo', { fetcher });
 
-      const agent = await source.getAgent('verbal');
+      const agent = await source.getAgent('agares');
       expect(agent!.history).toBe('# History\n- Created team');
     });
 
@@ -198,11 +198,11 @@ describe('GitHubAgentSource', () => {
   describe('getCharter', () => {
     it('should return raw charter content', async () => {
       const fetcher = makeFetcher([], {
-        '.squad/agents/verbal/charter.md': CHARTER_VERBAL,
+        '.squad/agents/agares/charter.md': CHARTER_VERBAL,
       });
       const source = new GitHubAgentSource('acme/repo', { fetcher });
 
-      const charter = await source.getCharter('verbal');
+      const charter = await source.getCharter('agares');
       expect(charter).toBe(CHARTER_VERBAL);
     });
 
@@ -218,7 +218,7 @@ describe('GitHubAgentSource', () => {
   describe('parseCharterMetadata', () => {
     it('should extract name and role from Identity section', () => {
       const meta = parseCharterMetadata(CHARTER_VERBAL);
-      expect(meta.name).toBe('Verbal');
+      expect(meta.name).toBe('Agares');
       expect(meta.role).toBe('Prompt Engineer');
     });
 

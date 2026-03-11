@@ -103,10 +103,10 @@ describe('board state compatibility with triage output', () => {
 
   it('triage assignment labels move issues from untriaged to assigned', () => {
     const roster: TeamMember[] = [
-      { name: 'Hockney', role: 'Tester', label: 'squad:hockney' },
-      { name: 'Keaton', role: 'Lead', label: 'squad:keaton' },
+      { name: 'Samigina', role: 'Tester', label: 'squad:samigina' },
+      { name: 'Bael', role: 'Lead', label: 'squad:bael' },
     ];
-    const rules: RoutingRule[] = [{ workType: 'Tests & quality', agentName: 'Hockney', keywords: ['vitest'] }];
+    const rules: RoutingRule[] = [{ workType: 'Tests & quality', agentName: 'Samigina', keywords: ['vitest'] }];
     const issue: TriageIssue = {
       number: 77,
       title: 'Need Vitest coverage for board status',
@@ -122,7 +122,7 @@ describe('board state compatibility with triage output', () => {
     }
     const after = countIssueBoardState([{ ...issue, labels: [...issue.labels, decision.agent.label] }], roster);
 
-    expect(decision?.agent.label).toBe('squad:hockney');
+    expect(decision?.agent.label).toBe('squad:samigina');
     expect(before).toEqual({ untriaged: 1, assigned: 0 });
     expect(after).toEqual({ untriaged: 0, assigned: 1 });
   });

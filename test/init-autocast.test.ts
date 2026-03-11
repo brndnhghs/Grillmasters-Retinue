@@ -74,8 +74,8 @@ function makeCommandContext(teamRoot: string): CommandContext {
 describe('hasRosterEntries — auto-cast gating predicate', () => {
   it('returns true when Members table has data rows', () => {
     const md = makePopulatedTeamMd([
-      { name: 'Fenster', role: 'Developer' },
-      { name: 'Hockney', role: 'Tester' },
+      { name: 'Vassago', role: 'Developer' },
+      { name: 'Samigina', role: 'Tester' },
     ]);
     expect(hasRosterEntries(md)).toBe(true);
   });
@@ -148,7 +148,7 @@ describe('auto-cast trigger conditions', () => {
     // Setup: populated roster + stale .init-prompt
     fs.writeFileSync(
       path.join(squadDir, 'team.md'),
-      makePopulatedTeamMd([{ name: 'Fenster', role: 'Developer' }]),
+      makePopulatedTeamMd([{ name: 'Vassago', role: 'Developer' }]),
     );
     fs.writeFileSync(path.join(squadDir, '.init-prompt'), 'Build a snake game');
 
@@ -225,7 +225,7 @@ describe('orphan .init-prompt cleanup', () => {
     const teamFilePath = path.join(squadDir, 'team.md');
     const initPromptPath = path.join(squadDir, '.init-prompt');
 
-    fs.writeFileSync(teamFilePath, makePopulatedTeamMd([{ name: 'Fenster', role: 'Dev' }]));
+    fs.writeFileSync(teamFilePath, makePopulatedTeamMd([{ name: 'Vassago', role: 'Dev' }]));
     fs.writeFileSync(initPromptPath, 'stale prompt from earlier');
 
     // Replicate the onReady cleanup logic

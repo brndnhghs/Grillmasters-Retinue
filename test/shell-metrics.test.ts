@@ -131,7 +131,7 @@ describe('Shell Metrics — Opt-in Gate', () => {
     delete process.env['SQUAD_TELEMETRY'];
     // Should not throw even without enabling
     recordShellSessionDuration(5000);
-    recordAgentResponseLatency('fenster', 1200);
+    recordAgentResponseLatency('vassago', 1200);
     recordShellError('dispatch');
     expect(spyMeter.createCounter).not.toHaveBeenCalled();
   });
@@ -177,19 +177,19 @@ describe('Shell Metrics — Agent Response Latency (#508, #526)', () => {
   });
 
   it('recordAgentResponseLatency records with agent name and dispatch type', () => {
-    recordAgentResponseLatency('fenster', 850, 'direct');
+    recordAgentResponseLatency('vassago', 850, 'direct');
     const hist = getInstrument('squad.shell.agent_response_latency_ms');
     expect(hist.record).toHaveBeenCalledWith(850, {
-      'agent.name': 'fenster',
+      'agent.name': 'vassago',
       'dispatch.type': 'direct',
     });
   });
 
   it('defaults dispatch type to direct', () => {
-    recordAgentResponseLatency('keaton', 500);
+    recordAgentResponseLatency('bael', 500);
     const hist = getInstrument('squad.shell.agent_response_latency_ms');
     expect(hist.record).toHaveBeenCalledWith(500, {
-      'agent.name': 'keaton',
+      'agent.name': 'bael',
       'dispatch.type': 'direct',
     });
   });
@@ -215,11 +215,11 @@ describe('Shell Metrics — Error Rate (#530)', () => {
   });
 
   it('recordShellError increments error_count with source', () => {
-    recordShellError('agent_dispatch', 'fenster');
+    recordShellError('agent_dispatch', 'vassago');
     const counter = getInstrument('squad.shell.error_count');
     expect(counter.add).toHaveBeenCalledWith(1, {
       'error.source': 'agent_dispatch',
-      'error.type': 'fenster',
+      'error.type': 'vassago',
     });
   });
 
@@ -234,7 +234,7 @@ describe('Shell Metrics — Error Rate (#530)', () => {
   it('multiple errors accumulate', () => {
     recordShellError('dispatch', 'Error');
     recordShellError('dispatch', 'TypeError');
-    recordShellError('agent_dispatch', 'keaton');
+    recordShellError('agent_dispatch', 'bael');
     const counter = getInstrument('squad.shell.error_count');
     expect(counter.add).toHaveBeenCalledTimes(3);
   });

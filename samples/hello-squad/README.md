@@ -7,7 +7,7 @@
 | SDK Feature | What You'll See |
 |---|---|
 | `resolveSquad()` | Locate (or create) a `.squad/` directory |
-| `CastingEngine` | Cast a team of 4 agents from "The Usual Suspects" universe |
+| `CastingEngine` | Cast a team of 4 agents from "The Solomonic Demonology" universe |
 | `onboardAgent()` | Create charter + history files for each agent |
 | `CastingHistory` | Record casts and prove names are deterministic |
 
@@ -35,22 +35,22 @@ npm start
    resolveSquad() → /tmp/hello-squad-demo/.squad
 
 ────────────────────────────────────────────────────────────
-  Step 2 — Cast a team from "The Usual Suspects"
+  Step 2 — Cast a team from "The Solomonic Demonology"
 ────────────────────────────────────────────────────────────
-  Universe: The Usual Suspects
+  Universe: The Solomonic Demonology
   Team size: 4
 
-  🎭 Keyser — Lead
+  🎭 Bael — Lead
      Personality: Quietly commanding; sees the whole board before anyone else.
      ...
 
 ────────────────────────────────────────────────────────────
   Step 3 — Onboard agents
 ────────────────────────────────────────────────────────────
-  ✅ Keyser — Lead
-  ✅ McManus — Developer
-  ✅ Fenster — Tester
-  ✅ Verbal — Scribe
+  ✅ Bael — Lead
+  ✅ marbas — Developer
+  ✅ Vassago — Tester
+  ✅ Agares — Scribe
 
 ────────────────────────────────────────────────────────────
   Step 4 — Team roster

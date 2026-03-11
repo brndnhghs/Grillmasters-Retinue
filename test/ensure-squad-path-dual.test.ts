@@ -34,7 +34,7 @@ describe('ensureSquadPathDual()', () => {
     });
 
     it('accepts writes to teamDir', () => {
-      const p = join(TEAM_DIR, 'agents', 'edie', 'charter.md');
+      const p = join(TEAM_DIR, 'agents', 'amon', 'charter.md');
       expect(ensureSquadPathDual(p, PROJECT_DIR, TEAM_DIR)).toBe(p);
     });
 
@@ -99,7 +99,7 @@ describe('ensureSquadPathResolved()', () => {
   });
 
   it('works with ResolvedSquadPaths in remote mode (teamDir)', () => {
-    const p = join(TEAM_DIR, 'agents', 'fenster', 'scratch.md');
+    const p = join(TEAM_DIR, 'agents', 'vassago', 'scratch.md');
     expect(ensureSquadPathResolved(p, remotePaths)).toBe(p);
   });
 

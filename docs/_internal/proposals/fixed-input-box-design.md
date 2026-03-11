@@ -1,7 +1,7 @@
 # Design Spec: Fixed Bottom Input Box
 
 **Issue:** #679  
-**Designer:** Marquez (CLI UX Designer)  
+**Designer:** Zepar (CLI UX Designer)  
 **Date:** 2026-03-05  
 **Status:** Proposal (Seeking Engineering Review)  
 **Target Release:** Alpha-2 or Later
@@ -81,7 +81,7 @@ Currently, the Squad CLI input prompt flows linearly with message content — it
 ║ ⚠️  Experimental preview — file issues at github.com/...           ║
 ╠════════════════════════════════════════════════════════════════════╣
 ║ ❯ What should we build first?                                      ║
-║ ▸ Keaton: I'd suggest starting with...                             ║
+║ ▸ Bael: I'd suggest starting with...                             ║
 ║ ❯ Can you refactor the auth module?                                ║
 ║ ▸ Devon: Sure! Here's my approach...                               ║
 ║ [... more messages scroll above ...]                               ║
@@ -102,7 +102,7 @@ Currently, the Squad CLI input prompt flows linearly with message content — it
 **Processing State:**
 ```
 ╠════════════════════════════════════════════════════════════════════╣
-║ ◆ squad ⠙ > [Keaton thinking...]                                  ║
+║ ◆ squad ⠙ > [Bael thinking...]                                  ║
 ║ [working...]                                                       ║
 ╚════════════════════════════════════════════════════════════════════╝
 ```
@@ -130,7 +130,7 @@ Currently, the Squad CLI input prompt flows linearly with message content — it
 ║ ⚠️  Experimental — github.com/bradygaster/squad              ║
 ╠════════════════════════════════════════════════════════════════╣
 ║ ❯ What should we build first?                                  ║
-║ ▸ Keaton: Let's start with the auth...                         ║
+║ ▸ Bael: Let's start with the auth...                         ║
 ║ ❯ Refactor login?                                              ║
 ║ ▸ Devon: I'll tackle that...                                   ║
 ║ [... scrollable ...]                                           ║
@@ -160,7 +160,7 @@ Currently, the Squad CLI input prompt flows linearly with message content — it
 ║ Type naturally · @Agent · /help║
 ╠════════════════════════════════╣
 ║ ❯ What should we build?        ║
-║ ▸ Keaton: Let's start...       ║
+║ ▸ Bael: Let's start...       ║
 ║ ❯ Refactor login?              ║
 ║ ▸ Devon: Sure...               ║
 ╠════════════════════════════════╣
@@ -252,7 +252,7 @@ Currently, the Squad CLI input prompt flows linearly with message content — it
 ### 3. **Processing (Disabled)**
 ```
 ┌────────────────────────────────────┐
-│ ◆ squad ⠙ > [Keaton thinking...]  │
+│ ◆ squad ⠙ > [Bael thinking...]  │
 │ [working...]                       │
 └────────────────────────────────────┘
 ```
@@ -433,7 +433,7 @@ No changes needed for a11y.
 ### Prompts & Labels
 - **Idle:** `◆ squad>` (consistent with brand mark)
 - **Hint:** `Tab completes · ↑↓ history` (imperative, scannable)
-- **Processing:** `[Keaton thinking...]` (agent name + action)
+- **Processing:** `[Bael thinking...]` (agent name + action)
 - **Error:** "Connection failed. Try: (1) check network (2) squad doctor"
 
 **Standards:**
@@ -596,7 +596,7 @@ No changes needed for a11y.
 - [Ink Static component](https://github.com/vadimdemedes/ink#static)
 - [Copilot CLI Input](https://github.com/github/copilot-cli) — reference for fixed-box UX
 - Claude CLI — reference for aesthetic
-- Related UX audit: `.squad/agents/marquez/history.md` (Feb 2026)
+- Related UX audit: `.squad/agents/zepar/history.md` (Feb 2026)
 
 ---
 
@@ -647,4 +647,4 @@ One prompt at top (near header), one at bottom.
 
 | Date | Author | Change |
 |------|--------|--------|
-| 2026-03-05 | Marquez | Initial proposal — ASCII wireframes, feasibility analysis, phasing plan |
+| 2026-03-05 | Zepar | Initial proposal — ASCII wireframes, feasibility analysis, phasing plan |

@@ -92,7 +92,7 @@ describe('E2E: Full REPL round-trip', () => {
     };
 
     const { lastFrame, stdin, getApi } = renderApp({
-      agents: [{ name: 'Kovash', role: 'core dev' }],
+      agents: [{ name: 'Eligos', role: 'core dev' }],
       onDispatch,
     });
 
@@ -116,7 +116,7 @@ describe('E2E: Full REPL round-trip', () => {
     // Simulate agent response via ShellApi (as StreamBridge would)
     api.addMessage({
       role: 'agent',
-      agentName: 'Kovash',
+      agentName: 'Eligos',
       content: 'I found the bug in auth.ts — fixing now.',
       timestamp: new Date(),
     });
@@ -125,7 +125,7 @@ describe('E2E: Full REPL round-trip', () => {
     // Verify agent response renders in output
     const frameAfterResponse = lastFrame()!;
     expect(frameAfterResponse).toContain('I found the bug in auth.ts');
-    expect(frameAfterResponse).toContain('Kovash');
+    expect(frameAfterResponse).toContain('Eligos');
   });
 });
 
@@ -143,8 +143,8 @@ describe('E2E: Agent direct message', () => {
 
     const { lastFrame, stdin, getApi } = renderApp({
       agents: [
-        { name: 'Kovash', role: 'core dev' },
-        { name: 'Hockney', role: 'tester' },
+        { name: 'Eligos', role: 'core dev' },
+        { name: 'Samigina', role: 'tester' },
       ],
       onDispatch,
     });
@@ -152,19 +152,19 @@ describe('E2E: Agent direct message', () => {
     await tick(100);
     const api = getApi();
 
-    // Type @Kovash direct message
-    await typeAndSubmit(stdin, '@Kovash refactor the parser');
+    // Type @Eligos direct message
+    await typeAndSubmit(stdin, '@Eligos refactor the parser');
 
-    // Verify dispatch received a direct_agent message for Kovash
+    // Verify dispatch received a direct_agent message for Eligos
     expect(dispatched.length).toBe(1);
     expect(dispatched[0]!.type).toBe('direct_agent');
-    expect(dispatched[0]!.agentName).toBe('Kovash');
+    expect(dispatched[0]!.agentName).toBe('Eligos');
     expect(dispatched[0]!.content).toBe('refactor the parser');
 
-    // Simulate Kovash's response
+    // Simulate Eligos's response
     api.addMessage({
       role: 'agent',
-      agentName: 'Kovash',
+      agentName: 'Eligos',
       content: 'Parser refactored. Tests still pass.',
       timestamp: new Date(),
     });
@@ -172,7 +172,7 @@ describe('E2E: Agent direct message', () => {
 
     const frame = lastFrame()!;
     expect(frame).toContain('Parser refactored');
-    expect(frame).toContain('Kovash');
+    expect(frame).toContain('Eligos');
   });
 });
 
@@ -185,7 +185,7 @@ describe('E2E: Slash command round-trip', () => {
     const onDispatch = vi.fn();
 
     const { lastFrame, stdin } = renderApp({
-      agents: [{ name: 'Kovash', role: 'core dev' }],
+      agents: [{ name: 'Eligos', role: 'core dev' }],
       onDispatch,
     });
 
@@ -208,8 +208,8 @@ describe('E2E: Slash command round-trip', () => {
 
     const { lastFrame, stdin } = renderApp({
       agents: [
-        { name: 'Kovash', role: 'core dev' },
-        { name: 'Hockney', role: 'tester' },
+        { name: 'Eligos', role: 'core dev' },
+        { name: 'Samigina', role: 'tester' },
       ],
       onDispatch,
     });
@@ -248,7 +248,7 @@ describe('E2E: Error recovery', () => {
     process.on('unhandledRejection', catcher);
 
     const { lastFrame, stdin } = renderApp({
-      agents: [{ name: 'Kovash', role: 'core dev' }],
+      agents: [{ name: 'Eligos', role: 'core dev' }],
       onDispatch,
     });
 
@@ -278,7 +278,7 @@ describe('E2E: Error recovery', () => {
   it('no dispatch handler shows SDK-not-connected message', async () => {
     // Render App without onDispatch — simulates SDK not connected
     const { lastFrame, stdin } = renderApp({
-      agents: [{ name: 'Kovash', role: 'core dev' }],
+      agents: [{ name: 'Eligos', role: 'core dev' }],
       onDispatch: undefined,
     });
 
@@ -303,9 +303,9 @@ describe('E2E: Multi-agent session tracking', () => {
   });
 
   it('registers multiple agents with independent tracking', () => {
-    registry.register('Kovash', 'core dev');
-    registry.register('Hockney', 'tester');
-    registry.register('Fenster', 'designer');
+    registry.register('Eligos', 'core dev');
+    registry.register('Samigina', 'tester');
+    registry.register('Vassago', 'designer');
 
     const all = registry.getAll();
     expect(all).toHaveLength(3);
@@ -317,81 +317,81 @@ describe('E2E: Multi-agent session tracking', () => {
 
     // Verify independent identity
     const names = all.map(a => a.name);
-    expect(names).toContain('Kovash');
-    expect(names).toContain('Hockney');
-    expect(names).toContain('Fenster');
+    expect(names).toContain('Eligos');
+    expect(names).toContain('Samigina');
+    expect(names).toContain('Vassago');
   });
 
   it('tracks concurrent status changes independently', () => {
-    registry.register('Kovash', 'core dev');
-    registry.register('Hockney', 'tester');
-    registry.register('Fenster', 'designer');
+    registry.register('Eligos', 'core dev');
+    registry.register('Samigina', 'tester');
+    registry.register('Vassago', 'designer');
 
     // Set different statuses
-    registry.updateStatus('Kovash', 'working');
-    registry.updateStatus('Hockney', 'streaming');
-    registry.updateStatus('Fenster', 'idle');
+    registry.updateStatus('Eligos', 'working');
+    registry.updateStatus('Samigina', 'streaming');
+    registry.updateStatus('Vassago', 'idle');
 
-    expect(registry.get('Kovash')!.status).toBe('working');
-    expect(registry.get('Hockney')!.status).toBe('streaming');
-    expect(registry.get('Fenster')!.status).toBe('idle');
+    expect(registry.get('Eligos')!.status).toBe('working');
+    expect(registry.get('Samigina')!.status).toBe('streaming');
+    expect(registry.get('Vassago')!.status).toBe('idle');
 
     // getActive should return only working/streaming agents
     const active = registry.getActive();
     expect(active).toHaveLength(2);
     const activeNames = active.map(a => a.name);
-    expect(activeNames).toContain('Kovash');
-    expect(activeNames).toContain('Hockney');
-    expect(activeNames).not.toContain('Fenster');
+    expect(activeNames).toContain('Eligos');
+    expect(activeNames).toContain('Samigina');
+    expect(activeNames).not.toContain('Vassago');
   });
 
   it('cleans up on error — clears activity hint, other agents unaffected', () => {
-    registry.register('Kovash', 'core dev');
-    registry.register('Hockney', 'tester');
+    registry.register('Eligos', 'core dev');
+    registry.register('Samigina', 'tester');
 
     // Both working with activity hints
-    registry.updateStatus('Kovash', 'working');
-    registry.updateActivityHint('Kovash', 'Refactoring parser...');
-    registry.updateStatus('Hockney', 'working');
-    registry.updateActivityHint('Hockney', 'Running tests...');
+    registry.updateStatus('Eligos', 'working');
+    registry.updateActivityHint('Eligos', 'Refactoring parser...');
+    registry.updateStatus('Samigina', 'working');
+    registry.updateActivityHint('Samigina', 'Running tests...');
 
-    // Kovash hits an error
-    registry.updateStatus('Kovash', 'error');
+    // Eligos hits an error
+    registry.updateStatus('Eligos', 'error');
 
-    // Kovash: error status, hint cleared
-    expect(registry.get('Kovash')!.status).toBe('error');
-    expect(registry.get('Kovash')!.activityHint).toBeUndefined();
+    // Eligos: error status, hint cleared
+    expect(registry.get('Eligos')!.status).toBe('error');
+    expect(registry.get('Eligos')!.activityHint).toBeUndefined();
 
-    // Hockney: still working, hint preserved
-    expect(registry.get('Hockney')!.status).toBe('working');
-    expect(registry.get('Hockney')!.activityHint).toBe('Running tests...');
+    // Samigina: still working, hint preserved
+    expect(registry.get('Samigina')!.status).toBe('working');
+    expect(registry.get('Samigina')!.activityHint).toBe('Running tests...');
   });
 
   it('session removal leaves other sessions intact', () => {
-    registry.register('Kovash', 'core dev');
-    registry.register('Hockney', 'tester');
-    registry.register('Fenster', 'designer');
+    registry.register('Eligos', 'core dev');
+    registry.register('Samigina', 'tester');
+    registry.register('Vassago', 'designer');
 
-    registry.updateStatus('Kovash', 'working');
+    registry.updateStatus('Eligos', 'working');
 
-    // Remove Hockney
-    const removed = registry.remove('Hockney');
+    // Remove Samigina
+    const removed = registry.remove('Samigina');
     expect(removed).toBe(true);
 
-    // Kovash and Fenster still tracked
+    // Eligos and Vassago still tracked
     const all = registry.getAll();
     expect(all).toHaveLength(2);
-    expect(registry.get('Kovash')!.status).toBe('working');
-    expect(registry.get('Fenster')!.status).toBe('idle');
+    expect(registry.get('Eligos')!.status).toBe('working');
+    expect(registry.get('Vassago')!.status).toBe('idle');
 
-    // Hockney gone
-    expect(registry.get('Hockney')).toBeUndefined();
+    // Samigina gone
+    expect(registry.get('Samigina')).toBeUndefined();
   });
 
   it('fan-out: concurrent dispatch to multiple agents collects all responses', async () => {
-    registry.register('Kovash', 'core dev');
-    registry.register('Hockney', 'tester');
-    registry.register('Fenster', 'designer');
+    registry.register('Eligos', 'core dev');
+    registry.register('Samigina', 'tester');
+    registry.register('Vassago', 'designer');
 
     // Simulate fan-out dispatch to 3 agents concurrently
     const mockDispatch = async (agentName: string, message: string): Promise<string> => {
@@ -406,16 +406,16 @@ describe('E2E: Multi-agent session tracking', () => {
 
     // Fan-out to all agents
     const results = await Promise.all([
-      mockDispatch('Kovash', input),
-      mockDispatch('Hockney', input),
-      mockDispatch('Fenster', input),
+      mockDispatch('Eligos', input),
+      mockDispatch('Samigina', input),
+      mockDispatch('Vassago', input),
     ]);
 
     // All 3 responses collected
     expect(results).toHaveLength(3);
-    expect(results[0]).toContain('Kovash response');
-    expect(results[1]).toContain('Hockney response');
-    expect(results[2]).toContain('Fenster response');
+    expect(results[0]).toContain('Eligos response');
+    expect(results[1]).toContain('Samigina response');
+    expect(results[2]).toContain('Vassago response');
 
     // All agents back to idle after completion
     for (const agent of registry.getAll()) {
@@ -424,16 +424,16 @@ describe('E2E: Multi-agent session tracking', () => {
   });
 
   it('fan-out: one agent failing does not block others', async () => {
-    registry.register('Kovash', 'core dev');
-    registry.register('Hockney', 'tester');
+    registry.register('Eligos', 'core dev');
+    registry.register('Samigina', 'tester');
 
     const mockDispatch = async (agentName: string): Promise<string> => {
       registry.updateStatus(agentName, 'working');
       await new Promise(r => setTimeout(r, 20));
 
-      if (agentName === 'Kovash') {
+      if (agentName === 'Eligos') {
         registry.updateStatus(agentName, 'error');
-        throw new Error('Kovash SDK timeout');
+        throw new Error('Eligos SDK timeout');
       }
 
       registry.updateStatus(agentName, 'idle');
@@ -442,18 +442,18 @@ describe('E2E: Multi-agent session tracking', () => {
 
     // Fan-out with error handling per agent
     const results = await Promise.allSettled([
-      mockDispatch('Kovash'),
-      mockDispatch('Hockney'),
+      mockDispatch('Eligos'),
+      mockDispatch('Samigina'),
     ]);
 
-    // Kovash failed, Hockney succeeded
+    // Eligos failed, Samigina succeeded
     expect(results[0]!.status).toBe('rejected');
     expect(results[1]!.status).toBe('fulfilled');
-    expect((results[1] as PromiseFulfilledResult<string>).value).toContain('Hockney completed');
+    expect((results[1] as PromiseFulfilledResult<string>).value).toContain('Samigina completed');
 
     // Registry reflects the state
-    expect(registry.get('Kovash')!.status).toBe('error');
-    expect(registry.get('Hockney')!.status).toBe('idle');
+    expect(registry.get('Eligos')!.status).toBe('error');
+    expect(registry.get('Samigina')!.status).toBe('idle');
   });
 });
 
@@ -463,11 +463,11 @@ describe('E2E: Multi-agent session tracking', () => {
 
 describe('E2E: Input parsing integration', () => {
   it('parseInput correctly routes @Agent with registered agent list', () => {
-    const agents = ['Kovash', 'Hockney', 'Fenster'];
+    const agents = ['Eligos', 'Samigina', 'Vassago'];
 
-    const direct = parseInput('@Kovash fix the bug', agents);
+    const direct = parseInput('@Eligos fix the bug', agents);
     expect(direct.type).toBe('direct_agent');
-    expect(direct.agentName).toBe('Kovash');
+    expect(direct.agentName).toBe('Eligos');
     expect(direct.content).toBe('fix the bug');
 
     const slash = parseInput('/help', agents);
@@ -480,19 +480,19 @@ describe('E2E: Input parsing integration', () => {
   });
 
   it('case-insensitive agent matching', () => {
-    const agents = ['Kovash', 'Hockney'];
+    const agents = ['Eligos', 'Samigina'];
 
-    const lower = parseInput('@kovash hello', agents);
+    const lower = parseInput('@eligos hello', agents);
     expect(lower.type).toBe('direct_agent');
-    expect(lower.agentName).toBe('Kovash'); // Returns canonical name
+    expect(lower.agentName).toBe('Eligos'); // Returns canonical name
 
-    const upper = parseInput('@KOVASH hello', agents);
+    const upper = parseInput('@ELIGOS hello', agents);
     expect(upper.type).toBe('direct_agent');
-    expect(upper.agentName).toBe('Kovash');
+    expect(upper.agentName).toBe('Eligos');
   });
 
   it('unknown @name falls through to coordinator', () => {
-    const agents = ['Kovash'];
+    const agents = ['Eligos'];
 
     const result = parseInput('@UnknownAgent hello', agents);
     expect(result.type).toBe('coordinator');

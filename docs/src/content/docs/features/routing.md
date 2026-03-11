@@ -10,7 +10,7 @@ Route all database-related work to Basher
 
 **Try this to direct work explicitly:**
 ```
-Fenster, fix the login validation bug
+Vassago, fix the login validation bug
 ```
 
 **Try this to check routing logic:**
@@ -32,9 +32,9 @@ The coordinator decides who handles each piece of work using a three-layer routi
 
 You explicitly name who should do the work:
 
-> "Fenster, fix the login validation bug"
+> "Vassago, fix the login validation bug"
 
-Coordinator assigns directly to Fenster. No lookup required.
+Coordinator assigns directly to Vassago. No lookup required.
 
 ### 2. Domain Routing
 
@@ -117,8 +117,8 @@ When multiple patterns match:
 
 GitHub issues with `squad:{member}` labels route directly:
 
-- `squad:fenster` → Fenster picks it up
-- `squad:mcmanus` → McManus handles it
+- `squad:vassago` → Vassago picks it up
+- `squad:marbas` → marbas handles it
 - No `squad:*` label → Coordinator triages and assigns
 
 Ralph (the work monitor) uses this to auto-assign based on routing rules.
@@ -127,7 +127,7 @@ Ralph (the work monitor) uses this to auto-assign based on routing rules.
 
 Some tasks require multiple agents:
 
-> "Fenster, implement the API. Hockney, write the tests."
+> "Vassago, implement the API. Samigina, write the tests."
 
 Coordinator spawns both agents in parallel. They work independently and coordinate via the shared `.squad/` state.
 
@@ -138,7 +138,7 @@ The coordinator logs routing decisions to `.squad/orchestration-log/`:
 ```
 [2024-01-15 14:23:10] ROUTE: Issue #42 → Backend (pattern: src/api/**)
 [2024-01-15 14:24:05] ROUTE: Issue #43 → Lead (no match, fallback)
-[2024-01-15 14:25:30] ROUTE: "Fenster, fix bug" → Fenster (named)
+[2024-01-15 14:25:30] ROUTE: "Vassago, fix bug" → Vassago (named)
 ```
 
 Useful for debugging why work went to a specific agent.
@@ -156,9 +156,9 @@ Who handles authentication work?
 Coordinator checks routing.md and skills/authentication.md, reports the responsible agent(s).
 
 ```
-From now on, McManus reviews all user-facing documentation before merge
+From now on, marbas reviews all user-facing documentation before merge
 ```
-Creates a routing rule + directive: docs/** routes to McManus for review.
+Creates a routing rule + directive: docs/** routes to marbas for review.
 
 ```
 Why did issue #42 go to Backend?
@@ -166,6 +166,6 @@ Why did issue #42 go to Backend?
 Coordinator explains the routing decision based on pattern match or skill fit.
 
 ```
-Fenster, implement the new search API. Hockney, write integration tests for it.
+Vassago, implement the new search API. Samigina, write integration tests for it.
 ```
 Named routing to two agents. Both spawn in parallel.

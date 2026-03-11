@@ -55,9 +55,9 @@ function scaffoldSquadDir(root: string): void {
 
 | Name | Role | Charter | Status |
 |------|------|---------|--------|
-| Keaton | Lead | \`.squad/agents/keaton/charter.md\` | ✅ Active |
-| Fenster | Core Dev | \`.squad/agents/fenster/charter.md\` | ✅ Active |
-| Hockney | Designer | \`.squad/agents/hockney/charter.md\` | ✅ Active |
+| Bael | Lead | \`.squad/agents/bael/charter.md\` | ✅ Active |
+| Vassago | Core Dev | \`.squad/agents/vassago/charter.md\` | ✅ Active |
+| Samigina | Designer | \`.squad/agents/samigina/charter.md\` | ✅ Active |
 `);
 
   writeFileSync(join(identityDir, 'now.md'), `---
@@ -94,9 +94,9 @@ async function createShellHarness(opts?: {
 }): Promise<ShellHarness> {
   const {
     agents = [
-      { name: 'Keaton', role: 'Lead' },
-      { name: 'Fenster', role: 'Core Dev' },
-      { name: 'Hockney', role: 'Designer' },
+      { name: 'Bael', role: 'Lead' },
+      { name: 'Vassago', role: 'Core Dev' },
+      { name: 'Samigina', role: 'Designer' },
     ],
     withSquadDir = true,
     version = '0.0.0-test',
@@ -197,65 +197,65 @@ describe('Journey: Talk to a specific agent', () => {
       await shell.cleanup();
     });
 
-    it('@Keaton message dispatches as direct_agent to Keaton', async () => {
-      await shell.submit('@Keaton please review the PR');
+    it('@Bael message dispatches as direct_agent to Bael', async () => {
+      await shell.submit('@Bael please review the PR');
       expect(shell.dispatched).toHaveBeenCalledTimes(1);
       const parsed = shell.dispatched.mock.calls[0]![0] as ParsedInput;
       expect(parsed.type).toBe('direct_agent');
-      expect(parsed.agentName).toBe('Keaton');
+      expect(parsed.agentName).toBe('Bael');
       expect(parsed.content).toBe('please review the PR');
     });
 
-    it('@Fenster message dispatches as direct_agent to Fenster', async () => {
-      await shell.submit('@Fenster write unit tests');
+    it('@Vassago message dispatches as direct_agent to Vassago', async () => {
+      await shell.submit('@Vassago write unit tests');
       expect(shell.dispatched).toHaveBeenCalledTimes(1);
       const parsed = shell.dispatched.mock.calls[0]![0] as ParsedInput;
       expect(parsed.type).toBe('direct_agent');
-      expect(parsed.agentName).toBe('Fenster');
+      expect(parsed.agentName).toBe('Vassago');
       expect(parsed.content).toBe('write unit tests');
     });
 
     it('@agent routing is case-insensitive', async () => {
-      await shell.submit('@keaton fix the build');
+      await shell.submit('@bael fix the build');
       expect(shell.dispatched).toHaveBeenCalledTimes(1);
       const parsed = shell.dispatched.mock.calls[0]![0] as ParsedInput;
       expect(parsed.type).toBe('direct_agent');
-      expect(parsed.agentName).toBe('Keaton');
+      expect(parsed.agentName).toBe('Bael');
     });
 
     it('@agent message appears in conversation history', async () => {
-      await shell.submit('@Hockney design the landing page');
-      expect(shell.hasText('@Hockney design the landing page')).toBe(true);
+      await shell.submit('@Samigina design the landing page');
+      expect(shell.hasText('@Samigina design the landing page')).toBe(true);
     });
   });
 
   // ─── 2. Tab completion suggests agent names ────────────────────────────
 
   describe('Tab completion suggests agent names after @', () => {
-    it('completer returns matching agents for @K prefix', () => {
-      const completer = createCompleter(['Keaton', 'Fenster', 'Hockney']);
-      const [matches] = completer('@K');
-      expect(matches).toContain('@Keaton ');
-      expect(matches).not.toContain('@Fenster ');
+    it('completer returns matching agents for @B prefix', () => {
+      const completer = createCompleter(['Bael', 'Vassago', 'Samigina']);
+      const [matches] = completer('@B');
+      expect(matches).toContain('@Bael ');
+      expect(matches).not.toContain('@Vassago ');
     });
 
     it('completer returns all agents for bare @', () => {
-      const completer = createCompleter(['Keaton', 'Fenster', 'Hockney']);
+      const completer = createCompleter(['Bael', 'Vassago', 'Samigina']);
       const [matches] = completer('@');
       expect(matches).toHaveLength(3);
-      expect(matches).toContain('@Keaton ');
-      expect(matches).toContain('@Fenster ');
-      expect(matches).toContain('@Hockney ');
+      expect(matches).toContain('@Bael ');
+      expect(matches).toContain('@Vassago ');
+      expect(matches).toContain('@Samigina ');
     });
 
     it('completer is case-insensitive', () => {
-      const completer = createCompleter(['Keaton', 'Fenster']);
-      const [matches] = completer('@f');
-      expect(matches).toContain('@Fenster ');
+      const completer = createCompleter(['Bael', 'Vassago']);
+      const [matches] = completer('@v');
+      expect(matches).toContain('@Vassago ');
     });
 
     it('completer returns empty for no match', () => {
-      const completer = createCompleter(['Keaton', 'Fenster']);
+      const completer = createCompleter(['Bael', 'Vassago']);
       const [matches] = completer('@Z');
       expect(matches).toHaveLength(0);
     });
@@ -265,11 +265,11 @@ describe('Journey: Talk to a specific agent', () => {
       Object.defineProperty(process.stdout, 'columns', { value: 120, configurable: true });
       const shell = await createShellHarness();
       try {
-        await shell.type('@K');
+        await shell.type('@B');
         // Send Tab key
         shell.raw('\t');
         await tick(120);
-        expect(shell.hasText('@Keaton')).toBe(true);
+        expect(shell.hasText('@Bael')).toBe(true);
       } finally {
         vi.unstubAllEnvs();
         await shell.cleanup();
@@ -310,23 +310,23 @@ describe('Journey: Talk to a specific agent', () => {
   // ─── 4. Multi-agent @mentions ──────────────────────────────────────────
 
   describe('Multi-agent @mentions via parseDispatchTargets', () => {
-    const knownAgents = ['Keaton', 'Fenster', 'Hockney'];
+    const knownAgents = ['Bael', 'Vassago', 'Samigina'];
 
     it('extracts multiple known agents from message', () => {
-      const result = parseDispatchTargets('@Fenster @Hockney fix and test', knownAgents);
-      expect(result.agents).toEqual(['Fenster', 'Hockney']);
+      const result = parseDispatchTargets('@Vassago @Samigina fix and test', knownAgents);
+      expect(result.agents).toEqual(['Vassago', 'Samigina']);
       expect(result.content).toBe('fix and test');
     });
 
     it('deduplicates repeated @mentions', () => {
-      const result = parseDispatchTargets('@Keaton @keaton do it', knownAgents);
-      expect(result.agents).toEqual(['Keaton']);
+      const result = parseDispatchTargets('@Bael @bael do it', knownAgents);
+      expect(result.agents).toEqual(['Bael']);
       expect(result.content).toBe('do it');
     });
 
     it('ignores unknown agents in multi-mention', () => {
-      const result = parseDispatchTargets('@Keaton @Unknown @Fenster collaborate', knownAgents);
-      expect(result.agents).toEqual(['Keaton', 'Fenster']);
+      const result = parseDispatchTargets('@Bael @Unknown @Vassago collaborate', knownAgents);
+      expect(result.agents).toEqual(['Bael', 'Vassago']);
       expect(result.content).toBe('collaborate');
     });
 
@@ -337,8 +337,8 @@ describe('Journey: Talk to a specific agent', () => {
     });
 
     it('handles all three agents mentioned', () => {
-      const result = parseDispatchTargets('@Keaton @Fenster @Hockney ship it', knownAgents);
-      expect(result.agents).toEqual(['Keaton', 'Fenster', 'Hockney']);
+      const result = parseDispatchTargets('@Bael @Vassago @Samigina ship it', knownAgents);
+      expect(result.agents).toEqual(['Bael', 'Vassago', 'Samigina']);
       expect(result.content).toBe('ship it');
     });
   });
@@ -360,44 +360,44 @@ describe('Journey: Talk to a specific agent', () => {
     });
 
     it('agent response shows agent name label', async () => {
-      await shell.submit('@Keaton fix the build');
+      await shell.submit('@Bael fix the build');
       shell.api().addMessage({
         role: 'agent',
-        agentName: 'Keaton',
+        agentName: 'Bael',
         content: 'Build fixed! All tests passing.',
         timestamp: new Date(),
       });
       await tick(120);
-      expect(shell.hasText('Keaton:')).toBe(true);
+      expect(shell.hasText('Bael:')).toBe(true);
       expect(shell.hasText('Build fixed! All tests passing.')).toBe(true);
     });
 
     it('different agents have distinct labels', async () => {
       shell.api().addMessage({
         role: 'agent',
-        agentName: 'Keaton',
+        agentName: 'Bael',
         content: 'I reviewed the code.',
         timestamp: new Date(),
       });
       await tick(120);
       shell.api().addMessage({
         role: 'agent',
-        agentName: 'Fenster',
+        agentName: 'Vassago',
         content: 'Tests are written.',
         timestamp: new Date(),
       });
       await tick(120);
-      expect(shell.hasText('Keaton:')).toBe(true);
-      expect(shell.hasText('Fenster:')).toBe(true);
+      expect(shell.hasText('Bael:')).toBe(true);
+      expect(shell.hasText('Vassago:')).toBe(true);
     });
 
     it('streaming content shows agent name', async () => {
       shell.api().setStreamingContent({
-        agentName: 'Hockney',
+        agentName: 'Samigina',
         content: 'Working on the design...',
       });
       await tick(120);
-      expect(shell.hasText('Hockney:')).toBe(true);
+      expect(shell.hasText('Samigina:')).toBe(true);
       expect(shell.hasText('Working on the design...')).toBe(true);
     });
   });
@@ -424,23 +424,23 @@ describe('Journey: Talk to a specific agent', () => {
     });
 
     it('/status shows working agent after setting status', async () => {
-      shell.registry.updateStatus('Keaton', 'working');
+      shell.registry.updateStatus('Bael', 'working');
       await shell.submit('/status');
       expect(shell.hasText('Working')).toBe(true);
-      expect(shell.hasText('Keaton')).toBe(true);
+      expect(shell.hasText('Bael')).toBe(true);
     });
 
     it('/status shows agent activity hint', async () => {
-      shell.registry.updateStatus('Fenster', 'working');
-      shell.registry.updateActivityHint('Fenster', 'writing tests');
+      shell.registry.updateStatus('Vassago', 'working');
+      shell.registry.updateActivityHint('Vassago', 'writing tests');
       await shell.submit('/status');
-      expect(shell.hasText('Fenster')).toBe(true);
+      expect(shell.hasText('Vassago')).toBe(true);
       expect(shell.hasText('writing tests')).toBe(true);
     });
 
     it('/status reflects multiple active agents', async () => {
-      shell.registry.updateStatus('Keaton', 'working');
-      shell.registry.updateStatus('Fenster', 'streaming');
+      shell.registry.updateStatus('Bael', 'working');
+      shell.registry.updateStatus('Vassago', 'streaming');
       await shell.submit('/status');
       expect(shell.hasText('2 active')).toBe(true);
     });

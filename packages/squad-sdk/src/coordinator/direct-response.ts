@@ -95,7 +95,7 @@ const DEFAULT_PATTERNS: DirectResponsePattern[] = [
         '**Squad Coordinator** — I route work to specialist agents.',
         '',
         'You can ask me to:',
-        '- Route tasks to specific agents (e.g., "ask Fenster to fix the build")',
+        '- Route tasks to specific agents (e.g., "ask Vassago to fix the build")',
         '- Check team status (e.g., "status" or "who is active?")',
         '- View the team roster (e.g., "show team" or "who is on the team?")',
         '- View configuration (e.g., "show config" or "what model am I using?")',

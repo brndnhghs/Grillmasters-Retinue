@@ -71,7 +71,7 @@ npx github:bradygaster/squad import ~/projects/project-alpha/squad-export.json
 ✅ Imported squad from squad-export.json
   5 agents: Danny, Rusty, Linus, Basher, Scribe
   3 skills imported
-  Casting: usual-suspects universe preserved
+  Casting: solomonic-demonology universe preserved
 
 ⚠ Project-specific learnings are marked in agent histories — review if needed
 

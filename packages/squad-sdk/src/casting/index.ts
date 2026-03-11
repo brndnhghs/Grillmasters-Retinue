@@ -44,7 +44,7 @@ export interface CastingEntry {
   characterName: string;
   /** Universe the character is from */
   universe: string;
-  /** Display name (e.g., 'Fenster — Core Dev') */
+  /** Display name (e.g., 'Vassago — Core Dev') */
   displayName: string;
 }
 

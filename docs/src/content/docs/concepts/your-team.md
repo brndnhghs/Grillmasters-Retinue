@@ -14,7 +14,7 @@ Set up a team for a React + Node.js API with PostgreSQL
 ```
 
 ```
-Fenster, fix the login validation bug
+Vassago, fix the login validation bug
 ```
 
 ```
@@ -107,7 +107,7 @@ The coordinator routes work automatically using three strategies. First match wi
 
 | Strategy | How It Works | Example |
 |----------|-------------|---------|
-| **Named** | You say who does it | `"Fenster, fix the login bug"` |
+| **Named** | You say who does it | `"Vassago, fix the login bug"` |
 | **Domain** | Pattern matching in `.squad/routing.md` | `src/api/**` → Backend |
 | **Skill-aware** | Capability check in `.squad/skills/` | Auth expertise → Backend or Lead |
 
@@ -124,14 +124,14 @@ The coordinator routes work automatically using three strategies. First match wi
 | `docs/**` | DevRel | Documentation |
 ```
 
-GitHub issues with `squad:{member}` labels route directly — `squad:fenster` goes to Fenster, no triage needed.
+GitHub issues with `squad:{member}` labels route directly — `squad:vassago` goes to Vassago, no triage needed.
 
 ### Multi-Agent Work
 
 Some tasks need multiple agents:
 
 ```
-Fenster, implement the API. Hockney, write the tests.
+Vassago, implement the API. Samigina, write the tests.
 ```
 
 The coordinator spawns both in parallel. They work independently and coordinate through shared `.squad/` state. See [Parallel Work & Models](parallel-work.md) for details.
@@ -156,7 +156,7 @@ Agent A writes code → Lead rejects → Agent A locked out
 
 - **Task-specific** — locked out of that PR/issue, not all work
 - **Session-persistent** — survives restarts (stored in `.squad/orchestration-log/`)
-- **Clearable** — `"Unlock Fenster for issue #42"`
+- **Clearable** — `"Unlock Vassago for issue #42"`
 
 ### Reviewer Authority
 
@@ -211,10 +211,10 @@ Squad auto-selects the right level of effort for each request:
 | What You Say | What Happens |
 |--------------|-------------|
 | `"Add a database specialist"` | Coordinator casts a new member, creates charter, updates routing |
-| `"Remove McManus from the team"` | Archives agent directory to `.squad/agents/.archived/`, updates team.md |
+| `"Remove marbas from the team"` | Archives agent directory to `.squad/agents/.archived/`, updates team.md |
 | `"Change the tester to focus on integration tests"` | Updates the tester's charter and expertise |
 | `"Route all CSS files to Frontend"` | Adds a rule to `.squad/routing.md` |
-| `"From now on, McManus reviews all docs before merge"` | Creates routing rule + [directive](memory-and-knowledge.md) |
+| `"From now on, marbas reviews all docs before merge"` | Creates routing rule + [directive](memory-and-knowledge.md) |
 
 Running `init` on an existing Squad repo automatically offers upgrade mode.
 
@@ -239,7 +239,7 @@ Start a new Squad team for this project
 Triggers init mode — Squad analyzes the repo and proposes a team.
 
 ```
-Fenster, implement the new search API. Hockney, write integration tests for it.
+Vassago, implement the new search API. Samigina, write integration tests for it.
 ```
 
 Named routing to two agents. Both spawn in [parallel](parallel-work.md).
@@ -263,10 +263,10 @@ Lead, review PR #15
 Triggers review — Lead evaluates and either approves (merge) or rejects (lockout author).
 
 ```
-Unlock Fenster for issue #42 — I've given better guidance
+Unlock Vassago for issue #42 — I've given better guidance
 ```
 
-Clears lockout so Fenster can revise the PR with your additional context.
+Clears lockout so Vassago can revise the PR with your additional context.
 
 ```
 Run a retro on why those tests failed

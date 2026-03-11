@@ -20,7 +20,7 @@ SQUAD_DEMO_MODE=true npx tsx index.ts
 
 **Expected:**
 - [x] Banner displays: `🎬 Squad Streaming Chat · MVP Summit`
-- [x] Cast shows 3 agents with colored bullets: McManus (cyan), Kobayashi (magenta), Fenster (yellow)
+- [x] Cast shows 3 agents with colored bullets: marbas (cyan), Barbatos (magenta), Vassago (yellow)
 - [x] Message: `Running in demo mode — responses are simulated`
 - [x] Prompt appears: `◆ you >`
 
@@ -31,7 +31,7 @@ SQUAD_DEMO_MODE=true npx tsx index.ts
 Type: `How should I design the API endpoints?`
 
 **Expected:**
-- [x] Header shows: `McManus (Backend)` in cyan
+- [x] Header shows: `marbas (Backend)` in cyan
 - [x] Response streams word-by-word (visible character-at-a-time output)
 - [x] Response is backend-themed (mentions Express, API, etc.)
 - [x] Prompt reappears after response completes
@@ -43,7 +43,7 @@ Type: `How should I design the API endpoints?`
 Type: `Build me a nice UI layout`
 
 **Expected:**
-- [x] Header shows: `Kobayashi (Frontend)` in magenta
+- [x] Header shows: `Barbatos (Frontend)` in magenta
 - [x] Response streams word-by-word
 - [x] Response is frontend-themed (mentions CSS, components, etc.)
 
@@ -54,7 +54,7 @@ Type: `Build me a nice UI layout`
 Type: `I need more test coverage`
 
 **Expected:**
-- [x] Header shows: `Fenster (Tester)` in yellow
+- [x] Header shows: `Vassago (Tester)` in yellow
 - [x] Response streams word-by-word
 - [x] Response is test-themed (mentions coverage, mocks, etc.)
 
@@ -65,7 +65,7 @@ Type: `I need more test coverage`
 Type: `What do you think?`
 
 **Expected:**
-- [x] Falls through to McManus (Backend) as default
+- [x] Falls through to marbas (Backend) as default
 - [x] Response streams normally
 
 ---

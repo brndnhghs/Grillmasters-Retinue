@@ -38,8 +38,8 @@ function setupProjectDir(): void {
     '# Team Config\n\nA test team.\n',
   );
   writeFileSync(
-    join(TEST_DIR, '.github', 'agents', 'fenster.agent.md'),
-    '# Fenster\n\nCore developer agent.\n',
+    join(TEST_DIR, '.github', 'agents', 'vassago.agent.md'),
+    '# Vassago\n\nCore developer agent.\n',
   );
   writeFileSync(
     join(TEST_DIR, '.github', 'agents', 'ralph.agent.md'),
@@ -47,7 +47,7 @@ function setupProjectDir(): void {
   );
   writeFileSync(
     join(TEST_DIR, '.ai-team', 'routing.md'),
-    '# Routing\n\n- `build/*` → fenster\n- `review/*` → ralph\n',
+    '# Routing\n\n- `build/*` → vassago\n- `review/*` → ralph\n',
   );
   writeFileSync(
     join(TEST_DIR, '.ai-team', 'skills', 'typescript.md'),
@@ -59,11 +59,11 @@ function makeBundle(overrides?: Partial<ExportBundle>): ExportBundle {
   return {
     config: { teamFile: 'test config' },
     agents: [
-      { name: 'fenster', role: 'fenster', content: '# Fenster\nCore dev.' },
+      { name: 'vassago', role: 'vassago', content: '# Vassago\nCore dev.' },
       { name: 'ralph', role: 'ralph', content: '# Ralph\nReviewer.' },
     ],
     skills: ['typescript'],
-    routingRules: [{ pattern: 'build/*', agent: 'fenster' }],
+    routingRules: [{ pattern: 'build/*', agent: 'vassago' }],
     metadata: {
       version: '1.0.0',
       timestamp: new Date().toISOString(),
@@ -79,7 +79,7 @@ function makeEntry(overrides?: Partial<HistoryEntry>): HistoryEntry {
     timestamp: new Date().toISOString(),
     type: 'decision',
     content: 'Decided to use ESM modules for the build.',
-    agent: 'fenster',
+    agent: 'vassago',
     ...overrides,
   };
 }
@@ -102,14 +102,14 @@ describe('Export', () => {
   it('should export squad config with agents', () => {
     const bundle = exportSquadConfig(TEST_DIR);
     expect(bundle.agents).toHaveLength(2);
-    expect(bundle.agents.some(a => a.name === 'fenster')).toBe(true);
+    expect(bundle.agents.some(a => a.name === 'vassago')).toBe(true);
     expect(bundle.agents.some(a => a.name === 'ralph')).toBe(true);
   });
 
   it('should export routing rules', () => {
     const bundle = exportSquadConfig(TEST_DIR);
     expect(bundle.routingRules.length).toBeGreaterThanOrEqual(1);
-    expect(bundle.routingRules.some(r => r.agent === 'fenster')).toBe(true);
+    expect(bundle.routingRules.some(r => r.agent === 'vassago')).toBe(true);
   });
 
   it('should export skills when includeSkills is true', () => {
@@ -273,7 +273,7 @@ describe('Import', () => {
     const result = importSquadConfig(bundlePath, targetDir);
     expect(result.success).toBe(true);
     expect(result.changes.some(c => c.type === 'added')).toBe(true);
-    expect(existsSync(join(targetDir, '.github', 'agents', 'fenster.agent.md'))).toBe(true);
+    expect(existsSync(join(targetDir, '.github', 'agents', 'vassago.agent.md'))).toBe(true);
   });
 
   it('should support dry run', () => {
@@ -287,7 +287,7 @@ describe('Import', () => {
     const result = importSquadConfig(bundlePath, targetDir, { dryRun: true });
     expect(result.success).toBe(true);
     expect(result.changes.length).toBeGreaterThan(0);
-    expect(existsSync(join(targetDir, '.github', 'agents', 'fenster.agent.md'))).toBe(false);
+    expect(existsSync(join(targetDir, '.github', 'agents', 'vassago.agent.md'))).toBe(false);
   });
 
   it('should return error for missing bundle file', () => {
@@ -332,13 +332,13 @@ describe('Import', () => {
 
     const targetDir = join(IMPORT_DIR, 'target-nomerge');
     mkdirSync(join(targetDir, '.github', 'agents'), { recursive: true });
-    writeFileSync(join(targetDir, '.github', 'agents', 'fenster.agent.md'), 'existing');
+    writeFileSync(join(targetDir, '.github', 'agents', 'vassago.agent.md'), 'existing');
 
     const result = importSquadConfig(bundlePath, targetDir, { merge: false });
     expect(result.success).toBe(true);
-    expect(result.changes.some(c => c.type === 'skipped' && c.path.includes('fenster'))).toBe(true);
+    expect(result.changes.some(c => c.type === 'skipped' && c.path.includes('vassago'))).toBe(true);
     // File should not be overwritten
-    expect(readFileSync(join(targetDir, '.github', 'agents', 'fenster.agent.md'), 'utf-8')).toBe('existing');
+    expect(readFileSync(join(targetDir, '.github', 'agents', 'vassago.agent.md'), 'utf-8')).toBe('existing');
   });
 });
 

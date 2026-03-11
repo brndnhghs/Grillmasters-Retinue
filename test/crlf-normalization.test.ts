@@ -56,14 +56,14 @@ describe('CRLF normalization', () => {
 
 | Name | Role | Skills | Model |
 |------|------|--------|-------|
-| Keaton | Lead | architecture, design | claude-opus-4.5 |
+| Bael | Lead | architecture, design | claude-opus-4.5 |
 | Harper | Developer | typescript, testing | |
 `);
       const { agents, warnings } = parseTeamMarkdown(md);
       expect(agents).toHaveLength(2);
       expectNoCR(agents[0].name, 'agents[0].name');
       expectNoCR(agents[1].name, 'agents[1].name');
-      expect(agents[0].name).toBe('keaton');
+      expect(agents[0].name).toBe('bael');
       expect(agents[0].role).toBe('Lead');
       expect(agents[0].model).toBe('claude-opus-4.5');
       expectNoCR(warnings, 'warnings');
@@ -73,7 +73,7 @@ describe('CRLF normalization', () => {
       const md = withCRLF(`
 ## Team Members
 
-### Keaton
+### Bael
 - **Role:** Lead
 - **Skills:** architecture, design
 - **Model:** claude-opus-4.5
@@ -96,7 +96,7 @@ describe('CRLF normalization', () => {
         '## Roster\n' +
         '| Name | Role | Skills | Model |\r\n' +
         '|------|------|--------|-------|\r\n' +
-        '| Keaton | Lead | architecture | claude-opus-4.5 |\n' +
+        '| Bael | Lead | architecture | claude-opus-4.5 |\n' +
         '| Harper | Developer | typescript | |\r\n';
 
       const { agents } = parseTeamMarkdown(md);
@@ -111,7 +111,7 @@ describe('CRLF normalization', () => {
 
 | Name | Role | Skills | Model |
 |------|------|--------|-------|
-| Fenster | Core Dev | typescript, node, architecture, testing | claude-sonnet-4.5 |
+| Vassago | Core Dev | typescript, node, architecture, testing | claude-sonnet-4.5 |
 `);
       const { agents } = parseTeamMarkdown(md);
       expect(agents).toHaveLength(1);
@@ -221,11 +221,11 @@ Use prettier and eslint.
   // -------------------------------------------------------------------------
 
   describe('parseCharterMarkdown', () => {
-    const SAMPLE_CHARTER = `# Fenster
+    const SAMPLE_CHARTER = `# Vassago
 
 ## Identity
 
-**Name:** Fenster
+**Name:** Vassago
 **Role:** Core Developer
 **Expertise:** TypeScript, testing, architecture
 **Style:** Precise and methodical
@@ -245,13 +245,13 @@ Do not modify docs/ or marketing.
 
 ## Collaboration
 
-Coordinate with Verbal on prompt changes.
+Coordinate with Agares on prompt changes.
 `;
 
     it('CRLF identity section', () => {
       const parsed = parseCharterMarkdown(withCRLF(SAMPLE_CHARTER));
       expectNoCR(parsed.identity, 'identity');
-      expect(parsed.identity.name).toBe('Fenster');
+      expect(parsed.identity.name).toBe('Vassago');
       expect(parsed.identity.role).toBe('Core Developer');
       expect(parsed.identity.expertise).toContain('TypeScript');
       expect(parsed.identity.style).toBe('Precise and methodical');

@@ -1,7 +1,7 @@
 ---
 title: "The Adapter Chronicles"
 date: 2026-02-22
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: null
 tags: [squad, adapter, copilot-sdk, typescript, type-safety, codespace, bug]
 status: published
@@ -84,4 +84,4 @@ The adapter layer is clean. The type system is honest. Now it's time to bring in
 
 ---
 
-_This post was written by McManus, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_
+_This post was written by marbas, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_

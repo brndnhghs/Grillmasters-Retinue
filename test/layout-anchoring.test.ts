@@ -8,7 +8,7 @@
  *
  * 📌 Proactive: Written from requirements while implementation is in progress.
  * Tests target App composition and component contracts. Some assertions may
- * need adjustment once Kovash lands the anchoring implementation.
+ * need adjustment once Eligos lands the anchoring implementation.
  */
 
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
@@ -92,7 +92,7 @@ describe('#675 — InputPrompt viewport anchoring', () => {
         h(MessageStream, {
           messages: [makeMessage({ role: 'user', content: 'build the feature' })],
           processing: true,
-          streamingContent: new Map([['Kovash', 'Working on the implementation...']]),
+          streamingContent: new Map([['Eligos', 'Working on the implementation...']]),
         }),
         h(InputPrompt, { onSubmit, disabled: true }),
       )
@@ -112,7 +112,7 @@ describe('#675 — InputPrompt viewport anchoring', () => {
         h(MessageStream, {
           messages: [
             makeMessage({ role: 'user', content: 'hello' }),
-            makeMessage({ role: 'agent', content: 'Hi there!', agentName: 'Kovash' }),
+            makeMessage({ role: 'agent', content: 'Hi there!', agentName: 'Eligos' }),
           ],
           processing: false,
           streamingContent: new Map(),
@@ -140,7 +140,7 @@ describe('#674 — Predictable scrolling / layout stability', () => {
         h(MessageStream, {
           messages: [makeMessage({ role: 'user', content: 'generate report' })],
           processing: true,
-          streamingContent: new Map([['Fenster', longContent]]),
+          streamingContent: new Map([['Vassago', longContent]]),
         }),
         h(InputPrompt, { onSubmit, disabled: true }),
       )

@@ -51,8 +51,8 @@ function scaffoldSquadDir(root: string): void {
 
 | Name | Role | Charter | Status |
 |------|------|---------|--------|
-| Keaton | Lead | \`.squad/agents/keaton/charter.md\` | ✅ Active |
-| Fenster | Core Dev | \`.squad/agents/fenster/charter.md\` | ✅ Active |
+| Bael | Lead | \`.squad/agents/bael/charter.md\` | ✅ Active |
+| Vassago | Core Dev | \`.squad/agents/vassago/charter.md\` | ✅ Active |
 `);
 
   writeFileSync(join(identityDir, 'now.md'), `---
@@ -91,8 +91,8 @@ async function createShellHarness(opts?: {
 }): Promise<ShellHarness> {
   const {
     agents = [
-      { name: 'Keaton', role: 'Lead' },
-      { name: 'Fenster', role: 'Core Dev' },
+      { name: 'Bael', role: 'Lead' },
+      { name: 'Vassago', role: 'Core Dev' },
     ],
     withSquadDir = true,
     version = '0.0.0-test',
@@ -235,7 +235,7 @@ describe('Journey: Agent dispatch failure', () => {
   });
 
   it('shows the dispatch error as a system message via ShellApi', async () => {
-    await shell.submit('@Keaton fix the build');
+    await shell.submit('@Bael fix the build');
     await tick(120);
     // Simulate what handleDispatch does when an error is caught:
     shell.api().addMessage({
@@ -321,11 +321,11 @@ describe('Journey: Network errors during streaming', () => {
   });
 
   it('StreamBridge-style error is shown as a friendly system message', async () => {
-    await shell.submit('@Keaton fix the build');
+    await shell.submit('@Bael fix the build');
     // Simulate what StreamBridge.onError does
     shell.api().addMessage({
       role: 'system',
-      content: '❌ Keaton hit a problem: ECONNRESET: network connection was reset\n   Try again, or run `squad doctor` to check your setup.',
+      content: '❌ Bael hit a problem: ECONNRESET: network connection was reset\n   Try again, or run `squad doctor` to check your setup.',
       timestamp: new Date(),
     });
     await tick(120);
@@ -336,7 +336,7 @@ describe('Journey: Network errors during streaming', () => {
   it('network error does not contain raw Error: prefix', async () => {
     shell.api().addMessage({
       role: 'system',
-      content: '❌ Keaton hit a problem: network connection was reset\n   Try again, or run `squad doctor` to check your setup.',
+      content: '❌ Bael hit a problem: network connection was reset\n   Try again, or run `squad doctor` to check your setup.',
       timestamp: new Date(),
     });
     await tick(120);
@@ -347,7 +347,7 @@ describe('Journey: Network errors during streaming', () => {
   it('suggests squad doctor for recovery', async () => {
     shell.api().addMessage({
       role: 'system',
-      content: '❌ Keaton hit a problem: timeout exceeded\n   Try again, or run `squad doctor` to check your setup.',
+      content: '❌ Bael hit a problem: timeout exceeded\n   Try again, or run `squad doctor` to check your setup.',
       timestamp: new Date(),
     });
     await tick(120);

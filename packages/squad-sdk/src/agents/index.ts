@@ -74,10 +74,10 @@ export {
 // --- Charter Types ---
 
 export interface AgentCharter {
-  /** Agent name (e.g., 'fenster', 'verbal') */
+  /** Agent name (e.g., 'vassago', 'agares') */
   name: string;
 
-  /** Display name (e.g., 'Fenster — Core Dev') */
+  /** Display name (e.g., 'Vassago — Core Dev') */
   displayName: string;
 
   /** Role description */

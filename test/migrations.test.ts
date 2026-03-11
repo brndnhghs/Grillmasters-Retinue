@@ -68,7 +68,7 @@ describe('createDefaultRegistry', () => {
     const config = {
       version: '0.6.0',
       configDir: '.squad',
-      agents: [{ name: '@keaton', role: 'lead', displayName: 'Keaton' }],
+      agents: [{ name: '@bael', role: 'lead', displayName: 'Bael' }],
       routing: { rules: [], fallbackBehavior: 'coordinator' },
       models: { default: 'claude-sonnet-4', defaultTier: 'standard', tiers: {} },
       agentSources: [{ type: 'local', name: 'local', path: '.squad/agents' }],
@@ -101,7 +101,7 @@ describe('migration 0.4.0 → 0.5.0', () => {
     const config = {
       version: '0.4.0',
       teamMembers: [
-        { name: 'Keaton', role: 'Lead', model: 'claude-opus-4.5' },
+        { name: 'Bael', role: 'Lead', model: 'claude-opus-4.5' },
         { name: 'Harper', role: 'Developer' },
       ],
     };
@@ -110,7 +110,7 @@ describe('migration 0.4.0 → 0.5.0', () => {
     expect(result.agents).toBeInstanceOf(Array);
     const agents = result.agents as Array<Record<string, unknown>>;
     expect(agents).toHaveLength(2);
-    expect(agents[0].name).toBe('@keaton');
+    expect(agents[0].name).toBe('@bael');
     expect(agents[0].role).toBe('Lead');
     expect(agents[0].model).toBe('claude-opus-4.5');
     expect(agents[1].name).toBe('@harper');
@@ -136,14 +136,14 @@ describe('migration 0.4.0 → 0.5.0', () => {
   it('should rollback agents → teamMembers', () => {
     const config = {
       version: '0.5.0',
-      agents: [{ name: '@keaton', role: 'lead', displayName: 'Keaton' }],
+      agents: [{ name: '@bael', role: 'lead', displayName: 'Bael' }],
     };
     const result = migration_0_4_to_0_5.rollback!(config);
 
     expect(result.teamMembers).toBeInstanceOf(Array);
     expect(result.agents).toBeUndefined();
     const members = result.teamMembers as Array<Record<string, unknown>>;
-    expect(members[0].name).toBe('Keaton');
+    expect(members[0].name).toBe('Bael');
   });
 
   it('should rollback .squad → .ai-team in configDir', () => {

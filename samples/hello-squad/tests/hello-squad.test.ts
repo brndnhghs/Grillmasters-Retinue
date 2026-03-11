@@ -52,12 +52,12 @@ describe('CastingEngine.castTeam', () => {
   const roles: AgentRole[] = ['lead', 'developer', 'tester', 'scribe'];
 
   it('casts the right number of agents', () => {
-    const team = engine.castTeam({ universe: 'usual-suspects', teamSize: 4, requiredRoles: roles });
+    const team = engine.castTeam({ universe: 'solomonic-demonology', teamSize: 4, requiredRoles: roles });
     expect(team).toHaveLength(4);
   });
 
   it('fills all required roles', () => {
-    const team = engine.castTeam({ universe: 'usual-suspects', teamSize: 4, requiredRoles: roles });
+    const team = engine.castTeam({ universe: 'solomonic-demonology', teamSize: 4, requiredRoles: roles });
     const teamRoles = team.map(m => m.role);
     for (const role of roles) {
       expect(teamRoles).toContain(role);
@@ -65,20 +65,20 @@ describe('CastingEngine.castTeam', () => {
   });
 
   it('assigns unique names', () => {
-    const team = engine.castTeam({ universe: 'usual-suspects', teamSize: 4, requiredRoles: roles });
+    const team = engine.castTeam({ universe: 'solomonic-demonology', teamSize: 4, requiredRoles: roles });
     const names = team.map(m => m.name);
     expect(new Set(names).size).toBe(names.length);
   });
 
   it('names are deterministic across casts', () => {
-    const config = { universe: 'usual-suspects' as const, teamSize: 4, requiredRoles: roles };
+    const config = { universe: 'solomonic-demonology' as const, teamSize: 4, requiredRoles: roles };
     const team1 = engine.castTeam(config);
     const team2 = engine.castTeam(config);
     expect(team1.map(m => m.name)).toEqual(team2.map(m => m.name));
   });
 
   it('each member has displayName, personality, backstory', () => {
-    const team = engine.castTeam({ universe: 'usual-suspects', teamSize: 4, requiredRoles: roles });
+    const team = engine.castTeam({ universe: 'solomonic-demonology', teamSize: 4, requiredRoles: roles });
     for (const member of team) {
       expect(member.displayName).toBeTruthy();
       expect(member.personality).toBeTruthy();
@@ -133,7 +133,7 @@ describe('CastingHistory', () => {
   it('records and retrieves casting history', () => {
     const engine = new CastingEngine();
     const history = new CastingHistory();
-    const config = { universe: 'usual-suspects' as const, teamSize: 3, requiredRoles: ['lead', 'developer', 'tester'] as AgentRole[] };
+    const config = { universe: 'solomonic-demonology' as const, teamSize: 3, requiredRoles: ['lead', 'developer', 'tester'] as AgentRole[] };
     const team = engine.castTeam(config);
 
     history.recordCast(team, config);
@@ -141,14 +141,14 @@ describe('CastingHistory', () => {
 
     const records = history.getCastHistory();
     expect(records).toHaveLength(1);
-    expect(records[0].universe).toBe('usual-suspects');
+    expect(records[0].universe).toBe('solomonic-demonology');
     expect(records[0].members).toHaveLength(3);
   });
 
   it('serializes and deserializes correctly', () => {
     const engine = new CastingEngine();
     const history = new CastingHistory();
-    const config = { universe: 'usual-suspects' as const, teamSize: 2, requiredRoles: ['lead', 'developer'] as AgentRole[] };
+    const config = { universe: 'solomonic-demonology' as const, teamSize: 2, requiredRoles: ['lead', 'developer'] as AgentRole[] };
     const team = engine.castTeam(config);
 
     history.recordCast(team, config);
@@ -164,7 +164,7 @@ describe('CastingHistory', () => {
   it('queries history by agent name', () => {
     const engine = new CastingEngine();
     const history = new CastingHistory();
-    const config = { universe: 'usual-suspects' as const, requiredRoles: ['lead'] as AgentRole[] };
+    const config = { universe: 'solomonic-demonology' as const, requiredRoles: ['lead'] as AgentRole[] };
     const team = engine.castTeam(config);
 
     history.recordCast(team, config);

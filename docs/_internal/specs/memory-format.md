@@ -86,7 +86,7 @@ Example:
 - **Rationale**: Preserves local timezone for auditability; enables chronological sorting
 
 **author**
-- **Values**: Agent name (e.g., `Keaton`, `Verbal`) or human name (e.g., `bradygaster`)
+- **Values**: Agent name (e.g., `Bael`, `Agares`) or human name (e.g., `bradygaster`)
 - **Special value**: `Coordinator` for system-level decisions
 - **Format**: `**author:** {value}`
 
@@ -356,7 +356,7 @@ function setField(entry: SEMEntry, field: string, value: string) {
 
 **type:** decision  
 **timestamp:** 2026-02-15T14:32:15-0800  
-**author:** Verbal  
+**author:** Agares  
 **scope:** team  
 **tags:** model-selection, cost-optimization, v0.3.0  
 
@@ -378,7 +378,7 @@ Auto-selection algorithm maps role category to model tier:
 
 Task complexity can bump tier (architecture decisions → opus).
 
-**rationale:** Brady's directive: optimize for cost unless code quality matters. At scale, the difference between haiku ($0.25) and sonnet ($3.00) per 1M tokens is significant. Scribe doing file merges doesn't need Sonnet; Keaton making architecture decisions needs more than Haiku.
+**rationale:** Brady's directive: optimize for cost unless code quality matters. At scale, the difference between haiku ($0.25) and sonnet ($3.00) per 1M tokens is significant. Scribe doing file merges doesn't need Sonnet; Bael making architecture decisions needs more than Haiku.
 
 **related:**
 - proposal: 024
@@ -395,8 +395,8 @@ Task complexity can bump tier (architecture decisions → opus).
 
 **type:** memory  
 **timestamp:** 2026-02-15T15:45:30-0800  
-**author:** Hockney  
-**scope:** agent:Hockney  
+**author:** Samigina  
+**scope:** agent:Samigina  
 **tags:** testing, jest, mocking, test-pollution  
 
 **summary:** Always restore spies in afterEach to prevent test pollution.
@@ -463,7 +463,7 @@ NOT `git add -f .ai-team/`.
 
 **type:** note  
 **timestamp:** 2026-02-15T16:00:00-0800  
-**author:** Strausz  
+**author:** Beleth  
 **scope:** team  
 **tags:** spike, vs-code, agent-spawning, runSubagent  
 
@@ -541,7 +541,7 @@ Both formats parse correctly:
 
 ```markdown
 ### 2026-02-10: Old format entry
-**By:** Keaton
+**By:** Bael
 **What:** Some decision...
 
 ---
@@ -550,7 +550,7 @@ Both formats parse correctly:
 
 **type:** decision
 **timestamp:** 2026-02-15T14:32:15-0800
-**author:** Keaton
+**author:** Bael
 
 **details:** Some decision...
 
@@ -630,7 +630,7 @@ function isValidISO8601(timestamp: string): boolean {
 2. **Fall back gracefully**: Support legacy format during migration window
 3. **Validate timestamps**: Some may be malformed; skip or flag
 4. **Index by tags**: Enables fast filtering without full-text search
-5. **Respect scope**: Don't surface `agent:Hockney` entries in team-wide views
+5. **Respect scope**: Don't surface `agent:Samigina` entries in team-wide views
 
 ---
 

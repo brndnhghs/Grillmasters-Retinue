@@ -97,12 +97,12 @@ Agents process lists better than paragraphs.
 When the work is **sequential** or **highly specialized**.
 
 ```
-> Keaton, review this PR for architectural fit.
+> Bael, review this PR for architectural fit.
 ```
 
 | Use Case | Example | Why |
 |----------|---------|-----|
-| Code review | "Keaton, review the auth endpoints" | Only the lead does design review |
+| Code review | "Bael, review the auth endpoints" | Only the lead does design review |
 | Specialized skill | "Felix, optimize the database queries" | The performance expert works alone |
 | Fix a specific mistake | "Dallas, fix the button styling" | Don't spawn the whole team for one file |
 | Unblock someone | "Kane, help Lambert debug the test failure" | Point conversation between two agents |
@@ -528,12 +528,12 @@ Requires good routing rules and clear ownership, but it works.
 For hard problems, do a spike first.
 
 ```
-> Keaton (Lead), do a spike on authentication patterns for this stack. 
+> Bael (Lead), do a spike on authentication patterns for this stack. 
 > Spend 30 minutes exploring. Write your findings to a decision.
 
-[Keaton researches, writes decision about auth strategy]
+[Bael researches, writes decision about auth strategy]
 
-> Team, now build the auth system using the strategy Keaton decided.
+> Team, now build the auth system using the strategy Bael decided.
 ```
 
 This prevents agents from building the wrong thing.
@@ -587,7 +587,7 @@ Divide the team. Start both immediately.
 ### Spike Before Building
 
 ```
-Keaton, do a 20-minute spike on [problem]. 
+Bael, do a 20-minute spike on [problem]. 
 Research [specific areas]. 
 Write a decision with your recommendation.
 When you're done, tell me what you learned.
@@ -597,7 +597,7 @@ When you're done, tell me what you learned.
 
 ```
 Team, we're closing the MVP phase. 
-Keaton, what's the current architecture?
+Bael, what's the current architecture?
 Kane, what's left to do on the backend?
 Dallas, what UX work is pending?
 Lambert, what tests are missing?
@@ -628,7 +628,7 @@ When you're unsure who to ask:
 
 | Task | Ask | Why |
 |------|-----|-----|
-| Architecture review | Lead (Keaton) | Design decisions are the lead's job |
+| Architecture review | Lead (Bael) | Design decisions are the lead's job |
 | Fix a feature | The assigned agent | They know the context |
 | Debug a test | Tester + Backend | Usually a logic error or missing setup |
 | Design decision | Team (parallel) | All perspectives needed |

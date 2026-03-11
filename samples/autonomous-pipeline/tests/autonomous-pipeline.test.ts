@@ -22,10 +22,10 @@ import type { CastMember, ResponseTier, SquadConfig, TierContext } from '@bradyg
 // ============================================================================
 
 describe('CastingEngine', () => {
-  it('casts a 4-agent team from usual-suspects', () => {
+  it('casts a 4-agent team from solomonic-demonology', () => {
     const engine = new CastingEngine();
     const cast = engine.castTeam({
-      universe: 'usual-suspects',
+      universe: 'solomonic-demonology',
       requiredRoles: ['lead', 'developer', 'tester', 'scribe'],
       teamSize: 4,
     });
@@ -48,7 +48,7 @@ describe('CastingEngine', () => {
   it('lists available universes', () => {
     const engine = new CastingEngine();
     const universes = engine.getUniverses();
-    expect(universes).toContain('usual-suspects');
+    expect(universes).toContain('solomonic-demonology');
     expect(universes).toContain('oceans-eleven');
   });
 });
@@ -67,7 +67,7 @@ describe('CostTracker', () => {
   it('records usage and produces summary', () => {
     tracker.recordUsage({
       sessionId: 'session-1',
-      agentName: 'McManus',
+      agentName: 'marbas',
       model: 'claude-sonnet-4-20250514',
       inputTokens: 1200,
       outputTokens: 800,
@@ -78,13 +78,13 @@ describe('CostTracker', () => {
     expect(summary.totalInputTokens).toBe(1200);
     expect(summary.totalOutputTokens).toBe(800);
     expect(summary.totalEstimatedCost).toBeCloseTo(0.0156, 4);
-    expect(summary.agents.get('McManus')).toBeDefined();
+    expect(summary.agents.get('marbas')).toBeDefined();
   });
 
   it('aggregates costs across multiple agents', () => {
     tracker.recordUsage({
       sessionId: 's1',
-      agentName: 'Keyser',
+      agentName: 'Bael',
       model: 'claude-sonnet-4-20250514',
       inputTokens: 500,
       outputTokens: 300,
@@ -92,7 +92,7 @@ describe('CostTracker', () => {
     });
     tracker.recordUsage({
       sessionId: 's2',
-      agentName: 'Fenster',
+      agentName: 'Vassago',
       model: 'claude-sonnet-4-20250514',
       inputTokens: 800,
       outputTokens: 600,
@@ -108,7 +108,7 @@ describe('CostTracker', () => {
   it('formats summary as string', () => {
     tracker.recordUsage({
       sessionId: 's1',
-      agentName: 'Verbal',
+      agentName: 'Agares',
       model: 'claude-sonnet-4-20250514',
       inputTokens: 400,
       outputTokens: 200,
@@ -117,7 +117,7 @@ describe('CostTracker', () => {
 
     const formatted = tracker.formatSummary();
     expect(formatted).toContain('Squad Cost Summary');
-    expect(formatted).toContain('Verbal');
+    expect(formatted).toContain('Agares');
   });
 });
 
@@ -129,7 +129,7 @@ describe('TelemetryCollector', () => {
   it('collects events when enabled', () => {
     const collector = new TelemetryCollector({ enabled: true });
     collector.collectEvent({ name: 'squad.init' });
-    collector.collectEvent({ name: 'squad.agent.spawn', properties: { agent: 'Keyser' } });
+    collector.collectEvent({ name: 'squad.agent.spawn', properties: { agent: 'Bael' } });
     expect(collector.pendingCount).toBe(2);
   });
 
@@ -214,13 +214,13 @@ describe('StreamingPipeline', () => {
     await pipeline.processEvent({
       type: 'message_delta',
       sessionId: 'test-session',
-      agentName: 'McManus',
-      content: 'Hello from McManus',
+      agentName: 'marbas',
+      content: 'Hello from marbas',
       index: 0,
       timestamp: new Date(),
     });
 
-    expect(deltas).toContain('Hello from McManus');
+    expect(deltas).toContain('Hello from marbas');
     pipeline.clear();
   });
 
@@ -252,7 +252,7 @@ describe('StreamingPipeline', () => {
     await pipeline.processEvent({
       type: 'usage',
       sessionId: 's1',
-      agentName: 'Keyser',
+      agentName: 'Bael',
       model: 'claude-sonnet-4-20250514',
       inputTokens: 1000,
       outputTokens: 500,
@@ -278,16 +278,16 @@ describe('selectResponseTier', () => {
     team: { name: 'Test Squad' },
     routing: {
       rules: [
-        { pattern: 'security|audit', agents: ['Hockney'], tier: 'full' },
+        { pattern: 'security|audit', agents: ['Samigina'], tier: 'full' },
       ],
-      defaultAgent: 'Keyser',
+      defaultAgent: 'Bael',
     },
     models: {
       default: 'claude-sonnet-4-20250514',
       defaultTier: 'standard',
       tiers: { premium: ['claude-sonnet-4-20250514'], standard: ['claude-sonnet-4-20250514'], fast: ['claude-haiku-3'] },
     },
-    agents: [{ name: 'Keyser', role: 'lead' }],
+    agents: [{ name: 'Bael', role: 'lead' }],
   };
 
   it('selects full tier for security audit tasks', () => {
@@ -319,7 +319,7 @@ describe('Pipeline integration', () => {
   it('wires CastingEngine + CostTracker + TelemetryCollector together', () => {
     const engine = new CastingEngine();
     const cast = engine.castTeam({
-      universe: 'usual-suspects',
+      universe: 'solomonic-demonology',
       requiredRoles: ['lead', 'developer'],
       teamSize: 2,
     });

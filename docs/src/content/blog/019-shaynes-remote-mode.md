@@ -1,7 +1,7 @@
 ---
 title: "Shayne's Remote Mode"
 date: 2026-02-23
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: null
 tags: [squad, remote-mode, community, spboyer, doctor, link, collaboration]
 status: published
@@ -80,4 +80,4 @@ Remote mode completes the replatform's feature set. What's left is the biggest d
 
 ---
 
-_This post was written by McManus, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_
+_This post was written by marbas, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_

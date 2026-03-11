@@ -98,8 +98,8 @@ describe('Nap — Metrics collection', () => {
   it('counts files and bytes correctly for a populated .squad/', async () => {
     const squadDir = createTestSquadDir({
       'decisions.md': 'Some decisions content here',
-      'agents/hockney/history.md': 'Hockney history',
-      'agents/fenster/history.md': 'Fenster history content',
+      'agents/samigina/history.md': 'Samigina history',
+      'agents/vassago/history.md': 'Vassago history content',
       'log/session-1.md': 'Log entry one',
       'decisions/inbox/item1.md': 'Inbox item',
     });
@@ -133,16 +133,16 @@ describe('Nap — History compression', () => {
   it('leaves history under 15KB untouched', async () => {
     const smallHistory = generateHistory(3, 1000); // ~3KB
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': smallHistory,
+      'agents/samigina/history.md': smallHistory,
     });
     const result = await runNap({ squadDir });
 
     const compressActions = result.actions.filter(
-      (a) => a.type === 'compress' && a.target.includes('hockney')
+      (a) => a.type === 'compress' && a.target.includes('samigina')
     );
     expect(compressActions).toHaveLength(0);
 
-    const afterContent = readFileSync(join(squadDir, 'agents/hockney/history.md'), 'utf8');
+    const afterContent = readFileSync(join(squadDir, 'agents/samigina/history.md'), 'utf8');
     expect(afterContent).toBe(smallHistory);
   });
 
@@ -152,19 +152,19 @@ describe('Nap — History compression', () => {
     expect(Buffer.byteLength(largeHistory)).toBeGreaterThan(15 * 1024);
 
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': largeHistory,
+      'agents/samigina/history.md': largeHistory,
     });
     const result = await runNap({ squadDir });
 
     // Should have a compress action
     const compressActions = result.actions.filter(
-      (a) => a.type === 'compress' && a.target.includes('hockney')
+      (a) => a.type === 'compress' && a.target.includes('samigina')
     );
     expect(compressActions.length).toBeGreaterThan(0);
     expect(compressActions[0]!.bytesSaved).toBeGreaterThan(0);
 
     // Compressed file should still contain Core Context
-    const afterContent = readFileSync(join(squadDir, 'agents/hockney/history.md'), 'utf8');
+    const afterContent = readFileSync(join(squadDir, 'agents/samigina/history.md'), 'utf8');
     expect(afterContent).toContain('Core Context');
 
     // Should keep 5 most recent entries (entries 6–10)
@@ -182,11 +182,11 @@ describe('Nap — History compression', () => {
   it('archives compressed content to history-archive.md', async () => {
     const largeHistory = generateHistory(10, 2000);
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': largeHistory,
+      'agents/samigina/history.md': largeHistory,
     });
     await runNap({ squadDir });
 
-    const archivePath = join(squadDir, 'agents/hockney/history-archive.md');
+    const archivePath = join(squadDir, 'agents/samigina/history-archive.md');
     expect(existsSync(archivePath)).toBe(true);
 
     const archiveContent = readFileSync(archivePath, 'utf8');
@@ -199,12 +199,12 @@ describe('Nap — History compression', () => {
     const existingArchive = '## Previously archived\n\nOld archive content\n';
     const largeHistory = generateHistory(10, 2000);
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': largeHistory,
-      'agents/hockney/history-archive.md': existingArchive,
+      'agents/samigina/history.md': largeHistory,
+      'agents/samigina/history-archive.md': existingArchive,
     });
     await runNap({ squadDir });
 
-    const archiveContent = readFileSync(join(squadDir, 'agents/hockney/history-archive.md'), 'utf8');
+    const archiveContent = readFileSync(join(squadDir, 'agents/samigina/history-archive.md'), 'utf8');
     // Old content preserved
     expect(archiveContent).toContain('Old archive content');
     // New content appended
@@ -215,7 +215,7 @@ describe('Nap — History compression', () => {
     const history = '## Core Context\n\nI am the tester. I break things.\n\n' +
       generateHistory(10, 2000).replace(/## Core Context[\s\S]*?\n\n/, '');
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': history,
+      'agents/samigina/history.md': history,
     });
 
     // Ensure it's over threshold
@@ -223,7 +223,7 @@ describe('Nap — History compression', () => {
 
     await runNap({ squadDir });
 
-    const afterContent = readFileSync(join(squadDir, 'agents/hockney/history.md'), 'utf8');
+    const afterContent = readFileSync(join(squadDir, 'agents/samigina/history.md'), 'utf8');
     expect(afterContent).toContain('Core Context');
     expect(afterContent).toContain('I am the tester');
   });
@@ -400,12 +400,12 @@ describe('Nap — Deep mode', () => {
   it('uses more aggressive compression (3 entries instead of 5)', async () => {
     const largeHistory = generateHistory(10, 2000);
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': largeHistory,
+      'agents/samigina/history.md': largeHistory,
     });
 
     await runNap({ squadDir, deep: true });
 
-    const afterContent = readFileSync(join(squadDir, 'agents/hockney/history.md'), 'utf8');
+    const afterContent = readFileSync(join(squadDir, 'agents/samigina/history.md'), 'utf8');
     // Should keep only 3 most recent in deep mode
     expect(afterContent).toContain('Entry 10');
     expect(afterContent).toContain('Entry 9');
@@ -418,7 +418,7 @@ describe('Nap — Deep mode', () => {
 
   it('still runs all Tier 1 actions in deep mode', async () => {
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': generateHistory(10, 2000),
+      'agents/samigina/history.md': generateHistory(10, 2000),
       'log/old.md': 'old log',
       'decisions/inbox/item.md': '### Item\nContent.\n',
       'decisions.md': '# Decisions\n',
@@ -444,20 +444,20 @@ describe('Nap — Dry-run mode', () => {
   it('does not modify any files', async () => {
     const largeHistory = generateHistory(10, 2000);
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': largeHistory,
+      'agents/samigina/history.md': largeHistory,
       'log/old.md': 'old log',
       'decisions/inbox/item.md': '### Item\nContent.\n',
       'decisions.md': '# Decisions\n',
     });
     setFileAge(join(squadDir, 'log/old.md'), 10);
 
-    const beforeHistory = readFileSync(join(squadDir, 'agents/hockney/history.md'), 'utf8');
+    const beforeHistory = readFileSync(join(squadDir, 'agents/samigina/history.md'), 'utf8');
     const beforeDecisions = readFileSync(join(squadDir, 'decisions.md'), 'utf8');
 
     const result = await runNap({ squadDir, dryRun: true });
 
     // Files should be unchanged
-    expect(readFileSync(join(squadDir, 'agents/hockney/history.md'), 'utf8')).toBe(beforeHistory);
+    expect(readFileSync(join(squadDir, 'agents/samigina/history.md'), 'utf8')).toBe(beforeHistory);
     expect(readFileSync(join(squadDir, 'decisions.md'), 'utf8')).toBe(beforeDecisions);
     expect(existsSync(join(squadDir, 'log/old.md'))).toBe(true);
     expect(existsSync(join(squadDir, 'decisions/inbox/item.md'))).toBe(true);
@@ -468,7 +468,7 @@ describe('Nap — Dry-run mode', () => {
 
   it('reports projected changes in before/after metrics', async () => {
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': generateHistory(10, 2000),
+      'agents/samigina/history.md': generateHistory(10, 2000),
       'log/old.md': 'old log content',
     });
     setFileAge(join(squadDir, 'log/old.md'), 10);
@@ -481,12 +481,12 @@ describe('Nap — Dry-run mode', () => {
 
   it('does not create archive files in dry-run', async () => {
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': generateHistory(10, 2000),
+      'agents/samigina/history.md': generateHistory(10, 2000),
     });
 
     await runNap({ squadDir, dryRun: true });
 
-    expect(existsSync(join(squadDir, 'agents/hockney/history-archive.md'))).toBe(false);
+    expect(existsSync(join(squadDir, 'agents/samigina/history-archive.md'))).toBe(false);
   });
 });
 
@@ -497,7 +497,7 @@ describe('Nap — Dry-run mode', () => {
 describe('Nap — Journal safety', () => {
   it('creates .nap-journal at start and removes on completion', async () => {
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': 'small history',
+      'agents/samigina/history.md': 'small history',
     });
 
     // After successful nap, journal should be cleaned up
@@ -509,7 +509,7 @@ describe('Nap — Journal safety', () => {
   it('warns when an existing journal is found at start', async () => {
     const squadDir = createTestSquadDir({
       '.nap-journal': 'stale journal from interrupted run',
-      'agents/hockney/history.md': 'some history',
+      'agents/samigina/history.md': 'some history',
     });
 
     const result = await runNap({ squadDir });
@@ -548,7 +548,7 @@ describe('Nap — Report formatting', () => {
         inboxFiles: 0,
       },
       actions: [
-        { type: 'compress', target: 'agents/hockney/history.md', description: 'Compressed history', bytesSaved: 40000 },
+        { type: 'compress', target: 'agents/samigina/history.md', description: 'Compressed history', bytesSaved: 40000 },
         { type: 'prune', target: 'log/old.md', description: 'Pruned old log', bytesSaved: 30000 },
       ],
       ...overrides,
@@ -630,8 +630,8 @@ describe('Nap — Edge cases', () => {
 
   it('skips empty history.md files', async () => {
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': '',
-      'agents/fenster/history.md': '',
+      'agents/samigina/history.md': '',
+      'agents/vassago/history.md': '',
     });
 
     const result = await runNap({ squadDir });
@@ -645,7 +645,7 @@ describe('Nap — Edge cases', () => {
     expect(Buffer.byteLength(hugeHistory)).toBeGreaterThan(100 * 1024);
 
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': hugeHistory,
+      'agents/samigina/history.md': hugeHistory,
     });
 
     const result = await runNap({ squadDir });
@@ -654,25 +654,25 @@ describe('Nap — Edge cases', () => {
     expect(result.actions.length).toBeGreaterThan(0);
 
     // After should be significantly smaller
-    const afterSize = statSync(join(squadDir, 'agents/hockney/history.md')).size;
+    const afterSize = statSync(join(squadDir, 'agents/samigina/history.md')).size;
     expect(afterSize).toBeLessThan(Buffer.byteLength(hugeHistory));
   });
 
   it('handles multiple agents with mixed history sizes', async () => {
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': generateHistory(10, 2000),  // ~20KB, over threshold
-      'agents/fenster/history.md': generateHistory(2, 500),     // ~1KB, under threshold
-      'agents/verbal/history.md': generateHistory(8, 2500),     // ~20KB, over threshold
+      'agents/samigina/history.md': generateHistory(10, 2000),  // ~20KB, over threshold
+      'agents/vassago/history.md': generateHistory(2, 500),     // ~1KB, under threshold
+      'agents/agares/history.md': generateHistory(8, 2500),     // ~20KB, over threshold
     });
 
     const result = await runNap({ squadDir });
 
     const compressActions = result.actions.filter((a) => a.type === 'compress');
-    // hockney and verbal should be compressed, fenster should not
+    // samigina and agares should be compressed, vassago should not
     const targets = compressActions.map((a) => a.target);
-    expect(targets.some((t) => t.includes('hockney'))).toBe(true);
-    expect(targets.some((t) => t.includes('verbal'))).toBe(true);
-    expect(targets.some((t) => t.includes('fenster'))).toBe(false);
+    expect(targets.some((t) => t.includes('samigina'))).toBe(true);
+    expect(targets.some((t) => t.includes('agares'))).toBe(true);
+    expect(targets.some((t) => t.includes('vassago'))).toBe(false);
   });
 
   it('handles .squad/ with only hidden files and no content', async () => {
@@ -691,7 +691,7 @@ describe('Nap — Edge cases', () => {
 
   it('NapAction bytesSaved is always non-negative', async () => {
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': generateHistory(10, 2000),
+      'agents/samigina/history.md': generateHistory(10, 2000),
       'log/old.md': 'old log',
     });
     setFileAge(join(squadDir, 'log/old.md'), 10);
@@ -705,7 +705,7 @@ describe('Nap — Edge cases', () => {
 
   it('after metrics reflect actual state after nap', async () => {
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': generateHistory(10, 2000),
+      'agents/samigina/history.md': generateHistory(10, 2000),
       'log/old.md': 'x'.repeat(5000),
     });
     setFileAge(join(squadDir, 'log/old.md'), 10);
@@ -730,8 +730,8 @@ describe('Nap — Combined scenarios', () => {
     }
 
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': generateHistory(10, 2000),
-      'agents/fenster/history.md': generateHistory(8, 2500),
+      'agents/samigina/history.md': generateHistory(10, 2000),
+      'agents/vassago/history.md': generateHistory(8, 2500),
       'log/old1.md': 'old log 1',
       'log/old2.md': 'old log 2',
       'log/recent.md': 'recent log',
@@ -760,13 +760,13 @@ describe('Nap — Combined scenarios', () => {
   it('deep + dry-run combines both flags correctly', async () => {
     const largeHistory = generateHistory(10, 2000);
     const squadDir = createTestSquadDir({
-      'agents/hockney/history.md': largeHistory,
+      'agents/samigina/history.md': largeHistory,
     });
 
     const result = await runNap({ squadDir, deep: true, dryRun: true });
 
     // File unchanged (dry-run)
-    expect(readFileSync(join(squadDir, 'agents/hockney/history.md'), 'utf8')).toBe(largeHistory);
+    expect(readFileSync(join(squadDir, 'agents/samigina/history.md'), 'utf8')).toBe(largeHistory);
 
     // But actions show deep-mode behavior
     expect(result.actions.length).toBeGreaterThan(0);

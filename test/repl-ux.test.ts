@@ -4,7 +4,7 @@
  * Tests rendered output of shell components using ink-testing-library.
  * Asserts on TEXT content (what the user sees), not internal state.
  * Written against component interfaces (props → rendered text) so that
- * implementation changes by Kovash don't break these tests.
+ * implementation changes by Eligos don't break these tests.
  *
  * Components under test:
  * - MessageStream: conversation display, spinner, streaming cursor
@@ -67,14 +67,14 @@ describe('ThinkingIndicator visibility', () => {
     // the hint must come from the parent via activityHint (as App.tsx does).
     const { lastFrame } = render(
       h(MessageStream, {
-        messages: [makeMessage({ role: 'user', content: '@Kovash fix the bug' })],
+        messages: [makeMessage({ role: 'user', content: '@Eligos fix the bug' })],
         processing: true,
         streamingContent: new Map(),
-        activityHint: 'Kovash is thinking...',
+        activityHint: 'Eligos is thinking...',
       })
     );
     const frame = lastFrame()!;
-    expect(frame).toContain('Kovash');
+    expect(frame).toContain('Eligos');
     expect(frame).toContain('thinking');
   });
 
@@ -96,7 +96,7 @@ describe('ThinkingIndicator visibility', () => {
       h(MessageStream, {
         messages: [makeMessage({ role: 'user', content: 'hello' })],
         processing: true,
-        streamingContent: new Map([['Kovash', 'Working on it...']]),
+        streamingContent: new Map([['Eligos', 'Working on it...']]),
       })
     );
     const frame = lastFrame()!;
@@ -118,7 +118,7 @@ describe('ThinkingIndicator visibility', () => {
       h(MessageStream, {
         messages: [
           makeMessage({ role: 'user', content: 'hello' }),
-          makeMessage({ role: 'agent', content: 'Done!', agentName: 'Kovash' }),
+          makeMessage({ role: 'agent', content: 'Done!', agentName: 'Eligos' }),
         ],
         processing: false,
         streamingContent: new Map(),
@@ -142,25 +142,25 @@ describe('AgentPanel status display', () => {
 
   it('shows agent names in roster', () => {
     const agents = [
-      makeAgent({ name: 'Kovash', role: 'core dev', status: 'idle' }),
-      makeAgent({ name: 'Hockney', role: 'tester', status: 'idle' }),
+      makeAgent({ name: 'Eligos', role: 'core dev', status: 'idle' }),
+      makeAgent({ name: 'Samigina', role: 'tester', status: 'idle' }),
     ];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     const frame = lastFrame()!;
-    expect(frame).toContain('Kovash');
-    expect(frame).toContain('Hockney');
+    expect(frame).toContain('Eligos');
+    expect(frame).toContain('Samigina');
   });
 
   it('idle agents show "idle" status text', () => {
-    const agents = [makeAgent({ name: 'Kovash', status: 'idle' })];
+    const agents = [makeAgent({ name: 'Eligos', status: 'idle' })];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     expect(lastFrame()!.toLowerCase()).toContain('[idle]');
   });
 
   it('working agents show active indicator ●', () => {
     const agents = [
-      makeAgent({ name: 'Kovash', status: 'working' }),
-      makeAgent({ name: 'Hockney', status: 'idle' }),
+      makeAgent({ name: 'Eligos', status: 'working' }),
+      makeAgent({ name: 'Samigina', status: 'idle' }),
     ];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     const frame = lastFrame()!;
@@ -168,41 +168,41 @@ describe('AgentPanel status display', () => {
   });
 
   it('streaming agents show active indicator ●', () => {
-    const agents = [makeAgent({ name: 'Kovash', status: 'streaming' })];
+    const agents = [makeAgent({ name: 'Eligos', status: 'streaming' })];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     expect(lastFrame()!).toContain('●');
   });
 
   it('error agents show error indicator [ERR]', () => {
-    const agents = [makeAgent({ name: 'Kovash', status: 'error' })];
+    const agents = [makeAgent({ name: 'Eligos', status: 'error' })];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     expect(lastFrame()!).toContain('[ERR]');
   });
 
   it('shows streaming status when streamingContent references agent', () => {
-    const agents = [makeAgent({ name: 'Kovash', status: 'streaming' })];
+    const agents = [makeAgent({ name: 'Eligos', status: 'streaming' })];
     const { lastFrame } = render(
       h(AgentPanel, {
         agents,
-        streamingContent: new Map([['Kovash', 'some response']]),
+        streamingContent: new Map([['Eligos', 'some response']]),
       })
     );
     const frame = lastFrame()!;
-    expect(frame).toContain('Kovash');
+    expect(frame).toContain('Eligos');
     expect(frame).toContain('working');
   });
 
   it('mixed statuses render correctly together', () => {
     const agents = [
       makeAgent({ name: 'Brady', role: 'lead', status: 'idle' }),
-      makeAgent({ name: 'Kovash', role: 'core dev', status: 'working' }),
-      makeAgent({ name: 'Hockney', role: 'tester', status: 'error' }),
+      makeAgent({ name: 'Eligos', role: 'core dev', status: 'working' }),
+      makeAgent({ name: 'Samigina', role: 'tester', status: 'error' }),
     ];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     const frame = lastFrame()!;
     expect(frame).toContain('Brady');
-    expect(frame).toContain('Kovash');
-    expect(frame).toContain('Hockney');
+    expect(frame).toContain('Eligos');
+    expect(frame).toContain('Samigina');
     expect(frame).toContain('●');
     expect(frame).toContain('[ERR]');
   });
@@ -227,12 +227,12 @@ describe('MessageStream formatting', () => {
   it('agent messages show agent name with emoji', () => {
     const { lastFrame } = render(
       h(MessageStream, {
-        messages: [makeMessage({ role: 'agent', content: 'I will fix it', agentName: 'Kovash' })],
-        agents: [makeAgent({ name: 'Kovash', role: 'core dev' })],
+        messages: [makeMessage({ role: 'agent', content: 'I will fix it', agentName: 'Eligos' })],
+        agents: [makeAgent({ name: 'Eligos', role: 'core dev' })],
       })
     );
     const frame = lastFrame()!;
-    expect(frame).toContain('Kovash');
+    expect(frame).toContain('Eligos');
     expect(frame).toContain('I will fix it');
     // core dev emoji is 🔧
     expect(frame).toContain('🔧');
@@ -241,8 +241,8 @@ describe('MessageStream formatting', () => {
   it('tester agent shows tester emoji 🧪', () => {
     const { lastFrame } = render(
       h(MessageStream, {
-        messages: [makeMessage({ role: 'agent', content: 'tests pass', agentName: 'Hockney' })],
-        agents: [makeAgent({ name: 'Hockney', role: 'tester' })],
+        messages: [makeMessage({ role: 'agent', content: 'tests pass', agentName: 'Samigina' })],
+        agents: [makeAgent({ name: 'Samigina', role: 'tester' })],
       })
     );
     expect(lastFrame()!).toContain('🧪');
@@ -263,7 +263,7 @@ describe('MessageStream formatting', () => {
       h(MessageStream, {
         messages: [
           makeMessage({ role: 'user', content: 'first question' }),
-          makeMessage({ role: 'agent', content: 'first answer', agentName: 'Kovash' }),
+          makeMessage({ role: 'agent', content: 'first answer', agentName: 'Eligos' }),
           makeMessage({ role: 'user', content: 'second question' }),
         ],
       })
@@ -286,7 +286,7 @@ describe('MessageStream formatting', () => {
     const { lastFrame } = render(
       h(MessageStream, {
         messages: [],
-        streamingContent: new Map([['Kovash', 'partial response']]),
+        streamingContent: new Map([['Eligos', 'partial response']]),
       })
     );
     const frame = lastFrame()!;
@@ -298,11 +298,11 @@ describe('MessageStream formatting', () => {
     const { lastFrame } = render(
       h(MessageStream, {
         messages: [],
-        streamingContent: new Map([['Kovash', 'streaming text']]),
-        agents: [makeAgent({ name: 'Kovash', role: 'core dev' })],
+        streamingContent: new Map([['Eligos', 'streaming text']]),
+        agents: [makeAgent({ name: 'Eligos', role: 'core dev' })],
       })
     );
-    expect(lastFrame()!).toContain('Kovash');
+    expect(lastFrame()!).toContain('Eligos');
   });
 
   it('respects maxVisible prop — only shows last N messages', () => {
@@ -387,7 +387,7 @@ describe('InputPrompt behavior', () => {
       })
     );
     const frame = lastFrame()!;
-    // Kovash's refactored InputPrompt shows ◆ squad + spinner when disabled
+    // Eligos's refactored InputPrompt shows ◆ squad + spinner when disabled
     expect(frame).toContain('squad');
     expect(frame).toMatch(/[⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏]/);
   });
@@ -488,14 +488,14 @@ describe('Welcome experience', () => {
   it('agent roster displays all team members', () => {
     const agents = [
       makeAgent({ name: 'Brady', role: 'lead', status: 'idle' }),
-      makeAgent({ name: 'Kovash', role: 'core dev', status: 'idle' }),
-      makeAgent({ name: 'Hockney', role: 'tester', status: 'idle' }),
+      makeAgent({ name: 'Eligos', role: 'core dev', status: 'idle' }),
+      makeAgent({ name: 'Samigina', role: 'tester', status: 'idle' }),
     ];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     const frame = lastFrame()!;
     expect(frame).toContain('Brady');
-    expect(frame).toContain('Kovash');
-    expect(frame).toContain('Hockney');
+    expect(frame).toContain('Eligos');
+    expect(frame).toContain('Samigina');
     // Should show idle status for the team
     expect(frame.toLowerCase()).toContain('[idle]');
   });
@@ -533,7 +533,7 @@ describe('Never feels dead', () => {
       h(MessageStream, {
         messages: [makeMessage({ role: 'user', content: 'do something' })],
         processing: true,
-        streamingContent: new Map([['Kovash', 'Working...']]),
+        streamingContent: new Map([['Eligos', 'Working...']]),
       })
     );
     const frame = lastFrame()!;
@@ -559,7 +559,7 @@ describe('Never feels dead', () => {
       h(MessageStream, {
         messages: [makeMessage({ role: 'user', content: 'hello' })],
         processing: true,
-        streamingContent: new Map([['Kovash', 'Partial...']]),
+        streamingContent: new Map([['Eligos', 'Partial...']]),
       })
     );
     expect(lastFrame()!).toContain('Partial...');
@@ -570,7 +570,7 @@ describe('Never feels dead', () => {
       h(MessageStream, {
         messages: [
           makeMessage({ role: 'user', content: 'hello' }),
-          makeMessage({ role: 'agent', content: 'Complete answer.', agentName: 'Kovash' }),
+          makeMessage({ role: 'agent', content: 'Complete answer.', agentName: 'Eligos' }),
         ],
         processing: false,
         streamingContent: new Map(),
@@ -622,12 +622,12 @@ describe('Never feels dead', () => {
       },
       {
         processing: true,
-        streamingContent: new Map([['Kovash', 'Starting...']]),
+        streamingContent: new Map([['Eligos', 'Starting...']]),
         messages: [makeMessage({ role: 'user', content: 'question' })],
       },
       {
         processing: true,
-        streamingContent: new Map([['Kovash', 'More content here...']]),
+        streamingContent: new Map([['Eligos', 'More content here...']]),
         messages: [makeMessage({ role: 'user', content: 'question' })],
       },
       {
@@ -635,7 +635,7 @@ describe('Never feels dead', () => {
         streamingContent: new Map(),
         messages: [
           makeMessage({ role: 'user', content: 'question' }),
-          makeMessage({ role: 'agent', content: 'Full answer.', agentName: 'Kovash' }),
+          makeMessage({ role: 'agent', content: 'Full answer.', agentName: 'Eligos' }),
         ],
       },
     ];
@@ -750,14 +750,14 @@ describe('ThinkingIndicator integration with MessageStream', () => {
     // the hint must come from the parent via activityHint (as App.tsx does).
     const { lastFrame } = render(
       h(MessageStream, {
-        messages: [makeMessage({ role: 'user', content: '@Kovash fix the bug' })],
+        messages: [makeMessage({ role: 'user', content: '@Eligos fix the bug' })],
         processing: true,
         streamingContent: new Map(),
-        activityHint: 'Kovash is thinking...',
+        activityHint: 'Eligos is thinking...',
       })
     );
     const frame = lastFrame()!;
-    expect(frame).toContain('Kovash');
+    expect(frame).toContain('Eligos');
     expect(frame).toContain('thinking');
   });
 
@@ -776,7 +776,7 @@ describe('ThinkingIndicator integration with MessageStream', () => {
   it('activityHint overrides @mention hint', () => {
     const { lastFrame } = render(
       h(MessageStream, {
-        messages: [makeMessage({ role: 'user', content: '@Kovash fix it' })],
+        messages: [makeMessage({ role: 'user', content: '@Eligos fix it' })],
         processing: true,
         streamingContent: new Map(),
         activityHint: 'Reading file...',
@@ -791,12 +791,12 @@ describe('ThinkingIndicator integration with MessageStream', () => {
       h(MessageStream, {
         messages: [makeMessage({ role: 'user', content: 'hello' })],
         processing: true,
-        streamingContent: new Map([['Kovash', 'Working on it...']]),
+        streamingContent: new Map([['Eligos', 'Working on it...']]),
       })
     );
     const frame = lastFrame()!;
     expect(frame).toContain('Working on it...');
-    expect(frame).toContain('Kovash streaming');
+    expect(frame).toContain('Eligos streaming');
   });
 });
 
@@ -808,45 +808,45 @@ describe('Rich progress indicators', () => {
   // -- AgentPanel progress display --
 
   it('working agent shows activity description in status line', () => {
-    const agents = [makeAgent({ name: 'Keaton', status: 'working' })];
+    const agents = [makeAgent({ name: 'Bael', status: 'working' })];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     const frame = lastFrame()!;
-    expect(frame).toContain('Keaton');
+    expect(frame).toContain('Bael');
     expect(frame).toContain('working');
   });
 
   it('streaming agent shows activity description in status line', () => {
-    const agents = [makeAgent({ name: 'Keaton', status: 'streaming' })];
+    const agents = [makeAgent({ name: 'Bael', status: 'streaming' })];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     const frame = lastFrame()!;
-    expect(frame).toContain('Keaton');
+    expect(frame).toContain('Bael');
     expect(frame).toContain('working');
   });
 
   it('active agent shows pulsing dot in roster', () => {
-    const agents = [makeAgent({ name: 'Keaton', status: 'working' })];
+    const agents = [makeAgent({ name: 'Bael', status: 'working' })];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     expect(lastFrame()!).toMatch(/[●◉○]/);
   });
 
   it('agent with activityHint shows hint in status line', () => {
-    const agents = [makeAgent({ name: 'Keaton', status: 'working', activityHint: 'Reviewing architecture' })];
+    const agents = [makeAgent({ name: 'Bael', status: 'working', activityHint: 'Reviewing architecture' })];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     const frame = lastFrame()!;
     expect(frame).toContain('Reviewing architecture');
   });
 
   it('agent status shows hint directly (no [WORK] tag)', () => {
-    const agents = [makeAgent({ name: 'Keaton', status: 'working', activityHint: 'Reading file' })];
+    const agents = [makeAgent({ name: 'Bael', status: 'working', activityHint: 'Reading file' })];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     const frame = lastFrame()!;
-    expect(frame).toContain('Keaton');
+    expect(frame).toContain('Bael');
     expect(frame).toContain('Reading file');
     expect(frame).not.toContain('[WORK]');
   });
 
   it('idle agent does not show activity hint even if set', () => {
-    const agents = [makeAgent({ name: 'Keaton', status: 'idle', activityHint: 'stale hint' })];
+    const agents = [makeAgent({ name: 'Bael', status: 'idle', activityHint: 'stale hint' })];
     const { lastFrame } = render(h(AgentPanel, { agents }));
     const frame = lastFrame()!;
     // Idle agents are in the "ready" section, not the active status lines
@@ -856,7 +856,7 @@ describe('Rich progress indicators', () => {
   // -- MessageStream activity feed --
 
   it('MessageStream shows activity feed when agentActivities provided', () => {
-    const activities = new Map([['Keaton', 'reading file']]);
+    const activities = new Map([['Bael', 'reading file']]);
     const { lastFrame } = render(
       h(MessageStream, {
         messages: [makeMessage({ role: 'user', content: 'hello' })],
@@ -865,14 +865,14 @@ describe('Rich progress indicators', () => {
     );
     const frame = lastFrame()!;
     expect(frame).toContain('▸');
-    expect(frame).toContain('Keaton');
+    expect(frame).toContain('Bael');
     expect(frame).toContain('reading file');
   });
 
   it('MessageStream shows multiple agent activities', () => {
     const activities = new Map([
-      ['Keaton', 'reading file'],
-      ['Hockney', 'running tests'],
+      ['Bael', 'reading file'],
+      ['Samigina', 'running tests'],
     ]);
     const { lastFrame } = render(
       h(MessageStream, {
@@ -881,8 +881,8 @@ describe('Rich progress indicators', () => {
       })
     );
     const frame = lastFrame()!;
-    expect(frame).toContain('Keaton');
-    expect(frame).toContain('Hockney');
+    expect(frame).toContain('Bael');
+    expect(frame).toContain('Samigina');
     expect(frame).toContain('reading file');
     expect(frame).toContain('running tests');
   });
@@ -913,7 +913,7 @@ describe('Rich progress indicators', () => {
   // -- Combined: activity feed + thinking indicator --
 
   it('activity feed and thinking indicator coexist during processing', () => {
-    const activities = new Map([['Keaton', 'searching codebase']]);
+    const activities = new Map([['Bael', 'searching codebase']]);
     const { lastFrame } = render(
       h(MessageStream, {
         messages: [makeMessage({ role: 'user', content: 'find the bug' })],
@@ -923,7 +923,7 @@ describe('Rich progress indicators', () => {
       })
     );
     const frame = lastFrame()!;
-    expect(frame).toContain('▸ Keaton');
+    expect(frame).toContain('▸ Bael');
     expect(frame).toContain('searching codebase');
     // ThinkingIndicator should also be showing
     expect(frame).toMatch(/[⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏]/);
@@ -940,7 +940,7 @@ describe('Animations and transitions', () => {
   it('new messages are rendered immediately (content always visible)', () => {
     const msgs = [
       makeMessage({ role: 'user', content: 'hello world' }),
-      makeMessage({ role: 'agent', content: 'response here', agentName: 'Keaton' }),
+      makeMessage({ role: 'agent', content: 'response here', agentName: 'Bael' }),
     ];
     const { lastFrame } = render(h(MessageStream, { messages: msgs }));
     const frame = lastFrame()!;
@@ -952,7 +952,7 @@ describe('Animations and transitions', () => {
     const msgs = [makeMessage({ role: 'user', content: 'first message' })];
     const { lastFrame, rerender } = render(h(MessageStream, { messages: msgs }));
     // Add a new message
-    const updated = [...msgs, makeMessage({ role: 'agent', content: 'new reply', agentName: 'Keaton' })];
+    const updated = [...msgs, makeMessage({ role: 'agent', content: 'new reply', agentName: 'Bael' })];
     rerender(h(MessageStream, { messages: updated }));
     const frame = lastFrame()!;
     expect(frame).toContain('new reply');
@@ -961,50 +961,50 @@ describe('Animations and transitions', () => {
   // -- Completion flash --
 
   it('agent shows "✓ Done" flash when transitioning from working to idle', () => {
-    const working = [makeAgent({ name: 'Keaton', status: 'working' })];
+    const working = [makeAgent({ name: 'Bael', status: 'working' })];
     const { lastFrame, rerender } = render(h(AgentPanel, { agents: working }));
     // Transition to idle
-    const idle = [makeAgent({ name: 'Keaton', status: 'idle' })];
+    const idle = [makeAgent({ name: 'Bael', status: 'idle' })];
     rerender(h(AgentPanel, { agents: idle }));
     const frame = lastFrame()!;
     expect(frame).toContain('✓ Done');
   });
 
   it('agent shows "✓ Done" flash when transitioning from streaming to idle', () => {
-    const streaming = [makeAgent({ name: 'Keaton', status: 'streaming' })];
+    const streaming = [makeAgent({ name: 'Bael', status: 'streaming' })];
     const { lastFrame, rerender } = render(h(AgentPanel, { agents: streaming }));
-    const idle = [makeAgent({ name: 'Keaton', status: 'idle' })];
+    const idle = [makeAgent({ name: 'Bael', status: 'idle' })];
     rerender(h(AgentPanel, { agents: idle }));
     const frame = lastFrame()!;
     expect(frame).toContain('✓ Done');
   });
 
   it('no "✓ Done" flash for agents that were already idle', () => {
-    const idle = [makeAgent({ name: 'Keaton', status: 'idle' })];
+    const idle = [makeAgent({ name: 'Bael', status: 'idle' })];
     const { lastFrame, rerender } = render(h(AgentPanel, { agents: idle }));
     // Re-render with same idle status
-    rerender(h(AgentPanel, { agents: [makeAgent({ name: 'Keaton', status: 'idle' })] }));
+    rerender(h(AgentPanel, { agents: [makeAgent({ name: 'Bael', status: 'idle' })] }));
     const frame = lastFrame()!;
     expect(frame).not.toContain('✓ Done');
   });
 
   it('completion flash works for multiple agents independently', () => {
     const working = [
-      makeAgent({ name: 'Keaton', status: 'working' }),
-      makeAgent({ name: 'Hockney', status: 'working' }),
+      makeAgent({ name: 'Bael', status: 'working' }),
+      makeAgent({ name: 'Samigina', status: 'working' }),
     ];
     const { lastFrame, rerender } = render(h(AgentPanel, { agents: working }));
-    // Only Keaton finishes
+    // Only Bael finishes
     const mixed = [
-      makeAgent({ name: 'Keaton', status: 'idle' }),
-      makeAgent({ name: 'Hockney', status: 'working' }),
+      makeAgent({ name: 'Bael', status: 'idle' }),
+      makeAgent({ name: 'Samigina', status: 'working' }),
     ];
     rerender(h(AgentPanel, { agents: mixed }));
     const frame = lastFrame()!;
-    expect(frame).toContain('Keaton');
+    expect(frame).toContain('Bael');
     expect(frame).toContain('✓ Done');
-    // Hockney still working
-    expect(frame).toContain('Hockney');
+    // Samigina still working
+    expect(frame).toContain('Samigina');
     expect(frame).toContain('working');
   });
 
@@ -1014,9 +1014,9 @@ describe('Animations and transitions', () => {
     const orig = process.env['NO_COLOR'];
     process.env['NO_COLOR'] = '1';
     try {
-      const working = [makeAgent({ name: 'Keaton', status: 'working' })];
+      const working = [makeAgent({ name: 'Bael', status: 'working' })];
       const { lastFrame, rerender } = render(h(AgentPanel, { agents: working }));
-      rerender(h(AgentPanel, { agents: [makeAgent({ name: 'Keaton', status: 'idle' })] }));
+      rerender(h(AgentPanel, { agents: [makeAgent({ name: 'Bael', status: 'idle' })] }));
       const frame = lastFrame()!;
       expect(frame).not.toContain('✓ Done');
     } finally {
@@ -1331,11 +1331,11 @@ describe('NO_COLOR mode rendering', () => {
   it('AgentPanel renders working status in NO_COLOR', () => {
     setNoColor();
     try {
-      const agents = [makeAgent({ name: 'Kovash', status: 'working' })];
+      const agents = [makeAgent({ name: 'Eligos', status: 'working' })];
       const { lastFrame } = render(h(AgentPanel, { agents }));
       const frame = lastFrame()!;
       expect(frame).toContain('working');
-      expect(frame).toContain('Kovash');
+      expect(frame).toContain('Eligos');
     } finally {
       restoreNoColor();
     }
@@ -1344,7 +1344,7 @@ describe('NO_COLOR mode rendering', () => {
   it('AgentPanel renders [ERR] text label in NO_COLOR', () => {
     setNoColor();
     try {
-      const agents = [makeAgent({ name: 'Kovash', status: 'error' })];
+      const agents = [makeAgent({ name: 'Eligos', status: 'error' })];
       const { lastFrame } = render(h(AgentPanel, { agents }));
       const frame = lastFrame()!;
       expect(frame).toContain('[ERR]');
@@ -1356,7 +1356,7 @@ describe('NO_COLOR mode rendering', () => {
   it('AgentPanel renders static dot (not animated) in NO_COLOR', () => {
     setNoColor();
     try {
-      const agents = [makeAgent({ name: 'Kovash', status: 'working' })];
+      const agents = [makeAgent({ name: 'Eligos', status: 'working' })];
       const { lastFrame } = render(h(AgentPanel, { agents }));
       const frame = lastFrame()!;
       expect(frame).toContain('●');
@@ -1415,12 +1415,12 @@ describe('NO_COLOR mode rendering', () => {
     try {
       const { lastFrame } = render(
         h(MessageStream, {
-          messages: [makeMessage({ role: 'agent', content: 'agent reply', agentName: 'Kovash' })],
-          agents: [makeAgent({ name: 'Kovash', role: 'core dev' })],
+          messages: [makeMessage({ role: 'agent', content: 'agent reply', agentName: 'Eligos' })],
+          agents: [makeAgent({ name: 'Eligos', role: 'core dev' })],
         })
       );
       const frame = lastFrame()!;
-      expect(frame).toContain('Kovash');
+      expect(frame).toContain('Eligos');
       expect(frame).toContain('agent reply');
     } finally {
       restoreNoColor();
@@ -1514,7 +1514,7 @@ describe('Keyboard shortcut coverage', { timeout: 15_000 }, () => {
 
   it('Tab autocompletes @agent name when single match', async () => {
     const { lastFrame, stdin } = render(
-      h(InputPrompt, { onSubmit: vi.fn(), disabled: false, agentNames: ['Kovash', 'Keaton'] })
+      h(InputPrompt, { onSubmit: vi.fn(), disabled: false, agentNames: ['Eligos', 'Bael'] })
     );
     for (const ch of '@Kov') stdin.write(ch);
     await new Promise(r => setTimeout(r, 50));
@@ -1538,7 +1538,7 @@ describe('Keyboard shortcut coverage', { timeout: 15_000 }, () => {
 
   it('Tab does nothing when no match', async () => {
     const { lastFrame, stdin } = render(
-      h(InputPrompt, { onSubmit: vi.fn(), disabled: false, agentNames: ['Kovash'] })
+      h(InputPrompt, { onSubmit: vi.fn(), disabled: false, agentNames: ['Eligos'] })
     );
     for (const ch of '@Zzz') stdin.write(ch);
     await new Promise(r => setTimeout(r, 50));
@@ -1549,7 +1549,7 @@ describe('Keyboard shortcut coverage', { timeout: 15_000 }, () => {
 
   it('Tab does nothing when multiple matches', async () => {
     const { lastFrame, stdin } = render(
-      h(InputPrompt, { onSubmit: vi.fn(), disabled: false, agentNames: ['Kovash', 'Keaton'] })
+      h(InputPrompt, { onSubmit: vi.fn(), disabled: false, agentNames: ['Eligos', 'Bael'] })
     );
     for (const ch of '@K') stdin.write(ch);
     await new Promise(r => setTimeout(r, 50));

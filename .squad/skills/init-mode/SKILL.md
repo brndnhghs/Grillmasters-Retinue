@@ -85,11 +85,11 @@ The `union` merge driver keeps all lines from both sides, which is correct for a
 2. Runs `git config user.name` → "Brady"
 3. Asks: *"Hey Brady, what are you building?"*
 4. User: *"TypeScript CLI tool with GitHub API integration"*
-5. Coordinator runs casting algorithm → selects "The Usual Suspects" universe
-6. Proposes: Keaton (Lead), Verbal (Prompt), Fenster (Backend), Hockney (Tester), Scribe, Ralph
+5. Coordinator runs casting algorithm → selects "The Solomonic Demonology" universe
+6. Proposes: Bael (Lead), Agares (Prompt), Vassago (Backend), Samigina (Tester), Scribe, Ralph
 7. Uses `ask_user` with choices → user selects "Yes, hire this team"
 8. Coordinator creates `.squad/` structure, initializes casting state, seeds agents
-9. Says: *"✅ Team hired. Try: 'Keaton, set up the project structure'"*
+9. Says: *"✅ Team hired. Try: 'Bael, set up the project structure'"*
 
 ## Anti-Patterns
 

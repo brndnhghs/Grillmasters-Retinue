@@ -47,31 +47,31 @@ describe('squad migrate', () => {
 
 | Name | Role | Status |
 |------|------|--------|
-| edie | TypeScript Engineer | active |
-| hockney | Tester | active |
-| fenster | Systems Engineer | active |
+| amon | TypeScript Engineer | active |
+| samigina | Tester | active |
+| vassago | Systems Engineer | active |
 `;
     await writeFile(join(squadDir, 'team.md'), teamMd, 'utf-8');
 
     // Create agent charters
-    await mkdir(join(squadDir, 'agents', 'edie'), { recursive: true });
+    await mkdir(join(squadDir, 'agents', 'amon'), { recursive: true });
     await writeFile(
-      join(squadDir, 'agents', 'edie', 'charter.md'),
-      '# Edie — TypeScript Engineer\n\nExpert in TypeScript...',
+      join(squadDir, 'agents', 'amon', 'charter.md'),
+      '# Amon — TypeScript Engineer\n\nExpert in TypeScript...',
       'utf-8'
     );
 
-    await mkdir(join(squadDir, 'agents', 'hockney'), { recursive: true });
+    await mkdir(join(squadDir, 'agents', 'samigina'), { recursive: true });
     await writeFile(
-      join(squadDir, 'agents', 'hockney', 'charter.md'),
-      '# Hockney — Tester\n\nSkeptical, relentless...',
+      join(squadDir, 'agents', 'samigina', 'charter.md'),
+      '# Samigina — Tester\n\nSkeptical, relentless...',
       'utf-8'
     );
 
-    await mkdir(join(squadDir, 'agents', 'fenster'), { recursive: true });
+    await mkdir(join(squadDir, 'agents', 'vassago'), { recursive: true });
     await writeFile(
-      join(squadDir, 'agents', 'fenster', 'charter.md'),
-      '# Fenster — Systems Engineer\n\nInfrastructure expert...',
+      join(squadDir, 'agents', 'vassago', 'charter.md'),
+      '# Vassago — Systems Engineer\n\nInfrastructure expert...',
       'utf-8'
     );
 
@@ -96,11 +96,11 @@ describe('squad migrate', () => {
 export default defineSquad({
   team: defineTeam({
     name: 'Test Squad',
-    members: ['edie', 'hockney'],
+    members: ['amon', 'samigina'],
   }),
   agents: [
-    defineAgent({ name: 'edie', role: 'TypeScript Engineer' }),
-    defineAgent({ name: 'hockney', role: 'Tester' }),
+    defineAgent({ name: 'amon', role: 'TypeScript Engineer' }),
+    defineAgent({ name: 'samigina', role: 'Tester' }),
   ],
 });
 `;
@@ -162,7 +162,7 @@ export default defineSquad({
     // const configPath = join(tempDir, 'squad.config.ts');
     // const configContent = await readFile(configPath, 'utf-8');
 
-    // Assert: generated config has 3 defineAgent() calls (edie, hockney, fenster)
+    // Assert: generated config has 3 defineAgent() calls (amon, samigina, vassago)
     // const agentMatches = configContent.match(/defineAgent\(/g);
     // expect(agentMatches).toHaveLength(3);
   });
@@ -217,21 +217,21 @@ export default defineSquad({
     await createMarkdownSquad(tempDir);
 
     // Remove one charter file
-    await rm(join(tempDir, '.squad', 'agents', 'fenster', 'charter.md'));
+    await rm(join(tempDir, '.squad', 'agents', 'vassago', 'charter.md'));
 
     // TODO: Call migrate
     // await migrate({ targetDir: tempDir, to: 'sdk' });
 
-    // Assert: still generates config with fenster agent (with empty or placeholder charter)
+    // Assert: still generates config with vassago agent (with empty or placeholder charter)
     // const configPath = join(tempDir, 'squad.config.ts');
     // const configContent = await readFile(configPath, 'utf-8');
-    // expect(configContent).toContain('fenster');
+    // expect(configContent).toContain('vassago');
   });
 
   it('--to sdk preserves agent capabilities from charter frontmatter', async () => {
     await createMarkdownSquad(tempDir);
 
-    // Add frontmatter to edie's charter
+    // Add frontmatter to amon's charter
     const charterWithMeta = `---
 capabilities:
   - name: typescript
@@ -240,12 +240,12 @@ capabilities:
     level: proficient
 ---
 
-# Edie — TypeScript Engineer
+# Amon — TypeScript Engineer
 
 Expert in TypeScript...
 `;
     await writeFile(
-      join(tempDir, '.squad', 'agents', 'edie', 'charter.md'),
+      join(tempDir, '.squad', 'agents', 'amon', 'charter.md'),
       charterWithMeta,
       'utf-8'
     );
@@ -268,11 +268,11 @@ Expert in TypeScript...
 
 ## Rules
 
-- \`feature-*\` → edie
-- \`bug-*\` → fenster
-- \`test-*\` → hockney
+- \`feature-*\` → amon
+- \`bug-*\` → vassago
+- \`test-*\` → samigina
 
-Default: edie
+Default: amon
 `;
     await writeFile(join(tempDir, '.squad', 'routing.md'), routingMd, 'utf-8');
 

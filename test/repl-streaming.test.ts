@@ -217,7 +217,7 @@ describe('REPL Streaming — dispatchToAgent waits for streamed content', () => 
 
 describe('REPL Streaming — dispatchToCoordinator waits for streamed content', () => {
   it('coordinator response is fully accumulated before parsing', async () => {
-    const coordinatorReply = '## Routing\n- **Agent:** kovash\n- **Task:** fix the REPL bug';
+    const coordinatorReply = '## Routing\n- **Agent:** eligos\n- **Task:** fix the REPL bug';
     const chunks = [coordinatorReply.slice(0, 20), coordinatorReply.slice(20)];
     const session = createStreamingMockSession(chunks);
 
@@ -296,7 +296,7 @@ describe('REPL Streaming — sendMessage → accumulated → parseCoordinatorRes
   it('end-to-end pipeline: send → stream → accumulate → parse → route', async () => {
     const routingResponse = [
       '## Routing Decision\n',
-      '- **Agent:** kovash\n',
+      '- **Agent:** eligos\n',
       '- **Task:** Fix the streaming bug\n',
     ];
     const session = createStreamingMockSession(routingResponse);
@@ -381,7 +381,7 @@ describe('REPL Streaming — sendMessage → accumulated → parseCoordinatorRes
 // ============================================================================
 
 /**
- * Mirrors the FIXED extractDelta from index.ts (Kovash's patch).
+ * Mirrors the FIXED extractDelta from index.ts (Eligos's patch).
  * Tests will call this directly to validate field-priority behaviour.
  */
 function extractDelta(event: { type: string; [key: string]: unknown }): string {
@@ -827,14 +827,14 @@ describe('Coordinator dispatch — deltaContent accumulation + fallback', () => 
   it('coordinator response accumulated from deltaContent is parsed correctly', async () => {
     const chunks = [
       '## Routing\n',
-      '- **Agent:** kovash\n',
+      '- **Agent:** eligos\n',
       '- **Task:** fix the delta bug\n',
     ];
     const session = createDeltaContentMockSession(chunks);
     const accumulated = await simulateDispatchFixed(session, 'fix deltas');
     const decision = parseCoordinatorResponse(accumulated);
 
-    expect(accumulated).toBe('## Routing\n- **Agent:** kovash\n- **Task:** fix the delta bug\n');
+    expect(accumulated).toBe('## Routing\n- **Agent:** eligos\n- **Task:** fix the delta bug\n');
     expect(decision).toBeDefined();
     expect(typeof decision.type).toBe('string');
   });

@@ -15,7 +15,7 @@ Show me all issues with priority:p0
 
 **Try this to route work to a specific agent:**
 ```
-Add squad:fenster to issue #23
+Add squad:vassago to issue #23
 ```
 
 Squad uses structured, namespaced labels as the state machine. Labels drive workflow automation — not just tags. Five namespaces control lifecycle, priority, ownership, and release targeting.
@@ -30,7 +30,7 @@ Squad uses structured, namespaced labels as the state machine. Labels drive work
 | `release:` | Release target | `release:v0.4.0`, `release:v0.5.0`, `release:backlog` | ✅ One per issue |
 | `type:` | Issue category | `type:feature`, `type:bug`, `type:spike`, `type:docs`, `type:chore`, `type:epic` | ✅ One per issue |
 | `priority:` | Urgency level | `priority:p0`, `priority:p1`, `priority:p2` | ✅ One per issue |
-| `squad:{member}` | Agent assignment | `squad:fenster`, `squad:mcmanus`, `squad:hockney` | ❌ Can have multiple (pair work) |
+| `squad:{member}` | Agent assignment | `squad:vassago`, `squad:marbas`, `squad:samigina` | ❌ Can have multiple (pair work) |
 
 ## Mutual Exclusivity Rules
 
@@ -42,7 +42,7 @@ Example:
 - Result: `go:needs-research` removed, `go:yes` applied
 
 The `squad:{member}` namespace allows **multiple labels** for collaborative work:
-- `squad:fenster` + `squad:hockney` = pair programming or handoff
+- `squad:vassago` + `squad:samigina` = pair programming or handoff
 
 ## Workflow Automation
 
@@ -61,7 +61,7 @@ Some label changes trigger cascading updates:
 ### 3. Triage (Auto-Assignment)
 
 Ralph (work monitor) uses labels to route work:
-- `squad:fenster` → Fenster picks it up
+- `squad:vassago` → Vassago picks it up
 - No `squad:*` + `type:bug` → Routes to Tester or Lead based on routing.md
 - `go:needs-research` → Routes to Lead for investigation
 
@@ -116,8 +116,8 @@ Squad uses a consistent color scheme:
 # All approved features for v0.4.0
 gh issue list --label "go:yes,release:v0.4.0,type:feature"
 
-# All p0 bugs assigned to Fenster
-gh issue list --label "priority:p0,type:bug,squad:fenster"
+# All p0 bugs assigned to Vassago
+gh issue list --label "priority:p0,type:bug,squad:vassago"
 
 # All issues needing research
 gh issue list --label "go:needs-research"
@@ -136,9 +136,9 @@ Change issue #15 from needs-research to no
 Updates verdict: removes `go:needs-research`, applies `go:no`, adds `release:backlog`.
 
 ```
-Assign issue #28 to Fenster and Hockney for pair work
+Assign issue #28 to Vassago and Samigina for pair work
 ```
-Applies `squad:fenster` and `squad:hockney` labels. Both agents can pick it up.
+Applies `squad:vassago` and `squad:samigina` labels. Both agents can pick it up.
 
 ```
 List all p0 features approved for the next release

@@ -23,14 +23,14 @@ import {
 // --- Fixtures ---
 
 const FIXTURES_ROOT = path.resolve(__dirname, '..', 'test-fixtures', '.squad');
-const FENSTER_CHARTER = path.join(FIXTURES_ROOT, 'agents', 'fenster', 'charter.md');
-const HOCKNEY_CHARTER = path.join(FIXTURES_ROOT, 'agents', 'hockney', 'charter.md');
+const FENSTER_CHARTER = path.join(FIXTURES_ROOT, 'agents', 'vassago', 'charter.md');
+const HOCKNEY_CHARTER = path.join(FIXTURES_ROOT, 'agents', 'samigina', 'charter.md');
 
-const FULL_CHARTER = `# Verbal — Prompt Engineer
+const FULL_CHARTER = `# Agares — Prompt Engineer
 
 ## Identity
 
-**Name:** Verbal
+**Name:** Agares
 **Role:** Prompt Engineer
 **Expertise:** LLM prompts, agent design, system instructions
 **Style:** Precise. Every word in a prompt earns its place.
@@ -51,7 +51,7 @@ Do not modify runtime code. Stay within prompt and charter files.
 
 ## Collaboration
 
-Works closely with Fenster on agent integration testing.
+Works closely with Vassago on agent integration testing.
 `;
 
 const MINIMAL_CHARTER = `# Barebones Agent
@@ -69,7 +69,7 @@ describe('parseCharterMarkdown', () => {
   describe('identity parsing', () => {
     it('extracts name from ** bold format', () => {
       const parsed = parseCharterMarkdown(FULL_CHARTER);
-      expect(parsed.identity.name).toBe('Verbal');
+      expect(parsed.identity.name).toBe('Agares');
     });
 
     it('extracts role', () => {
@@ -120,7 +120,7 @@ describe('parseCharterMarkdown', () => {
 
     it('extracts collaboration section', () => {
       const parsed = parseCharterMarkdown(FULL_CHARTER);
-      expect(parsed.collaboration).toContain('Fenster');
+      expect(parsed.collaboration).toContain('Vassago');
     });
 
     it('preserves full content', () => {
@@ -178,17 +178,17 @@ describe('parseCharterMarkdown', () => {
   });
 
   describe('real fixture charters', () => {
-    it('parses fenster charter from test-fixtures', async () => {
+    it('parses vassago charter from test-fixtures', async () => {
       const content = await fs.readFile(FENSTER_CHARTER, 'utf-8');
       const parsed = parseCharterMarkdown(content);
-      expect(parsed.identity.name).toBe('Fenster');
+      expect(parsed.identity.name).toBe('Vassago');
       expect(parsed.identity.role).toBe('Core Dev');
     });
 
-    it('parses hockney charter from test-fixtures', async () => {
+    it('parses samigina charter from test-fixtures', async () => {
       const content = await fs.readFile(HOCKNEY_CHARTER, 'utf-8');
       const parsed = parseCharterMarkdown(content);
-      expect(parsed.identity.name).toBe('Hockney');
+      expect(parsed.identity.name).toBe('Samigina');
       expect(parsed.identity.role).toBe('Tester');
     });
   });
@@ -201,19 +201,19 @@ describe('parseCharterMarkdown', () => {
 describe('compileCharterFull', () => {
   it('returns CompiledCharter with parsed metadata', () => {
     const result = compileCharterFull({
-      agentName: 'verbal',
-      charterPath: '/test/verbal/charter.md',
+      agentName: 'agares',
+      charterPath: '/test/agares/charter.md',
       charterContent: FULL_CHARTER,
     });
 
     expect(result.parsed).toBeDefined();
-    expect(result.parsed.identity.name).toBe('Verbal');
+    expect(result.parsed.identity.name).toBe('Agares');
     expect(result.parsed.identity.role).toBe('Prompt Engineer');
   });
 
   it('resolves model from charter preference', () => {
     const result = compileCharterFull({
-      agentName: 'verbal',
+      agentName: 'agares',
       charterPath: '/test/charter.md',
       charterContent: FULL_CHARTER,
     });
@@ -223,7 +223,7 @@ describe('compileCharterFull', () => {
 
   it('config override model wins over charter', () => {
     const result = compileCharterFull({
-      agentName: 'verbal',
+      agentName: 'agares',
       charterPath: '/test/charter.md',
       charterContent: FULL_CHARTER,
       configOverrides: { model: 'claude-opus-4.6' },
@@ -234,7 +234,7 @@ describe('compileCharterFull', () => {
 
   it('config override role wins over charter role', () => {
     const result = compileCharterFull({
-      agentName: 'verbal',
+      agentName: 'agares',
       charterPath: '/test/charter.md',
       charterContent: FULL_CHARTER,
       configOverrides: { role: 'Lead Engineer' },
@@ -245,7 +245,7 @@ describe('compileCharterFull', () => {
 
   it('config override displayName wins', () => {
     const result = compileCharterFull({
-      agentName: 'verbal',
+      agentName: 'agares',
       charterPath: '/test/charter.md',
       charterContent: FULL_CHARTER,
       configOverrides: { displayName: 'Custom Display Name' },
@@ -256,7 +256,7 @@ describe('compileCharterFull', () => {
 
   it('config override tools are set', () => {
     const result = compileCharterFull({
-      agentName: 'verbal',
+      agentName: 'agares',
       charterPath: '/test/charter.md',
       charterContent: FULL_CHARTER,
       configOverrides: { tools: ['grep', 'edit'] },
@@ -268,7 +268,7 @@ describe('compileCharterFull', () => {
 
   it('appends extraPrompt from config overrides', () => {
     const result = compileCharterFull({
-      agentName: 'verbal',
+      agentName: 'agares',
       charterPath: '/test/charter.md',
       charterContent: FULL_CHARTER,
       configOverrides: { extraPrompt: 'ALWAYS follow the style guide.' },
@@ -279,14 +279,14 @@ describe('compileCharterFull', () => {
 
   it('includes team context in prompt', () => {
     const result = compileCharterFull({
-      agentName: 'verbal',
+      agentName: 'agares',
       charterPath: '/test/charter.md',
       charterContent: FULL_CHARTER,
-      teamContext: 'Team: Fenster, Verbal, Hockney',
+      teamContext: 'Team: Vassago, Agares, Samigina',
     });
 
     expect(result.prompt).toContain('Team Context');
-    expect(result.prompt).toContain('Fenster, Verbal, Hockney');
+    expect(result.prompt).toContain('Vassago, Agares, Samigina');
   });
 
   it('handles empty charter content gracefully', () => {
@@ -302,7 +302,7 @@ describe('compileCharterFull', () => {
 
   it('description includes expertise when available', () => {
     const result = compileCharterFull({
-      agentName: 'verbal',
+      agentName: 'agares',
       charterPath: '/test/charter.md',
       charterContent: FULL_CHARTER,
     });
@@ -326,15 +326,15 @@ describe('CharterCompiler class', () => {
   describe('compile()', () => {
     it('reads charter.md and produces AgentCharter', async () => {
       const charter = await compiler.compile(FENSTER_CHARTER);
-      expect(charter.name).toBe('fenster');
+      expect(charter.name).toBe('vassago');
       expect(charter.role).toBe('Core Dev');
-      expect(charter.displayName).toContain('Fenster');
+      expect(charter.displayName).toContain('Vassago');
       expect(charter.prompt).toBeTruthy();
     });
 
-    it('parses hockney charter correctly', async () => {
+    it('parses samigina charter correctly', async () => {
       const charter = await compiler.compile(HOCKNEY_CHARTER);
-      expect(charter.name).toBe('hockney');
+      expect(charter.name).toBe('samigina');
       expect(charter.role).toBe('Tester');
     });
 
@@ -355,7 +355,7 @@ describe('CharterCompiler class', () => {
       const charters = await compiler.compileAll(teamRoot);
       expect(charters.length).toBeGreaterThanOrEqual(1);
       const names = charters.map(c => c.name);
-      expect(names).toContain('fenster');
+      expect(names).toContain('vassago');
     });
 
     it('skips agents without charter.md (no error)', async () => {

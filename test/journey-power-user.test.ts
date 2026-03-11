@@ -49,9 +49,9 @@ function scaffoldSquadDir(root: string): void {
 
 | Name | Role | Charter | Status |
 |------|------|---------|--------|
-| Keaton | Lead | \`.squad/agents/keaton/charter.md\` | ✅ Active |
-| Fenster | Core Dev | \`.squad/agents/fenster/charter.md\` | ✅ Active |
-| McManus | QA | \`.squad/agents/mcmanus/charter.md\` | ✅ Active |
+| Bael | Lead | \`.squad/agents/bael/charter.md\` | ✅ Active |
+| Vassago | Core Dev | \`.squad/agents/vassago/charter.md\` | ✅ Active |
+| marbas | QA | \`.squad/agents/marbas/charter.md\` | ✅ Active |
 `);
 
   writeFileSync(join(identityDir, 'now.md'), `---
@@ -87,9 +87,9 @@ async function createShellHarness(opts?: {
 }): Promise<ShellHarness> {
   const {
     agents = [
-      { name: 'Keaton', role: 'Lead' },
-      { name: 'Fenster', role: 'Core Dev' },
-      { name: 'McManus', role: 'QA' },
+      { name: 'Bael', role: 'Lead' },
+      { name: 'Vassago', role: 'Core Dev' },
+      { name: 'marbas', role: 'QA' },
     ],
     withSquadDir = true,
     version = '0.0.0-test',
@@ -238,18 +238,18 @@ describe('Journey: Power user', { timeout: 30_000 }, () => {
 
   // ── 4. Tab completion for @agent names ────────────────────────────────
 
-  it('tab completes @K to @Keaton', async () => {
-    await shell.type('@K');
+  it('tab completes @B to @Bael', async () => {
+    await shell.type('@B');
     shell.ink.stdin.write('\t');
     await tick(120);
-    expect(shell.hasText('@Keaton')).toBe(true);
+    expect(shell.hasText('@Bael')).toBe(true);
   });
 
-  it('tab completes @F to @Fenster', async () => {
-    await shell.type('@F');
+  it('tab completes @V to @Vassago', async () => {
+    await shell.type('@V');
     shell.ink.stdin.write('\t');
     await tick(120);
-    expect(shell.hasText('@Fenster')).toBe(true);
+    expect(shell.hasText('@Vassago')).toBe(true);
   });
 
   // ── 5. Ctrl+C cancels an active operation ─────────────────────────────
@@ -298,9 +298,9 @@ describe('Journey: Power user', { timeout: 30_000 }, () => {
 
   it('running /agents shows team members', async () => {
     await shell.submit('/agents');
-    expect(shell.hasText('Keaton')).toBe(true);
-    expect(shell.hasText('Fenster')).toBe(true);
-    expect(shell.hasText('McManus')).toBe(true);
+    expect(shell.hasText('Bael')).toBe(true);
+    expect(shell.hasText('Vassago')).toBe(true);
+    expect(shell.hasText('marbas')).toBe(true);
   });
 
   it('/version then /status in sequence works correctly', async () => {
@@ -313,35 +313,35 @@ describe('Journey: Power user', { timeout: 30_000 }, () => {
 
   // ── 8. @agent direct routing with complex messages ────────────────────
 
-  it('@Keaton routes complex message as direct_agent', async () => {
-    await shell.submit('@Keaton refactor the auth module and add retry logic');
+  it('@Bael routes complex message as direct_agent', async () => {
+    await shell.submit('@Bael refactor the auth module and add retry logic');
     expect(shell.dispatched).toHaveBeenCalledTimes(1);
     const parsed = shell.dispatched.mock.calls[0]![0] as ParsedInput;
     expect(parsed.type).toBe('direct_agent');
-    expect(parsed.agentName).toBe('Keaton');
+    expect(parsed.agentName).toBe('Bael');
     expect(parsed.content).toBe('refactor the auth module and add retry logic');
   });
 
-  it('@Fenster routes with multi-word message', async () => {
-    await shell.submit('@Fenster write tests for the new parser including edge cases');
+  it('@Vassago routes with multi-word message', async () => {
+    await shell.submit('@Vassago write tests for the new parser including edge cases');
     expect(shell.dispatched).toHaveBeenCalledTimes(1);
     const parsed = shell.dispatched.mock.calls[0]![0] as ParsedInput;
     expect(parsed.type).toBe('direct_agent');
-    expect(parsed.agentName).toBe('Fenster');
+    expect(parsed.agentName).toBe('Vassago');
     expect(parsed.content).toBe('write tests for the new parser including edge cases');
   });
 
   it('@agent message appears in conversation history', async () => {
-    await shell.submit('@McManus run the full regression suite');
-    expect(shell.hasText('@McManus run the full regression suite')).toBe(true);
+    await shell.submit('@marbas run the full regression suite');
+    expect(shell.hasText('@marbas run the full regression suite')).toBe(true);
     expect(shell.hasText('❯')).toBe(true);
   });
 
   it('agent response renders when pushed via ShellApi', async () => {
-    await shell.submit('@Keaton check the CI pipeline');
+    await shell.submit('@Bael check the CI pipeline');
     shell.api().addMessage({
       role: 'agent',
-      agentName: 'Keaton',
+      agentName: 'Bael',
       content: 'CI pipeline is green — all 47 tests passing.',
       timestamp: new Date(),
     });

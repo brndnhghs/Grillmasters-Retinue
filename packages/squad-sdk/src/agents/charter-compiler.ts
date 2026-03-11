@@ -14,7 +14,7 @@ import { normalizeEol } from '../utils/normalize-eol.js';
  * Options for compiling a charter.
  */
 export interface CharterCompileOptions {
-  /** Agent name (e.g., 'verbal', 'fenster') */
+  /** Agent name (e.g., 'agares', 'vassago') */
   agentName: string;
   /** Full path to the agent's charter.md file */
   charterPath: string;

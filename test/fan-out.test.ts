@@ -61,9 +61,9 @@ describe('spawnParallel', () => {
 
   it('should spawn multiple agents in parallel', async () => {
     const configs: AgentSpawnConfig[] = [
-      { agentName: 'fenster', task: 'Implement feature A' },
-      { agentName: 'verbal', task: 'Write documentation' },
-      { agentName: 'hockney', task: 'Create tests' },
+      { agentName: 'vassago', task: 'Implement feature A' },
+      { agentName: 'agares', task: 'Write documentation' },
+      { agentName: 'samigina', task: 'Create tests' },
     ];
 
     const results = await spawnParallel(configs, mockDeps);
@@ -74,9 +74,9 @@ describe('spawnParallel', () => {
 
     // Verify all charters were compiled
     expect(mockDeps.compileCharter).toHaveBeenCalledTimes(3);
-    expect(mockDeps.compileCharter).toHaveBeenCalledWith('fenster');
-    expect(mockDeps.compileCharter).toHaveBeenCalledWith('verbal');
-    expect(mockDeps.compileCharter).toHaveBeenCalledWith('hockney');
+    expect(mockDeps.compileCharter).toHaveBeenCalledWith('vassago');
+    expect(mockDeps.compileCharter).toHaveBeenCalledWith('agares');
+    expect(mockDeps.compileCharter).toHaveBeenCalledWith('samigina');
 
     // Verify all sessions were created
     expect(mockDeps.createSession).toHaveBeenCalledTimes(3);
@@ -87,8 +87,8 @@ describe('spawnParallel', () => {
 
   it('should handle priority levels', async () => {
     const configs: AgentSpawnConfig[] = [
-      { agentName: 'fenster', task: 'Critical bug fix', priority: 'critical' },
-      { agentName: 'verbal', task: 'Documentation update', priority: 'low' },
+      { agentName: 'vassago', task: 'Critical bug fix', priority: 'critical' },
+      { agentName: 'agares', task: 'Documentation update', priority: 'low' },
     ];
 
     const results = await spawnParallel(configs, mockDeps);
@@ -100,7 +100,7 @@ describe('spawnParallel', () => {
   it('should pass context to agents', async () => {
     const configs: AgentSpawnConfig[] = [
       {
-        agentName: 'fenster',
+        agentName: 'vassago',
         task: 'Implement API endpoint',
         context: 'Related to PRD-5, use Express framework',
       },
@@ -123,7 +123,7 @@ describe('spawnParallel', () => {
   it('should handle model overrides', async () => {
     const configs: AgentSpawnConfig[] = [
       {
-        agentName: 'fenster',
+        agentName: 'vassago',
         task: 'Complex refactoring',
         modelOverride: 'claude-opus-4.6',
       },
@@ -162,9 +162,9 @@ describe('spawnParallel', () => {
     });
 
     const configs: AgentSpawnConfig[] = [
-      { agentName: 'fenster', task: 'Task 1' },
+      { agentName: 'vassago', task: 'Task 1' },
       { agentName: 'failing-agent', task: 'Task 2' },
-      { agentName: 'verbal', task: 'Task 3' },
+      { agentName: 'agares', task: 'Task 3' },
     ];
 
     const results = await spawnParallel(configs, mockDeps);
@@ -173,9 +173,9 @@ describe('spawnParallel', () => {
 
     // First and third should succeed
     expect(results[0].status).toBe('success');
-    expect(results[0].agentName).toBe('fenster');
+    expect(results[0].agentName).toBe('vassago');
     expect(results[2].status).toBe('success');
-    expect(results[2].agentName).toBe('verbal');
+    expect(results[2].agentName).toBe('agares');
 
     // Second should fail
     expect(results[1].status).toBe('failed');
@@ -194,15 +194,15 @@ describe('spawnParallel', () => {
     });
 
     const configs: AgentSpawnConfig[] = [
-      { agentName: 'fenster', task: 'Task 1' },
-      { agentName: 'verbal', task: 'Task 2' },
+      { agentName: 'vassago', task: 'Task 1' },
+      { agentName: 'agares', task: 'Task 2' },
     ];
 
     await spawnParallel(configs, mockDeps);
 
     expect(emittedEvents).toHaveLength(2);
-    expect(emittedEvents[0].payload.agentName).toBe('fenster');
-    expect(emittedEvents[1].payload.agentName).toBe('verbal');
+    expect(emittedEvents[0].payload.agentName).toBe('vassago');
+    expect(emittedEvents[1].payload.agentName).toBe('agares');
   });
 
   it('should emit spawn failure events', async () => {
@@ -227,7 +227,7 @@ describe('spawnParallel', () => {
 
   it('should track spawn timing', async () => {
     const configs: AgentSpawnConfig[] = [
-      { agentName: 'fenster', task: 'Task' },
+      { agentName: 'vassago', task: 'Task' },
     ];
 
     const results = await spawnParallel(configs, mockDeps);
@@ -246,7 +246,7 @@ describe('spawnParallel', () => {
     (mockDeps.createSession as any).mockRejectedValue(new Error('Session creation failed'));
 
     const configs: AgentSpawnConfig[] = [
-      { agentName: 'fenster', task: 'Task' },
+      { agentName: 'vassago', task: 'Task' },
     ];
 
     const results = await spawnParallel(configs, mockDeps);
@@ -274,7 +274,7 @@ describe('aggregateSessionEvents', () => {
       }),
     };
 
-    aggregateSessionEvents('session-123', 'fenster', mockSession, coordinatorEventBus);
+    aggregateSessionEvents('session-123', 'vassago', mockSession, coordinatorEventBus);
 
     expect(mockSession.on).toHaveBeenCalled();
     expect(receivedEvents.length).toBeGreaterThan(0);
@@ -296,10 +296,10 @@ describe('aggregateSessionEvents', () => {
       }),
     };
 
-    aggregateSessionEvents('session-456', 'verbal', mockSession, coordinatorEventBus);
+    aggregateSessionEvents('session-456', 'agares', mockSession, coordinatorEventBus);
 
     expect(receivedEvents.length).toBeGreaterThan(0);
-    expect(receivedEvents[0].payload.agentName).toBe('verbal');
+    expect(receivedEvents[0].payload.agentName).toBe('agares');
   });
 
   it('should handle session without event emitter', () => {
@@ -308,7 +308,7 @@ describe('aggregateSessionEvents', () => {
 
     // Should not throw
     expect(() => {
-      aggregateSessionEvents('session-789', 'fenster', mockSession, coordinatorEventBus);
+      aggregateSessionEvents('session-789', 'vassago', mockSession, coordinatorEventBus);
     }).not.toThrow();
   });
 });

@@ -3,12 +3,12 @@
 exports[`Snapshot tests > snapshot: parseCharterMarkdown against canonical charter 1`] = `
 {
   "boundaries": "Do not modify test files or CI configuration.",
-  "collaboration": "Coordinate with Fenster on implementation, Hockney on test plans.",
-  "fullContent": "# Keaton
+  "collaboration": "Coordinate with Vassago on implementation, Samigina on test plans.",
+  "fullContent": "# Bael
 
 ## Identity
 
-**Name:** Keaton
+**Name:** Bael
 **Role:** Lead
 **Expertise:** Architecture, system design, coordination
 **Style:** Decisive and structured
@@ -28,7 +28,7 @@ Do not modify test files or CI configuration.
 
 ## Collaboration
 
-Coordinate with Fenster on implementation, Hockney on test plans.
+Coordinate with Vassago on implementation, Samigina on test plans.
 ",
   "identity": {
     "expertise": [
@@ -36,7 +36,7 @@ Coordinate with Fenster on implementation, Hockney on test plans.
       "system design",
       "coordination",
     ],
-    "name": "Keaton",
+    "name": "Bael",
     "role": "Lead",
     "style": "Decisive and structured",
   },
@@ -56,7 +56,7 @@ exports[`Snapshot tests > snapshot: parseRoutingMarkdown against canonical routi
   "rules": [
     {
       "agents": [
-        "Keaton",
+        "Bael",
       ],
       "confidence": "high",
       "examples": [
@@ -67,7 +67,7 @@ exports[`Snapshot tests > snapshot: parseRoutingMarkdown against canonical routi
     },
     {
       "agents": [
-        "Fenster",
+        "Vassago",
       ],
       "confidence": "high",
       "examples": [
@@ -78,7 +78,7 @@ exports[`Snapshot tests > snapshot: parseRoutingMarkdown against canonical routi
     },
     {
       "agents": [
-        "Hockney",
+        "Samigina",
       ],
       "confidence": "high",
       "examples": [
@@ -89,8 +89,8 @@ exports[`Snapshot tests > snapshot: parseRoutingMarkdown against canonical routi
     },
     {
       "agents": [
-        "Fenster",
-        "Hockney",
+        "Vassago",
+        "Samigina",
       ],
       "confidence": "high",
       "examples": [
@@ -110,7 +110,7 @@ exports[`Snapshot tests > snapshot: parseTeamMarkdown against canonical team.md 
       "aliases": undefined,
       "autoAssign": undefined,
       "model": "claude-opus-4.5",
-      "name": "keaton",
+      "name": "bael",
       "role": "Lead",
       "skills": [
         "architecture",
@@ -123,7 +123,7 @@ exports[`Snapshot tests > snapshot: parseTeamMarkdown against canonical team.md 
       "aliases": undefined,
       "autoAssign": undefined,
       "model": "claude-sonnet-4.5",
-      "name": "fenster",
+      "name": "vassago",
       "role": "Core Dev",
       "skills": [
         "typescript",
@@ -136,7 +136,7 @@ exports[`Snapshot tests > snapshot: parseTeamMarkdown against canonical team.md 
       "aliases": undefined,
       "autoAssign": undefined,
       "model": "claude-sonnet-4.5",
-      "name": "hockney",
+      "name": "samigina",
       "role": "Tester",
       "skills": [
         "testing",

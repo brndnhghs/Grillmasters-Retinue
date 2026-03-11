@@ -1,7 +1,7 @@
 # Copy Review Spec — Issue #668
 
 **Requested by:** Brady  
-**Prepared by:** Marquez (CLI UX Designer)  
+**Prepared by:** Zepar (CLI UX Designer)  
 **Scope:** All user-facing text in the Squad CLI shell  
 **Goal:** Tighten verbose copy, improve clarity, reduce jargon  
 
@@ -64,7 +64,7 @@ This spec provides concrete rewrites for every user-facing string in:
 
 ## Tone Guidelines for Implementation
 
-**Kovash and Cheritto:** Apply these rules when implementing copy changes.
+**Eligos and Botis:** Apply these rules when implementing copy changes.
 
 ### ✓ DO
 
@@ -130,37 +130,37 @@ These are moments where users see nothing or insufficient feedback:
 - **Current:** ThinkingIndicator shows "Routing to agent..." only when `processing=true`
 - **Issue:** SDK initialization is silent. User sees prompt but no activity.
 - **Fix:** Show "Connecting..." immediately on `/help`, `/status`, or `/init` commands before SDK responds
-- **Owner:** Cheritto (SDK integration in shell lifecycle)
+- **Owner:** Botis (SDK integration in shell lifecycle)
 
 ### 2. **First message processing (3–7 seconds)**
 - **Current:** Spinner cycles, ThinkingIndicator shows hints, but they're small and optional
 - **Issue:** On slow networks, spinner alone doesn't convince user something is happening
-- **Fix:** Ensure ThinkingIndicator always visible + pair with agent activity hint ("Keaton analyzing...")
-- **Owner:** Cheritto (ThinkingIndicator component)
+- **Fix:** Ensure ThinkingIndicator always visible + pair with agent activity hint ("Bael analyzing...")
+- **Owner:** Botis (ThinkingIndicator component)
 
 ### 3. **Narrow terminal mode (≤60 cols)**
 - **Current:** InputPrompt hints reduce to bare essentials: `Tab · ↑↓`
 - **Issue:** New users on narrow terminals don't know Tab does anything
 - **Fix:** Proposed: `Tab for help · ↑↓ for history` (still fits narrow but explains affordances)
-- **Owner:** Kovash (InputPrompt hints)
+- **Owner:** Eligos (InputPrompt hints)
 
 ### 4. **Agent list when registry empty**
 - **Current:** AgentPanel shows "No agents active. Send a message to start."
 - **Issue:** Doesn't tell user how to build a team if this is first run
 - **Fix:** Check if team.md exists. If not, suggest: "No agents yet. Type what you want to build, or run: /init"
-- **Owner:** Cheritto (AgentPanel empty state)
+- **Owner:** Botis (AgentPanel empty state)
 
 ### 5. **Error recovery paths**
 - **Current:** Some errors say "Try X" but user doesn't know what "X" does
 - **Issue:** "squad doctor" is assumed to be known, but first-run users won't have heard of it
 - **Fix:** Always include brief explanation: "Try: squad doctor (diagnoses setup issues)"
-- **Owner:** Kovash/Cheritto (wherever commands.ts errors appear in shell)
+- **Owner:** Eligos/Botis (wherever commands.ts errors appear in shell)
 
 ### 6. **Session restore feedback**
 - **Current:** `/resume <id>` shows `✓ Restored {id} ({count} msgs)` but doesn't say what happens next
 - **Issue:** User restored a session. Can they just start typing? Is there a briefing?
 - **Fix:** After restore, show: `✓ Restored 8 msgs. Continue here or /clear to start fresh.`
-- **Owner:** Kovash (handleResume in commands.ts)
+- **Owner:** Eligos (handleResume in commands.ts)
 
 ---
 
@@ -200,8 +200,8 @@ These are moments where users see nothing or insufficient feedback:
 
 ## Sign-Off
 
-**Design by:** Marquez  
-**For implementation by:** Kovash (REPL), Cheritto (TUI)  
+**Design by:** Zepar  
+**For implementation by:** Eligos (REPL), Botis (TUI)  
 **Review by:** Brady  
 
 This spec is actionable. Each proposed change includes rationale. Implement in priority order.

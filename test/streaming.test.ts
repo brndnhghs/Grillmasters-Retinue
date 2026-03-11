@@ -217,7 +217,7 @@ describe('CostTracker', () => {
   it('should record a single usage event', () => {
     tracker.recordUsage({
       sessionId: 's1',
-      agentName: 'keaton',
+      agentName: 'bael',
       model: 'claude-opus-4',
       inputTokens: 500,
       outputTokens: 200,
@@ -233,7 +233,7 @@ describe('CostTracker', () => {
   it('should accumulate per-agent data', () => {
     tracker.recordUsage({
       sessionId: 's1',
-      agentName: 'keaton',
+      agentName: 'bael',
       model: 'claude-opus-4',
       inputTokens: 500,
       outputTokens: 200,
@@ -241,14 +241,14 @@ describe('CostTracker', () => {
     });
     tracker.recordUsage({
       sessionId: 's2',
-      agentName: 'keaton',
+      agentName: 'bael',
       model: 'claude-opus-4',
       inputTokens: 300,
       outputTokens: 100,
       estimatedCost: 0.03,
     });
 
-    const agent = tracker.getSummary().agents.get('keaton')!;
+    const agent = tracker.getSummary().agents.get('bael')!;
     expect(agent.inputTokens).toBe(800);
     expect(agent.turnCount).toBe(2);
   });
@@ -256,7 +256,7 @@ describe('CostTracker', () => {
   it('should accumulate per-session data', () => {
     tracker.recordUsage({
       sessionId: 's1',
-      agentName: 'keaton',
+      agentName: 'bael',
       model: 'claude-opus-4',
       inputTokens: 500,
       outputTokens: 200,
@@ -264,7 +264,7 @@ describe('CostTracker', () => {
     });
     tracker.recordUsage({
       sessionId: 's1',
-      agentName: 'keaton',
+      agentName: 'bael',
       model: 'claude-opus-4',
       inputTokens: 100,
       outputTokens: 50,
@@ -279,7 +279,7 @@ describe('CostTracker', () => {
   it('should track fallback count', () => {
     tracker.recordUsage({
       sessionId: 's1',
-      agentName: 'keaton',
+      agentName: 'bael',
       model: 'claude-opus-4',
       inputTokens: 500,
       outputTokens: 200,
@@ -287,22 +287,22 @@ describe('CostTracker', () => {
       isFallback: true,
     });
 
-    const agent = tracker.getSummary().agents.get('keaton')!;
+    const agent = tracker.getSummary().agents.get('bael')!;
     expect(agent.fallbackCount).toBe(1);
   });
 
   it('should increment fallback via recordFallback', () => {
     tracker.recordUsage({
       sessionId: 's1',
-      agentName: 'keaton',
+      agentName: 'bael',
       model: 'claude-opus-4',
       inputTokens: 100,
       outputTokens: 50,
       estimatedCost: 0.01,
     });
-    tracker.recordFallback('keaton');
+    tracker.recordFallback('bael');
 
-    const agent = tracker.getSummary().agents.get('keaton')!;
+    const agent = tracker.getSummary().agents.get('bael')!;
     expect(agent.fallbackCount).toBe(1);
   });
 
@@ -321,7 +321,7 @@ describe('CostTracker', () => {
   it('should reset all data', () => {
     tracker.recordUsage({
       sessionId: 's1',
-      agentName: 'keaton',
+      agentName: 'bael',
       model: 'claude-opus-4',
       inputTokens: 500,
       outputTokens: 200,
@@ -338,7 +338,7 @@ describe('CostTracker', () => {
   it('should format summary as readable string', () => {
     tracker.recordUsage({
       sessionId: 's1',
-      agentName: 'keaton',
+      agentName: 'bael',
       model: 'claude-opus-4',
       inputTokens: 500,
       outputTokens: 200,
@@ -347,7 +347,7 @@ describe('CostTracker', () => {
 
     const output = tracker.formatSummary();
     expect(output).toContain('Squad Cost Summary');
-    expect(output).toContain('keaton');
+    expect(output).toContain('bael');
     expect(output).toContain('claude-opus-4');
     expect(output).toContain('500');
   });
@@ -355,7 +355,7 @@ describe('CostTracker', () => {
   it('should format summary with fallback info', () => {
     tracker.recordUsage({
       sessionId: 's1',
-      agentName: 'keaton',
+      agentName: 'bael',
       model: 'claude-opus-4',
       inputTokens: 100,
       outputTokens: 50,

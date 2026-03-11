@@ -49,22 +49,22 @@ describe('error-messages', () => {
   // ---------- agentSessionGuidance ----------
   describe('agentSessionGuidance', () => {
     it('includes agent name in message', () => {
-      const g = agentSessionGuidance('Kovash');
-      expect(g.message).toBe('Kovash session failed.');
+      const g = agentSessionGuidance('Eligos');
+      expect(g.message).toBe('Eligos session failed.');
     });
 
     it('includes detail when provided', () => {
-      const g = agentSessionGuidance('Kovash', 'connection reset');
-      expect(g.message).toBe('Kovash session failed: connection reset.');
+      const g = agentSessionGuidance('Eligos', 'connection reset');
+      expect(g.message).toBe('Eligos session failed: connection reset.');
     });
 
     it('suggests retrying with @agent', () => {
-      const g = agentSessionGuidance('Kovash');
-      expect(g.recovery.some(r => r.includes('@Kovash'))).toBe(true);
+      const g = agentSessionGuidance('Eligos');
+      expect(g.recovery.some(r => r.includes('@Eligos'))).toBe(true);
     });
 
     it('suggests auto-reconnect', () => {
-      const g = agentSessionGuidance('Kovash');
+      const g = agentSessionGuidance('Eligos');
       expect(g.recovery.some(r => r.includes('auto-reconnect'))).toBe(true);
     });
   });

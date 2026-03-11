@@ -49,7 +49,7 @@ After all tasks, a bar chart shows how many tasks landed on each tier. Highlight
 
 ### Agent cost table
 
-Aligned columns: Agent, Model, Tokens In/Out, Cost, Turns. Note that Fenster (security audit) consumed the most tokens.
+Aligned columns: Agent, Model, Tokens In/Out, Cost, Turns. Note that Vassago (security audit) consumed the most tokens.
 
 ### Final report
 

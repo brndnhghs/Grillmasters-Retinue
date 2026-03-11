@@ -79,27 +79,27 @@ describe('AgentSessionManager', () => {
 
   describe('spawn()', () => {
     it('creates session with active state', async () => {
-      const charter = makeCharter('fenster');
+      const charter = makeCharter('vassago');
       const info = await manager.spawn(charter);
       expect(info.state).toBe('active');
     });
 
     it('assigns a sessionId', async () => {
-      const charter = makeCharter('fenster');
+      const charter = makeCharter('vassago');
       const info = await manager.spawn(charter);
       expect(info.sessionId).toBeTruthy();
       expect(typeof info.sessionId).toBe('string');
     });
 
     it('stores charter reference', async () => {
-      const charter = makeCharter('fenster');
+      const charter = makeCharter('vassago');
       const info = await manager.spawn(charter);
       expect(info.charter).toBe(charter);
-      expect(info.charter.name).toBe('fenster');
+      expect(info.charter.name).toBe('vassago');
     });
 
     it('sets createdAt and lastActiveAt timestamps', async () => {
-      const charter = makeCharter('fenster');
+      const charter = makeCharter('vassago');
       const before = new Date();
       const info = await manager.spawn(charter);
       const after = new Date();
@@ -110,27 +110,27 @@ describe('AgentSessionManager', () => {
     });
 
     it('defaults to standard response mode', async () => {
-      const charter = makeCharter('fenster');
+      const charter = makeCharter('vassago');
       const info = await manager.spawn(charter);
       expect(info.responseMode).toBe('standard');
     });
 
     it('respects lightweight mode', async () => {
-      const charter = makeCharter('hockney');
+      const charter = makeCharter('samigina');
       const info = await manager.spawn(charter, 'lightweight');
       expect(info.responseMode).toBe('lightweight');
     });
 
     it('respects full mode', async () => {
-      const charter = makeCharter('verbal');
+      const charter = makeCharter('agares');
       const info = await manager.spawn(charter, 'full');
       expect(info.responseMode).toBe('full');
     });
 
     it('registers agent in internal map', async () => {
-      const charter = makeCharter('fenster');
+      const charter = makeCharter('vassago');
       await manager.spawn(charter);
-      expect(manager.getAgent('fenster')).toBeDefined();
+      expect(manager.getAgent('vassago')).toBeDefined();
     });
 
     it('emits session.created event when EventBus provided', async () => {
@@ -139,34 +139,34 @@ describe('AgentSessionManager', () => {
       bus.on('session.created', (e: any) => events.push(e));
 
       const m = new AgentSessionManager(bus);
-      await m.spawn(makeCharter('fenster'));
+      await m.spawn(makeCharter('vassago'));
 
       expect(events.length).toBe(1);
-      expect(events[0].agentName).toBe('fenster');
+      expect(events[0].agentName).toBe('vassago');
       expect(events[0].payload.mode).toBe('standard');
     });
 
     it('can spawn multiple agents', async () => {
-      await manager.spawn(makeCharter('fenster'));
-      await manager.spawn(makeCharter('verbal'));
-      await manager.spawn(makeCharter('hockney'));
+      await manager.spawn(makeCharter('vassago'));
+      await manager.spawn(makeCharter('agares'));
+      await manager.spawn(makeCharter('samigina'));
       expect(manager.getAllAgents().length).toBe(3);
     });
   });
 
   describe('resume()', () => {
     it('reactivates an existing agent', async () => {
-      await manager.spawn(makeCharter('fenster'));
-      const info = await manager.resume('fenster');
+      await manager.spawn(makeCharter('vassago'));
+      const info = await manager.resume('vassago');
       expect(info.state).toBe('active');
     });
 
     it('updates lastActiveAt on resume', async () => {
-      await manager.spawn(makeCharter('fenster'));
-      const before = manager.getAgent('fenster')!.lastActiveAt;
+      await manager.spawn(makeCharter('vassago'));
+      const before = manager.getAgent('vassago')!.lastActiveAt;
       // Small delay to ensure timestamp changes
       await new Promise(r => setTimeout(r, 5));
-      const info = await manager.resume('fenster');
+      const info = await manager.resume('vassago');
       expect(info.lastActiveAt!.getTime()).toBeGreaterThanOrEqual(before!.getTime());
     });
 
@@ -175,9 +175,9 @@ describe('AgentSessionManager', () => {
     });
 
     it('throws for destroyed agent', async () => {
-      await manager.spawn(makeCharter('fenster'));
-      await manager.destroy('fenster');
-      await expect(manager.resume('fenster')).rejects.toThrow(/not found/);
+      await manager.spawn(makeCharter('vassago'));
+      await manager.destroy('vassago');
+      await expect(manager.resume('vassago')).rejects.toThrow(/not found/);
     });
   });
 
@@ -187,10 +187,10 @@ describe('AgentSessionManager', () => {
     });
 
     it('returns agent info after spawn', async () => {
-      await manager.spawn(makeCharter('fenster'));
-      const info = manager.getAgent('fenster');
+      await manager.spawn(makeCharter('vassago'));
+      const info = manager.getAgent('vassago');
       expect(info).toBeDefined();
-      expect(info!.charter.name).toBe('fenster');
+      expect(info!.charter.name).toBe('vassago');
     });
   });
 
@@ -200,30 +200,30 @@ describe('AgentSessionManager', () => {
     });
 
     it('returns all spawned agents', async () => {
-      await manager.spawn(makeCharter('fenster'));
-      await manager.spawn(makeCharter('verbal'));
+      await manager.spawn(makeCharter('vassago'));
+      await manager.spawn(makeCharter('agares'));
       const all = manager.getAllAgents();
       expect(all.length).toBe(2);
       const names = all.map(a => a.charter.name);
-      expect(names).toContain('fenster');
-      expect(names).toContain('verbal');
+      expect(names).toContain('vassago');
+      expect(names).toContain('agares');
     });
   });
 
   describe('destroy()', () => {
     it('removes agent from map', async () => {
-      await manager.spawn(makeCharter('fenster'));
-      await manager.destroy('fenster');
-      expect(manager.getAgent('fenster')).toBeUndefined();
+      await manager.spawn(makeCharter('vassago'));
+      await manager.destroy('vassago');
+      expect(manager.getAgent('vassago')).toBeUndefined();
     });
 
     it('sets agent state to destroyed before removal', async () => {
       const bus = createMockEventBus();
       const m = new AgentSessionManager(bus);
-      await m.spawn(makeCharter('fenster'));
-      await m.destroy('fenster');
+      await m.spawn(makeCharter('vassago'));
+      await m.destroy('vassago');
       // After destroy, agent is removed from map
-      expect(m.getAgent('fenster')).toBeUndefined();
+      expect(m.getAgent('vassago')).toBeUndefined();
     });
 
     it('emits session.destroyed event when EventBus provided', async () => {
@@ -232,11 +232,11 @@ describe('AgentSessionManager', () => {
       bus.on('session.destroyed', (e: any) => events.push(e));
 
       const m = new AgentSessionManager(bus);
-      await m.spawn(makeCharter('fenster'));
-      await m.destroy('fenster');
+      await m.spawn(makeCharter('vassago'));
+      await m.destroy('vassago');
 
       expect(events.length).toBe(1);
-      expect(events[0].agentName).toBe('fenster');
+      expect(events[0].agentName).toBe('vassago');
     });
 
     it('does not throw for non-existent agent', async () => {
@@ -244,10 +244,10 @@ describe('AgentSessionManager', () => {
     });
 
     it('reduces getAllAgents count', async () => {
-      await manager.spawn(makeCharter('fenster'));
-      await manager.spawn(makeCharter('verbal'));
+      await manager.spawn(makeCharter('vassago'));
+      await manager.spawn(makeCharter('agares'));
       expect(manager.getAllAgents().length).toBe(2);
-      await manager.destroy('fenster');
+      await manager.destroy('vassago');
       expect(manager.getAllAgents().length).toBe(1);
     });
   });

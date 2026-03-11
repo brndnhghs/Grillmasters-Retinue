@@ -82,8 +82,8 @@ describe('I18nManager', () => {
   });
 
   it('should interpolate multiple params', () => {
-    const result = i18n.formatMessage('agent.spawned', { name: 'Keaton', model: 'opus' });
-    expect(result).toBe('Agent Keaton spawned with model opus.');
+    const result = i18n.formatMessage('agent.spawned', { name: 'Bael', model: 'opus' });
+    expect(result).toBe('Agent Bael spawned with model opus.');
   });
 
   it('should handle messages with no placeholders and params provided', () => {
@@ -126,7 +126,7 @@ describe('defaultCatalog', () => {
 describe('auditAccessibility', () => {
   it('should pass for a config with display names on all agents', () => {
     const config = makeConfig({
-      agents: [{ name: 'keaton', role: 'lead', displayName: 'Keaton (Lead)' }],
+      agents: [{ name: 'bael', role: 'lead', displayName: 'Bael (Lead)' }],
     });
     const report = auditAccessibility(config);
     expect(report.passed).toBe(true);
@@ -134,7 +134,7 @@ describe('auditAccessibility', () => {
 
   it('should warn when an agent has no displayName', () => {
     const config = makeConfig({
-      agents: [{ name: 'keaton', role: 'lead' }],
+      agents: [{ name: 'bael', role: 'lead' }],
     });
     const report = auditAccessibility(config);
     const screenReaderFindings = report.findings.filter((f) => f.category === 'screen-reader');

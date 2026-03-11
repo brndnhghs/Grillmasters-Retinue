@@ -1,7 +1,7 @@
 ---
 title: "v0.2.0: Your Squad Comes With You"
 date: 2026-02-09
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: 3
 tags: [squad, release, v0.2.0, portability, skills, github-issues, prd-mode]
 status: published
@@ -17,16 +17,16 @@ hero: "Export your squad. Import it somewhere else. It remembers you — your pr
 
 ## What Shipped
 
-- **Export / Import CLI** — `npx @bradygaster/squad-cli export` serializes your squad's identity, history, skills, and decisions into a portable `.squad` package. `npx @bradygaster/squad-cli import` reconstitutes it in a new project. Your squad remembers YOU, not the repo it came from. _(Built by Fenster)_
-- **Skills Phase 1: Template + Read** — Agents read `SKILL.md` files from `.squad/skills/` before working. Skills are structured knowledge — domain conventions, patterns, anti-patterns — that agents reference during every spawn. _(Built by Verbal)_
-- **Skills Phase 2: Earned Skills** — Agents write `SKILL.md` files from real work. A skill starts at `low` confidence when first observed, moves to `medium` with repetition, and reaches `high` when proven across sessions. Your squad gets better because it worked with you, not because someone configured it. _(Built by Verbal)_
-- **Tiered Response Modes** — Direct, Lightweight, Standard, Full. A one-line question no longer pays the same spawn overhead as a multi-file refactor. The coordinator picks the tier based on complexity. _(Built by Verbal)_
-- **Smart Upgrade with Migrations** — `npx @bradygaster/squad-cli upgrade` now runs version-keyed migrations. Upgrading from v0.1.0 to v0.2.0 applies only the migrations for versions you haven't seen. Your team state is never touched. _(Built by Fenster)_
+- **Export / Import CLI** — `npx @bradygaster/squad-cli export` serializes your squad's identity, history, skills, and decisions into a portable `.squad` package. `npx @bradygaster/squad-cli import` reconstitutes it in a new project. Your squad remembers YOU, not the repo it came from. _(Built by Vassago)_
+- **Skills Phase 1: Template + Read** — Agents read `SKILL.md` files from `.squad/skills/` before working. Skills are structured knowledge — domain conventions, patterns, anti-patterns — that agents reference during every spawn. _(Built by Agares)_
+- **Skills Phase 2: Earned Skills** — Agents write `SKILL.md` files from real work. A skill starts at `low` confidence when first observed, moves to `medium` with repetition, and reaches `high` when proven across sessions. Your squad gets better because it worked with you, not because someone configured it. _(Built by Agares)_
+- **Tiered Response Modes** — Direct, Lightweight, Standard, Full. A one-line question no longer pays the same spawn overhead as a multi-file refactor. The coordinator picks the tier based on complexity. _(Built by Agares)_
+- **Smart Upgrade with Migrations** — `npx @bradygaster/squad-cli upgrade` now runs version-keyed migrations. Upgrading from v0.1.0 to v0.2.0 applies only the migrations for versions you haven't seen. Your team state is never touched. _(Built by Vassago)_
 - **GitHub Issues Mode** — Full lifecycle: pick up an issue, create a `squad/{issue-number}-{slug}` branch, do the work, open a PR with `Closes #N`, handle review comments, merge. Squad connects to how teams actually track work. _(Built by [@spboyer](https://github.com/spboyer), PR #2)_
 - **PRD Mode** — Paste a Product Requirements Document. The Lead decomposes it into prioritized work items with dependency tracking, presents them for approval, then routes work across the team. From document to executing backlog in one prompt. _(Built by [@spboyer](https://github.com/spboyer), PR #2)_
 - **Human Team Members** — Humans join the roster alongside AI agents with a 👤 badge. The Coordinator pauses when work routes to a human, sends stale reminders for blocked items, and respects the full reviewer rejection protocol. Not every teammate is an AI. _(Built by [@spboyer](https://github.com/spboyer), PR #2)_
-- **Progressive History Summarization** — Agent histories grow every session. Summarization compresses older entries while preserving key decisions and learnings. History stays useful without eating the context window. _(Built by Verbal)_
-- **Lightweight Spawn Template** — A minimal spawn template for simple tasks. No charter reads, no history loads, no decisions injection. Fast, cheap, and appropriate for questions that don't need the full agent context. _(Built by Verbal)_
+- **Progressive History Summarization** — Agent histories grow every session. Summarization compresses older entries while preserving key decisions and learnings. History stays useful without eating the context window. _(Built by Agares)_
+- **Lightweight Spawn Template** — A minimal spawn template for simple tasks. No charter reads, no history loads, no decisions injection. Fast, cheap, and appropriate for questions that don't need the full agent context. _(Built by Agares)_
 
 ## The Story
 
@@ -89,4 +89,4 @@ The roadmap for v0.2.0 is clear. The roadmap after v0.2.0 is wide open. Skills a
 
 ---
 
-_This post was written by McManus, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_
+_This post was written by marbas, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_

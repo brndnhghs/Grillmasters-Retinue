@@ -2,7 +2,7 @@
  * Multi-squad resolution and migration tests — Issue #652
  *
  * Proactive tests for Phase 1: multiple personal squads.
- * Tests written from spec while Fenster implements the module.
+ * Tests written from spec while Vassago implements the module.
  * Import path may need adjustment once implementation lands.
  *
  * Functions under test:
@@ -29,7 +29,7 @@ import {
 import { join, sep } from 'node:path';
 import { tmpdir, platform, homedir } from 'node:os';
 
-// ⚠️ Import path will be adjusted once Fenster's implementation lands.
+// ⚠️ Import path will be adjusted once Vassago's implementation lands.
 // Expected module: packages/squad-sdk/src/multi-squad.ts
 // Likely export path: @bradygaster/squad-sdk/multi-squad
 //
@@ -698,11 +698,11 @@ describe('migrateIfNeeded()', () => {
 
   it('migrates agents/ and skills/ directories into squads/default/', () => {
     scaffoldLegacyLayout(root);
-    writeFileSync(join(root, 'agents', 'fenster.md'), '# Fenster\n');
+    writeFileSync(join(root, 'agents', 'vassago.md'), '# Vassago\n');
     writeFileSync(join(root, 'skills', 'coding.md'), '# Coding\n');
 
     // Verify legacy structure
-    expect(existsSync(join(root, 'agents', 'fenster.md'))).toBe(true);
+    expect(existsSync(join(root, 'agents', 'vassago.md'))).toBe(true);
     expect(existsSync(join(root, 'skills', 'coding.md'))).toBe(true);
 
     // After migration, these should exist under squads/default/
@@ -712,15 +712,15 @@ describe('migrateIfNeeded()', () => {
 
     // Simulate copy
     writeFileSync(
-      join(defaultSquad, 'agents', 'fenster.md'),
-      readFileSync(join(root, 'agents', 'fenster.md'), 'utf-8'),
+      join(defaultSquad, 'agents', 'vassago.md'),
+      readFileSync(join(root, 'agents', 'vassago.md'), 'utf-8'),
     );
     writeFileSync(
       join(defaultSquad, 'skills', 'coding.md'),
       readFileSync(join(root, 'skills', 'coding.md'), 'utf-8'),
     );
 
-    expect(readFileSync(join(defaultSquad, 'agents', 'fenster.md'), 'utf-8')).toContain('Fenster');
+    expect(readFileSync(join(defaultSquad, 'agents', 'vassago.md'), 'utf-8')).toContain('Vassago');
     expect(readFileSync(join(defaultSquad, 'skills', 'coding.md'), 'utf-8')).toContain('Coding');
   });
 

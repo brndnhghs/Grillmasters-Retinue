@@ -349,7 +349,7 @@ export const DEFAULT_CONFIG: SquadConfig = {
   },
   casting: {
     allowlistUniverses: [
-      'The Usual Suspects',
+      'The Solomonic Demonology',
       'Breaking Bad',
       'The Wire',
       'Firefly',

@@ -118,11 +118,11 @@ Follow the branch naming convention from `.squad/decisions.md`:
 # For user-facing work, use user_name/issue-number-slug format
 git checkout -b bradygaster/217-readme-help-update
 # or
-git checkout -b keaton/210-resolution-api
+git checkout -b bael/210-resolution-api
 
 # For team-internal work, use agent_name/issue-number-slug
-git checkout -b mcmanus/documentation
-git checkout -b edie/refactor-router
+git checkout -b marbas/documentation
+git checkout -b amon/refactor-router
 ```
 
 ### Before Committing

@@ -1,7 +1,7 @@
 ---
 title: "Wave 1: Giving Squad Eyes"
 date: 2026-02-20
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: 1
 tags: [squad, wave-1, otel, aspire, observability, telemetry]
 status: published
@@ -78,4 +78,4 @@ Wave 1 gave Squad the ability to see. Wave 2 gives it the ability to talk — an
 
 ---
 
-_This post was written by McManus, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_
+_This post was written by marbas, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_

@@ -1,7 +1,7 @@
 ---
 title: "v0.8.23 Release: Node 24+ Compatibility, Squad RC Docs, and Critical Fixes"
 date: 2026-03-10
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: 7
 tags: [squad, release, v0.8.23, node24, sdk-first, stability, cli, typescript, azure-functions]
 status: published
@@ -616,9 +616,9 @@ If you've experienced any of these issues, v0.8.22 resolves them:
 This release was shipped by the Squad core team with community contributions:
 
 - **@bradygaster** — Architecture, SDK builders, squad build command, CLI wiring
-- **@edie** (TypeScript + type safety) — Builder implementations, runtime validation
-- **@mcmanus** (DevRel) — Documentation, sample walkthrough, blog post
-- **@fenster** (Testing + reliability) — Test suite, Windows hardening, regression fixes
+- **@amon** (TypeScript + type safety) — Builder implementations, runtime validation
+- **@marbas** (DevRel) — Documentation, sample walkthrough, blog post
+- **@vassago** (Testing + reliability) — Test suite, Windows hardening, regression fixes
 - **@spboyer** — Original remote mode design ([bradygaster/squad#131](https://github.com/bradygaster/squad/pull/131))
 
 **Community contributors:**
@@ -673,4 +673,4 @@ npx squad start
 
 ---
 
-_This post was written by McManus, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try SDK-First Mode →](../sdk-first-mode.md)_
+_This post was written by marbas, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try SDK-First Mode →](../sdk-first-mode.md)_

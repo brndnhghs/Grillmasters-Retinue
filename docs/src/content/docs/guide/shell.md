@@ -50,11 +50,11 @@ Output:
 Team Status
 ────────────────────
 Active Agents: 4/5
-  Keaton (lead): idle
-  McManus (devrel): working (10s)
-  Verbal (backend): working (25s)
-  Fenster (tester): idle
-  Kobayashi (scribe): logging
+  Bael (lead): idle
+  marbas (devrel): working (10s)
+  Agares (backend): working (25s)
+  Vassago (tester): idle
+  Barbatos (scribe): logging
 
 Sessions: 5
 Latest decision: "Use React Query for data fetching" (2m ago)
@@ -115,7 +115,7 @@ Typical workflow — pick up where you left off:
 ```
 squad > /sessions
 squad > /resume a1b2
-squad > @Keaton, where were we on the auth work?
+squad > @Bael, where were we on the auth work?
 ```
 
 ### `/clear` — Clear the screen
@@ -137,13 +137,13 @@ You can talk to specific agents by name:
 ### Using `@AgentName`
 
 ```
-squad > @Keaton, analyze the architecture of this project
+squad > @Bael, analyze the architecture of this project
 ```
 
 ### Using natural language
 
 ```
-squad > Keaton, set up the database schema for user authentication
+squad > Bael, set up the database schema for user authentication
 ```
 
 Or without naming an agent — the coordinator routes to whoever is best suited:
@@ -173,10 +173,10 @@ squad > Build the login page
 ```
 
 The coordinator might spawn:
-- McManus (frontend) → building the UI
-- Verbal (backend) → setting up auth endpoints
-- Fenster (tester) → writing test cases
-- Kobayashi (scribe) → logging everything
+- marbas (frontend) → building the UI
+- Agares (backend) → setting up auth endpoints
+- Vassago (tester) → writing test cases
+- Barbatos (scribe) → logging everything
 
 All at once. All in parallel.
 
@@ -207,7 +207,7 @@ Shows full session log with start time, end time, duration, what the agent did, 
 If an agent crashes or times out:
 
 ```
-squad > @Keaton, check on Verbal and resume if needed
+squad > @Bael, check on Agares and resume if needed
 ```
 
 ---
@@ -249,7 +249,7 @@ Agents read your decisions — they're shortcuts for complex context.
 ### Batch work through the coordinator
 
 ```
-squad > @Keaton, here's what needs doing:
+squad > @Bael, here's what needs doing:
 1. Set up database schema
 2. Build API endpoints
 3. Write tests
@@ -266,7 +266,7 @@ If you step away, run `/history` to see what happened. Every decision is logged,
 ### Name agents explicitly for urgent work
 
 ```
-squad > @Keaton, this is critical: we need the deployment script fixed
+squad > @Bael, this is critical: we need the deployment script fixed
 ```
 
 The explicit mention ensures the lead coordinator sees it first.
@@ -290,9 +290,9 @@ squad > Set up the database
 ### Asking Agents About Their Work
 
 ```
-squad > @Verbal, what's left on the auth endpoints?
-squad > @McManus, show me what you've written so far
-squad > @Fenster, are the tests passing?
+squad > @Agares, what's left on the auth endpoints?
+squad > @marbas, show me what you've written so far
+squad > @Vassago, are the tests passing?
 ```
 
 Agents respond with status, file paths, and blockers.
@@ -302,7 +302,7 @@ Agents respond with status, file paths, and blockers.
 Instead of asking the coordinator to chain work, set up explicit hand-offs:
 
 ```
-squad > @Keaton, when Verbal finishes the auth API, have him route testing to Fenster
+squad > @Bael, when Agares finishes the auth API, have him route testing to Vassago
 ```
 
 ---
@@ -312,7 +312,7 @@ squad > @Keaton, when Verbal finishes the auth API, have him route testing to Fe
 1. Open an integrated terminal in VS Code
 2. Run `squad` to enter the shell
 3. Keep it open in a side panel
-4. As you edit code, ask agents to review: `@Fenster, test this component`
+4. As you edit code, ask agents to review: `@Vassago, test this component`
 
 ---
 
@@ -327,7 +327,7 @@ The coordinator might be evaluating a complex task, or an agent might be streami
 Check `/status` and `/history` for blockers. Then ask the coordinator to route explicitly:
 
 ```
-squad > @Keaton, route this task to @Verbal and report any blocks
+squad > @Bael, route this task to @Agares and report any blocks
 ```
 
 ### Shell Quit Unexpectedly

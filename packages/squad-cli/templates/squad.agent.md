@@ -137,11 +137,11 @@ For each squad member with assigned issues, note them in the session context. Wh
 
 **The user should never see a blank screen while agents work.** Before spawning any background agents, ALWAYS respond with brief text acknowledging the request. Name the agents being launched and describe their work in human terms — not system jargon. This acknowledgment is REQUIRED, not optional.
 
-- **Single agent:** `"Fenster's on it — looking at the error handling now."`
+- **Single agent:** `"Vassago's on it — looking at the error handling now."`
 - **Multi-agent spawn:** Show a quick launch table:
   ```
-  🔧 Fenster — error handling in index.js
-  🧪 Hockney — writing test cases
+  🔧 Vassago — error handling in index.js
+  🧪 Samigina — writing test cases
   📋 Scribe — logging session
   ```
 
@@ -174,9 +174,9 @@ When spawning agents, include the role emoji in the `description` parameter to m
 4. If no match, use 👤 as fallback
 
 **Examples:**
-- `description: "🏗️ Keaton: Reviewing architecture proposal"`
-- `description: "🔧 Fenster: Refactoring auth module"`
-- `description: "🧪 Hockney: Writing test cases"`
+- `description: "🏗️ Bael: Reviewing architecture proposal"`
+- `description: "🔧 Vassago: Refactoring auth module"`
+- `description: "🧪 Samigina: Writing test cases"`
 - `description: "📋 Scribe: Log session & merge decisions"`
 
 The emoji makes task spawn notifications visually consistent with the launch table shown to users.
@@ -384,11 +384,11 @@ If you've exhausted the fallback chain and reached nuclear fallback, omit the `m
 When spawning, include the model in your acknowledgment:
 
 ```
-🔧 Fenster (claude-sonnet-4.5) — refactoring auth module
-🎨 Redfoot (claude-opus-4.5 · vision) — designing color system
+🔧 Vassago (claude-sonnet-4.5) — refactoring auth module
+🎨 Sitri (claude-opus-4.5 · vision) — designing color system
 📋 Scribe (claude-haiku-4.5 · fast) — logging session
-⚡ Keaton (claude-opus-4.6 · bumped for architecture) — reviewing proposal
-📝 McManus (claude-haiku-4.5 · fast) — updating docs
+⚡ Bael (claude-opus-4.6 · bumped for architecture) — reviewing proposal
+📝 marbas (claude-haiku-4.5 · fast) — updating docs
 ```
 
 Include tier annotation only when the model was bumped or a specialist was chosen. Default-tier spawns just show the model name.

@@ -46,7 +46,7 @@ process: All work through PRs. Branch naming squad/{issue-number}-{slug}. Never 
 - **Secret guardrails** — Hook-based enforcement (zero-worry guarantee)
 - **ESM runtime patch** — Node 24+ compatibility fix
 - **Contributors Guide page** — Recognition and onboarding for external contributors
-- **Team rebirth** — The Usual Suspects → Apollo 13 / NASA Mission Control
+- **Team rebirth** — The Solomonic Demonology → Apollo 13 / NASA Mission Control
 
 ## Active Work in Progress (Tamir's Branches)
 

@@ -4,6 +4,6 @@
 
 | Name | Role | Charter | Status |
 |------|------|---------|--------|
-| Hockney | Tester | `.squad/agents/hockney/charter.md` | ✅ Active |
-| Fenster | Core Dev | `.squad/agents/fenster/charter.md` | ✅ Active |
-| McManus | Scribe | `.squad/agents/mcmanus/charter.md` | 🔇 Inactive |
+| Samigina | Tester | `.squad/agents/samigina/charter.md` | ✅ Active |
+| Vassago | Core Dev | `.squad/agents/vassago/charter.md` | ✅ Active |
+| marbas | Scribe | `.squad/agents/marbas/charter.md` | 🔇 Inactive |

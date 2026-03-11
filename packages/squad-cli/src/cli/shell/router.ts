@@ -84,7 +84,7 @@ export interface DispatchTargets {
  * the remaining message content with mentions stripped out.
  *
  * Examples:
- *   "@Fenster @Hockney fix and test" → { agents: ['Fenster','Hockney'], content: 'fix and test' }
+ *   "@Vassago @Samigina fix and test" → { agents: ['Vassago','Samigina'], content: 'fix and test' }
  *   "plain message" → { agents: [], content: 'plain message' }
  */
 export function parseDispatchTargets(input: string, knownAgents: string[]): DispatchTargets {

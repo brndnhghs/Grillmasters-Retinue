@@ -18,9 +18,9 @@ const TEST_ROOT = join(process.cwd(), `.test-doctor-${randomBytes(4).toString('h
 
 async function scaffold(root: string): Promise<void> {
   const sq = join(root, '.squad');
-  await mkdir(join(sq, 'agents', 'edie'), { recursive: true });
+  await mkdir(join(sq, 'agents', 'amon'), { recursive: true });
   await mkdir(join(sq, 'casting'), { recursive: true });
-  await writeFile(join(sq, 'team.md'), '# Team\n\n## Members\n\n- Edie\n');
+  await writeFile(join(sq, 'team.md'), '# Team\n\n## Members\n\n- Amon\n');
   await writeFile(join(sq, 'routing.md'), '# Routing\n');
   await writeFile(join(sq, 'decisions.md'), '# Decisions\n');
   await writeFile(

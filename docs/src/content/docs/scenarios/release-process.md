@@ -527,12 +527,12 @@ gh release create v0.4.0 --title "v0.4.0" --prerelease \
 
 ## Sample Prompts
 
-Use these with Kobayashi or in Copilot sessions to guide release work.
+Use these with Barbatos or in Copilot sessions to guide release work.
 
 ### To Prepare for Release
 
 ```
-Kobayashi, prepare v0.4.0 for release:
+Barbatos, prepare v0.4.0 for release:
 1. Update CHANGELOG.md with the new version entry
 2. Update version in package.json
 3. Commit both changes to dev branch
@@ -548,7 +548,7 @@ Use these features as the new entry:
 ### To Build a Preview
 
 ```
-Kobayashi, build a preview branch:
+Barbatos, build a preview branch:
 1. Create preview branch from dev
 2. Remove .ai-team/ and team-docs/ (except blog)
 3. Commit the removal
@@ -560,7 +560,7 @@ Kobayashi, build a preview branch:
 ### To Tag a Release
 
 ```
-Kobayashi, tag the release:
+Barbatos, tag the release:
 1. Checkout main
 2. Create and push tag v0.4.0
 3. Verify the release workflow starts
@@ -570,7 +570,7 @@ Kobayashi, tag the release:
 ### To Sync After Release
 
 ```
-Kobayashi, sync main back to dev:
+Barbatos, sync main back to dev:
 1. Create a chore/sync-from-main branch
 2. Merge main into it
 3. Create and merge PR back to dev
@@ -580,7 +580,7 @@ Kobayashi, sync main back to dev:
 ### To Test the Guard
 
 ```
-Kobayashi, test the guard workflow:
+Barbatos, test the guard workflow:
 1. Create a test branch test/guard-ai-team-block
 2. Add .ai-team/agents/test/history.md with dummy content
 3. Commit and push
@@ -594,7 +594,7 @@ Kobayashi, test the guard workflow:
 ### To Fix a Blocked PR
 
 ```
-Kobayashi, fix this blocked PR:
+Barbatos, fix this blocked PR:
 1. Fetch the current PR state
 2. Remove all .ai-team/ and team-docs/ files
 3. Commit the removal

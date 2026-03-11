@@ -8,7 +8,7 @@ This is the **showcase sample** for the Squad SDK. It exercises the full runtime
 
 | SDK Component | What It Does Here |
 |---------------|-------------------|
-| **CastingEngine** | Casts 4 agents from the `usual-suspects` universe with unique personalities |
+| **CastingEngine** | Casts 4 agents from the `solomonic-demonology` universe with unique personalities |
 | **CostTracker** | Accumulates per-agent cost/token data across the entire run |
 | **TelemetryCollector** | Collects opt-in telemetry events (init, spawn, run) |
 | **SkillRegistry** | Matches domain skills (JWT auth, testing, docs) to tasks by keyword |
@@ -34,7 +34,7 @@ npm run dev
 
 ## What You'll See
 
-1. **Casting** — 4 agents materialize from The Usual Suspects universe
+1. **Casting** — 4 agents materialize from The Solomonic Demonology universe
 2. **Task Queue** — 10 diverse tasks: API design, auth implementation, testing, docs, security audit
 3. **Autonomous Execution** — Agents pick up tasks matching their role and execute with simulated work
 4. **Live Dashboard** — Agent status, task progress, timeline, decisions, cost tracking

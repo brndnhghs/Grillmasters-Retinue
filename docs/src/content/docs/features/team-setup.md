@@ -64,7 +64,7 @@ When you first run Squad in a repository, it doesn't impose a team — it propos
 | "Add a designer" | Adds a designer role to the roster |
 | "Remove the tester" | Drops tester from the team |
 | "Change backend to Rust specialist" | Adjusts role focus for that member |
-| "Make Fenster the frontend lead" | Assigns specific name to role |
+| "Make Vassago the frontend lead" | Assigns specific name to role |
 
 ## Customizing After Init
 
@@ -77,7 +77,7 @@ The coordinator will:
 2. Create their agent directory and charter
 3. Update `team.md` and `routing.md`
 
-> "Remove McManus from the team"
+> "Remove marbas from the team"
 
 The coordinator will:
 1. Remove the member from `team.md`

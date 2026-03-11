@@ -1,7 +1,7 @@
 ---
 title: "Skills System: Agents That Learn From Work"
 date: 2026-02-15
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: null
 tags: [squad, skills, memory, learning, anthropic, open-standard]
 status: published
@@ -50,7 +50,7 @@ Confidence increases monotonically (never downgrades). Once a skill reaches `con
 
 ## The Design Story
 
-The skills system was a three-way collaboration between **Brady** (product owner), **Kujan** (platform expert), and **Verbal** (prompt engineer).
+The skills system was a three-way collaboration between **Brady** (product owner), **Valefor** (platform expert), and **Agares** (prompt engineer).
 
 ### Brady's Directive (2026-02-08)
 
@@ -62,13 +62,13 @@ This single sentence shaped the entire design:
 2. **MCP tool declarations** — skills can specify which MCP tools they depend on (e.g., `github-issues-create`, `trello-create-card`).
 3. **Portable by default** — skills are metadata files, not code. They travel via JSON export/import.
 
-### Verbal's Lifecycle Design (2026-02-08)
+### Agares's Lifecycle Design (2026-02-08)
 
-Verbal designed the skill lifecycle (acquisition → reinforcement → correction → deprecation) and the per-agent storage model. Initial design had skills stored at `.squad/agents/{name}/skills.md` (per-agent files). This was revised after Kujan's platform assessment.
+Agares designed the skill lifecycle (acquisition → reinforcement → correction → deprecation) and the per-agent storage model. Initial design had skills stored at `.squad/agents/{name}/skills.md` (per-agent files). This was revised after Valefor's platform assessment.
 
-### Kujan's Platform Feasibility (2026-02-08)
+### Valefor's Platform Feasibility (2026-02-08)
 
-Kujan validated that:
+Valefor validated that:
 - Skills stored separately from history enable clean export (history is project-specific, skills are portable)
 - The `store_memory` tool (Anthropic's skill persistence API) was the wrong model for Squad — filesystem persistence is Squad's architecture
 - File paths in agent charters are frozen API contracts (changing `.squad/agents/{name}/skills.md` to `.squad/skills/` requires migration)
@@ -77,7 +77,7 @@ Kujan validated that:
 
 Squad adopted the Agent Skills Open Standard (agentskills.io) and the SKILL.md YAML frontmatter format. Directory structure changed from per-agent files to a flat `.squad/skills/` directory. Skills are **team knowledge**, not agent-specific.
 
-The final decision (Verbal, 2026-02-09):
+The final decision (Agares, 2026-02-09):
 
 > _"Skills in `.squad/skills/{skill-name}/SKILL.md`. Coordinator injects `<available_skills>` XML for progressive disclosure (~50 tokens per skill at discovery). Skills portable beyond Squad — works in Claude Code, Copilot, any compliant tool."_
 
@@ -206,13 +206,13 @@ The skills system is foundational. v0.2.0 planted the seed. Future versions harv
 
 ## Attribution
 
-- **Design**: Verbal (prompt engineer)
-- **Platform validation**: Kujan (SDK expert)
-- **Open standard decision**: Verbal + Kujan
+- **Design**: Agares (prompt engineer)
+- **Platform validation**: Valefor (SDK expert)
+- **Open standard decision**: Agares + Valefor
 - **Directive**: bradygaster (product owner)
 - **Format standard**: Anthropic (agentskills.io)
-- **Implementation**: Verbal (spawn templates), Fenster (`squad init` scaffolding), Hockney (skill extraction validation)
+- **Implementation**: Agares (spawn templates), Vassago (`squad init` scaffolding), Samigina (skill extraction validation)
 
 ---
 
-_This post was written by McManus, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_
+_This post was written by marbas, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_

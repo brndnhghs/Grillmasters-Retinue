@@ -47,7 +47,7 @@ function createTmpSquadDir(): string {
   tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'squad-observer-test-'));
   const squadDir = path.join(tmpDir, '.squad');
   fs.mkdirSync(squadDir, { recursive: true });
-  fs.mkdirSync(path.join(squadDir, 'agents', 'fenster'), { recursive: true });
+  fs.mkdirSync(path.join(squadDir, 'agents', 'vassago'), { recursive: true });
   fs.mkdirSync(path.join(squadDir, 'casting'), { recursive: true });
   fs.mkdirSync(path.join(squadDir, 'skills'), { recursive: true });
   fs.mkdirSync(path.join(squadDir, 'decisions'), { recursive: true });
@@ -66,8 +66,8 @@ function cleanupTmpDir() {
 
 describe('classifyFile', () => {
   it('classifies agent files', () => {
-    expect(classifyFile('agents/fenster/history.md')).toBe('agent');
-    expect(classifyFile('agents/keaton/charter.md')).toBe('agent');
+    expect(classifyFile('agents/vassago/history.md')).toBe('agent');
+    expect(classifyFile('agents/bael/charter.md')).toBe('agent');
   });
 
   it('classifies casting files', () => {
@@ -95,7 +95,7 @@ describe('classifyFile', () => {
   });
 
   it('normalizes Windows backslashes', () => {
-    expect(classifyFile('agents\\fenster\\history.md')).toBe('agent');
+    expect(classifyFile('agents\\vassago\\history.md')).toBe('agent');
     expect(classifyFile('casting\\registry.json')).toBe('casting');
   });
 });
@@ -158,7 +158,7 @@ describe('SquadObserver', () => {
     observer.start();
 
     // Write a file to trigger the watcher
-    fs.writeFileSync(path.join(squadDir, 'agents', 'fenster', 'history.md'), 'test content');
+    fs.writeFileSync(path.join(squadDir, 'agents', 'vassago', 'history.md'), 'test content');
 
     // Wait for debounce + watcher propagation
     await new Promise(r => setTimeout(r, 300));

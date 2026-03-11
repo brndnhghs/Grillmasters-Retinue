@@ -1,4 +1,4 @@
 # Routing Rules
 
-- Tests → Hockney
-- Core features → Fenster
+- Tests → Samigina
+- Core features → Vassago

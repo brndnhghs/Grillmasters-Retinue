@@ -163,7 +163,7 @@ describe.skipIf(SKIP_REASON !== null)(
         sessionSpan.setAttribute('squad.team', 'suspects');
 
         tracer.startActiveSpan('squad.agent', (agentSpan) => {
-          agentSpan.setAttribute('squad.agent.name', 'saul');
+          agentSpan.setAttribute('squad.agent.name', 'leraje');
           agentSpan.setAttribute('squad.agent.role', 'observability');
           agentSpan.end();
         });
@@ -214,8 +214,8 @@ describe.skipIf(SKIP_REASON !== null)(
         description: 'Agent response latency in ms',
         unit: 'ms',
       });
-      latencyHistogram.record(42, { 'squad.agent.name': 'saul' });
-      latencyHistogram.record(108, { 'squad.agent.name': 'fenster' });
+      latencyHistogram.record(42, { 'squad.agent.name': 'leraje' });
+      latencyHistogram.record(108, { 'squad.agent.name': 'vassago' });
 
       // Flush metrics via the global provider
       const mp = metrics.getMeterProvider();

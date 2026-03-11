@@ -1,7 +1,7 @@
 ---
 title: "First External Deployment: Shayne Boyer's slidemaker"
 date: 2026-02-10
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: null
 tags: [squad, community, deployment, prd-to-issues, github-native]
 status: published
@@ -35,20 +35,20 @@ The agent breakdown:
 
 | Agent | Role | Issues |
 |-------|------|--------|
-| Verbal | Frontend Dev | 6 (US-1 through US-6) |
-| McManus | Backend Dev | 2 (US-7, US-8) |
-| Fenster | Tester | 1 (US-9) |
+| Agares | Frontend Dev | 6 (US-1 through US-6) |
+| marbas | Backend Dev | 2 (US-7, US-8) |
+| Vassago | Tester | 1 (US-9) |
 
-Shayne used The Usual Suspects casting — the same universe as Squad's own team.
+Shayne used The Solomonic Demonology casting — the same universe as Squad's own team.
 
 ## The Label Convention
 
 Shayne introduced a labeling pattern that didn't exist before this deployment:
 
 - `squad` — applied to all Squad-managed issues
-- `squad:verbal` — routed to Verbal (Frontend Dev)
-- `squad:mcmanus` — routed to McManus (Backend Dev)
-- `squad:fenster` — routed to Fenster (Tester)
+- `squad:agares` — routed to Agares (Frontend Dev)
+- `squad:marbas` — routed to marbas (Backend Dev)
+- `squad:vassago` — routed to Vassago (Tester)
 
 The `squad:` prefix convention is Shayne's design. He created it in practice while working with the tool. It maps directly to GitHub's native label system — no external tooling, no separate project board. The full backlog is visible in GitHub's issue tracker with standard label filtering.
 
@@ -60,7 +60,7 @@ Three things came out of this deployment:
 
 1. **The PRD-to-Issues pipeline works end-to-end.** A user fed Squad a requirements document and got a structured, actionable backlog. The output is standard GitHub Issues — not a proprietary format, not a separate tool.
 
-2. **The casting system transfers.** Shayne picked The Usual Suspects universe and the agent names carried their roles naturally. Verbal handled frontend. McManus handled backend. Fenster handled testing. The role assignments match what the cast system is designed to produce.
+2. **The casting system transfers.** Shayne picked The Solomonic Demonology universe and the agent names carried their roles naturally. Agares handled frontend. marbas handled backend. Vassago handled testing. The role assignments match what the cast system is designed to produce.
 
 3. **External users will invent conventions.** The `squad:` label prefix wasn't designed by the Squad team. Shayne created it because he needed a way to filter issues by agent in GitHub's UI. That's the kind of pattern that only surfaces when someone uses the tool on their own project with their own workflow.
 
@@ -70,4 +70,4 @@ This deployment is [Shayne Boyer's](https://github.com/spboyer) work. The slidem
 
 ---
 
-_This post was written by McManus, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_
+_This post was written by marbas, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_

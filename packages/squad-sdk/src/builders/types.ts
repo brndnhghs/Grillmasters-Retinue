@@ -13,7 +13,7 @@
 // Shared primitives
 // ---------------------------------------------------------------------------
 
-/** Reference to an agent by name (e.g. `"@edie"` or `"edie"`). */
+/** Reference to an agent by name (e.g. `"@amon"` or `"amon"`). */
 export type AgentRef = string;
 
 /** Cron-like schedule expression or human-readable trigger. */

@@ -146,7 +146,7 @@ describe('OTel Integration — full trace hierarchy', () => {
     const requestSpan = tracer.startSpan('squad.request', { attributes: { 'squad.request.id': 'req-1' } });
     const requestCtx = trace.setSpan(context.active(), requestSpan);
 
-    const agentSpan = tracer.startSpan('squad.agent.spawn', { attributes: { 'agent.name': 'fenster', mode: 'standard' } }, requestCtx);
+    const agentSpan = tracer.startSpan('squad.agent.spawn', { attributes: { 'agent.name': 'vassago', mode: 'standard' } }, requestCtx);
     const agentCtx = trace.setSpan(requestCtx, agentSpan);
 
     const toolSpan = tracer.startSpan('squad.tool.execute', { attributes: { 'tool.name': 'readFile', 'tool.args': '/src/index.ts' } }, agentCtx);
@@ -161,7 +161,7 @@ describe('OTel Integration — full trace hierarchy', () => {
     const tool = spans.find((s) => s.name === 'squad.tool.execute')!;
 
     expect(req.attributes['squad.request.id']).toBe('req-1');
-    expect(agent.attributes['agent.name']).toBe('fenster');
+    expect(agent.attributes['agent.name']).toBe('vassago');
     expect(tool.attributes['tool.name']).toBe('readFile');
   });
 
@@ -171,18 +171,18 @@ describe('OTel Integration — full trace hierarchy', () => {
     const routeSpan = tracer.startSpan('squad.coordinator.route');
     const routeCtx = trace.setSpan(context.active(), routeSpan);
 
-    const agent1 = tracer.startSpan('squad.agent.fenster', { attributes: { 'agent.name': 'fenster' } }, routeCtx);
+    const agent1 = tracer.startSpan('squad.agent.vassago', { attributes: { 'agent.name': 'vassago' } }, routeCtx);
     agent1.end();
 
-    const agent2 = tracer.startSpan('squad.agent.edie', { attributes: { 'agent.name': 'edie' } }, routeCtx);
+    const agent2 = tracer.startSpan('squad.agent.amon', { attributes: { 'agent.name': 'amon' } }, routeCtx);
     agent2.end();
 
     routeSpan.end();
 
     const spans = exporter.getFinishedSpans();
     const route = spans.find((s) => s.name === 'squad.coordinator.route')!;
-    const a1 = spans.find((s) => s.name === 'squad.agent.fenster')!;
-    const a2 = spans.find((s) => s.name === 'squad.agent.edie')!;
+    const a1 = spans.find((s) => s.name === 'squad.agent.vassago')!;
+    const a2 = spans.find((s) => s.name === 'squad.agent.amon')!;
 
     expect((a1 as any).parentSpanContext?.spanId).toBe(route.spanContext().spanId);
     expect((a2 as any).parentSpanContext?.spanId).toBe(route.spanContext().spanId);
@@ -212,7 +212,7 @@ describe('OTel Integration — zero-overhead when unconfigured', () => {
     const transport = createOTelTransport();
     const events: TelemetryEvent[] = [
       { name: 'squad.init', timestamp: Date.now() },
-      { name: 'squad.agent.spawn', properties: { agent: 'fenster' }, timestamp: Date.now() },
+      { name: 'squad.agent.spawn', properties: { agent: 'vassago' }, timestamp: Date.now() },
       { name: 'squad.error', properties: { message: 'test' }, timestamp: Date.now() },
     ];
     await expect(transport(events, '')).resolves.not.toThrow();
@@ -262,8 +262,8 @@ describe('OTel Integration — metrics across operations', () => {
     pipeline.attachToSession('sess-e2e');
 
     const usageEvents = [
-      { type: 'usage' as const, sessionId: 'sess-e2e', agentName: 'fenster', model: 'gpt-4', inputTokens: 100, outputTokens: 50, estimatedCost: 0.003, timestamp: new Date() },
-      { type: 'usage' as const, sessionId: 'sess-e2e', agentName: 'edie', model: 'claude-3', inputTokens: 200, outputTokens: 100, estimatedCost: 0.01, timestamp: new Date() },
+      { type: 'usage' as const, sessionId: 'sess-e2e', agentName: 'vassago', model: 'gpt-4', inputTokens: 100, outputTokens: 50, estimatedCost: 0.003, timestamp: new Date() },
+      { type: 'usage' as const, sessionId: 'sess-e2e', agentName: 'amon', model: 'claude-3', inputTokens: 200, outputTokens: 100, estimatedCost: 0.01, timestamp: new Date() },
     ];
 
     for (const event of usageEvents) {
@@ -275,8 +275,8 @@ describe('OTel Integration — metrics across operations', () => {
     expect(summary.totalOutputTokens).toBe(150);
     expect(summary.estimatedCost).toBeCloseTo(0.013);
     expect(summary.byAgent.size).toBe(2);
-    expect(summary.byAgent.get('fenster')!.turnCount).toBe(1);
-    expect(summary.byAgent.get('edie')!.turnCount).toBe(1);
+    expect(summary.byAgent.get('vassago')!.turnCount).toBe(1);
+    expect(summary.byAgent.get('amon')!.turnCount).toBe(1);
   });
 
   it('StreamingPipeline TTFT tracking works with message_delta events', async () => {
@@ -341,18 +341,18 @@ describe('OTel Integration — metrics across operations', () => {
     pipeline.attachToSession('sess-b');
 
     await pipeline.processEvent({
-      type: 'usage', sessionId: 'sess-a', agentName: 'fenster', model: 'gpt-4',
+      type: 'usage', sessionId: 'sess-a', agentName: 'vassago', model: 'gpt-4',
       inputTokens: 100, outputTokens: 50, estimatedCost: 0.003, timestamp: new Date(),
     });
     await pipeline.processEvent({
-      type: 'usage', sessionId: 'sess-b', agentName: 'edie', model: 'claude-3',
+      type: 'usage', sessionId: 'sess-b', agentName: 'amon', model: 'claude-3',
       inputTokens: 200, outputTokens: 100, estimatedCost: 0.01, timestamp: new Date(),
     });
 
     const summary = pipeline.getUsageSummary();
     expect(summary.totalInputTokens).toBe(300);
-    expect(summary.byAgent.get('fenster')!.model).toBe('gpt-4');
-    expect(summary.byAgent.get('edie')!.model).toBe('claude-3');
+    expect(summary.byAgent.get('vassago')!.model).toBe('gpt-4');
+    expect(summary.byAgent.get('amon')!.model).toBe('claude-3');
   });
 });
 
@@ -371,7 +371,7 @@ describe('OTel Integration — EventBus → OTel bridge', () => {
     setTelemetryTransport(transport);
 
     collector.collectEvent({ name: 'squad.init', properties: { version: '1.0.0' } });
-    collector.collectEvent({ name: 'squad.agent.spawn', properties: { agent: 'fenster' } });
+    collector.collectEvent({ name: 'squad.agent.spawn', properties: { agent: 'vassago' } });
     collector.collectEvent({ name: 'squad.run', properties: { command: 'test' } });
     await collector.flush();
 
@@ -406,7 +406,7 @@ describe('OTel Integration — EventBus → OTel bridge', () => {
     await bus.emit({
       type: 'session:created',
       sessionId: 'sess-1',
-      agentName: 'fenster',
+      agentName: 'vassago',
       payload: {},
       timestamp: new Date(),
     });
@@ -414,7 +414,7 @@ describe('OTel Integration — EventBus → OTel bridge', () => {
     await bus.emit({
       type: 'session:destroyed',
       sessionId: 'sess-1',
-      agentName: 'fenster',
+      agentName: 'vassago',
       payload: {},
       timestamp: new Date(),
     });
@@ -423,7 +423,7 @@ describe('OTel Integration — EventBus → OTel bridge', () => {
     expect(spans.length).toBe(2);
     expect(spans[0]!.name).toBe('squad.session:created');
     expect(spans[0]!.attributes['session.id']).toBe('sess-1');
-    expect(spans[0]!.attributes['agent.name']).toBe('fenster');
+    expect(spans[0]!.attributes['agent.name']).toBe('vassago');
     expect(spans[1]!.name).toBe('squad.session:destroyed');
 
     detach();

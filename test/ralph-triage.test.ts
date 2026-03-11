@@ -125,11 +125,11 @@ describe('ralph triage parser helpers', () => {
         '',
         '| Work Type | Agent |',
         '|-----------|-------|',
-        '| Runtime | Fenster |',
+        '| Runtime | Vassago |',
       ].join('\n');
 
       expect(parseRoutingRules(markdown)).toEqual([
-        { workType: 'Runtime', agentName: 'Fenster', keywords: [] },
+        { workType: 'Runtime', agentName: 'Vassago', keywords: [] },
       ]);
     });
 
@@ -169,11 +169,11 @@ describe('ralph triage parser helpers', () => {
         '',
         '| Module | Primary | Secondary |',
         '|--------|---------|-----------|',
-        '| `SRC\\CLI\\` | Fenster | — |',
+        '| `SRC\\CLI\\` | Vassago | — |',
       ].join('\n');
 
       expect(parseModuleOwnership(markdown)).toEqual([
-        { modulePath: 'src/cli/', primary: 'Fenster', secondary: null },
+        { modulePath: 'src/cli/', primary: 'Vassago', secondary: null },
       ]);
     });
   });
@@ -260,9 +260,9 @@ describe('triageIssue()', () => {
 
   it('combines title + body for matching', () => {
     const onlyBodyRule: RoutingRule[] = [
-      { workType: 'Testing', agentName: 'Hockney', keywords: ['vitest'] },
+      { workType: 'Testing', agentName: 'Samigina', keywords: ['vitest'] },
     ];
-    const hockneyOnly: TeamMember[] = [{ name: 'Hockney', role: 'Tester', label: 'squad:hockney' }];
+    const hockneyOnly: TeamMember[] = [{ name: 'Samigina', role: 'Tester', label: 'squad:samigina' }];
 
     const decision = triageIssue(
       issue('Please investigate', 'This appears only in body: vitest'),
@@ -272,14 +272,14 @@ describe('triageIssue()', () => {
     );
 
     expect(decision?.source).toBe('routing-rule');
-    expect(decision?.agent.name).toBe('Hockney');
+    expect(decision?.agent.name).toBe('Samigina');
   });
 
   it('case insensitive matching', () => {
     const onlyBodyRule: RoutingRule[] = [
-      { workType: 'Testing', agentName: 'Hockney', keywords: ['vitest'] },
+      { workType: 'Testing', agentName: 'Samigina', keywords: ['vitest'] },
     ];
-    const hockneyOnly: TeamMember[] = [{ name: 'Hockney', role: 'Tester', label: 'squad:hockney' }];
+    const hockneyOnly: TeamMember[] = [{ name: 'Samigina', role: 'Tester', label: 'squad:samigina' }];
 
     const decision = triageIssue(issue('Need VITEST coverage now'), onlyBodyRule, [], hockneyOnly);
     expect(decision?.source).toBe('routing-rule');
@@ -287,12 +287,12 @@ describe('triageIssue()', () => {
 
   it('prefers longer module path match (src/ralph/ over src/)', () => {
     const customModules: ModuleOwnership[] = [
-      { modulePath: 'src/', primary: 'Keaton', secondary: null },
-      { modulePath: 'src/ralph/', primary: 'Fenster', secondary: null },
+      { modulePath: 'src/', primary: 'Bael', secondary: null },
+      { modulePath: 'src/ralph/', primary: 'Vassago', secondary: null },
     ];
     const customRoster: TeamMember[] = [
-      { name: 'Keaton', role: 'Lead', label: 'squad:keaton' },
-      { name: 'Fenster', role: 'Core Dev', label: 'squad:fenster' },
+      { name: 'Bael', role: 'Lead', label: 'squad:bael' },
+      { name: 'Vassago', role: 'Core Dev', label: 'squad:vassago' },
     ];
 
     const decision = triageIssue(
@@ -303,7 +303,7 @@ describe('triageIssue()', () => {
     );
 
     expect(decision?.source).toBe('module-ownership');
-    expect(decision?.agent.name).toBe('Fenster');
+    expect(decision?.agent.name).toBe('Vassago');
   });
 });
 
@@ -322,17 +322,17 @@ describe('triage parity', () => {
     const routingMd = `## Work Type → Agent
 | Work Type | Agent | Examples |
 |---|---|---|
-| Runtime | Fenster 🔧 | streaming, event loop |
+| Runtime | Vassago 🔧 | streaming, event loop |
 
 ## Module Ownership
 | Module | Primary | Secondary |
 |---|---|---|
-| src/runtime/ | Fenster 🔧 | — |`;
+| src/runtime/ | Vassago 🔧 | — |`;
     const teamMd = `## Members
 | Name | Role |
 |---|---|
-| Fenster | Core Dev |
-| Keaton | Lead |`;
+| Vassago | Core Dev |
+| Bael | Lead |`;
 
     const rules = parseRoutingRules(routingMd);
     const modules = parseModuleOwnership(routingMd);

@@ -57,7 +57,7 @@ Labels aren't just tags — they're Squad's **state machine**. Five namespaces d
 | `release:` | Release target | `release:v0.4.0`, `release:backlog` | ✅ One per issue |
 | `type:` | Issue category | `type:feature`, `type:bug`, `type:spike`, `type:docs`, `type:chore`, `type:epic` | ✅ One per issue |
 | `priority:` | Urgency | `priority:p0`, `priority:p1`, `priority:p2` | ✅ One per issue |
-| `squad:{member}` | Agent assignment | `squad:fenster`, `squad:hockney` | ❌ Multiple OK (pair work) |
+| `squad:{member}` | Agent assignment | `squad:vassago`, `squad:samigina` | ❌ Multiple OK (pair work) |
 
 Within `go:`, `release:`, `type:`, and `priority:`, applying a second label **auto-removes** the first. The `squad:{member}` namespace allows multiple labels for collaborative work.
 
@@ -67,7 +67,7 @@ Labels power four automation layers:
 
 1. **Enforcement** — `label-enforcement.yml` watches for changes and removes duplicates within a namespace.
 2. **Sync** — Cross-namespace cascading: `go:no` → auto-adds `release:backlog`; `priority:p0` → ensures `go:yes`.
-3. **Triage** — Ralph uses labels to route work: `squad:fenster` → Fenster picks it up; no `squad:*` + `type:bug` → routes based on `routing.md`.
+3. **Triage** — Ralph uses labels to route work: `squad:vassago` → Vassago picks it up; no `squad:*` + `type:bug` → routes based on `routing.md`.
 4. **Heartbeat** — `squad-heartbeat.yml` runs every 30 minutes, auto-triaging unassigned issues and escalating stale research.
 
 ### State Machine Flow
@@ -182,9 +182,9 @@ The flow:
 
 | Trigger | Example |
 |---------|---------|
-| Blocked on input | "Keaton needs your decision on the API approach" |
-| Error hit | "McManus got an auth error — needs credentials" |
-| Work complete | "Fenster finished the test suite — 142 tests passing" |
+| Blocked on input | "Bael needs your decision on the API approach" |
+| Error hit | "marbas got an auth error — needs credentials" |
+| Work complete | "Vassago finished the test suite — 142 tests passing" |
 
 Configure in `.vscode/mcp.json` or `.copilot/mcp-config.json`. See the [MCP setup section in Portability & Extensions](portability.md) for configuration details.
 

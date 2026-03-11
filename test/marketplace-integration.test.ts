@@ -93,7 +93,7 @@ function mockFetcher(agents: Record<string, { charter: string; history?: string 
 }
 
 const CHARTER_MD = `## Identity
-**Name:** fenster
+**Name:** vassago
 **Role:** Core Developer
 **Expertise:** TypeScript, testing
 
@@ -286,7 +286,7 @@ describe('Agent Versioning', () => {
 
 describe('GitHub Agent Source (Mocked)', () => {
   it('should list agents from mocked GitHub repo', async () => {
-    const fetcher = mockFetcher({ fenster: { charter: CHARTER_MD }, verbal: { charter: CHARTER_MD } });
+    const fetcher = mockFetcher({ vassago: { charter: CHARTER_MD }, agares: { charter: CHARTER_MD } });
     const source = new GitHubAgentSource('squad/agents', { fetcher });
     const agents = await source.listAgents();
     expect(agents).toHaveLength(2);
@@ -294,19 +294,19 @@ describe('GitHub Agent Source (Mocked)', () => {
   });
 
   it('should get a specific agent with charter metadata', async () => {
-    const fetcher = mockFetcher({ fenster: { charter: CHARTER_MD, history: '# History\nSome history.' } });
+    const fetcher = mockFetcher({ vassago: { charter: CHARTER_MD, history: '# History\nSome history.' } });
     const source = new GitHubAgentSource('squad/agents', { fetcher });
-    const agent = await source.getAgent('fenster');
+    const agent = await source.getAgent('vassago');
     expect(agent).not.toBeNull();
-    expect(agent!.name).toBe('fenster');
+    expect(agent!.name).toBe('vassago');
     expect(agent!.role).toBe('Core Developer');
     expect(agent!.history).toContain('Some history');
   });
 
   it('should fetch charter content', async () => {
-    const fetcher = mockFetcher({ fenster: { charter: CHARTER_MD } });
+    const fetcher = mockFetcher({ vassago: { charter: CHARTER_MD } });
     const source = new GitHubAgentSource('squad/agents', { fetcher });
-    const charter = await source.getCharter('fenster');
+    const charter = await source.getCharter('vassago');
     expect(charter).toContain('## Identity');
   });
 

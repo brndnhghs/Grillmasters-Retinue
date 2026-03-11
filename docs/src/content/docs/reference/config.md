@@ -28,17 +28,17 @@ export default defineSquad({
   team: defineTeam({
     name: 'my-squad',
     description: 'My project team',
-    members: ['@edie', '@mcmanus'],
+    members: ['@amon', '@marbas'],
   }),
   agents: [
     defineAgent({
-      name: 'edie',
+      name: 'amon',
       role: 'TypeScript Engineer',
       model: 'claude-sonnet-4',
       tools: ['grep', 'edit', 'view'],
     }),
     defineAgent({
-      name: 'mcmanus',
+      name: 'marbas',
       role: 'DevRel',
       model: 'claude-haiku-4.5',
       tools: ['grep', 'view'],
@@ -46,8 +46,8 @@ export default defineSquad({
   ],
   routing: defineRouting({
     rules: [
-      { pattern: 'feature-*', agents: ['@edie'], tier: 'standard' },
-      { pattern: 'docs-*', agents: ['@mcmanus'], tier: 'lightweight' },
+      { pattern: 'feature-*', agents: ['@amon'], tier: 'standard' },
+      { pattern: 'docs-*', agents: ['@marbas'], tier: 'lightweight' },
     ],
     defaultAgent: '@coordinator',
   }),

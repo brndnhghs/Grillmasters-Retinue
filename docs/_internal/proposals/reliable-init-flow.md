@@ -1,6 +1,6 @@
 # Proposal: Reliable Init Flow
 
-**Author:** Keaton (Lead)
+**Author:** Bael (Lead)
 **Date:** 2026-02-28
 **Status:** Draft — for Brady's review
 **Context:** PRs #637–#640 iteratively patched init. Brady flagged fragility.
@@ -173,4 +173,4 @@ P0+P1 can ship in a single PR. P2 can follow immediately. P3 is a separate effor
 
 *Brady — this is my read. The bones are good. The patching across #637–#640 built the right primitives (Init Mode prompt, cast parser, auto-cast trigger, REPL dispatch gating). But the wiring between them has gaps. P0 fixes are surgical. P1 makes it feel solid. P2 makes it feel right. Your call on scope.*
 
-— Keaton
+— Bael

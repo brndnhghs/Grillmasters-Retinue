@@ -14,7 +14,7 @@
  *   5. Edge cases: custom content, extra agents, minimal squads
  *
  * ⚠️ Uses local stubs matching build-command.test.ts patterns.
- * When Fenster's build command lands, replace stubs with real imports.
+ * When Vassago's build command lands, replace stubs with real imports.
  *
  * @see packages/squad-cli/src/cli/commands/build.ts
  * @see packages/squad-sdk/src/builders/index.ts
@@ -92,7 +92,7 @@ function defineCeremony(config: CeremonyDefinition): CeremonyDefinition {
 // ============================================================================
 // Local build stubs (same contract as build-command.test.ts)
 //
-// ⚠️ When Fenster's build command lands, replace with:
+// ⚠️ When Vassago's build command lands, replace with:
 //   import { runBuild } from
 //     '../packages/squad-cli/src/cli/commands/build.js';
 // ============================================================================
@@ -186,8 +186,8 @@ function runBuild(config: SquadSDKConfig, squadDir: string): { filesWritten: str
  */
 function createOriginalMarkdownSquad(root: string): string {
   const squadDir = join(root, '.squad');
-  mkdirSync(join(squadDir, 'agents', 'edie'), { recursive: true });
-  mkdirSync(join(squadDir, 'agents', 'hockney'), { recursive: true });
+  mkdirSync(join(squadDir, 'agents', 'amon'), { recursive: true });
+  mkdirSync(join(squadDir, 'agents', 'samigina'), { recursive: true });
   mkdirSync(join(squadDir, 'orchestration-log'), { recursive: true });
   mkdirSync(join(squadDir, 'decisions', 'inbox'), { recursive: true });
 
@@ -208,8 +208,8 @@ function createOriginalMarkdownSquad(root: string): string {
 
 | Name | Role | Charter |
 |------|------|---------|
-| Edie | TypeScript Engineer | \`.squad/agents/edie/charter.md\` |
-| Hockney | Tester | \`.squad/agents/hockney/charter.md\` |
+| Amon | TypeScript Engineer | \`.squad/agents/amon/charter.md\` |
+| Samigina | Tester | \`.squad/agents/samigina/charter.md\` |
 `,
   );
 
@@ -218,20 +218,20 @@ function createOriginalMarkdownSquad(root: string): string {
     join(squadDir, 'routing.md'),
     `# Routing Rules
 
-**Default agent:** edie
+**Default agent:** amon
 
 ## Rules
 
-- \`feature-*\` → edie
-- \`test-*\` → hockney
-- \`bug-*\` → edie, hockney
+- \`feature-*\` → amon
+- \`test-*\` → samigina
+- \`bug-*\` → amon, samigina
 `,
   );
 
   // Agent charters — hand-written
   writeFileSync(
-    join(squadDir, 'agents', 'edie', 'charter.md'),
-    `# Edie — TypeScript Engineer
+    join(squadDir, 'agents', 'amon', 'charter.md'),
+    `# Amon — TypeScript Engineer
 
 > Precise, opinionated. Types are contracts.
 
@@ -246,8 +246,8 @@ function createOriginalMarkdownSquad(root: string): string {
   );
 
   writeFileSync(
-    join(squadDir, 'agents', 'hockney', 'charter.md'),
-    `# Hockney — Tester
+    join(squadDir, 'agents', 'samigina', 'charter.md'),
+    `# Samigina — Tester
 
 > Skeptical, relentless. If it can break, he'll find how.
 
@@ -269,7 +269,7 @@ function createOriginalMarkdownSquad(root: string): string {
 > Team decisions that all agents must respect.
 
 ### 2026-02-21: Type safety — strict mode non-negotiable
-**By:** Edie
+**By:** Amon
 **What:** strict: true everywhere.
 
 ### 2026-02-21: No temp files in repo root
@@ -279,8 +279,8 @@ function createOriginalMarkdownSquad(root: string): string {
   );
 
   writeFileSync(
-    join(squadDir, 'agents', 'edie', 'history.md'),
-    `# Edie — Project History
+    join(squadDir, 'agents', 'amon', 'history.md'),
+    `# Amon — Project History
 
 ## Learnings
 
@@ -290,8 +290,8 @@ Built 8 builder functions with runtime validation. Zero dependencies.
   );
 
   writeFileSync(
-    join(squadDir, 'agents', 'hockney', 'history.md'),
-    `# Hockney — Project History
+    join(squadDir, 'agents', 'samigina', 'history.md'),
+    `# Samigina — Project History
 
 ## Learnings
 
@@ -306,14 +306,14 @@ Built 8 builder functions with runtime validation. Zero dependencies.
 
 ## Summary
 Brady kicked off Phase 1 SDK-first mode.
-Edie designed builder types, Hockney wrote tests.
+Amon designed builder types, Samigina wrote tests.
 `,
   );
 
   writeFileSync(
-    join(squadDir, 'decisions', 'inbox', 'edie-builder-naming.md'),
+    join(squadDir, 'decisions', 'inbox', 'amon-builder-naming.md'),
     `### Builder naming: defineXxx pattern
-**By:** Edie
+**By:** Amon
 **What:** All builder functions use defineXxx() naming.
 `,
   );
@@ -332,34 +332,34 @@ function buildEquivalentSDKConfig(): SquadSDKConfig {
     team: defineTeam({
       name: 'Alpha Squad',
       description: 'The core engineering team for the replatform.',
-      members: ['edie', 'hockney'],
+      members: ['amon', 'samigina'],
     }),
     agents: [
       defineAgent({
-        name: 'edie',
+        name: 'amon',
         role: 'TypeScript Engineer',
         charter: 'Precise, opinionated. Types are contracts.',
         model: 'claude-sonnet-4',
       }),
       defineAgent({
-        name: 'hockney',
+        name: 'samigina',
         role: 'Tester',
         charter: 'Skeptical, relentless. If it can break, he\'ll find how.',
       }),
     ],
     routing: defineRouting({
       rules: [
-        { pattern: 'feature-*', agents: ['edie'] },
-        { pattern: 'test-*', agents: ['hockney'] },
-        { pattern: 'bug-*', agents: ['edie', 'hockney'] },
+        { pattern: 'feature-*', agents: ['amon'] },
+        { pattern: 'test-*', agents: ['samigina'] },
+        { pattern: 'bug-*', agents: ['amon', 'samigina'] },
       ],
-      defaultAgent: 'edie',
+      defaultAgent: 'amon',
     }),
     ceremonies: [
       defineCeremony({
         name: 'standup',
         schedule: '0 9 * * 1-5',
-        participants: ['edie', 'hockney'],
+        participants: ['amon', 'samigina'],
       }),
     ],
   };
@@ -391,11 +391,11 @@ describe('original markdown squad — fixture validation', () => {
 
     expect(existsSync(join(squadDir, 'team.md'))).toBe(true);
     expect(existsSync(join(squadDir, 'routing.md'))).toBe(true);
-    expect(existsSync(join(squadDir, 'agents', 'edie', 'charter.md'))).toBe(true);
-    expect(existsSync(join(squadDir, 'agents', 'hockney', 'charter.md'))).toBe(true);
+    expect(existsSync(join(squadDir, 'agents', 'amon', 'charter.md'))).toBe(true);
+    expect(existsSync(join(squadDir, 'agents', 'samigina', 'charter.md'))).toBe(true);
     expect(existsSync(join(squadDir, 'decisions.md'))).toBe(true);
-    expect(existsSync(join(squadDir, 'agents', 'edie', 'history.md'))).toBe(true);
-    expect(existsSync(join(squadDir, 'agents', 'hockney', 'history.md'))).toBe(true);
+    expect(existsSync(join(squadDir, 'agents', 'amon', 'history.md'))).toBe(true);
+    expect(existsSync(join(squadDir, 'agents', 'samigina', 'history.md'))).toBe(true);
     expect(existsSync(join(squadDir, 'orchestration-log', '2026-03-01.md'))).toBe(true);
   });
 
@@ -405,8 +405,8 @@ describe('original markdown squad — fixture validation', () => {
     const content = readFileSync(join(squadDir, 'team.md'), 'utf-8');
 
     expect(content).toContain('Alpha Squad');
-    expect(content).toContain('Edie');
-    expect(content).toContain('Hockney');
+    expect(content).toContain('Amon');
+    expect(content).toContain('Samigina');
     expect(content).toContain('TypeScript Engineer');
     expect(content).toContain('Tester');
   });
@@ -419,8 +419,8 @@ describe('original markdown squad — fixture validation', () => {
     expect(content).toContain('feature-*');
     expect(content).toContain('test-*');
     expect(content).toContain('bug-*');
-    expect(content).toContain('edie');
-    expect(content).toContain('hockney');
+    expect(content).toContain('amon');
+    expect(content).toContain('samigina');
   });
 
   it('original markdown has NO generated-by header', () => {
@@ -429,7 +429,7 @@ describe('original markdown squad — fixture validation', () => {
 
     const teamMd = readFileSync(join(squadDir, 'team.md'), 'utf-8');
     const routingMd = readFileSync(join(squadDir, 'routing.md'), 'utf-8');
-    const edieCharter = readFileSync(join(squadDir, 'agents', 'edie', 'charter.md'), 'utf-8');
+    const edieCharter = readFileSync(join(squadDir, 'agents', 'amon', 'charter.md'), 'utf-8');
 
     expect(teamMd).not.toContain(GENERATED_HEADER);
     expect(routingMd).not.toContain(GENERATED_HEADER);
@@ -449,18 +449,18 @@ describe('SDK config equivalence', () => {
 
   it('SDK config has the same member list', () => {
     const config = buildEquivalentSDKConfig();
-    expect(config.team.members).toEqual(['edie', 'hockney']);
+    expect(config.team.members).toEqual(['amon', 'samigina']);
   });
 
   it('SDK config agents match original charter roles', () => {
     const config = buildEquivalentSDKConfig();
-    const edie = config.agents.find((a) => a.name === 'edie');
-    const hockney = config.agents.find((a) => a.name === 'hockney');
+    const amon = config.agents.find((a) => a.name === 'amon');
+    const samigina = config.agents.find((a) => a.name === 'samigina');
 
-    expect(edie).toBeDefined();
-    expect(edie!.role).toBe('TypeScript Engineer');
-    expect(hockney).toBeDefined();
-    expect(hockney!.role).toBe('Tester');
+    expect(amon).toBeDefined();
+    expect(amon!.role).toBe('TypeScript Engineer');
+    expect(samigina).toBeDefined();
+    expect(samigina!.role).toBe('Tester');
   });
 
   it('SDK config has same routing rules', () => {
@@ -469,7 +469,7 @@ describe('SDK config equivalence', () => {
     expect(config.routing!.rules[0]!.pattern).toBe('feature-*');
     expect(config.routing!.rules[1]!.pattern).toBe('test-*');
     expect(config.routing!.rules[2]!.pattern).toBe('bug-*');
-    expect(config.routing!.defaultAgent).toBe('edie');
+    expect(config.routing!.defaultAgent).toBe('amon');
   });
 });
 
@@ -487,8 +487,8 @@ describe('SDK conversion round-trip — build output', () => {
 
     const generated = readFileSync(join(squadDir, 'team.md'), 'utf-8');
     expect(generated).toContain('Alpha Squad');
-    expect(generated).toContain('edie');
-    expect(generated).toContain('hockney');
+    expect(generated).toContain('amon');
+    expect(generated).toContain('samigina');
     expect(generated).toContain('TypeScript Engineer');
     expect(generated).toContain('Tester');
   });
@@ -516,10 +516,10 @@ describe('SDK conversion round-trip — build output', () => {
     expect(generated).toContain('`feature-*`');
     expect(generated).toContain('`test-*`');
     expect(generated).toContain('`bug-*`');
-    expect(generated).toContain('edie');
-    expect(generated).toContain('hockney');
-    expect(generated).toContain('edie, hockney');
-    expect(generated).toContain('**Default agent:** edie');
+    expect(generated).toContain('amon');
+    expect(generated).toContain('samigina');
+    expect(generated).toContain('amon, samigina');
+    expect(generated).toContain('**Default agent:** amon');
   });
 
   it('generated charter files contain agent name and role', () => {
@@ -529,13 +529,13 @@ describe('SDK conversion round-trip — build output', () => {
 
     runBuild(config, squadDir);
 
-    const edieCharter = readFileSync(join(squadDir, 'agents', 'edie', 'charter.md'), 'utf-8');
-    expect(edieCharter).toContain('edie');
+    const edieCharter = readFileSync(join(squadDir, 'agents', 'amon', 'charter.md'), 'utf-8');
+    expect(edieCharter).toContain('amon');
     expect(edieCharter).toContain('TypeScript Engineer');
     expect(edieCharter).toContain('Precise, opinionated');
 
-    const hockneyCharter = readFileSync(join(squadDir, 'agents', 'hockney', 'charter.md'), 'utf-8');
-    expect(hockneyCharter).toContain('hockney');
+    const hockneyCharter = readFileSync(join(squadDir, 'agents', 'samigina', 'charter.md'), 'utf-8');
+    expect(hockneyCharter).toContain('samigina');
     expect(hockneyCharter).toContain('Tester');
     expect(hockneyCharter).toContain('Skeptical, relentless');
   });
@@ -550,8 +550,8 @@ describe('SDK conversion round-trip — build output', () => {
     const generated = readFileSync(join(squadDir, 'ceremonies.md'), 'utf-8');
     expect(generated).toContain('standup');
     expect(generated).toContain('0 9 * * 1-5');
-    expect(generated).toContain('edie');
-    expect(generated).toContain('hockney');
+    expect(generated).toContain('amon');
+    expect(generated).toContain('samigina');
   });
 
   it('build overwrites original hand-written files with generated versions', () => {
@@ -596,16 +596,16 @@ describe('SDK conversion — protected files preserved', () => {
     const squadDir = createOriginalMarkdownSquad(root);
     const config = buildEquivalentSDKConfig();
 
-    const edieHistory = readFileSync(join(squadDir, 'agents', 'edie', 'history.md'), 'utf-8');
-    const hockneyHistory = readFileSync(join(squadDir, 'agents', 'hockney', 'history.md'), 'utf-8');
+    const edieHistory = readFileSync(join(squadDir, 'agents', 'amon', 'history.md'), 'utf-8');
+    const hockneyHistory = readFileSync(join(squadDir, 'agents', 'samigina', 'history.md'), 'utf-8');
 
     expect(edieHistory).toContain('Phase 1 builder functions');
     expect(hockneyHistory).toContain('Phase 1 SDK tests');
 
     runBuild(config, squadDir);
 
-    expect(readFileSync(join(squadDir, 'agents', 'edie', 'history.md'), 'utf-8')).toBe(edieHistory);
-    expect(readFileSync(join(squadDir, 'agents', 'hockney', 'history.md'), 'utf-8')).toBe(hockneyHistory);
+    expect(readFileSync(join(squadDir, 'agents', 'amon', 'history.md'), 'utf-8')).toBe(edieHistory);
+    expect(readFileSync(join(squadDir, 'agents', 'samigina', 'history.md'), 'utf-8')).toBe(hockneyHistory);
   });
 
   it('orchestration-log/ entries are NOT touched during build', () => {
@@ -628,14 +628,14 @@ describe('SDK conversion — protected files preserved', () => {
     const config = buildEquivalentSDKConfig();
 
     const inboxContent = readFileSync(
-      join(squadDir, 'decisions', 'inbox', 'edie-builder-naming.md'),
+      join(squadDir, 'decisions', 'inbox', 'amon-builder-naming.md'),
       'utf-8',
     );
 
     runBuild(config, squadDir);
 
     const afterBuild = readFileSync(
-      join(squadDir, 'decisions', 'inbox', 'edie-builder-naming.md'),
+      join(squadDir, 'decisions', 'inbox', 'amon-builder-naming.md'),
       'utf-8',
     );
     expect(afterBuild).toBe(inboxContent);
@@ -678,7 +678,7 @@ Content five — most recent.
     const root = makeTmpDir();
     const squadDir = createOriginalMarkdownSquad(root);
 
-    const detailedHistory = `# Edie — Project History
+    const detailedHistory = `# Amon — Project History
 
 ## Learnings
 
@@ -693,12 +693,12 @@ subpath exports require explicit entries in package.json exports map.
 ### Builder naming convention (2026-03-01)
 All builders use defineXxx() pattern — mirrors Vite/Vitest conventions.
 `;
-    writeFileSync(join(squadDir, 'agents', 'edie', 'history.md'), detailedHistory);
+    writeFileSync(join(squadDir, 'agents', 'amon', 'history.md'), detailedHistory);
 
     const config = buildEquivalentSDKConfig();
     runBuild(config, squadDir);
 
-    const afterBuild = readFileSync(join(squadDir, 'agents', 'edie', 'history.md'), 'utf-8');
+    const afterBuild = readFileSync(join(squadDir, 'agents', 'amon', 'history.md'), 'utf-8');
     expect(afterBuild).toBe(detailedHistory);
     expect(afterBuild).toContain('Docker fix');
     expect(afterBuild).toContain('Import resolution');
@@ -721,27 +721,27 @@ describe('SDK conversion — edge cases', () => {
       team: defineTeam({
         name: 'Alpha Squad',
         description: 'The core engineering team for the replatform.',
-        members: ['edie', 'hockney', 'fenster'],
+        members: ['amon', 'samigina', 'vassago'],
       }),
       agents: [
-        defineAgent({ name: 'edie', role: 'TypeScript Engineer', charter: 'Types are contracts.' }),
-        defineAgent({ name: 'hockney', role: 'Tester', charter: 'Breaks things.' }),
-        defineAgent({ name: 'fenster', role: 'Core Developer', charter: 'Builds the engine.' }),
+        defineAgent({ name: 'amon', role: 'TypeScript Engineer', charter: 'Types are contracts.' }),
+        defineAgent({ name: 'samigina', role: 'Tester', charter: 'Breaks things.' }),
+        defineAgent({ name: 'vassago', role: 'Core Developer', charter: 'Builds the engine.' }),
       ],
     };
 
-    const edieHistory = readFileSync(join(squadDir, 'agents', 'edie', 'history.md'), 'utf-8');
+    const edieHistory = readFileSync(join(squadDir, 'agents', 'amon', 'history.md'), 'utf-8');
 
     runBuild(config, squadDir);
 
     // New agent charter is created
-    expect(existsSync(join(squadDir, 'agents', 'fenster', 'charter.md'))).toBe(true);
-    const fensterCharter = readFileSync(join(squadDir, 'agents', 'fenster', 'charter.md'), 'utf-8');
-    expect(fensterCharter).toContain('fenster');
+    expect(existsSync(join(squadDir, 'agents', 'vassago', 'charter.md'))).toBe(true);
+    const fensterCharter = readFileSync(join(squadDir, 'agents', 'vassago', 'charter.md'), 'utf-8');
+    expect(fensterCharter).toContain('vassago');
     expect(fensterCharter).toContain('Core Developer');
 
     // Existing protected files untouched
-    expect(readFileSync(join(squadDir, 'agents', 'edie', 'history.md'), 'utf-8')).toBe(edieHistory);
+    expect(readFileSync(join(squadDir, 'agents', 'amon', 'history.md'), 'utf-8')).toBe(edieHistory);
     expect(readFileSync(join(squadDir, 'decisions.md'), 'utf-8')).toContain('strict mode non-negotiable');
   });
 
@@ -777,13 +777,13 @@ describe('SDK conversion — edge cases', () => {
     runBuild(config, squadDir);
     const firstTeam = readFileSync(join(squadDir, 'team.md'), 'utf-8');
     const firstRouting = readFileSync(join(squadDir, 'routing.md'), 'utf-8');
-    const firstEdie = readFileSync(join(squadDir, 'agents', 'edie', 'charter.md'), 'utf-8');
+    const firstEdie = readFileSync(join(squadDir, 'agents', 'amon', 'charter.md'), 'utf-8');
 
     // Second build — should produce identical output
     runBuild(config, squadDir);
     expect(readFileSync(join(squadDir, 'team.md'), 'utf-8')).toBe(firstTeam);
     expect(readFileSync(join(squadDir, 'routing.md'), 'utf-8')).toBe(firstRouting);
-    expect(readFileSync(join(squadDir, 'agents', 'edie', 'charter.md'), 'utf-8')).toBe(firstEdie);
+    expect(readFileSync(join(squadDir, 'agents', 'amon', 'charter.md'), 'utf-8')).toBe(firstEdie);
   });
 
   it('SDK config with agent model preference generates model line in charter', () => {
@@ -793,7 +793,7 @@ describe('SDK conversion — edge cases', () => {
 
     runBuild(config, squadDir);
 
-    const edieCharter = readFileSync(join(squadDir, 'agents', 'edie', 'charter.md'), 'utf-8');
+    const edieCharter = readFileSync(join(squadDir, 'agents', 'amon', 'charter.md'), 'utf-8');
     expect(edieCharter).toContain('**Model:** claude-sonnet-4');
   });
 
@@ -804,7 +804,7 @@ describe('SDK conversion — edge cases', () => {
 
     runBuild(config, squadDir);
 
-    const hockneyCharter = readFileSync(join(squadDir, 'agents', 'hockney', 'charter.md'), 'utf-8');
+    const hockneyCharter = readFileSync(join(squadDir, 'agents', 'samigina', 'charter.md'), 'utf-8');
     expect(hockneyCharter).not.toContain('**Model:**');
   });
 
@@ -841,8 +841,8 @@ describe('SDK conversion — edge cases', () => {
     runBuild(config, squadDir);
 
     const routing = readFileSync(join(squadDir, 'routing.md'), 'utf-8');
-    // The bug-* rule routes to both edie and hockney
-    expect(routing).toContain('`bug-*` → edie, hockney');
+    // The bug-* rule routes to both amon and samigina
+    expect(routing).toContain('`bug-*` → amon, samigina');
   });
 
   it('build reports correct number of files written', () => {
@@ -856,8 +856,8 @@ describe('SDK conversion — edge cases', () => {
     expect(result.filesWritten).toHaveLength(5);
     expect(result.filesWritten).toContain('team.md');
     expect(result.filesWritten).toContain('routing.md');
-    expect(result.filesWritten).toContain('agents/edie/charter.md');
-    expect(result.filesWritten).toContain('agents/hockney/charter.md');
+    expect(result.filesWritten).toContain('agents/amon/charter.md');
+    expect(result.filesWritten).toContain('agents/samigina/charter.md');
     expect(result.filesWritten).toContain('ceremonies.md');
   });
 

@@ -38,35 +38,35 @@ When an artifact is **rejected** by a Reviewer:
 ## Examples
 
 **Example 1: Reassign after rejection**
-1. Fenster writes authentication module
-2. Hockney (Tester) reviews → rejects: "Error handling is missing. Verbal should fix this."
-3. Coordinator: Fenster is now locked out of this artifact
-4. Coordinator spawns Verbal to revise the authentication module
-5. Verbal produces v2
-6. Hockney reviews v2 → approves
+1. Vassago writes authentication module
+2. Samigina (Tester) reviews → rejects: "Error handling is missing. Agares should fix this."
+3. Coordinator: Vassago is now locked out of this artifact
+4. Coordinator spawns Agares to revise the authentication module
+5. Agares produces v2
+6. Samigina reviews v2 → approves
 7. Lockout clears for next artifact
 
 **Example 2: Escalate for expertise**
-1. Edie writes TypeScript config
-2. Keaton (Lead) reviews → rejects: "Need someone with deeper TS knowledge. Escalate."
-3. Coordinator: Edie is now locked out
+1. Amon writes TypeScript config
+2. Bael (Lead) reviews → rejects: "Need someone with deeper TS knowledge. Escalate."
+3. Coordinator: Amon is now locked out
 4. Coordinator spawns new agent (or existing TS expert) to revise
 5. New agent produces v2
-6. Keaton reviews v2
+6. Bael reviews v2
 
 **Example 3: Deadlock handling**
-1. Fenster writes module → rejected
-2. Verbal revises → rejected
-3. Hockney revises → rejected
+1. Vassago writes module → rejected
+2. Agares revises → rejected
+3. Samigina revises → rejected
 4. All 3 eligible agents are now locked out
 5. Coordinator: "All eligible agents have been locked out. Escalating to user: [artifact details]"
 
 **Example 4: Reviewer accidentally names original author**
-1. Fenster writes module → rejected
-2. Hockney says: "Fenster should fix the error handling"
-3. Coordinator: "Fenster is locked out as the original author. Please name a different agent."
-4. Hockney: "Verbal, then"
-5. Coordinator spawns Verbal
+1. Vassago writes module → rejected
+2. Samigina says: "Vassago should fix the error handling"
+3. Coordinator: "Vassago is locked out as the original author. Please name a different agent."
+4. Samigina: "Agares, then"
+5. Coordinator spawns Agares
 
 ## Anti-Patterns
 

@@ -172,7 +172,7 @@ export class ShellLifecycle {
  * ```
  * | Name | Role | Charter | Status |
  * |------|------|---------|--------|
- * | Keaton | Lead | `.squad/agents/keaton/charter.md` | ✅ Active |
+ * | Bael | Lead | `.squad/agents/bael/charter.md` | ✅ Active |
  * ```
  */
 function parseTeamManifest(content: string): DiscoveredAgent[] {

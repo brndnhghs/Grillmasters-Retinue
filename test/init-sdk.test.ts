@@ -35,7 +35,7 @@ describe('squad init --sdk flag', () => {
     const options: InitOptions = {
       teamRoot: tempDir,
       projectName: 'test-squad',
-      agents: [{ name: 'edie', role: 'Engineer' }],
+      agents: [{ name: 'amon', role: 'Engineer' }],
       configFormat: 'markdown',
     };
 
@@ -58,7 +58,7 @@ describe('squad init --sdk flag', () => {
     const options: InitOptions = {
       teamRoot: tempDir,
       projectName: 'test-squad',
-      agents: [{ name: 'edie', role: 'Engineer' }],
+      agents: [{ name: 'amon', role: 'Engineer' }],
       configFormat: 'sdk',
     };
 
@@ -91,7 +91,7 @@ describe('squad init --sdk flag', () => {
     const options: InitOptions = {
       teamRoot: tempDir,
       projectName: 'test-squad',
-      agents: [{ name: 'edie', role: 'Engineer' }],
+      agents: [{ name: 'amon', role: 'Engineer' }],
       configFormat: 'sdk',
     };
 
@@ -118,7 +118,7 @@ describe('squad init --sdk flag', () => {
     const options: InitOptions = {
       teamRoot: tempDir,
       projectName: 'test-squad',
-      agents: [{ name: 'edie', role: 'Engineer' }],
+      agents: [{ name: 'amon', role: 'Engineer' }],
       configFormat: 'markdown',
     };
 
@@ -148,7 +148,7 @@ describe('squad init --sdk flag', () => {
     const options: InitOptions = {
       teamRoot: tempDir,
       projectName: 'test-squad',
-      agents: [{ name: 'edie', role: 'Engineer' }],
+      agents: [{ name: 'amon', role: 'Engineer' }],
       configFormat: 'typescript',
     };
 
@@ -170,8 +170,8 @@ describe('squad init --sdk flag', () => {
       teamRoot: tempDir,
       projectName: 'test-squad',
       agents: [
-        { name: 'edie', role: 'Engineer' },
-        { name: 'hockney', role: 'Tester' },
+        { name: 'amon', role: 'Engineer' },
+        { name: 'samigina', role: 'Tester' },
       ],
       configFormat: 'sdk',
     };
@@ -191,7 +191,7 @@ describe('squad init --sdk flag', () => {
     const options: InitOptions = {
       teamRoot: tempDir,
       projectName: 'Test Squad',
-      agents: [{ name: 'edie', role: 'Engineer' }],
+      agents: [{ name: 'amon', role: 'Engineer' }],
       configFormat: 'sdk',
     };
 

@@ -1,7 +1,7 @@
 ---
 title: "Welcome to the New Squad"
 date: 2026-03-10
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: null
 tags: [squad, v0.8.18, release, launch, sdk, cli, typescript, samples, migration]
 status: published
@@ -265,7 +265,7 @@ npm install @bradygaster/squad-sdk
 
 | Component | What It Does |
 |-----------|-------------|
-| **CastingEngine** | Deterministic, themed agent naming. Cast a team from "The Usual Suspects" or "The Avengers." Names persist across sessions. |
+| **CastingEngine** | Deterministic, themed agent naming. Cast a team from "The Solomonic Demonology" or "The Avengers." Names persist across sessions. |
 | **StreamingPipeline** | Token-by-token LLM output with `onDelta()`, `onUsage()`, and `onReasoning()` handlers. |
 | **HookPipeline** | Governance as code: file-write guards, PII scrubbing, reviewer lockout, rate limiting. |
 | **CostTracker** | Budget-aware agent routing. Track tokens and costs per agent, per session. Warn at 70%, block at 100%. |
@@ -285,20 +285,20 @@ Eight samples ship with v0.8.18. Each one demonstrates a slice of the SDK. Run t
 
 ### 1. **hello-squad** (Beginner)
 
-**What it does:** Cast a themed team from The Usual Suspects universe. Watch four agents materialize with deterministic names. The casting engine's "hello world."
+**What it does:** Cast a themed team from The Solomonic Demonology universe. Watch four agents materialize with deterministic names. The casting engine's "hello world."
 
 **What you'll see:**
 ```
-🎭 Keyser — Lead
+🎭 Bael — Lead
    Personality: Quietly commanding; sees the whole board before anyone else.
 
-🎭 McManus — Developer
+🎭 marbas — Developer
    Personality: Sharp, precise, always three steps ahead.
 
-🎭 Fenster — Tester
+🎭 Vassago — Tester
    Personality: Unpredictable, curious, finds edge cases by instinct.
 
-🎭 Verbal — Scribe
+🎭 Agares — Scribe
    Personality: The storyteller; connects dots across sessions.
 ```
 
@@ -419,7 +419,7 @@ npm install && npm start
 ```
 squad > design a REST API for recipes
 
-Backend (McManus) responding...
+Backend (marbas) responding...
 I recommend a resource-based API with these endpoints:
   - GET /recipes — list all recipes
   - GET /recipes/:id — single recipe
@@ -521,12 +521,12 @@ npm install && npm start
 🎬 autonomous-pipeline — Squad SDK Showcase
 
 ────────────────────────────────────────────────────────────
-  Casting Team from "The Usual Suspects"
+  Casting Team from "The Solomonic Demonology"
 ────────────────────────────────────────────────────────────
-  🎭 Keyser — Lead
-  🎭 McManus — Developer
-  🎭 Fenster — Tester
-  🎭 Verbal — Scribe
+  🎭 Bael — Lead
+  🎭 marbas — Developer
+  🎭 Vassago — Tester
+  🎭 Agares — Scribe
 
 ────────────────────────────────────────────────────────────
   Task Queue (10 tasks)
@@ -545,10 +545,10 @@ npm install && npm start
 ────────────────────────────────────────────────────────────
   Autonomous Execution
 ────────────────────────────────────────────────────────────
-  McManus picked up: Design REST API
-  McManus routed to Fenster: Write unit tests
-  Fenster recorded decision: Use RS256 for JWT
-  Verbal accumulated learning: Pool size 20 optimal
+  marbas picked up: Design REST API
+  marbas routed to Vassago: Write unit tests
+  Vassago recorded decision: Use RS256 for JWT
+  Agares accumulated learning: Pool size 20 optimal
 
 [Live dashboard updates in real time]
 

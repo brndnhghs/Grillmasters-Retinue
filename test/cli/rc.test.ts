@@ -104,7 +104,7 @@ describe('CLI: rc command', () => {
     });
 
     it('parses valid team.md with agents', async () => {
-      const teamMd = `# Team Roster\n\n| Name | Role | Status |\n|------|------|--------|\n| Keaton | Architect | Active |\n| Fenster | DevOps | Active |\n`;
+      const teamMd = `# Team Roster\n\n| Name | Role | Status |\n|------|------|--------|\n| Bael | Architect | Active |\n| Vassago | DevOps | Active |\n`;
       await fs.promises.writeFile(path.join(squadDir, 'team.md'), teamMd);
       
       const content = await fs.promises.readFile(path.join(squadDir, 'team.md'), 'utf-8');

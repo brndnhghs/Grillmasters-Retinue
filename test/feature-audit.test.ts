@@ -20,11 +20,11 @@ function fullConfig(): SquadConfig {
     version: '0.6.0',
     team: { name: 'Audit Squad' },
     agents: [
-      { name: 'keaton', role: 'lead', status: 'active' },
-      { name: 'mcmanus', role: 'developer', status: 'active' },
+      { name: 'bael', role: 'lead', status: 'active' },
+      { name: 'marbas', role: 'developer', status: 'active' },
     ],
     routing: {
-      rules: [{ pattern: '.*', agents: ['keaton'], tier: 'standard' }],
+      rules: [{ pattern: '.*', agents: ['bael'], tier: 'standard' }],
       fallbackBehavior: 'coordinator',
     },
     models: {

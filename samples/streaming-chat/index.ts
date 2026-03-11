@@ -33,25 +33,25 @@ interface AgentInfo {
 
 const AGENTS: AgentInfo[] = [
   {
-    name: 'McManus',
+    name: 'marbas',
     role: 'Backend',
     color: '\x1b[36m',   // cyan
     keywords: ['api', 'server', 'database', 'backend', 'endpoint', 'rest', 'sql', 'auth'],
-    systemPrompt: 'You are McManus, a bold backend engineer. Keep answers concise and code-focused.',
+    systemPrompt: 'You are marbas, a bold backend engineer. Keep answers concise and code-focused.',
   },
   {
-    name: 'Kobayashi',
+    name: 'Barbatos',
     role: 'Frontend',
     color: '\x1b[35m',   // magenta
     keywords: ['ui', 'frontend', 'component', 'css', 'react', 'style', 'layout', 'ux'],
-    systemPrompt: 'You are Kobayashi, a precise frontend designer. Respond with clean, visual solutions.',
+    systemPrompt: 'You are Barbatos, a precise frontend designer. Respond with clean, visual solutions.',
   },
   {
-    name: 'Fenster',
+    name: 'Vassago',
     role: 'Tester',
     color: '\x1b[33m',   // yellow
     keywords: ['test', 'bug', 'qa', 'coverage', 'assert', 'fixture', 'mock', 'spec'],
-    systemPrompt: 'You are Fenster, an eccentric tester. You find bugs nobody else can see.',
+    systemPrompt: 'You are Vassago, an eccentric tester. You find bugs nobody else can see.',
   },
 ];
 
@@ -207,7 +207,7 @@ export async function main(): Promise<void> {
   // ── Cast agents ──
   const casting = new CastingEngine();
   const cast = casting.castTeam({
-    universe: 'usual-suspects',
+    universe: 'solomonic-demonology',
     requiredRoles: ['developer', 'designer', 'tester'],
   });
   console.log(`  ${DIM}Cast:${RESET}`);

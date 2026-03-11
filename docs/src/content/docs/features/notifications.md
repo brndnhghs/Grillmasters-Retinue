@@ -224,7 +224,7 @@ For any HTTP endpoint (custom service, Zapier, IFTTT, etc.):
 3. **Your endpoint receives POST:**
    ```json
    {
-     "agent": "Keaton",
+     "agent": "Bael",
      "message": "Blocked: waiting for your decision on architecture approach",
      "context": {
        "reason": "decision_needed",
@@ -242,11 +242,11 @@ Agents ping you when:
 
 | Trigger | Example |
 |---------|---------|
-| **Blocked on input** | "Keaton needs your decision on which API approach to use (Issue #42)" |
-| **Decision needed** | "Verbal hit a design choice and needs your call on error handling strategy" |
-| **Error hit** | "McManus got an authentication error and needs credentials for the staging API" |
-| **Work complete** | "Fenster finished the test suite — 142 tests passing, 3 flaky (check the logs)" |
-| **Review feedback** | "Your PR review on #78 needs a response before Keaton can merge" |
+| **Blocked on input** | "Bael needs your decision on which API approach to use (Issue #42)" |
+| **Decision needed** | "Agares hit a design choice and needs your call on error handling strategy" |
+| **Error hit** | "marbas got an authentication error and needs credentials for the staging API" |
+| **Work complete** | "Vassago finished the test suite — 142 tests passing, 3 flaky (check the logs)" |
+| **Review feedback** | "Your PR review on #78 needs a response before Bael can merge" |
 
 You control which triggers send notifications (see Configuration below).
 
@@ -259,7 +259,7 @@ Notifications are **agent-branded, context-rich, and actionable.**
 Example notification message:
 
 ```
-🏗️ Keaton needs your input
+🏗️ Bael needs your input
 
 Blocked: Design decision required for API error handling strategy.
 Follow the conversation in Issue #42.
@@ -270,7 +270,7 @@ Follow the conversation in Issue #42.
 Another example:
 
 ```
-✅ Fenster finished the test suite
+✅ Vassago finished the test suite
 
 142 tests passing. 3 marked as flaky — review them in the terminal output.
 
@@ -330,7 +330,7 @@ To test without running a full Squad session:
 
 ```bash
 # Once your MCP server is configured, trigger a test notification:
-copilot squad test-notification --agent Keaton --reason blocked
+copilot squad test-notification --agent Bael --reason blocked
 ```
 
 This fires a sample notification through your configured server so you can verify delivery and formatting.

@@ -90,11 +90,11 @@ If you've exhausted the fallback chain and reached nuclear fallback, omit the `m
 When spawning, include the model in your acknowledgment:
 
 ```
-🔧 Fenster (claude-sonnet-4.5) — refactoring auth module
-🎨 Redfoot (claude-opus-4.5 · vision) — designing color system
+🔧 Vassago (claude-sonnet-4.5) — refactoring auth module
+🎨 Sitri (claude-opus-4.5 · vision) — designing color system
 📋 Scribe (claude-haiku-4.5 · fast) — logging session
-⚡ Keaton (claude-opus-4.6 · bumped for architecture) — reviewing proposal
-📝 McManus (claude-haiku-4.5 · fast) — updating docs
+⚡ Bael (claude-opus-4.6 · bumped for architecture) — reviewing proposal
+📝 marbas (claude-haiku-4.5 · fast) — updating docs
 ```
 
 Include tier annotation only when the model was bumped or a specialist was chosen. Default-tier spawns just show the model name.
@@ -111,7 +111,7 @@ Include tier annotation only when the model was bumped or a specialist was chose
 - Role: Backend Dev
 - Task: "implement REST endpoints for user management"
 - Layer 3 decision: writing code → `claude-sonnet-4.5` (standard tier)
-- Spawn: `🔧 Fenster (claude-sonnet-4.5) — implementing user API endpoints`
+- Spawn: `🔧 Vassago (claude-sonnet-4.5) — implementing user API endpoints`
 
 **Example 2: User override**
 - User says: "use haiku for everything this session"
@@ -123,7 +123,7 @@ Include tier annotation only when the model was bumped or a specialist was chose
 - Task: "refactor 15 auth-related files to use new token system"
 - Layer 3 base: `claude-sonnet-4.5`
 - Task complexity: heavy multi-file refactor → switch to `gpt-5.2-codex`
-- Spawn: `🔧 Fenster (gpt-5.2-codex · code specialist) — refactoring auth to new token system`
+- Spawn: `🔧 Vassago (gpt-5.2-codex · code specialist) — refactoring auth to new token system`
 
 **Example 4: Scribe logging**
 - Role: Scribe

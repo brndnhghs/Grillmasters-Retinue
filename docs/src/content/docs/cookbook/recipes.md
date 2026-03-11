@@ -142,7 +142,7 @@ Team, design the user model. Don't code yet. Write decisions to decisions.md.
 
 **Spike → Decision → Build.** For hard problems, have the Lead do a spike first:
 ```
-Keaton, do a 20-minute spike on authentication patterns. Write a decision.
+Bael, do a 20-minute spike on authentication patterns. Write a decision.
 ```
 
 ---
@@ -176,7 +176,7 @@ Divide the team. Start both immediately.
 ### Architectural Spike
 
 ```
-Keaton, do a 20-minute spike on authentication patterns for this stack.
+Bael, do a 20-minute spike on authentication patterns for this stack.
 Research JWT vs session-based auth. Write a decision with your recommendation.
 ```
 
@@ -198,7 +198,7 @@ Michael, review the cart app. Are there issues I should know about?
 
 ```
 Team, we're closing the MVP phase.
-Keaton, what's the current architecture?
+Bael, what's the current architecture?
 Kane, what's left to do on the backend?
 Dallas, what UX work is pending?
 Lambert, what tests are missing?

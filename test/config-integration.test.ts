@@ -55,11 +55,11 @@ function fixture(...parts: string[]): string {
   return join(FIXTURES_ROOT, ...parts);
 }
 
-const SAMPLE_CHARTER = `# Fenster
+const SAMPLE_CHARTER = `# Vassago
 
 ## Identity
 
-**Name:** Fenster
+**Name:** Vassago
 **Role:** Core Developer
 **Expertise:** TypeScript, testing, architecture
 **Style:** Precise and methodical
@@ -79,7 +79,7 @@ Do not modify docs/ or marketing.
 
 ## Collaboration
 
-Coordinate with Verbal on prompt changes.
+Coordinate with Agares on prompt changes.
 `;
 
 const MINIMAL_CHARTER = `# MinAgent
@@ -118,27 +118,27 @@ describe('Integration: LocalAgentSource discovery', () => {
     const base = fixture('project-a');
     const agentsDir = join(base, '.squad', 'agents');
     mkdirSync(agentsDir, { recursive: true });
-    setupAgentDir(agentsDir, 'fenster', SAMPLE_CHARTER);
-    setupAgentDir(agentsDir, 'verbal', MINIMAL_CHARTER);
+    setupAgentDir(agentsDir, 'vassago', SAMPLE_CHARTER);
+    setupAgentDir(agentsDir, 'agares', MINIMAL_CHARTER);
 
     const source = new LocalAgentSource(base);
     const manifests = await source.listAgents();
 
     expect(manifests.length).toBe(2);
-    expect(manifests.map(m => m.name).sort()).toEqual(['Fenster', 'MinAgent'].sort());
+    expect(manifests.map(m => m.name).sort()).toEqual(['Vassago', 'MinAgent'].sort());
   });
 
   it('discovers agents in legacy .ai-team/agents/', async () => {
     const base = fixture('project-legacy');
     const agentsDir = join(base, '.ai-team', 'agents');
     mkdirSync(agentsDir, { recursive: true });
-    setupAgentDir(agentsDir, 'fenster', SAMPLE_CHARTER);
+    setupAgentDir(agentsDir, 'vassago', SAMPLE_CHARTER);
 
     const source = new LocalAgentSource(base);
     const manifests = await source.listAgents();
 
     expect(manifests.length).toBe(1);
-    expect(manifests[0].name).toBe('Fenster');
+    expect(manifests[0].name).toBe('Vassago');
     expect(manifests[0].role).toBe('Core Developer');
     expect(manifests[0].source).toBe('local');
   });
@@ -150,15 +150,15 @@ describe('Integration: LocalAgentSource discovery', () => {
     const aiTeamDir = join(base, '.ai-team', 'agents');
     mkdirSync(squadDir, { recursive: true });
     mkdirSync(aiTeamDir, { recursive: true });
-    setupAgentDir(squadDir, 'fenster', SAMPLE_CHARTER);
+    setupAgentDir(squadDir, 'vassago', SAMPLE_CHARTER);
     setupAgentDir(aiTeamDir, 'legacy-agent', MINIMAL_CHARTER);
 
     const source = new LocalAgentSource(base);
     const manifests = await source.listAgents();
 
-    // Should find fenster from .squad, NOT legacy-agent from .ai-team
+    // Should find vassago from .squad, NOT legacy-agent from .ai-team
     expect(manifests.length).toBe(1);
-    expect(manifests[0].name).toBe('Fenster');
+    expect(manifests[0].name).toBe('Vassago');
   });
 
   it('returns empty array when no agent directories exist', async () => {
@@ -175,13 +175,13 @@ describe('Integration: LocalAgentSource discovery', () => {
     const base = fixture('project-missing-charter');
     const agentsDir = join(base, '.squad', 'agents');
     mkdirSync(join(agentsDir, 'no-charter'), { recursive: true });
-    setupAgentDir(agentsDir, 'fenster', SAMPLE_CHARTER);
+    setupAgentDir(agentsDir, 'vassago', SAMPLE_CHARTER);
 
     const source = new LocalAgentSource(base);
     const manifests = await source.listAgents();
 
     expect(manifests.length).toBe(1);
-    expect(manifests[0].name).toBe('Fenster');
+    expect(manifests[0].name).toBe('Vassago');
   });
 
   it('handles malformed charter gracefully in listAgents', async () => {
@@ -203,13 +203,13 @@ describe('Integration: LocalAgentSource discovery', () => {
     const base = fixture('project-get-agent');
     const agentsDir = join(base, '.squad', 'agents');
     mkdirSync(agentsDir, { recursive: true });
-    setupAgentDir(agentsDir, 'fenster', SAMPLE_CHARTER, '# History\n\nSome history.');
+    setupAgentDir(agentsDir, 'vassago', SAMPLE_CHARTER, '# History\n\nSome history.');
 
     const source = new LocalAgentSource(base);
-    const agent = await source.getAgent('fenster');
+    const agent = await source.getAgent('vassago');
 
     expect(agent).not.toBeNull();
-    expect(agent!.name).toBe('Fenster');
+    expect(agent!.name).toBe('Vassago');
     expect(agent!.role).toBe('Core Developer');
     expect(agent!.model).toBe('claude-sonnet-4.5');
     expect(agent!.skills).toEqual(['TypeScript', 'testing', 'architecture']);
@@ -232,10 +232,10 @@ describe('Integration: LocalAgentSource discovery', () => {
     const base = fixture('project-no-history');
     const agentsDir = join(base, '.squad', 'agents');
     mkdirSync(agentsDir, { recursive: true });
-    setupAgentDir(agentsDir, 'fenster', SAMPLE_CHARTER);
+    setupAgentDir(agentsDir, 'vassago', SAMPLE_CHARTER);
 
     const source = new LocalAgentSource(base);
-    const agent = await source.getAgent('fenster');
+    const agent = await source.getAgent('vassago');
 
     expect(agent).not.toBeNull();
     expect(agent!.history).toBeUndefined();
@@ -245,10 +245,10 @@ describe('Integration: LocalAgentSource discovery', () => {
     const base = fixture('project-get-charter');
     const agentsDir = join(base, '.squad', 'agents');
     mkdirSync(agentsDir, { recursive: true });
-    setupAgentDir(agentsDir, 'fenster', SAMPLE_CHARTER);
+    setupAgentDir(agentsDir, 'vassago', SAMPLE_CHARTER);
 
     const source = new LocalAgentSource(base);
-    const charter = await source.getCharter('fenster');
+    const charter = await source.getCharter('vassago');
 
     expect(charter).toBe(SAMPLE_CHARTER);
   });
@@ -268,20 +268,20 @@ describe('Integration: LocalAgentSource discovery', () => {
     const agentsDir = join(base, '.squad', 'agents');
     mkdirSync(agentsDir, { recursive: true });
     writeFileSync(join(agentsDir, 'README.md'), 'Not an agent', 'utf-8');
-    setupAgentDir(agentsDir, 'fenster', SAMPLE_CHARTER);
+    setupAgentDir(agentsDir, 'vassago', SAMPLE_CHARTER);
 
     const source = new LocalAgentSource(base);
     const manifests = await source.listAgents();
 
     expect(manifests.length).toBe(1);
-    expect(manifests[0].name).toBe('Fenster');
+    expect(manifests[0].name).toBe('Vassago');
   });
 });
 
 describe('Integration: parseCharterMetadata', () => {
   it('extracts full metadata from well-formed charter', () => {
     const meta = parseCharterMetadata(SAMPLE_CHARTER);
-    expect(meta.name).toBe('Fenster');
+    expect(meta.name).toBe('Vassago');
     expect(meta.role).toBe('Core Developer');
     expect(meta.model).toBe('claude-sonnet-4.5');
     expect(meta.skills).toEqual(['TypeScript', 'testing', 'architecture']);
@@ -322,20 +322,20 @@ describe('Integration: parseCharterMetadata', () => {
 describe('Integration: Charter compilation with config overrides', () => {
   it('compiles charter with charter content', () => {
     const result = compileCharter({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
     });
 
-    expect(result.name).toBe('fenster');
+    expect(result.name).toBe('vassago');
     expect(result.displayName).toContain('Core Developer');
     expect(result.prompt).toContain('## Identity');
-    expect(result.prompt).toContain('Fenster');
+    expect(result.prompt).toContain('Vassago');
   });
 
   it('config role overrides charter role', () => {
     const result = compileCharterFull({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
       configOverrides: { role: 'Lead Architect' },
@@ -346,7 +346,7 @@ describe('Integration: Charter compilation with config overrides', () => {
 
   it('config model overrides charter model', () => {
     const result = compileCharterFull({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
       configOverrides: { model: 'claude-opus-4.6' },
@@ -357,7 +357,7 @@ describe('Integration: Charter compilation with config overrides', () => {
 
   it('falls back to charter model when config has no model', () => {
     const result = compileCharterFull({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
     });
@@ -367,7 +367,7 @@ describe('Integration: Charter compilation with config overrides', () => {
 
   it('config tools override charter tools', () => {
     const result = compileCharterFull({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
       configOverrides: { tools: ['bash', 'edit'] },
@@ -378,18 +378,18 @@ describe('Integration: Charter compilation with config overrides', () => {
 
   it('config displayName overrides computed displayName', () => {
     const result = compileCharterFull({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
-      configOverrides: { displayName: 'The Fenster' },
+      configOverrides: { displayName: 'The Vassago' },
     });
 
-    expect(result.displayName).toBe('The Fenster');
+    expect(result.displayName).toBe('The Vassago');
   });
 
   it('appends extra prompt from config', () => {
     const result = compileCharter({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
       configOverrides: { extraPrompt: '## Custom Rules\n\nDo not eat cookies.' },
@@ -400,7 +400,7 @@ describe('Integration: Charter compilation with config overrides', () => {
 
   it('includes team context in compiled prompt', () => {
     const result = compileCharter({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
       teamContext: 'Team has 3 members.',
@@ -411,18 +411,18 @@ describe('Integration: Charter compilation with config overrides', () => {
 
   it('includes routing rules in compiled prompt', () => {
     const result = compileCharter({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
-      routingRules: 'Route bugs to fenster.',
+      routingRules: 'Route bugs to vassago.',
     });
 
-    expect(result.prompt).toContain('Route bugs to fenster.');
+    expect(result.prompt).toContain('Route bugs to vassago.');
   });
 
   it('includes decisions in compiled prompt', () => {
     const result = compileCharter({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
       decisions: 'ADR-001: Use TypeScript.',
@@ -444,12 +444,12 @@ describe('Integration: Charter compilation with config overrides', () => {
 
   it('compileCharterFull returns parsed charter', () => {
     const result = compileCharterFull({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
     });
 
-    expect(result.parsed.identity.name).toBe('Fenster');
+    expect(result.parsed.identity.name).toBe('Vassago');
     expect(result.parsed.identity.expertise).toContain('TypeScript');
     expect(result.parsed.modelPreference).toBe('claude-sonnet-4.5');
     expect(result.parsed.ownership).toContain('src/config/');
@@ -459,7 +459,7 @@ describe('Integration: Charter compilation with config overrides', () => {
 describe('Integration: Config-driven charter → model resolution', () => {
   it('resolves model from charter preference (layer 2)', () => {
     const compiled = compileCharterFull({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
     });
@@ -467,7 +467,7 @@ describe('Integration: Config-driven charter → model resolution', () => {
     const resolved = resolveModel({
       charterPreference: compiled.resolvedModel,
       taskType: 'code',
-      agentRole: 'fenster',
+      agentRole: 'vassago',
     });
 
     expect(resolved.model).toBe('claude-sonnet-4.5');
@@ -476,7 +476,7 @@ describe('Integration: Config-driven charter → model resolution', () => {
 
   it('config model override flows through to model resolution (layer 1)', () => {
     const compiled = compileCharterFull({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
       configOverrides: { model: 'claude-opus-4.6' },
@@ -485,7 +485,7 @@ describe('Integration: Config-driven charter → model resolution', () => {
     const resolved = resolveModel({
       userOverride: compiled.resolvedModel,
       taskType: 'code',
-      agentRole: 'fenster',
+      agentRole: 'vassago',
     });
 
     expect(resolved.model).toBe('claude-opus-4.6');
@@ -515,22 +515,22 @@ describe('Integration: Routing config → tool filtering', () => {
 
 | Work Type | Route To | Examples |
 |-----------|----------|----------|
-| feature-dev | fenster | New features, enhancements |
-| bug-fix | fenster, verbal | Bug fixes, patches |
-| docs | verbal | Documentation updates |
+| feature-dev | vassago | New features, enhancements |
+| bug-fix | vassago, agares | Bug fixes, patches |
+| docs | agares | Documentation updates |
 `;
 
     const config = parseRoutingMarkdown(markdown);
     const router = compileRoutingRules(config);
 
     const match1 = matchRoute('I need a new feature for the dashboard', router);
-    expect(match1.agents).toContain('fenster');
+    expect(match1.agents).toContain('vassago');
 
     const match2 = matchRoute('Fix the bug in the login page', router);
-    expect(match2.agents).toContain('fenster');
+    expect(match2.agents).toContain('vassago');
 
     const match3 = matchRoute('Update the documentation for the API', router);
-    expect(match3.agents).toContain('verbal');
+    expect(match3.agents).toContain('agares');
   });
 
   it('fallback when no route matches', () => {
@@ -555,7 +555,7 @@ describe('Integration: Routing config → tool filtering', () => {
   it('routing rules influence agent tool availability', () => {
     // Simulate: agent only gets tools that match its routing capabilities
     const compiled = compileCharterFull({
-      agentName: 'fenster',
+      agentName: 'vassago',
       charterPath: '/fake/path',
       charterContent: SAMPLE_CHARTER,
       configOverrides: { tools: ['squad_route', 'squad_decide'] },
@@ -578,7 +578,7 @@ describe('Integration: Hook pipeline with config', () => {
     const allowed = await pipeline.runPreToolHooks({
       toolName: 'edit',
       arguments: { path: 'src/index.ts' },
-      agentName: 'fenster',
+      agentName: 'vassago',
       sessionId: 'test-session',
     });
     expect(allowed.action).toBe('allow');
@@ -586,7 +586,7 @@ describe('Integration: Hook pipeline with config', () => {
     const blocked = await pipeline.runPreToolHooks({
       toolName: 'edit',
       arguments: { path: 'docs/README.md' },
-      agentName: 'fenster',
+      agentName: 'vassago',
       sessionId: 'test-session',
     });
     expect(blocked.action).toBe('block');
@@ -600,7 +600,7 @@ describe('Integration: Hook pipeline with config', () => {
     const result = await pipeline.runPreToolHooks({
       toolName: 'bash',
       arguments: { command: 'rm -rf /' },
-      agentName: 'fenster',
+      agentName: 'vassago',
       sessionId: 'test-session',
     });
 
@@ -621,40 +621,40 @@ describe('Integration: AgentRegistry with LocalAgentSource', () => {
     const base = fixture('project-registry');
     const agentsDir = join(base, '.squad', 'agents');
     mkdirSync(agentsDir, { recursive: true });
-    setupAgentDir(agentsDir, 'fenster', SAMPLE_CHARTER);
+    setupAgentDir(agentsDir, 'vassago', SAMPLE_CHARTER);
 
     const registry = new AgentRegistry();
     registry.register(new LocalAgentSource(base));
 
     const agents = await registry.listAllAgents();
     expect(agents.length).toBe(1);
-    expect(agents[0].name).toBe('Fenster');
+    expect(agents[0].name).toBe('Vassago');
   });
 
   it('registry findAgent returns definition', async () => {
     const base = fixture('project-find');
     const agentsDir = join(base, '.squad', 'agents');
     mkdirSync(agentsDir, { recursive: true });
-    setupAgentDir(agentsDir, 'fenster', SAMPLE_CHARTER);
+    setupAgentDir(agentsDir, 'vassago', SAMPLE_CHARTER);
 
     const registry = new AgentRegistry();
     registry.register(new LocalAgentSource(base));
 
-    const agent = await registry.findAgent('fenster');
+    const agent = await registry.findAgent('vassago');
     expect(agent).not.toBeNull();
-    expect(agent!.charter).toContain('Fenster');
+    expect(agent!.charter).toContain('Vassago');
   });
 
   it('registry getCharter returns raw markdown', async () => {
     const base = fixture('project-charter');
     const agentsDir = join(base, '.squad', 'agents');
     mkdirSync(agentsDir, { recursive: true });
-    setupAgentDir(agentsDir, 'fenster', SAMPLE_CHARTER);
+    setupAgentDir(agentsDir, 'vassago', SAMPLE_CHARTER);
 
     const registry = new AgentRegistry();
     registry.register(new LocalAgentSource(base));
 
-    const charter = await registry.getCharter('fenster');
+    const charter = await registry.getCharter('vassago');
     expect(charter).toBe(SAMPLE_CHARTER);
   });
 });
@@ -757,7 +757,7 @@ describe('Integration: Full pipeline — discover → compile → resolve → fi
     const base = fixture('e2e-project');
     const agentsDir = join(base, '.squad', 'agents');
     mkdirSync(agentsDir, { recursive: true });
-    setupAgentDir(agentsDir, 'fenster', SAMPLE_CHARTER, '# History\n\nBuilt config module.');
+    setupAgentDir(agentsDir, 'vassago', SAMPLE_CHARTER, '# History\n\nBuilt config module.');
 
     // 2. Discover agents
     const source = new LocalAgentSource(base);
@@ -765,26 +765,26 @@ describe('Integration: Full pipeline — discover → compile → resolve → fi
     expect(manifests.length).toBe(1);
 
     // 3. Load agent definition
-    const agent = await source.getAgent('fenster');
+    const agent = await source.getAgent('vassago');
     expect(agent).not.toBeNull();
 
     // 4. Compile charter
     const compiled = compileCharterFull({
-      agentName: 'fenster',
-      charterPath: join(agentsDir, 'fenster', 'charter.md'),
+      agentName: 'vassago',
+      charterPath: join(agentsDir, 'vassago', 'charter.md'),
       charterContent: agent!.charter,
-      teamContext: 'Team: fenster, verbal, scribe',
+      teamContext: 'Team: vassago, agares, scribe',
     });
 
-    expect(compiled.name).toBe('fenster');
+    expect(compiled.name).toBe('vassago');
     expect(compiled.prompt).toContain('## Identity');
-    expect(compiled.prompt).toContain('Team: fenster, verbal, scribe');
+    expect(compiled.prompt).toContain('Team: vassago, agares, scribe');
 
     // 5. Resolve model
     const resolved = resolveModel({
       charterPreference: compiled.resolvedModel,
       taskType: 'code',
-      agentRole: 'fenster',
+      agentRole: 'vassago',
     });
 
     expect(resolved.model).toBe('claude-sonnet-4.5');
@@ -796,10 +796,10 @@ describe('Integration: Full pipeline — discover → compile → resolve → fi
     const base = fixture('e2e-overrides');
     const agentsDir = join(base, '.squad', 'agents');
     mkdirSync(agentsDir, { recursive: true });
-    setupAgentDir(agentsDir, 'fenster', SAMPLE_CHARTER);
+    setupAgentDir(agentsDir, 'vassago', SAMPLE_CHARTER);
 
     const source = new LocalAgentSource(base);
-    const agent = await source.getAgent('fenster');
+    const agent = await source.getAgent('vassago');
 
     // Config specifies a different model and tools
     const overrides: CharterConfigOverrides = {
@@ -809,8 +809,8 @@ describe('Integration: Full pipeline — discover → compile → resolve → fi
     };
 
     const compiled = compileCharterFull({
-      agentName: 'fenster',
-      charterPath: join(agentsDir, 'fenster', 'charter.md'),
+      agentName: 'vassago',
+      charterPath: join(agentsDir, 'vassago', 'charter.md'),
       charterContent: agent!.charter,
       configOverrides: overrides,
     });
@@ -887,7 +887,7 @@ describe('Integration: Full pipeline — discover → compile → resolve → fi
         },
       },
       routing: {
-        rules: [{ workType: 'feature-dev', agents: ['fenster'] }],
+        rules: [{ workType: 'feature-dev', agents: ['vassago'] }],
       },
     };
 
@@ -901,7 +901,7 @@ describe('Integration: Full pipeline — discover → compile → resolve → fi
   it('defineConfig merges with schema defaults', () => {
     const config = defineConfig({
       team: { name: 'Integration Squad' },
-      agents: [{ name: 'fenster', role: 'dev' }],
+      agents: [{ name: 'vassago', role: 'dev' }],
     });
 
     expect(config.team.name).toBe('Integration Squad');
@@ -913,14 +913,14 @@ describe('Integration: Full pipeline — discover → compile → resolve → fi
 describe('Integration: parseCharterMarkdown', () => {
   it('extracts all sections', () => {
     const parsed = parseCharterMarkdown(SAMPLE_CHARTER);
-    expect(parsed.identity.name).toBe('Fenster');
+    expect(parsed.identity.name).toBe('Vassago');
     expect(parsed.identity.role).toBe('Core Developer');
     expect(parsed.identity.expertise).toContain('TypeScript');
     expect(parsed.identity.style).toBe('Precise and methodical');
     expect(parsed.ownership).toContain('src/config/');
     expect(parsed.boundaries).toContain('Do not modify docs/');
     expect(parsed.modelPreference).toBe('claude-sonnet-4.5');
-    expect(parsed.collaboration).toContain('Verbal');
+    expect(parsed.collaboration).toContain('Agares');
   });
 
   it('handles empty string', () => {

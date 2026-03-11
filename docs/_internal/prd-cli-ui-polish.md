@@ -1,14 +1,14 @@
 # PRD: Squad CLI UI Polish
 **Status:** Draft  
-**Author:** Keaton (Lead)  
+**Author:** Bael (Lead)  
 **Date:** 2026-03-01  
-**Reviewers:** Brady, Marquez (UX), Redfoot (Design)
+**Reviewers:** Brady, Zepar (UX), Sitri (Design)
 
 ---
 
 ## Overview
 
-This PRD addresses critical UX/UI issues discovered during the team's visual review of 15 REPL screenshots from human testing (Session log: `.squad/log/2026-03-01T02-04-00Z-screenshot-review-2.md` and subsequent image analysis). Five team members (Redfoot, Marquez, Cheritto, Kovash, Brady) identified 20+ specific issues ranging from **P0 alpha blockers** (blank screens, no loading feedback) to **P3 future polish** (fixed bottom input, advanced layout).
+This PRD addresses critical UX/UI issues discovered during the team's visual review of 15 REPL screenshots from human testing (Session log: `.squad/log/2026-03-01T02-04-00Z-screenshot-review-2.md` and subsequent image analysis). Five team members (Sitri, Zepar, Botis, Eligos, Brady) identified 20+ specific issues ranging from **P0 alpha blockers** (blank screens, no loading feedback) to **P3 future polish** (fixed bottom input, advanced layout).
 
 This document defines what we're shipping for **alpha release** versus what we're deferring to post-alpha. The goal is pragmatic: ship a functional, usable CLI that doesn't embarrass us, not a grand redesign.
 
@@ -44,19 +44,19 @@ This document defines what we're shipping for **alpha release** versus what we'r
 **1. Blank/Loading States Are Broken (images 002, 003)**
 - **Finding:** User sees blank screen with no feedback during long operations
 - **Impact:** Users think Squad crashed. Trust evaporates instantly.
-- **Source:** Redfoot (CRITICAL), Marquez (CRITICAL), Cheritto (MAJOR), Kovash (TODAY)
+- **Source:** Sitri (CRITICAL), Zepar (CRITICAL), Botis (MAJOR), Eligos (TODAY)
 - **Image refs:** 002 (long wait, no spinner), 003 (completely blank screen)
 
 **2. No Alpha/Experimental Warning**
 - **Finding:** No indication this is alpha software
 - **Impact:** Users will file bug reports for expected alpha rough edges, creating support noise
-- **Source:** Marquez (CRITICAL), Kovash (TODAY)
+- **Source:** Zepar (CRITICAL), Eligos (TODAY)
 - **Image refs:** All screenshots lack warning
 
 **3. Static Spinner Text (no rotation)**
 - **Finding:** `ThinkingIndicator.tsx` has dynamic rotation logic with `THINKING_PHRASES` + 3s timer, but `App.tsx` overrides it with static `activityHint`/`mentionHint` props
 - **Impact:** No visual confirmation Squad is alive during long waits
-- **Source:** Cheritto (MEDIUM, ~5 line fix), Kovash (TODAY)
+- **Source:** Botis (MEDIUM, ~5 line fix), Eligos (TODAY)
 - **Technical note:** App.tsx lines ~200-220 override component's built-in rotation
 
 ### P1: High Priority (Ship within first week)
@@ -64,23 +64,23 @@ This document defines what we're shipping for **alpha release** versus what we'r
 **4. Low Contrast on Secondary Text (all images)**
 - **Finding:** Time indicators, hints, dim examples barely readable
 - **Impact:** Accessibility fail, users miss important context
-- **Source:** Redfoot (HIGH)
+- **Source:** Sitri (HIGH)
 - **Quick win:** 30 minutes to bump contrast
 
 **5. Inconsistent Semantic Color System (all images)**
 - **Finding:** Cyan/green/yellow used inconsistently across UI
 - **Impact:** Users can't trust color cues to mean anything
-- **Source:** Redfoot (HIGH)
+- **Source:** Sitri (HIGH)
 
 **6. Copy Too Verbose (images 001, 004, 007)**
 - **Finding:** "Routing your message to the team now..." (jargon), version "v0.8.6.14-preview" (too long), roster re-displays (repetitive)
 - **Impact:** Cognitive overload, buried CTAs, mechanical process text exposed
-- **Source:** Marquez (HIGH)
+- **Source:** Zepar (HIGH)
 
 **7. Information Hierarchy Weak (all images)**
 - **Finding:** CTAs buried, same visual weight everywhere, no clear focal points
 - **Impact:** Users don't know what to do next
-- **Source:** Marquez (HIGH)
+- **Source:** Zepar (HIGH)
 
 **8. CLI Timeout Too Low**
 - **Finding:** Brady tried Squad CLI in this repo and hit timeout
@@ -93,57 +93,57 @@ This document defines what we're shipping for **alpha release** versus what we'r
 **9. Horizontal Separators Invisible (images 001, 004, 008)**
 - **Finding:** `---` barely visible, should use box-drawing chars
 - **Impact:** Visual structure lost
-- **Source:** Redfoot (MEDIUM)
+- **Source:** Sitri (MEDIUM)
 - **Quick win:** 15 minutes
 
 **10. Table Header Styling Weak (image 009)**
 - **Finding:** No visual weight distinction for headers
 - **Impact:** Hard to scan tables
-- **Source:** Redfoot (MEDIUM)
+- **Source:** Sitri (MEDIUM)
 - **Quick win:** 30 minutes
 
 **11. Layout Architecture Chaotic**
 - **Finding:** Content positioning inconsistent, static scroll pushes live UI past viewport
 - **Impact:** Unreliable display, elements appear/disappear unexpectedly
-- **Source:** Cheritto (MAJOR)
+- **Source:** Botis (MAJOR)
 - **Files:** `MessageStream.tsx` (fragile), `App.tsx` (layout), `InputPrompt.tsx` (positioning)
 
 **12. Responsive Table Rendering Broken**
 - **Finding:** Manual pipe chars break at narrow terminals
 - **Impact:** Tables unreadable at <100 cols
-- **Source:** Cheritto (HIGH)
+- **Source:** Botis (HIGH)
 
 **13. Input Prompt Position Inconsistency**
 - **Finding:** Only properly bottom-anchored in image 009
 - **Impact:** Input box jumps around during session
-- **Source:** Cheritto (HIGH)
+- **Source:** Botis (HIGH)
 
 **14. Border/Separator Inconsistency**
 - **Finding:** 3 different components render separators independently
 - **Impact:** Visual chaos, no coherent design language
-- **Source:** Cheritto (MEDIUM)
+- **Source:** Botis (MEDIUM)
 
 **15. Agent Panel Persistence**
 - **Finding:** Only visible in image 009, disappears elsewhere
 - **Impact:** Users lose context about who's working
-- **Source:** Kovash (MEDIUM)
+- **Source:** Eligos (MEDIUM)
 
 ### P3: Future (Post-Alpha Polish)
 
 **16. Fixed Bottom Input Box**
 - **Finding:** Input should be squared off at bottom like Copilot/Claude CLI
 - **Impact:** Modern CLI feel, more predictable UX
-- **Source:** Kovash (FUTURE), Brady (future, not today)
+- **Source:** Eligos (FUTURE), Brady (future, not today)
 
 **17. Advanced Terminal Features**
 - **Finding:** No alt screen buffer, no advanced cursor management
 - **Impact:** Power users expect modern terminal behavior
-- **Source:** Cheritto (80% there, needs 1-2 days focused work)
+- **Source:** Botis (80% there, needs 1-2 days focused work)
 
 **18. Creative Spinner Content**
 - **Finding:** Spinner should show codebase facts, project trivia, vulnerability info, creative gerunds
 - **Impact:** Delightful experience during waits
-- **Source:** Kovash (suggestions), Brady (codebase facts / creative words)
+- **Source:** Eligos (suggestions), Brady (codebase facts / creative words)
 
 ---
 
@@ -193,7 +193,7 @@ This document defines what we're shipping for **alpha release** versus what we'r
 
 ## Technical Notes
 
-### Key Implementation Details (from Cheritto's Analysis)
+### Key Implementation Details (from Botis's Analysis)
 
 **Components Needing Most Work:**
 - `MessageStream.tsx` — fragile scroll logic, static content pushes live UI
@@ -207,7 +207,7 @@ This document defines what we're shipping for **alpha release** versus what we'r
 - **Table headers:** ~30 min — add chalk.bold() or underline logic
 
 **Architecture Debt:**
-- Layout is 80% there, needs 1-2 days focused work (Cheritto)
+- Layout is 80% there, needs 1-2 days focused work (Botis)
 - Three separate separator implementations need consolidation
 - Ink's layout model fights against predictable bottom-anchored input (alt screen buffer would solve, but that's P3)
 
@@ -256,44 +256,44 @@ This document defines what we're shipping for **alpha release** versus what we'r
 
 | # | Issue Title | Priority | Assignee | Description |
 |---|-------------|----------|----------|-------------|
-| 1 | Fix ThinkingIndicator rotation in App.tsx | P0 | Cheritto | Remove `activityHint`/`mentionHint` props from App.tsx, let ThinkingIndicator rotate natively. ~5 lines changed. |
-| 2 | Add alpha software banner at startup | P0 | Kovash | Show "⚠️ Squad CLI v{version} — Alpha Software" as first output in shell. |
-| 3 | Prevent blank screens >500ms | P0 | Cheritto | Add immediate spinner on any operation that might take >500ms. Audit all loading states. |
-| 4 | Verify timeout env var in large repos | P0 | Fenster | Test `SQUAD_SESSION_TIMEOUT_MS` with default ≥10 min. Dogfood in squad repo. |
-| 5 | Bump contrast on secondary text | P1 | Redfoot | Adjust chalk colors for hints/times/examples to ≥4.5:1 contrast. Update theme.ts. |
-| 6 | Define semantic color system | P1 | Redfoot | Document + implement: cyan=info, green=success, yellow=warning, red=error. |
-| 7 | Tighten verbose copy | P1 | Marquez | Remove "Routing your message..." jargon, shorten version, eliminate roster re-display. Review only. |
-| 8 | Implement copy tightening | P1 | Kovash | Apply Marquez's copy edits to shell output. Max 1-2 lines per status. |
-| 9 | Add information hierarchy | P1 | Cheritto | Bold CTAs, increase header weight, dim non-essential text. |
-| 10 | Whitespace breathing room | P1 | Cheritto | Add blank lines before CTAs, after sections, around agent panels. |
-| 11 | Replace `---` with box-drawing chars | P2 | Cheritto | Use `─` or `━` for separators. Single source of truth. |
-| 12 | Add table header styling | P2 | Cheritto | Bold headers or underline with box chars. Clearly distinct from data. |
-| 13 | Refactor MessageStream layout | P2 | Cheritto | Fix scroll behavior, keep live UI visible, prevent viewport overflow. |
-| 14 | Fix input prompt anchoring | P2 | Cheritto | Input always at bottom, never scrolls off. Consistent across states. |
-| 15 | Implement responsive tables | P2 | Cheritto | Use Ink table component or graceful degradation. Readable at 80+ cols. |
-| 16 | Consolidate separator rendering | P2 | Cheritto | Single separator component/utility. Replace 3 independent implementations. |
-| 17 | Make agent panel persistent | P2 | Kovash | Agent panel visible whenever agents active. Doesn't disappear mid-session. |
-| 18 | Design fixed bottom input (P3) | P3 | Cheritto | Spec out alt screen buffer + fixed input box like Copilot/Claude CLI. |
-| 19 | Implement creative spinner phrases | P3 | Kovash | Rotate codebase facts, project stats, security tips. Agent-themed messages. |
-| 20 | Terminal adaptivity 120→80→40 cols | P3 | Cheritto | Graceful degradation across terminal sizes. Test suite for responsive layout. |
+| 1 | Fix ThinkingIndicator rotation in App.tsx | P0 | Botis | Remove `activityHint`/`mentionHint` props from App.tsx, let ThinkingIndicator rotate natively. ~5 lines changed. |
+| 2 | Add alpha software banner at startup | P0 | Eligos | Show "⚠️ Squad CLI v{version} — Alpha Software" as first output in shell. |
+| 3 | Prevent blank screens >500ms | P0 | Botis | Add immediate spinner on any operation that might take >500ms. Audit all loading states. |
+| 4 | Verify timeout env var in large repos | P0 | Vassago | Test `SQUAD_SESSION_TIMEOUT_MS` with default ≥10 min. Dogfood in squad repo. |
+| 5 | Bump contrast on secondary text | P1 | Sitri | Adjust chalk colors for hints/times/examples to ≥4.5:1 contrast. Update theme.ts. |
+| 6 | Define semantic color system | P1 | Sitri | Document + implement: cyan=info, green=success, yellow=warning, red=error. |
+| 7 | Tighten verbose copy | P1 | Zepar | Remove "Routing your message..." jargon, shorten version, eliminate roster re-display. Review only. |
+| 8 | Implement copy tightening | P1 | Eligos | Apply Zepar's copy edits to shell output. Max 1-2 lines per status. |
+| 9 | Add information hierarchy | P1 | Botis | Bold CTAs, increase header weight, dim non-essential text. |
+| 10 | Whitespace breathing room | P1 | Botis | Add blank lines before CTAs, after sections, around agent panels. |
+| 11 | Replace `---` with box-drawing chars | P2 | Botis | Use `─` or `━` for separators. Single source of truth. |
+| 12 | Add table header styling | P2 | Botis | Bold headers or underline with box chars. Clearly distinct from data. |
+| 13 | Refactor MessageStream layout | P2 | Botis | Fix scroll behavior, keep live UI visible, prevent viewport overflow. |
+| 14 | Fix input prompt anchoring | P2 | Botis | Input always at bottom, never scrolls off. Consistent across states. |
+| 15 | Implement responsive tables | P2 | Botis | Use Ink table component or graceful degradation. Readable at 80+ cols. |
+| 16 | Consolidate separator rendering | P2 | Botis | Single separator component/utility. Replace 3 independent implementations. |
+| 17 | Make agent panel persistent | P2 | Eligos | Agent panel visible whenever agents active. Doesn't disappear mid-session. |
+| 18 | Design fixed bottom input (P3) | P3 | Botis | Spec out alt screen buffer + fixed input box like Copilot/Claude CLI. |
+| 19 | Implement creative spinner phrases | P3 | Eligos | Rotate codebase facts, project stats, security tips. Agent-themed messages. |
+| 20 | Terminal adaptivity 120→80→40 cols | P3 | Botis | Graceful degradation across terminal sizes. Test suite for responsive layout. |
 
 **Routing Notes:**
-- **Cheritto (TUI):** Owns 11/20 issues — all Ink layout, rendering, component work
-- **Kovash (REPL/Shell):** Owns 4/20 issues — shell output, alpha banner, agent panel, creative phrases
-- **Redfoot (Design):** Owns 2/20 issues — color system, contrast
-- **Marquez (UX):** Owns 1/20 issue — copy review (reviewer, not implementer)
-- **Fenster (Core):** Owns 1/20 issue — timeout config verification
+- **Botis (TUI):** Owns 11/20 issues — all Ink layout, rendering, component work
+- **Eligos (REPL/Shell):** Owns 4/20 issues — shell output, alpha banner, agent panel, creative phrases
+- **Sitri (Design):** Owns 2/20 issues — color system, contrast
+- **Zepar (UX):** Owns 1/20 issue — copy review (reviewer, not implementer)
+- **Vassago (Core):** Owns 1/20 issue — timeout config verification
 - **P3 issues:** Defer to post-alpha, no immediate assignment
 
 ---
 
 ## Next Steps
 
-1. **Keaton:** File 20 GitHub issues from breakdown table (labels: `squad:cheritto` / `squad:kovash` / `squad:redfoot` / `squad:fenster`, priority: `P0` / `P1` / `P2` / `P3`, milestone: `Alpha Release`)
+1. **Bael:** File 20 GitHub issues from breakdown table (labels: `squad:botis` / `squad:eligos` / `squad:sitri` / `squad:vassago`, priority: `P0` / `P1` / `P2` / `P3`, milestone: `Alpha Release`)
 2. **Brady:** Review PRD, approve or request changes
-3. **Cheritto + Kovash:** Pair on P0 issues 1-3 (critical path, ~1 day)
-4. **Redfoot:** P1 contrast + color system (~1 day)
-5. **Marquez:** Review copy tightening PR before merge
+3. **Botis + Eligos:** Pair on P0 issues 1-3 (critical path, ~1 day)
+4. **Sitri:** P1 contrast + color system (~1 day)
+5. **Zepar:** Review copy tightening PR before merge
 6. **Team:** Daily standup — P0→P1→P2 sequence, no P3 work until P0/P1 done
 7. **Brady:** Final dogfood session after P0+P1 complete
 

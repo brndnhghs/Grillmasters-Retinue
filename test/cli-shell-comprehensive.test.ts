@@ -99,14 +99,14 @@ describe('coordinator.ts — buildCoordinatorPrompt', () => {
   it('uses custom teamPath when provided', () => {
     const customPath = join(FIXTURES, '.squad', 'team.md');
     const prompt = buildCoordinatorPrompt({ teamRoot: '/fake', teamPath: customPath });
-    expect(prompt).toContain('Hockney');
-    expect(prompt).toContain('Fenster');
+    expect(prompt).toContain('Samigina');
+    expect(prompt).toContain('Vassago');
   });
 
   it('uses custom routingPath when provided', () => {
     const customPath = join(FIXTURES, '.squad', 'routing.md');
     const prompt = buildCoordinatorPrompt({ teamRoot: '/fake', routingPath: customPath });
-    expect(prompt).toContain('Tests → Hockney');
+    expect(prompt).toContain('Tests → Samigina');
   });
 
   it('handles missing team.md gracefully', () => {
@@ -135,33 +135,33 @@ describe('coordinator.ts — buildCoordinatorPrompt', () => {
 describe('coordinator.ts — parseCoordinatorResponse', () => {
   describe('ROUTE format', () => {
     it('parses ROUTE with CONTEXT', () => {
-      const response = 'ROUTE: Fenster\nTASK: Fix bug\nCONTEXT: Issue #123';
+      const response = 'ROUTE: Vassago\nTASK: Fix bug\nCONTEXT: Issue #123';
       const result = parseCoordinatorResponse(response);
       expect(result.type).toBe('route');
       expect(result.routes).toHaveLength(1);
       expect(result.routes![0]).toEqual({
-        agent: 'Fenster',
+        agent: 'Vassago',
         task: 'Fix bug',
         context: 'Issue #123',
       });
     });
 
     it('parses ROUTE without CONTEXT', () => {
-      const response = 'ROUTE: Hockney\nTASK: Write tests';
+      const response = 'ROUTE: Samigina\nTASK: Write tests';
       const result = parseCoordinatorResponse(response);
       expect(result.type).toBe('route');
       expect(result.routes![0]!.context).toBeUndefined();
     });
 
     it('handles ROUTE without TASK (empty task)', () => {
-      const response = 'ROUTE: Edie';
+      const response = 'ROUTE: Amon';
       const result = parseCoordinatorResponse(response);
       expect(result.type).toBe('route');
       expect(result.routes![0]!.task).toBe('');
     });
 
     it('handles ROUTE with multiline TASK', () => {
-      const response = 'ROUTE: Baer\nTASK: First line\nSecond line\nCONTEXT: Extra';
+      const response = 'ROUTE: Gusion\nTASK: First line\nSecond line\nCONTEXT: Extra';
       const result = parseCoordinatorResponse(response);
       // Only captures first line after TASK:
       expect(result.routes![0]!.task).toBe('First line');
@@ -203,21 +203,21 @@ describe('coordinator.ts — parseCoordinatorResponse', () => {
 
   describe('MULTI format', () => {
     it('parses MULTI with multiple valid lines', () => {
-      const response = 'MULTI:\n- Fenster: Fix parser\n- Hockney: Write tests';
+      const response = 'MULTI:\n- Vassago: Fix parser\n- Samigina: Write tests';
       const result = parseCoordinatorResponse(response);
       expect(result.type).toBe('multi');
       expect(result.routes).toHaveLength(2);
-      expect(result.routes![0]).toEqual({ agent: 'Fenster', task: 'Fix parser' });
-      expect(result.routes![1]).toEqual({ agent: 'Hockney', task: 'Write tests' });
+      expect(result.routes![0]).toEqual({ agent: 'Vassago', task: 'Fix parser' });
+      expect(result.routes![1]).toEqual({ agent: 'Samigina', task: 'Write tests' });
     });
 
     it('parses MULTI with mixed valid and invalid lines', () => {
-      const response = 'MULTI:\n- Edie: Code review\nInvalid line\n- Baer: Security audit';
+      const response = 'MULTI:\n- Amon: Code review\nInvalid line\n- Gusion: Security audit';
       const result = parseCoordinatorResponse(response);
       expect(result.type).toBe('multi');
       expect(result.routes).toHaveLength(2);
-      expect(result.routes![0]!.agent).toBe('Edie');
-      expect(result.routes![1]!.agent).toBe('Baer');
+      expect(result.routes![0]!.agent).toBe('Amon');
+      expect(result.routes![1]!.agent).toBe('Gusion');
     });
 
     it('handles MULTI with no valid routes', () => {
@@ -228,11 +228,11 @@ describe('coordinator.ts — parseCoordinatorResponse', () => {
     });
 
     it('handles MULTI with extra whitespace', () => {
-      const response = 'MULTI:\n- Fortier: Build system';
+      const response = 'MULTI:\n- Paimon: Build system';
       const result = parseCoordinatorResponse(response);
       expect(result.type).toBe('multi');
       expect(result.routes).toHaveLength(1);
-      expect(result.routes![0]!.agent).toBe('Fortier');
+      expect(result.routes![0]!.agent).toBe('Paimon');
       expect(result.routes![0]!.task).toBe('Build system');
     });
   });
@@ -268,10 +268,10 @@ describe('coordinator.ts — parseCoordinatorResponse', () => {
 describe('coordinator.ts — formatConversationContext', () => {
   it('formats messages with agentName prefix', () => {
     const messages: ShellMessage[] = [
-      { role: 'agent', agentName: 'Hockney', content: 'Test complete', timestamp: new Date() },
+      { role: 'agent', agentName: 'Samigina', content: 'Test complete', timestamp: new Date() },
     ];
     const formatted = formatConversationContext(messages);
-    expect(formatted).toBe('[Hockney]: Test complete');
+    expect(formatted).toBe('[Samigina]: Test complete');
   });
 
   it('formats messages with role prefix when no agentName', () => {
@@ -325,13 +325,13 @@ describe('coordinator.ts — formatConversationContext', () => {
 
 describe('spawn.ts — loadAgentCharter', () => {
   it('loads charter with teamRoot provided', () => {
-    const charter = loadAgentCharter('hockney', FIXTURES);
-    expect(charter).toContain('Hockney');
+    const charter = loadAgentCharter('samigina', FIXTURES);
+    expect(charter).toContain('Samigina');
   });
 
   it('lowercases agent name for path resolution', () => {
-    const charter = loadAgentCharter('HOCKNEY', FIXTURES);
-    expect(charter).toContain('Hockney');
+    const charter = loadAgentCharter('SAMIGINA', FIXTURES);
+    expect(charter).toContain('Samigina');
   });
 
   it('throws descriptive error when charter not found', () => {
@@ -429,8 +429,8 @@ describe('lifecycle.ts — ShellLifecycle', () => {
     const squadDir = join(tmpDir, '.squad');
     fs.mkdirSync(squadDir, { recursive: true });
     fs.writeFileSync(join(squadDir, 'team.md'), makeTeamMd([
-      { name: 'Fenster', role: 'Core Dev' },
-      { name: 'Hockney', role: 'Tester' },
+      { name: 'Vassago', role: 'Core Dev' },
+      { name: 'Samigina', role: 'Tester' },
     ]));
     const lc = makeLifecycle(tmpDir);
     await lc.initialize();
@@ -442,12 +442,12 @@ describe('lifecycle.ts — ShellLifecycle', () => {
     const squadDir = join(tmpDir, '.squad');
     fs.mkdirSync(squadDir, { recursive: true });
     fs.writeFileSync(join(squadDir, 'team.md'), makeTeamMd([
-      { name: 'Edie', role: 'TypeScript' },
+      { name: 'Amon', role: 'TypeScript' },
     ]));
     const lc = makeLifecycle(tmpDir);
     await lc.initialize();
-    expect(registry.get('Edie')).toBeDefined();
-    expect(registry.get('Edie')?.role).toBe('TypeScript');
+    expect(registry.get('Amon')).toBeDefined();
+    expect(registry.get('Amon')?.role).toBe('TypeScript');
   });
 
   it('handles team.md with no active agents', async () => {
@@ -465,7 +465,7 @@ describe('lifecycle.ts — ShellLifecycle', () => {
 // ============================================================================
 
 describe('router.ts — parseInput', () => {
-  const knownAgents = ['Fenster', 'Hockney', 'Edie'];
+  const knownAgents = ['Vassago', 'Samigina', 'Amon'];
 
   describe('slash commands', () => {
     it('parses /status command', () => {
@@ -495,26 +495,26 @@ describe('router.ts — parseInput', () => {
 
   describe('direct agent addressing', () => {
     it('parses @Agent syntax', () => {
-      const parsed = parseInput('@Fenster fix the bug', knownAgents);
+      const parsed = parseInput('@Vassago fix the bug', knownAgents);
       expect(parsed.type).toBe('direct_agent');
-      expect(parsed.agentName).toBe('Fenster');
+      expect(parsed.agentName).toBe('Vassago');
       expect(parsed.content).toBe('fix the bug');
     });
 
     it('parses comma syntax', () => {
-      const parsed = parseInput('Hockney, write tests', knownAgents);
+      const parsed = parseInput('Samigina, write tests', knownAgents);
       expect(parsed.type).toBe('direct_agent');
-      expect(parsed.agentName).toBe('Hockney');
+      expect(parsed.agentName).toBe('Samigina');
       expect(parsed.content).toBe('write tests');
     });
 
     it('matches agent names case-insensitively', () => {
-      const parsed = parseInput('@fenster help', knownAgents);
-      expect(parsed.agentName).toBe('Fenster');
+      const parsed = parseInput('@vassago help', knownAgents);
+      expect(parsed.agentName).toBe('Vassago');
     });
 
     it('handles @Agent with no message', () => {
-      const parsed = parseInput('@Edie', knownAgents);
+      const parsed = parseInput('@Amon', knownAgents);
       expect(parsed.type).toBe('direct_agent');
       expect(parsed.content).toBeUndefined();
     });
@@ -550,13 +550,13 @@ describe('router.ts — parseInput', () => {
 
   describe('edge cases', () => {
     it('handles input with leading/trailing whitespace', () => {
-      const parsed = parseInput('  @Fenster test  ', knownAgents);
+      const parsed = parseInput('  @Vassago test  ', knownAgents);
       expect(parsed.type).toBe('direct_agent');
-      expect(parsed.agentName).toBe('Fenster');
+      expect(parsed.agentName).toBe('Vassago');
     });
 
     it('handles multiline content in @Agent message', () => {
-      const parsed = parseInput('@Hockney line1\nline2', knownAgents);
+      const parsed = parseInput('@Samigina line1\nline2', knownAgents);
       expect(parsed.content).toContain('line1');
       expect(parsed.content).toContain('line2');
     });
@@ -568,11 +568,11 @@ describe('router.ts — parseInput', () => {
 // ============================================================================
 
 describe('router.ts — parseDispatchTargets', () => {
-  const knownAgents = ['Fenster', 'Hockney', 'Edie'];
+  const knownAgents = ['Vassago', 'Samigina', 'Amon'];
 
   it('extracts multiple @agent mentions', () => {
-    const result = parseDispatchTargets('@Fenster @Hockney fix and test', knownAgents);
-    expect(result.agents).toEqual(['Fenster', 'Hockney']);
+    const result = parseDispatchTargets('@Vassago @Samigina fix and test', knownAgents);
+    expect(result.agents).toEqual(['Vassago', 'Samigina']);
     expect(result.content).toBe('fix and test');
   });
 
@@ -583,35 +583,35 @@ describe('router.ts — parseDispatchTargets', () => {
   });
 
   it('deduplicates repeated mentions', () => {
-    const result = parseDispatchTargets('@Fenster @fenster do it', knownAgents);
-    expect(result.agents).toEqual(['Fenster']);
+    const result = parseDispatchTargets('@Vassago @vassago do it', knownAgents);
+    expect(result.agents).toEqual(['Vassago']);
   });
 
   it('ignores unknown agent mentions', () => {
-    const result = parseDispatchTargets('@Fenster @Nobody test', knownAgents);
-    expect(result.agents).toEqual(['Fenster']);
+    const result = parseDispatchTargets('@Vassago @Nobody test', knownAgents);
+    expect(result.agents).toEqual(['Vassago']);
   });
 
   it('handles single mention', () => {
-    const result = parseDispatchTargets('@Edie write docs', knownAgents);
-    expect(result.agents).toEqual(['Edie']);
+    const result = parseDispatchTargets('@Amon write docs', knownAgents);
+    expect(result.agents).toEqual(['Amon']);
     expect(result.content).toBe('write docs');
   });
 
   it('is case-insensitive for mentions', () => {
-    const result = parseDispatchTargets('@FENSTER @hockney go', knownAgents);
-    expect(result.agents).toEqual(['Fenster', 'Hockney']);
+    const result = parseDispatchTargets('@VASSAGO @samigina go', knownAgents);
+    expect(result.agents).toEqual(['Vassago', 'Samigina']);
   });
 
   it('extracts mentions from mid-sentence', () => {
-    const result = parseDispatchTargets('ask @Fenster and @Hockney to collaborate', knownAgents);
-    expect(result.agents).toEqual(['Fenster', 'Hockney']);
+    const result = parseDispatchTargets('ask @Vassago and @Samigina to collaborate', knownAgents);
+    expect(result.agents).toEqual(['Vassago', 'Samigina']);
     expect(result.content).toBe('ask and to collaborate');
   });
 
   it('handles all three agents', () => {
-    const result = parseDispatchTargets('@Fenster @Hockney @Edie full team task', knownAgents);
-    expect(result.agents).toEqual(['Fenster', 'Hockney', 'Edie']);
+    const result = parseDispatchTargets('@Vassago @Samigina @Amon full team task', knownAgents);
+    expect(result.agents).toEqual(['Vassago', 'Samigina', 'Amon']);
     expect(result.content).toBe('full team task');
   });
 
@@ -934,7 +934,7 @@ describe('memory.ts — MemoryManager', () => {
 // ============================================================================
 
 describe('autocomplete.ts — createCompleter', () => {
-  const agents = ['Fenster', 'Hockney', 'Edie'];
+  const agents = ['Vassago', 'Samigina', 'Amon'];
   let completer: ReturnType<typeof createCompleter>;
 
   beforeEach(() => {
@@ -943,20 +943,20 @@ describe('autocomplete.ts — createCompleter', () => {
 
   describe('agent name completion', () => {
     it('completes @Agent prefix', () => {
-      const [matches, partial] = completer('@Fe');
-      expect(matches).toEqual(['@Fenster ']);
-      expect(partial).toBe('@Fe');
+      const [matches, partial] = completer('@Va');
+      expect(matches).toEqual(['@Vassago ']);
+      expect(partial).toBe('@Va');
     });
 
     it('returns all agents for bare @', () => {
       const [matches] = completer('@');
       expect(matches).toHaveLength(3);
-      expect(matches).toContain('@Fenster ');
+      expect(matches).toContain('@Vassago ');
     });
 
     it('matches case-insensitively', () => {
-      const [matches] = completer('@hock');
-      expect(matches).toEqual(['@Hockney ']);
+      const [matches] = completer('@sam');
+      expect(matches).toEqual(['@Samigina ']);
     });
 
     it('returns no matches for non-matching prefix', () => {

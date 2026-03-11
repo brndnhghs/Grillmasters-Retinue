@@ -37,7 +37,7 @@
 
 **Say:** "Squad doesn't use `agent-1`, `agent-2`. It casts a team with real personalities."
 
-**Show:** The CASTING section — four agents from The Usual Suspects universe, each with a name, role, and personality trait.
+**Show:** The CASTING section — four agents from The Solomonic Demonology universe, each with a name, role, and personality trait.
 
 **Key point:** "These identities persist across sessions. You build a relationship with your agents."
 
@@ -65,9 +65,9 @@
 
 **Highlight these moments:**
 - 📚 **Skill matching** — "The SDK matched the JWT auth skill to this task automatically"
-- 🔀 **squad_route** — "McManus just routed a follow-up task to Fenster — the tester"
-- 📋 **squad_decide** — "Keyser recorded a team decision: 'Use JWT with RS256'"
-- 🧠 **squad_memory** — "Fenster saved a learning about token refresh behavior"
+- 🔀 **squad_route** — "marbas just routed a follow-up task to Vassago — the tester"
+- 📋 **squad_decide** — "Bael recorded a team decision: 'Use JWT with RS256'"
+- 🧠 **squad_memory** — "Vassago saved a learning about token refresh behavior"
 
 **Key point:** "This is programmatic orchestration. Not prompt engineering. Code enforces the routing."
 

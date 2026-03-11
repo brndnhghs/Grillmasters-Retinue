@@ -91,7 +91,7 @@ async function main(): Promise<void> {
     systemMessage: { mode: 'append', content: SCOREKEEPER_PROMPT },
   });
   const scorekeeper = {
-    name: 'Verbal',
+    name: 'Agares',
     sessionId: scorekeeperSession.sessionId,
   };
 

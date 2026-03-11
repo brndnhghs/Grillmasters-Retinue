@@ -59,10 +59,10 @@ After `squad init`, you have this:
 │   ├── registry.json    # Name → role mapping (persistent across sessions)
 │   └── history.json     # Casting history
 ├── agents/
-│   ├── keaton/
+│   ├── bael/
 │   │   ├── charter.md   # Identity: expertise, voice, permissions
 │   │   └── history.md   # What this agent knows about YOUR project
-│   ├── mcmanus/
+│   ├── marbas/
 │   │   ├── charter.md
 │   │   └── history.md
 │   └── ...              # One directory per agent
@@ -104,7 +104,7 @@ const config = await loadConfig(squadPath);
 
 // Step 3: Cast agents from a thematic universe
 const casting = new CastingEngine({
-  universe: 'usual-suspects',
+  universe: 'solomonic-demonology',
   agentCount: 5,
 });
 
@@ -130,11 +130,11 @@ npx tsx src/hello.ts
 
 Output:
 ```
-✅ Keaton — lead
-✅ McManus — frontend
-✅ Verbal — backend
-✅ Fenster — tester
-✅ Kobayashi — scribe
+✅ Bael — lead
+✅ marbas — frontend
+✅ Agares — backend
+✅ Vassago — tester
+✅ Barbatos — scribe
 ```
 
 Names are deterministic. Same universe, same roles, same names every time.
@@ -331,7 +331,7 @@ streaming.onDelta((delta) => {
 
 // --- Cast the team ---
 const casting = new CastingEngine({
-  universe: 'usual-suspects',
+  universe: 'solomonic-demonology',
   agentCount: 4,
 });
 
@@ -495,7 +495,7 @@ const streaming = new StreamingPipeline();
 streaming.onDelta((delta) => process.stdout.write(delta.content));
 
 // Cast
-const casting = new CastingEngine({ universe: 'usual-suspects', agentCount: 5 });
+const casting = new CastingEngine({ universe: 'solomonic-demonology', agentCount: 5 });
 const cast = casting.castTeam({
   roles: ['lead', 'frontend', 'backend', 'tester', 'scribe'],
 });

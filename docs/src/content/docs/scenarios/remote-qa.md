@@ -47,7 +47,7 @@ Create a GitHub issue and assign it to `@copilot`. If the repo has Squad's issue
 Add a `squad:{member}` label to any issue, and Squad routes it to the right team member.
 
 **How it works:**
-1. Create or label an issue with `squad:fenster` (or any member name)
+1. Create or label an issue with `squad:vassago` (or any member name)
 2. The triage workflow assigns it to the appropriate agent
 3. Work proceeds through the normal Squad flow
 

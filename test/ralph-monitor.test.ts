@@ -179,14 +179,14 @@ describe('RalphMonitor', () => {
       await eventBus.emit({
         type: 'session:created',
         sessionId: 'test-session-1',
-        agentName: 'Fenster',
+        agentName: 'Vassago',
         payload: null,
         timestamp: new Date(),
       });
 
       const status = monitor.getStatus();
       expect(status).toHaveLength(1);
-      expect(status[0].agentName).toBe('Fenster');
+      expect(status[0].agentName).toBe('Vassago');
       expect(status[0].status).toBe('working');
       expect(status[0].sessionId).toBe('test-session-1');
     });
@@ -195,10 +195,10 @@ describe('RalphMonitor', () => {
       const eventBus = createMockEventBus();
       await monitor.start(eventBus);
 
-      await eventBus.emit({ type: 'session:created', sessionId: 's1', agentName: 'Fenster', payload: null, timestamp: new Date() });
+      await eventBus.emit({ type: 'session:created', sessionId: 's1', agentName: 'Vassago', payload: null, timestamp: new Date() });
       expect(monitor.getStatus()).toHaveLength(1);
 
-      await eventBus.emit({ type: 'session:destroyed', sessionId: 's1', agentName: 'Fenster', payload: null, timestamp: new Date() });
+      await eventBus.emit({ type: 'session:destroyed', sessionId: 's1', agentName: 'Vassago', payload: null, timestamp: new Date() });
       expect(monitor.getStatus()).toHaveLength(0);
     });
 
@@ -206,8 +206,8 @@ describe('RalphMonitor', () => {
       const eventBus = createMockEventBus();
       await monitor.start(eventBus);
 
-      await eventBus.emit({ type: 'session:created', sessionId: 's1', agentName: 'Hockney', payload: null, timestamp: new Date() });
-      await eventBus.emit({ type: 'session:error', sessionId: 's1', agentName: 'Hockney', payload: { message: 'timeout' }, timestamp: new Date() });
+      await eventBus.emit({ type: 'session:created', sessionId: 's1', agentName: 'Samigina', payload: null, timestamp: new Date() });
+      await eventBus.emit({ type: 'session:error', sessionId: 's1', agentName: 'Samigina', payload: { message: 'timeout' }, timestamp: new Date() });
 
       const status = monitor.getStatus();
       expect(status[0].status).toBe('error');
@@ -217,8 +217,8 @@ describe('RalphMonitor', () => {
       const eventBus = createMockEventBus();
       await monitor.start(eventBus);
 
-      await eventBus.emit({ type: 'session:created', sessionId: 's1', agentName: 'Fenster', payload: null, timestamp: new Date() });
-      await eventBus.emit({ type: 'agent:milestone', sessionId: 's1', agentName: 'Fenster', payload: { milestone: 'tests passing', task: 'refactoring' }, timestamp: new Date() });
+      await eventBus.emit({ type: 'session:created', sessionId: 's1', agentName: 'Vassago', payload: null, timestamp: new Date() });
+      await eventBus.emit({ type: 'agent:milestone', sessionId: 's1', agentName: 'Vassago', payload: { milestone: 'tests passing', task: 'refactoring' }, timestamp: new Date() });
 
       const status = monitor.getStatus();
       expect(status[0].milestones).toContain('tests passing');
@@ -231,7 +231,7 @@ describe('RalphMonitor', () => {
       const eventBus = createMockEventBus();
       await m.start(eventBus);
 
-      await eventBus.emit({ type: 'session:created', sessionId: 's1', agentName: 'Fenster', payload: null, timestamp: new Date(Date.now() - 200) });
+      await eventBus.emit({ type: 'session:created', sessionId: 's1', agentName: 'Vassago', payload: null, timestamp: new Date(Date.now() - 200) });
 
       const result = await m.healthCheck();
       expect(result[0].status).toBe('stale');
@@ -243,15 +243,15 @@ describe('RalphMonitor', () => {
       const eventBus = createMockEventBus();
       await monitor.start(eventBus);
 
-      await eventBus.emit({ type: 'session:created', sessionId: 's1', agentName: 'Fenster', payload: null, timestamp: new Date() });
-      await eventBus.emit({ type: 'session:created', sessionId: 's2', agentName: 'Hockney', payload: null, timestamp: new Date() });
+      await eventBus.emit({ type: 'session:created', sessionId: 's1', agentName: 'Vassago', payload: null, timestamp: new Date() });
+      await eventBus.emit({ type: 'session:created', sessionId: 's2', agentName: 'Samigina', payload: null, timestamp: new Date() });
 
       expect(monitor.getStatus()).toHaveLength(2);
 
-      await eventBus.emit({ type: 'session:destroyed', sessionId: 's1', agentName: 'Fenster', payload: null, timestamp: new Date() });
+      await eventBus.emit({ type: 'session:destroyed', sessionId: 's1', agentName: 'Vassago', payload: null, timestamp: new Date() });
       const remaining = monitor.getStatus();
       expect(remaining).toHaveLength(1);
-      expect(remaining[0].agentName).toBe('Hockney');
+      expect(remaining[0].agentName).toBe('Samigina');
     });
   });
 

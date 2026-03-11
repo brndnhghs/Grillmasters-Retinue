@@ -138,7 +138,7 @@ describe('ensureSquadPath()', () => {
   const squadRoot = join(TMP, '.squad');
 
   it('allows a path inside .squad/', () => {
-    const p = join(squadRoot, 'agents', 'fenster', 'scratch.md');
+    const p = join(squadRoot, 'agents', 'vassago', 'scratch.md');
     expect(ensureSquadPath(p, squadRoot)).toBe(p);
   });
 

@@ -8,7 +8,7 @@
  * Valid configs pass through; invalid configs throw with actionable messages.
  *
  * ⚠️ Implementation expected at: packages/squad-sdk/src/builders/index.ts
- * When Edie's implementation lands, remove the local stubs and uncomment
+ * When Amon's implementation lands, remove the local stubs and uncomment
  * the real import line.
  *
  * @see packages/squad-sdk/src/builders/types.ts
@@ -17,7 +17,7 @@
 
 import { describe, it, expect } from 'vitest';
 
-// Real types — these exist in the codebase already (Edie's types.ts)
+// Real types — these exist in the codebase already (Amon's types.ts)
 import type {
   TeamDefinition,
   AgentDefinition,
@@ -210,7 +210,7 @@ describe('defineTeam()', () => {
     const input: TeamDefinition = {
       name: 'Alpha Squad',
       description: 'Frontend team',
-      members: ['edie', 'hockney', 'fenster'],
+      members: ['amon', 'samigina', 'vassago'],
     };
 
     const result = defineTeam(input);
@@ -224,7 +224,7 @@ describe('defineTeam()', () => {
     const input: TeamDefinition = {
       name: 'Backend Squad',
       projectContext: 'TypeScript monorepo, Node 20+, ESM-only',
-      members: ['kujan'],
+      members: ['valefor'],
     };
 
     const result = defineTeam(input);
@@ -233,7 +233,7 @@ describe('defineTeam()', () => {
 
   it('throws with actionable message when name is missing', () => {
     expect(() =>
-      defineTeam({ name: '', members: ['edie'] }),
+      defineTeam({ name: '', members: ['amon'] }),
     ).toThrow(/name.*required/i);
   });
 
@@ -245,12 +245,12 @@ describe('defineTeam()', () => {
 
   it('throws when a member reference is blank', () => {
     expect(() =>
-      defineTeam({ name: 'Bad Ref', members: ['edie', ''] }),
+      defineTeam({ name: 'Bad Ref', members: ['amon', ''] }),
     ).toThrow(/invalid member/i);
   });
 
   it('readonly contract — returned object has readonly members array', () => {
-    const result = defineTeam({ name: 'Squad', members: ['edie'] });
+    const result = defineTeam({ name: 'Squad', members: ['amon'] });
     // The type system enforces readonly; runtime check that shape is intact
     expect(Array.isArray(result.members)).toBe(true);
   });
@@ -263,18 +263,18 @@ describe('defineTeam()', () => {
 describe('defineAgent()', () => {
   it('returns a typed AgentDefinition with all required fields', () => {
     const input: AgentDefinition = {
-      name: 'edie',
+      name: 'amon',
       role: 'TypeScript Engineer',
     };
 
     const result = defineAgent(input);
-    expect(result.name).toBe('edie');
+    expect(result.name).toBe('amon');
     expect(result.role).toBe('TypeScript Engineer');
   });
 
   it('preserves optional fields when present', () => {
     const input: AgentDefinition = {
-      name: 'hockney',
+      name: 'samigina',
       role: 'Tester',
       model: 'claude-sonnet-4.5',
       tools: ['grep', 'vitest'],
@@ -308,7 +308,7 @@ describe('defineAgent()', () => {
 
   it('throws when role is missing', () => {
     expect(() =>
-      defineAgent({ name: 'edie', role: '' }),
+      defineAgent({ name: 'amon', role: '' }),
     ).toThrow(/role.*required/i);
   });
 
@@ -326,15 +326,15 @@ describe('defineRouting()', () => {
   it('returns a valid RoutingDefinition with rules', () => {
     const input: RoutingDefinition = {
       rules: [
-        { pattern: 'feature-*', agents: ['edie'] },
-        { pattern: 'bug-*', agents: ['fenster'] },
+        { pattern: 'feature-*', agents: ['amon'] },
+        { pattern: 'bug-*', agents: ['vassago'] },
       ],
-      defaultAgent: 'edie',
+      defaultAgent: 'amon',
     };
 
     const result = defineRouting(input);
     expect(result.rules).toHaveLength(2);
-    expect(result.defaultAgent).toBe('edie');
+    expect(result.defaultAgent).toBe('amon');
   });
 
   it('accepts empty rules array (valid — fallback agent handles everything)', () => {
@@ -351,8 +351,8 @@ describe('defineRouting()', () => {
   it('preserves routing tier and priority on rules', () => {
     const input: RoutingDefinition = {
       rules: [
-        { pattern: 'security-*', agents: ['baer'], tier: 'full', priority: 1 },
-        { pattern: 'docs-*', agents: ['verbal'], tier: 'lightweight', priority: 10 },
+        { pattern: 'security-*', agents: ['gusion'], tier: 'full', priority: 1 },
+        { pattern: 'docs-*', agents: ['agares'], tier: 'lightweight', priority: 10 },
       ],
     };
 
@@ -366,8 +366,8 @@ describe('defineRouting()', () => {
     expect(() =>
       defineRouting({
         rules: [
-          { pattern: 'feature-*', agents: ['edie'] },
-          { pattern: 'feature-*', agents: ['fenster'] },
+          { pattern: 'feature-*', agents: ['amon'] },
+          { pattern: 'feature-*', agents: ['vassago'] },
         ],
       }),
     ).toThrow(/duplicate.*pattern/i);
@@ -375,7 +375,7 @@ describe('defineRouting()', () => {
 
   it('preserves fallback strategy', () => {
     const input: RoutingDefinition = {
-      rules: [{ pattern: '*', agents: ['edie'] }],
+      rules: [{ pattern: '*', agents: ['amon'] }],
       fallback: 'coordinator',
     };
 
@@ -394,7 +394,7 @@ describe('defineCeremony()', () => {
       name: 'standup',
       trigger: 'schedule',
       schedule: '0 9 * * 1-5',
-      participants: ['edie', 'hockney', 'fenster'],
+      participants: ['amon', 'samigina', 'vassago'],
       agenda: 'What did you do? What will you do? Blockers?',
       hooks: ['pre-standup', 'post-standup'],
     };
@@ -471,15 +471,15 @@ describe('defineHooks()', () => {
 describe('defineCasting()', () => {
   it('returns a valid CastingDefinition with universe list', () => {
     const input: CastingDefinition = {
-      allowlistUniverses: ['The Usual Suspects', 'Breaking Bad'],
+      allowlistUniverses: ['The Solomonic Demonology', 'Breaking Bad'],
       overflowStrategy: 'generic',
-      capacity: { 'The Usual Suspects': 6, 'Breaking Bad': 4 },
+      capacity: { 'The Solomonic Demonology': 6, 'Breaking Bad': 4 },
     };
 
     const result = defineCasting(input);
     expect(result.allowlistUniverses).toHaveLength(2);
     expect(result.overflowStrategy).toBe('generic');
-    expect(result.capacity?.['The Usual Suspects']).toBe(6);
+    expect(result.capacity?.['The Solomonic Demonology']).toBe(6);
   });
 
   it('accepts config without universe list (no restriction)', () => {
@@ -559,23 +559,23 @@ describe('SquadSDKConfig composition', () => {
   it('composes a full config from all builder results', () => {
     const config: SquadSDKConfig = {
       version: '1.0.0',
-      team: defineTeam({ name: 'Alpha', members: ['edie', 'hockney'] }),
+      team: defineTeam({ name: 'Alpha', members: ['amon', 'samigina'] }),
       agents: [
-        defineAgent({ name: 'edie', role: 'TypeScript Engineer' }),
-        defineAgent({ name: 'hockney', role: 'Tester' }),
+        defineAgent({ name: 'amon', role: 'TypeScript Engineer' }),
+        defineAgent({ name: 'samigina', role: 'Tester' }),
       ],
       routing: defineRouting({
         rules: [
-          { pattern: 'feature-*', agents: ['edie'] },
-          { pattern: 'test-*', agents: ['hockney'] },
+          { pattern: 'feature-*', agents: ['amon'] },
+          { pattern: 'test-*', agents: ['samigina'] },
         ],
-        defaultAgent: 'edie',
+        defaultAgent: 'amon',
       }),
       ceremonies: [
         defineCeremony({ name: 'standup', schedule: '0 9 * * 1-5' }),
       ],
       hooks: defineHooks({ scrubPii: true }),
-      casting: defineCasting({ allowlistUniverses: ['The Usual Suspects'] }),
+      casting: defineCasting({ allowlistUniverses: ['The Solomonic Demonology'] }),
       telemetry: defineTelemetry({ enabled: true }),
     };
 
@@ -585,7 +585,7 @@ describe('SquadSDKConfig composition', () => {
     expect(config.routing?.rules).toHaveLength(2);
     expect(config.ceremonies).toHaveLength(1);
     expect(config.hooks?.scrubPii).toBe(true);
-    expect(config.casting?.allowlistUniverses).toContain('The Usual Suspects');
+    expect(config.casting?.allowlistUniverses).toContain('The Solomonic Demonology');
     expect(config.telemetry?.enabled).toBe(true);
   });
 

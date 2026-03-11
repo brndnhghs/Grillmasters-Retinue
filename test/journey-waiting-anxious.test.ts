@@ -50,8 +50,8 @@ function scaffoldSquadDir(root: string): void {
 
 | Name | Role | Charter | Status |
 |------|------|---------|--------|
-| Keaton | Lead | \`.squad/agents/keaton/charter.md\` | ✅ Active |
-| Fenster | Core Dev | \`.squad/agents/fenster/charter.md\` | ✅ Active |
+| Bael | Lead | \`.squad/agents/bael/charter.md\` | ✅ Active |
+| Vassago | Core Dev | \`.squad/agents/vassago/charter.md\` | ✅ Active |
 `);
 
   writeFileSync(join(identityDir, 'now.md'), `---
@@ -88,8 +88,8 @@ async function createShellHarness(opts?: {
 }): Promise<ShellHarness> {
   const {
     agents = [
-      { name: 'Keaton', role: 'Lead' },
-      { name: 'Fenster', role: 'Core Dev' },
+      { name: 'Bael', role: 'Lead' },
+      { name: 'Vassago', role: 'Core Dev' },
     ],
     withSquadDir = true,
     version = '0.0.0-test',
@@ -222,11 +222,11 @@ describe('Journey: I\'m waiting and getting anxious', { timeout: 30_000 }, () =>
     let resolve!: () => void;
     shell.dispatched.mockImplementation(() => new Promise<void>(r => { resolve = r; }));
 
-    await shell.submit('@Keaton fix the build');
+    await shell.submit('@Bael fix the build');
     await tick(300);
 
-    // MessageStream resolves activity hint from @mention: "Keaton is thinking..."
-    expect(shell.hasText('Keaton is thinking...')).toBe(true);
+    // MessageStream resolves activity hint from @mention: "Bael is thinking..."
+    expect(shell.hasText('Bael is thinking...')).toBe(true);
 
     resolve();
     await tick(120);
@@ -257,10 +257,10 @@ describe('Journey: I\'m waiting and getting anxious', { timeout: 30_000 }, () =>
     await shell.submit('review the codebase');
     await tick(200);
 
-    shell.api().setAgentActivity('Keaton', 'reading src/auth.ts');
+    shell.api().setAgentActivity('Bael', 'reading src/auth.ts');
     await tick(200);
 
-    expect(shell.hasText('Keaton is reading src/auth.ts')).toBe(true);
+    expect(shell.hasText('Bael is reading src/auth.ts')).toBe(true);
 
     resolve();
     await tick(120);
@@ -272,20 +272,20 @@ describe('Journey: I\'m waiting and getting anxious', { timeout: 30_000 }, () =>
     let resolve!: () => void;
     shell.dispatched.mockImplementation(() => new Promise<void>(r => { resolve = r; }));
 
-    await shell.submit('@Fenster write the tests');
+    await shell.submit('@Vassago write the tests');
     await tick(200);
 
     shell.api().setStreamingContent({
-      agentName: 'Fenster',
+      agentName: 'Vassago',
       content: 'I\'ll start by creating the test file...',
     });
     await tick(200);
 
-    expect(shell.hasText('Fenster:')).toBe(true);
+    expect(shell.hasText('Vassago:')).toBe(true);
     expect(shell.hasText('I\'ll start by creating the test file...')).toBe(true);
 
     // Streaming indicator shows agent name
-    expect(shell.hasText('Fenster streaming')).toBe(true);
+    expect(shell.hasText('Vassago streaming')).toBe(true);
 
     resolve();
     await tick(120);
@@ -295,18 +295,18 @@ describe('Journey: I\'m waiting and getting anxious', { timeout: 30_000 }, () =>
     let resolve!: () => void;
     shell.dispatched.mockImplementation(() => new Promise<void>(r => { resolve = r; }));
 
-    await shell.submit('@Fenster explain the architecture');
+    await shell.submit('@Vassago explain the architecture');
     await tick(200);
 
     shell.api().setStreamingContent({
-      agentName: 'Fenster',
+      agentName: 'Vassago',
       content: 'The system uses',
     });
     await tick(200);
     expect(shell.hasText('The system uses')).toBe(true);
 
     shell.api().setStreamingContent({
-      agentName: 'Fenster',
+      agentName: 'Vassago',
       content: 'The system uses a layered architecture with clean separation.',
     });
     await tick(200);
@@ -320,20 +320,20 @@ describe('Journey: I\'m waiting and getting anxious', { timeout: 30_000 }, () =>
 
   it('/status shows active agent status', async () => {
     // Mark agent as working in the registry
-    shell.registry.updateStatus('Keaton', 'working');
+    shell.registry.updateStatus('Bael', 'working');
     shell.api().refreshAgents();
     await tick(120);
 
     await shell.submit('/status');
     await tick(200);
 
-    expect(shell.hasText('Keaton')).toBe(true);
+    expect(shell.hasText('Bael')).toBe(true);
     expect(shell.hasText('1 active')).toBe(true);
   });
 
   it('/status shows activity hint for working agent', async () => {
-    shell.registry.updateStatus('Keaton', 'working');
-    shell.registry.updateActivityHint('Keaton', 'editing src/main.ts');
+    shell.registry.updateStatus('Bael', 'working');
+    shell.registry.updateActivityHint('Bael', 'editing src/main.ts');
     shell.api().refreshAgents();
     await tick(120);
 
@@ -416,21 +416,21 @@ describe('Journey: I\'m waiting and getting anxious', { timeout: 30_000 }, () =>
   // ─── Bonus: AgentPanel shows active status for working agents ──────────────
 
   it('AgentPanel shows agent name when agent is working', async () => {
-    shell.registry.updateStatus('Keaton', 'working');
+    shell.registry.updateStatus('Bael', 'working');
     shell.api().refreshAgents();
     await tick(200);
 
-    expect(shell.hasText('Keaton')).toBe(true);
+    expect(shell.hasText('Bael')).toBe(true);
     // Active agents show with pulsing dot and activity info, not [WORK] tag
     expect(shell.hasText('working')).toBe(true);
   });
 
   it('AgentPanel shows agent name when agent is streaming', async () => {
-    shell.registry.updateStatus('Fenster', 'streaming');
+    shell.registry.updateStatus('Vassago', 'streaming');
     shell.api().refreshAgents();
     await tick(200);
 
-    expect(shell.hasText('Fenster')).toBe(true);
+    expect(shell.hasText('Vassago')).toBe(true);
     // Active agents show with pulsing dot and activity info, not [STREAM] tag
     expect(shell.hasText('working')).toBe(true);
   });

@@ -65,7 +65,7 @@ describe('OTel Metric Wiring — Streaming Pipeline', () => {
     const usageEvent = {
       type: 'usage' as const,
       sessionId: 'sess-1',
-      agentName: 'fenster',
+      agentName: 'vassago',
       model: 'gpt-4',
       inputTokens: 100,
       outputTokens: 50,

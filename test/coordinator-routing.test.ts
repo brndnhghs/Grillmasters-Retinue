@@ -4,7 +4,7 @@
  * Covers:
  * - route() returns correct tier for different message patterns
  * - Direct-response detection (status queries)
- * - Agent name mention routing (@fenster, @verbal)
+ * - Agent name mention routing (@vassago, @agares)
  * - "team" keyword triggers full fan-out
  * - Default routing to lead agent
  * - initialize() / shutdown() lifecycle
@@ -92,32 +92,32 @@ describe('Coordinator', () => {
   // --- Agent name mention routing ---
 
   describe('route() — agent name mentions', () => {
-    it('routes @fenster to fenster', async () => {
-      const result = await coordinator.route('@fenster implement the auth module');
+    it('routes @vassago to vassago', async () => {
+      const result = await coordinator.route('@vassago implement the auth module');
       expect(result.tier).toBe('standard');
-      expect(result.agents).toEqual(['fenster']);
+      expect(result.agents).toEqual(['vassago']);
       expect(result.parallel).toBe(false);
     });
 
-    it('routes @verbal to verbal', async () => {
-      const result = await coordinator.route('@verbal write the API docs');
+    it('routes @agares to agares', async () => {
+      const result = await coordinator.route('@agares write the API docs');
       expect(result.tier).toBe('standard');
-      expect(result.agents).toEqual(['verbal']);
+      expect(result.agents).toEqual(['agares']);
     });
 
-    it('routes @hockney to hockney', async () => {
-      const result = await coordinator.route('@hockney create tests for the parser');
-      expect(result.agents).toEqual(['hockney']);
+    it('routes @samigina to samigina', async () => {
+      const result = await coordinator.route('@samigina create tests for the parser');
+      expect(result.agents).toEqual(['samigina']);
     });
 
     it('includes rationale with mentioned agent name', async () => {
-      const result = await coordinator.route('@fenster do the thing');
-      expect(result.rationale).toContain('fenster');
+      const result = await coordinator.route('@vassago do the thing');
+      expect(result.rationale).toContain('vassago');
     });
 
     it('is case-insensitive for mentions', async () => {
-      const result = await coordinator.route('@FENSTER fix the bug');
-      expect(result.agents).toEqual(['fenster']);
+      const result = await coordinator.route('@VASSAGO fix the bug');
+      expect(result.agents).toEqual(['vassago']);
     });
   });
 
@@ -167,15 +167,15 @@ describe('Coordinator', () => {
 
   describe('route() — priority ordering', () => {
     it('@mention takes priority over team keyword', async () => {
-      const result = await coordinator.route('@fenster tell the team');
+      const result = await coordinator.route('@vassago tell the team');
       // @mention is checked before "team" keyword
-      expect(result.agents).toEqual(['fenster']);
+      expect(result.agents).toEqual(['vassago']);
       expect(result.tier).toBe('standard');
     });
 
     it('direct pattern takes priority over @mention', async () => {
-      // "status @fenster" starts with "status" which matches direct pattern
-      const result = await coordinator.route('status @fenster');
+      // "status @vassago" starts with "status" which matches direct pattern
+      const result = await coordinator.route('status @vassago');
       expect(result.tier).toBe('direct');
     });
   });
@@ -214,7 +214,7 @@ describe('Coordinator', () => {
 
       const decision: RoutingDecision = {
         tier: 'standard',
-        agents: ['fenster'],
+        agents: ['vassago'],
         parallel: false,
         rationale: 'Test routing',
       };

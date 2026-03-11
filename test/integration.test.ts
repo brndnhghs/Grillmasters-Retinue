@@ -80,7 +80,7 @@ describe('Integration: Tool → Hook Pipeline', () => {
 
       const ctx: PreToolUseContext = {
         toolName: 'squad_route',
-        arguments: { targetAgent: 'fenster', task: 'Implement feature' },
+        arguments: { targetAgent: 'vassago', task: 'Implement feature' },
         agentName: 'coordinator',
         sessionId: 'session-1',
       };
@@ -90,7 +90,7 @@ describe('Integration: Tool → Hook Pipeline', () => {
 
       // Execute tool
       const toolResult = await tool.handler(
-        { targetAgent: 'fenster', task: 'Implement feature' } as RouteRequest,
+        { targetAgent: 'vassago', task: 'Implement feature' } as RouteRequest,
         {
           sessionId: 'session-1',
           toolCallId: 'call-1',
@@ -138,7 +138,7 @@ describe('Integration: Tool → Hook Pipeline', () => {
       const ctx: PreToolUseContext = {
         toolName: 'create',
         arguments: { path: inboxPath },
-        agentName: 'fenster',
+        agentName: 'vassago',
         sessionId: 'session-1',
       };
 
@@ -149,7 +149,7 @@ describe('Integration: Tool → Hook Pipeline', () => {
       const tool = registry.getTool('squad_decide')!;
       const toolResult = await tool.handler(
         {
-          author: 'fenster',
+          author: 'vassago',
           summary: 'Use TypeScript',
           body: 'TypeScript provides better type safety.',
         } as DecisionRecord,
@@ -179,7 +179,7 @@ describe('Integration: Tool → Hook Pipeline', () => {
       const ctx: PreToolUseContext = {
         toolName: 'edit',
         arguments: { path: 'src/main.ts' },
-        agentName: 'fenster',
+        agentName: 'vassago',
         sessionId: 'session-1',
       };
 
@@ -192,7 +192,7 @@ describe('Integration: Tool → Hook Pipeline', () => {
   describe('squad_memory with PII scrubbing', () => {
     it('should scrub email addresses from tool result', async () => {
       // Create agent history file
-      const agentDir = path.join(testRoot, 'agents', 'fenster');
+      const agentDir = path.join(testRoot, 'agents', 'vassago');
       fs.mkdirSync(agentDir, { recursive: true });
       fs.writeFileSync(
         path.join(agentDir, 'history.md'),
@@ -209,7 +209,7 @@ describe('Integration: Tool → Hook Pipeline', () => {
       const tool = registry.getTool('squad_memory')!;
       const toolResult = await tool.handler(
         {
-          agent: 'fenster',
+          agent: 'vassago',
           section: 'learnings',
           content: 'Collaborated with john.doe@example.com on authentication module.',
         } as MemoryEntry,
@@ -228,7 +228,7 @@ describe('Integration: Tool → Hook Pipeline', () => {
         toolName: 'squad_memory',
         arguments: {},
         result: toolResult,
-        agentName: 'fenster',
+        agentName: 'vassago',
         sessionId: 'session-1',
       };
 
@@ -263,7 +263,7 @@ describe('Integration: Tool → Hook Pipeline', () => {
           toolName: 'view',
           arguments: {},
           result: `Contact: ${email}`,
-          agentName: 'fenster',
+          agentName: 'vassago',
           sessionId: 'session-1',
         };
 
@@ -341,14 +341,14 @@ describe('Integration: Charter → Model → Session Pipeline', () => {
   describe('Compile charter → resolve model', () => {
     it('should compile charter and resolve model for code task', () => {
       const charterOptions: CharterCompileOptions = {
-        agentName: 'fenster',
+        agentName: 'vassago',
         charterPath: '/path/to/charter.md',
         teamContext: 'Team of 5 agents',
       };
 
       const config = compileCharter(charterOptions);
       expect(config).toBeDefined();
-      expect(config.name).toBe('fenster');
+      expect(config.name).toBe('vassago');
       expect(config.prompt).toBeDefined();
       expect(config.prompt.length).toBeGreaterThan(0);
 
@@ -719,7 +719,7 @@ describe('Integration: Session Pool + Event Bus', () => {
       const event: SquadEvent = {
         type: 'session:created',
         sessionId: 'session-1',
-        agentName: 'fenster',
+        agentName: 'vassago',
         payload: { model: 'claude-sonnet-4.5' },
         timestamp: new Date(),
       };
@@ -728,7 +728,7 @@ describe('Integration: Session Pool + Event Bus', () => {
 
       expect(receivedEvents.length).toBe(1);
       expect(receivedEvents[0].sessionId).toBe('session-1');
-      expect(receivedEvents[0].agentName).toBe('fenster');
+      expect(receivedEvents[0].agentName).toBe('vassago');
     });
 
     it('should emit and receive multiple event types', async () => {
@@ -857,7 +857,7 @@ describe('Integration: Error Hierarchy', () => {
       
       const wrappedError = ErrorFactory.wrap(originalError, {
         sessionId: 'session-1',
-        agentName: 'fenster',
+        agentName: 'vassago',
         toolName: 'squad_route',
       });
 
@@ -904,7 +904,7 @@ describe('Integration: Error Hierarchy', () => {
 
       const stopwatch = collector.start('squad_route', {
         sessionId: 'session-1',
-        agentName: 'fenster',
+        agentName: 'vassago',
         metadata: { targetAgent: 'brady' },
       });
 
@@ -914,7 +914,7 @@ describe('Integration: Error Hierarchy', () => {
       expect(telemetryPoints[0].operation).toBe('squad_route');
       expect(telemetryPoints[0].success).toBe(true);
       expect(telemetryPoints[0].sessionId).toBe('session-1');
-      expect(telemetryPoints[0].agentName).toBe('fenster');
+      expect(telemetryPoints[0].agentName).toBe('vassago');
     });
 
     it('should track tool execution failure', () => {
@@ -974,7 +974,7 @@ describe('Integration: Error Hierarchy', () => {
       const originalError = new Error('Tool failed');
       const error = ErrorFactory.wrap(originalError, {
         sessionId: 'session-123',
-        agentName: 'fenster',
+        agentName: 'vassago',
         toolName: 'squad_route',
         metadata: {
           targetAgent: 'brady',
@@ -983,7 +983,7 @@ describe('Integration: Error Hierarchy', () => {
       });
 
       expect(error.context.sessionId).toBe('session-123');
-      expect(error.context.agentName).toBe('fenster');
+      expect(error.context.agentName).toBe('vassago');
       expect(error.context.toolName).toBe('squad_route');
       expect(error.context.metadata?.targetAgent).toBe('brady');
       expect(error.context.timestamp).toBeInstanceOf(Date);
@@ -1051,7 +1051,7 @@ describe('Integration: End-to-End Scenarios', () => {
     await eventBus.emit({
       type: 'session:created',
       sessionId: 'session-1',
-      agentName: 'fenster',
+      agentName: 'vassago',
       payload: { model: 'claude-sonnet-4.5' },
       timestamp: new Date(),
     });
@@ -1059,8 +1059,8 @@ describe('Integration: End-to-End Scenarios', () => {
     // Pre-tool hook check
     const preCtx: PreToolUseContext = {
       toolName: 'squad_decide',
-      arguments: { author: 'fenster', summary: 'Test', body: 'Content' },
-      agentName: 'fenster',
+      arguments: { author: 'vassago', summary: 'Test', body: 'Content' },
+      agentName: 'vassago',
       sessionId: 'session-1',
     };
 
@@ -1071,7 +1071,7 @@ describe('Integration: End-to-End Scenarios', () => {
     const tool = registry.getTool('squad_decide')!;
     const toolResult = await tool.handler(
       {
-        author: 'fenster',
+        author: 'vassago',
         summary: 'Integration test decision',
         body: 'This decision was made during integration testing.',
       },
@@ -1090,7 +1090,7 @@ describe('Integration: End-to-End Scenarios', () => {
       toolName: 'squad_decide',
       arguments: {},
       result: toolResult,
-      agentName: 'fenster',
+      agentName: 'vassago',
       sessionId: 'session-1',
     };
 
@@ -1101,7 +1101,7 @@ describe('Integration: End-to-End Scenarios', () => {
     await eventBus.emit({
       type: 'session:tool_call',
       sessionId: 'session-1',
-      agentName: 'fenster',
+      agentName: 'vassago',
       payload: { toolName: 'squad_decide', success: true },
       timestamp: new Date(),
     });

@@ -248,10 +248,10 @@ Before spawning agents, detect which platform you're running on:
 
 This document is based on active research spikes (#32, #33, #34) conducted in February 2026. Key findings:
 
-- **Proposal 032a** (Strausz): `runSubagent` API research — agent spawning mechanics on VS Code
-- **Proposal 032b** (Kujan): CLI spawn parity analysis — all 5 Squad spawn patterns mapped
-- **Proposal 033a** (Strausz): VS Code file discovery — `.ai-team/` access and workspace scoping
-- **Proposal 034a** (Kujan): Model selection & background mode — per-agent model routing and async execution
+- **Proposal 032a** (Beleth): `runSubagent` API research — agent spawning mechanics on VS Code
+- **Proposal 032b** (Valefor): CLI spawn parity analysis — all 5 Squad spawn patterns mapped
+- **Proposal 033a** (Beleth): VS Code file discovery — `.ai-team/` access and workspace scoping
+- **Proposal 034a** (Valefor): Model selection & background mode — per-agent model routing and async execution
 
 **Next steps:**
 - [ ] JetBrains investigation spike (#12)

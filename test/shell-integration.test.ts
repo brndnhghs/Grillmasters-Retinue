@@ -96,37 +96,37 @@ describe('ShellLifecycle — startup', () => {
     const squadDir = path.join(tmpDir, '.squad');
     fs.mkdirSync(squadDir, { recursive: true });
     fs.writeFileSync(path.join(squadDir, 'team.md'), makeTeamMd([
-      { name: 'Fenster', role: 'Core Dev' },
-      { name: 'Hockney', role: 'Tester' },
+      { name: 'Vassago', role: 'Core Dev' },
+      { name: 'Samigina', role: 'Tester' },
     ]));
     const lc = makeLifecycle(tmpDir);
     await lc.initialize();
 
     const agents = lc.getDiscoveredAgents();
     expect(agents).toHaveLength(2);
-    expect(agents.map(a => a.name)).toContain('Fenster');
-    expect(agents.map(a => a.name)).toContain('Hockney');
+    expect(agents.map(a => a.name)).toContain('Vassago');
+    expect(agents.map(a => a.name)).toContain('Samigina');
   });
 
   it('registers active agents in session registry', async () => {
     const squadDir = path.join(tmpDir, '.squad');
     fs.mkdirSync(squadDir, { recursive: true });
     fs.writeFileSync(path.join(squadDir, 'team.md'), makeTeamMd([
-      { name: 'Keaton', role: 'Lead' },
+      { name: 'Bael', role: 'Lead' },
     ]));
     const registry = new SessionRegistry();
     const lc = new ShellLifecycle({ teamRoot: tmpDir, renderer: new ShellRenderer(), registry });
     await lc.initialize();
 
-    expect(registry.get('Keaton')).toBeDefined();
-    expect(registry.get('Keaton')?.role).toBe('Lead');
+    expect(registry.get('Bael')).toBeDefined();
+    expect(registry.get('Bael')?.role).toBe('Lead');
   });
 
   it('sets state to ready after successful init', async () => {
     const squadDir = path.join(tmpDir, '.squad');
     fs.mkdirSync(squadDir, { recursive: true });
     fs.writeFileSync(path.join(squadDir, 'team.md'), makeTeamMd([
-      { name: 'Fenster', role: 'Core Dev' },
+      { name: 'Vassago', role: 'Core Dev' },
     ]));
     const lc = makeLifecycle(tmpDir);
     await lc.initialize();
@@ -155,12 +155,12 @@ describe('ShellLifecycle — startup', () => {
 // ============================================================================
 
 describe('parseInput — input routing', () => {
-  const knownAgents = ['Fenster', 'Hockney', 'Keaton', 'Verbal'];
+  const knownAgents = ['Vassago', 'Samigina', 'Bael', 'Agares'];
 
-  it('@Fenster fix the bug → direct_agent', () => {
-    const result = parseInput('@Fenster fix the bug', knownAgents);
+  it('@Vassago fix the bug → direct_agent', () => {
+    const result = parseInput('@Vassago fix the bug', knownAgents);
     expect(result.type).toBe('direct_agent');
-    expect(result.agentName).toBe('Fenster');
+    expect(result.agentName).toBe('Vassago');
     expect(result.content).toBe('fix the bug');
   });
 
@@ -190,20 +190,20 @@ describe('parseInput — input routing', () => {
   });
 
   it('preserves raw input', () => {
-    const result = parseInput('  @Fenster help  ', knownAgents);
-    expect(result.raw).toBe('@Fenster help');
+    const result = parseInput('  @Vassago help  ', knownAgents);
+    expect(result.raw).toBe('@Vassago help');
   });
 
   it('case-insensitive agent matching', () => {
-    const result = parseInput('@fenster fix it', knownAgents);
+    const result = parseInput('@vassago fix it', knownAgents);
     expect(result.type).toBe('direct_agent');
-    expect(result.agentName).toBe('Fenster');
+    expect(result.agentName).toBe('Vassago');
   });
 
-  it('"Fenster, do something" comma syntax → direct_agent', () => {
-    const result = parseInput('Fenster, do something', knownAgents);
+  it('"Vassago, do something" comma syntax → direct_agent', () => {
+    const result = parseInput('Vassago, do something', knownAgents);
     expect(result.type).toBe('direct_agent');
-    expect(result.agentName).toBe('Fenster');
+    expect(result.agentName).toBe('Vassago');
     expect(result.content).toBe('do something');
   });
 
@@ -220,9 +220,9 @@ describe('parseInput — input routing', () => {
   });
 
   it('@agent with no message → direct_agent with undefined content', () => {
-    const result = parseInput('@Fenster', knownAgents);
+    const result = parseInput('@Vassago', knownAgents);
     expect(result.type).toBe('direct_agent');
-    expect(result.agentName).toBe('Fenster');
+    expect(result.agentName).toBe('Vassago');
     expect(result.content).toBeUndefined();
   });
 });
@@ -233,13 +233,13 @@ describe('parseInput — input routing', () => {
 
 describe('parseCoordinatorResponse', () => {
   it('parses ROUTE format', () => {
-    const response = `ROUTE: Fenster
+    const response = `ROUTE: Vassago
 TASK: Fix the null pointer exception in parser.ts
 CONTEXT: User reported crash on line 42`;
     const result = parseCoordinatorResponse(response);
     expect(result.type).toBe('route');
     expect(result.routes).toHaveLength(1);
-    expect(result.routes![0].agent).toBe('Fenster');
+    expect(result.routes![0].agent).toBe('Vassago');
     expect(result.routes![0].task).toBe('Fix the null pointer exception in parser.ts');
     expect(result.routes![0].context).toBe('User reported crash on line 42');
   });
@@ -253,14 +253,14 @@ CONTEXT: User reported crash on line 42`;
 
   it('parses MULTI format', () => {
     const response = `MULTI:
-- Fenster: Fix the parser bug
-- Hockney: Write regression tests`;
+- Vassago: Fix the parser bug
+- Samigina: Write regression tests`;
     const result = parseCoordinatorResponse(response);
     expect(result.type).toBe('multi');
     expect(result.routes).toHaveLength(2);
-    expect(result.routes![0].agent).toBe('Fenster');
+    expect(result.routes![0].agent).toBe('Vassago');
     expect(result.routes![0].task).toBe('Fix the parser bug');
-    expect(result.routes![1].agent).toBe('Hockney');
+    expect(result.routes![1].agent).toBe('Samigina');
     expect(result.routes![1].task).toBe('Write regression tests');
   });
 
@@ -272,7 +272,7 @@ CONTEXT: User reported crash on line 42`;
   });
 
   it('ROUTE without CONTEXT', () => {
-    const response = `ROUTE: Keaton
+    const response = `ROUTE: Bael
 TASK: Review the proposal`;
     const result = parseCoordinatorResponse(response);
     expect(result.type).toBe('route');
@@ -303,12 +303,12 @@ describe('formatConversationContext', () => {
   it('formats messages with role prefixes', () => {
     const messages = [
       { role: 'user' as const, content: 'hello', timestamp: new Date() },
-      { role: 'agent' as const, agentName: 'Fenster', content: 'hi', timestamp: new Date() },
+      { role: 'agent' as const, agentName: 'Vassago', content: 'hi', timestamp: new Date() },
       { role: 'system' as const, content: 'info', timestamp: new Date() },
     ];
     const ctx = formatConversationContext(messages);
     expect(ctx).toContain('[user]: hello');
-    expect(ctx).toContain('[Fenster]: hi');
+    expect(ctx).toContain('[Vassago]: hi');
     expect(ctx).toContain('[system]: info');
   });
 
@@ -341,8 +341,8 @@ describe('Session cleanup on shutdown', () => {
       const squadDir = path.join(tmpDir, '.squad');
       fs.mkdirSync(squadDir, { recursive: true });
       fs.writeFileSync(path.join(squadDir, 'team.md'), makeTeamMd([
-        { name: 'Fenster', role: 'Core Dev' },
-        { name: 'Hockney', role: 'Tester' },
+        { name: 'Vassago', role: 'Core Dev' },
+        { name: 'Samigina', role: 'Tester' },
       ]));
 
       const registry = new SessionRegistry();

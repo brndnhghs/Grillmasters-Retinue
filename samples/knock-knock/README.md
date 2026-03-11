@@ -5,7 +5,7 @@ Two Copilot sessions trade knock-knock jokes forever using **real LLM-generated 
 ## What It Shows
 
 - **SquadClientWithPool**: Connect to GitHub Copilot with auth
-- **CastingEngine**: Cast two agents from the "Usual Suspects" universe  
+- **CastingEngine**: Cast two agents from the "Solomonic Demonology" universe  
 - **StreamingPipeline**: Token-by-token streaming output from live LLM
 - **Session Management**: Creating, resuming, and managing Copilot sessions
 
@@ -55,11 +55,11 @@ npm start
 Watch the output to see LLM-generated jokes:
 
 ```
-🎭 McManus: Knock knock!
-🎭 Fenster: Who's there?
-🎭 McManus: TypeScript.
-🎭 Fenster: TypeScript who?
-🎭 McManus: TypeScript checking your jokes for type safety! 🔍
+🎭 marbas: Knock knock!
+🎭 Vassago: Who's there?
+🎭 marbas: TypeScript.
+🎭 Vassago: TypeScript who?
+🎭 marbas: TypeScript checking your jokes for type safety! 🔍
 
 ...
 ```

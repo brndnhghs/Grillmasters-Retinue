@@ -130,10 +130,10 @@ const DEMO_CONFIG: SquadConfig = {
   team: { name: 'Pipeline Demo Squad' },
   routing: {
     rules: [
-      { pattern: 'security|audit|vulnerability', agents: ['Hockney'], tier: 'full' },
-      { pattern: 'document|docs|readme', agents: ['Verbal'], tier: 'lightweight' },
+      { pattern: 'security|audit|vulnerability', agents: ['Samigina'], tier: 'full' },
+      { pattern: 'document|docs|readme', agents: ['Agares'], tier: 'lightweight' },
     ],
-    defaultAgent: 'Keyser',
+    defaultAgent: 'Bael',
     fallbackBehavior: 'default-agent',
   },
   models: {
@@ -146,10 +146,10 @@ const DEMO_CONFIG: SquadConfig = {
     },
   },
   agents: [
-    { name: 'Keyser', role: 'lead' },
-    { name: 'McManus', role: 'developer' },
-    { name: 'Fenster', role: 'tester' },
-    { name: 'Verbal', role: 'scribe' },
+    { name: 'Bael', role: 'lead' },
+    { name: 'marbas', role: 'developer' },
+    { name: 'Vassago', role: 'tester' },
+    { name: 'Agares', role: 'scribe' },
   ],
 };
 
@@ -525,7 +525,7 @@ function maybeRouteFollowUp(
     timeline.push({
       timestamp: Date.now(),
       agent: agent.member.name,
-      event: `squad_route → Fenster: "Write tests for auth endpoints"`,
+      event: `squad_route → Vassago: "Write tests for auth endpoints"`,
       icon: '🔀',
     });
   }
@@ -543,7 +543,7 @@ function maybeRouteFollowUp(
     timeline.push({
       timestamp: Date.now(),
       agent: agent.member.name,
-      event: `squad_route → McManus: "${followUp.title}"`,
+      event: `squad_route → marbas: "${followUp.title}"`,
       icon: '🔀',
     });
   }
@@ -702,7 +702,7 @@ export async function runPipeline(): Promise<void> {
   printSection('CASTING');
   const engine = new CastingEngine();
   const cast = engine.castTeam({
-    universe: 'usual-suspects',
+    universe: 'solomonic-demonology',
     requiredRoles: ['lead', 'developer', 'tester', 'scribe'],
     teamSize: 4,
   });

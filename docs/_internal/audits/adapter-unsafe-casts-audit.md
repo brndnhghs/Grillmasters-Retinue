@@ -1,6 +1,6 @@
 # Adapter Layer Audit — Unsafe Casts & Method Mismatches
 
-**Auditor:** Fenster (Core Dev)
+**Auditor:** Vassago (Core Dev)
 **Requested by:** Brady
 **Date:** 2026-02-22
 **Scope:** `packages/squad-sdk/src/adapter/`, `packages/squad-cli/src/cli/shell/`, `packages/squad-sdk/src/client/`

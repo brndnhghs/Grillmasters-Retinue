@@ -181,7 +181,7 @@ describe('squad_route handler', () => {
     const tool = registry.getTool('squad_route')!;
     const result = await tool.handler(
       {
-        targetAgent: 'fenster',
+        targetAgent: 'vassago',
         task: 'Implement feature X',
         priority: 'high',
         context: 'Related to PRD-2',
@@ -197,7 +197,7 @@ describe('squad_route handler', () => {
     expect(result).toMatchObject({
       resultType: 'success',
     });
-    expect((result as any).textResultForLlm).toContain('fenster');
+    expect((result as any).textResultForLlm).toContain('vassago');
     expect((result as any).textResultForLlm).toContain('high');
   });
 
@@ -242,7 +242,7 @@ describe('squad_decide handler', () => {
     const tool = registry.getTool('squad_decide')!;
     const result = await tool.handler(
       {
-        author: 'fenster',
+        author: 'vassago',
         summary: 'Use TypeScript for all new code',
         body: 'TypeScript provides better type safety and developer experience.',
         references: ['PRD-2', 'Issue #88'],
@@ -264,11 +264,11 @@ describe('squad_decide handler', () => {
 
     const files = fs.readdirSync(inboxDir);
     expect(files.length).toBe(1);
-    expect(files[0]).toMatch(/^fenster-use-typescript-for-all-new-code\.md$/);
+    expect(files[0]).toMatch(/^vassago-use-typescript-for-all-new-code\.md$/);
 
     const content = fs.readFileSync(path.join(inboxDir, files[0]), 'utf-8');
     expect(content).toContain('Use TypeScript for all new code');
-    expect(content).toContain('**By:** fenster');
+    expect(content).toContain('**By:** vassago');
     expect(content).toContain('**What:**');
     expect(content).toContain('**Why:**');
     expect(content).toContain('**References:** PRD-2, Issue #88');
@@ -314,10 +314,10 @@ describe('squad_memory handler', () => {
     registry = new ToolRegistry(testRoot);
 
     // Create test agent history file
-    const agentDir = path.join(testRoot, 'agents', 'fenster');
+    const agentDir = path.join(testRoot, 'agents', 'vassago');
     fs.mkdirSync(agentDir, { recursive: true });
     
-    const historyContent = `# Fenster's History
+    const historyContent = `# Vassago's History
 
 ## Learnings
 
@@ -347,7 +347,7 @@ Initial session entry.
     const tool = registry.getTool('squad_memory')!;
     const result = await tool.handler(
       {
-        agent: 'fenster',
+        agent: 'vassago',
         section: 'learnings',
         content: 'Learned how to implement ToolRegistry.',
       } as MemoryEntry,
@@ -363,7 +363,7 @@ Initial session entry.
       resultType: 'success',
     });
 
-    const historyFile = path.join(testRoot, 'agents', 'fenster', 'history.md');
+    const historyFile = path.join(testRoot, 'agents', 'vassago', 'history.md');
     const content = fs.readFileSync(historyFile, 'utf-8');
     
     expect(content).toContain('Learned how to implement ToolRegistry');
@@ -465,13 +465,13 @@ describe('squad_status handler', () => {
     // Add some sessions to the pool
     sessionPool.add({
       id: 'session-1',
-      agentName: 'fenster',
+      agentName: 'vassago',
       status: 'active',
       createdAt: new Date(),
     });
     sessionPool.add({
       id: 'session-2',
-      agentName: 'verbal',
+      agentName: 'agares',
       status: 'active',
       createdAt: new Date(),
     });
@@ -498,20 +498,20 @@ describe('squad_status handler', () => {
   it('should filter by agent name', async () => {
     sessionPool.add({
       id: 'session-1',
-      agentName: 'fenster',
+      agentName: 'vassago',
       status: 'active',
       createdAt: new Date(),
     });
     sessionPool.add({
       id: 'session-2',
-      agentName: 'verbal',
+      agentName: 'agares',
       status: 'active',
       createdAt: new Date(),
     });
 
     const tool = registry.getTool('squad_status')!;
     const result = await tool.handler(
-      { agentName: 'fenster' },
+      { agentName: 'vassago' },
       {
         sessionId: 'test-session',
         toolCallId: 'test-call',
@@ -530,7 +530,7 @@ describe('squad_status handler', () => {
   it('should include verbose session details', async () => {
     sessionPool.add({
       id: 'session-123',
-      agentName: 'fenster',
+      agentName: 'vassago',
       status: 'active',
       createdAt: new Date(Date.now() - 5000), // 5 seconds ago
     });
@@ -550,7 +550,7 @@ describe('squad_status handler', () => {
       resultType: 'success',
     });
     expect((result as any).textResultForLlm).toContain('Sessions:');
-    expect((result as any).textResultForLlm).toContain('fenster');
+    expect((result as any).textResultForLlm).toContain('vassago');
     expect((result as any).textResultForLlm).toContain('active');
   });
 

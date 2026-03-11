@@ -253,7 +253,7 @@ Find your **board ID** by opening any card on Trello and looking at the URL: `tr
 In your Squad session:
 
 ```
-> Keaton, create a Trello card for the auth refactor
+> Bael, create a Trello card for the auth refactor
 ```
 
 Agents will now automatically propose Trello tasks for tracking work items.

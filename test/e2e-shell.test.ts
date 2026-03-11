@@ -51,8 +51,8 @@ function scaffoldSquadDir(root: string): void {
 
 | Name | Role | Charter | Status |
 |------|------|---------|--------|
-| Keaton | Lead | \`.squad/agents/keaton/charter.md\` | ✅ Active |
-| Fenster | Core Dev | \`.squad/agents/fenster/charter.md\` | ✅ Active |
+| Bael | Lead | \`.squad/agents/bael/charter.md\` | ✅ Active |
+| Vassago | Core Dev | \`.squad/agents/vassago/charter.md\` | ✅ Active |
 `);
 
   writeFileSync(join(identityDir, 'now.md'), `---
@@ -108,8 +108,8 @@ async function createShellHarness(opts?: {
 }): Promise<ShellHarness> {
   const {
     agents = [
-      { name: 'Keaton', role: 'Lead' },
-      { name: 'Fenster', role: 'Core Dev' },
+      { name: 'Bael', role: 'Lead' },
+      { name: 'Vassago', role: 'Core Dev' },
     ],
     withSquadDir = true,
     version = '0.0.0-test',
@@ -217,8 +217,8 @@ describe('E2E: Shell welcome', () => {
   });
 
   it('shows agent names from the roster', () => {
-    expect(shell.hasText('Keaton')).toBe(true);
-    expect(shell.hasText('Fenster')).toBe(true);
+    expect(shell.hasText('Bael')).toBe(true);
+    expect(shell.hasText('Vassago')).toBe(true);
   });
 
   it('shows help hint in banner', () => {
@@ -380,26 +380,26 @@ describe('E2E: @agent routing', () => {
     await shell.cleanup();
   });
 
-  it('@Keaton message dispatches as direct_agent', async () => {
-    await shell.submit('@Keaton fix the build');
+  it('@Bael message dispatches as direct_agent', async () => {
+    await shell.submit('@Bael fix the build');
     expect(shell.dispatched).toHaveBeenCalledTimes(1);
     const parsed = shell.dispatched.mock.calls[0]![0] as ParsedInput;
     expect(parsed.type).toBe('direct_agent');
-    expect(parsed.agentName).toBe('Keaton');
+    expect(parsed.agentName).toBe('Bael');
     expect(parsed.content).toBe('fix the build');
   });
 
   it('@agent message appears in the conversation', async () => {
-    await shell.submit('@Keaton fix the build');
-    expect(shell.hasText('@Keaton fix the build')).toBe(true);
+    await shell.submit('@Bael fix the build');
+    expect(shell.hasText('@Bael fix the build')).toBe(true);
   });
 
   it('agent response appears when pushed via ShellApi', async () => {
-    await shell.submit('@Keaton fix the build');
+    await shell.submit('@Bael fix the build');
     // Simulate agent response via ShellApi
     shell.api().addMessage({
       role: 'agent',
-      agentName: 'Keaton',
+      agentName: 'Bael',
       content: 'On it! Fixing the build now.',
       timestamp: new Date(),
     });

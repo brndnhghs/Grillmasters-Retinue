@@ -38,16 +38,16 @@ describe('SessionRegistry', () => {
   });
 
   it('register creates a session with idle status', () => {
-    const s = registry.register('hockney', 'Tester');
-    expect(s.name).toBe('hockney');
+    const s = registry.register('samigina', 'Tester');
+    expect(s.name).toBe('samigina');
     expect(s.role).toBe('Tester');
     expect(s.status).toBe('idle');
     expect(s.startedAt).toBeInstanceOf(Date);
   });
 
   it('get retrieves a registered session', () => {
-    registry.register('fenster', 'Core Dev');
-    expect(registry.get('fenster')?.role).toBe('Core Dev');
+    registry.register('vassago', 'Core Dev');
+    expect(registry.get('vassago')?.role).toBe('Core Dev');
   });
 
   it('get returns undefined for unknown name', () => {
@@ -102,13 +102,13 @@ describe('SessionRegistry', () => {
 describe('Spawn infrastructure', () => {
   describe('loadAgentCharter', () => {
     it('loads charter from test-fixtures/.squad/agents/{name}', () => {
-      const charter = loadAgentCharter('hockney', FIXTURES);
-      expect(charter).toContain('Hockney');
+      const charter = loadAgentCharter('samigina', FIXTURES);
+      expect(charter).toContain('Samigina');
       expect(charter).toContain('Tester');
     });
 
     it('lowercases the agent name for path resolution', () => {
-      const charter = loadAgentCharter('Fenster', FIXTURES);
+      const charter = loadAgentCharter('Vassago', FIXTURES);
       expect(charter).toContain('Core Dev');
     });
 
@@ -150,8 +150,8 @@ describe('Coordinator', () => {
         teamRoot: FIXTURES,
         teamPath: join(FIXTURES, '.squad', 'team.md'),
       });
-      expect(prompt).toContain('Hockney');
-      expect(prompt).toContain('Fenster');
+      expect(prompt).toContain('Samigina');
+      expect(prompt).toContain('Vassago');
     });
 
     it('includes routing.md content', () => {
@@ -159,7 +159,7 @@ describe('Coordinator', () => {
         teamRoot: FIXTURES,
         routingPath: join(FIXTURES, '.squad', 'routing.md'),
       });
-      expect(prompt).toContain('Tests → Hockney');
+      expect(prompt).toContain('Tests → Samigina');
     });
 
     it('falls back gracefully when team.md is missing', () => {
@@ -188,30 +188,30 @@ describe('Coordinator', () => {
 
     it('parses ROUTE responses', () => {
       const result = parseCoordinatorResponse(
-        'ROUTE: Fenster\nTASK: Fix the parser\nCONTEXT: Related to issue #42',
+        'ROUTE: Vassago\nTASK: Fix the parser\nCONTEXT: Related to issue #42',
       );
       expect(result.type).toBe('route');
       expect(result.routes).toHaveLength(1);
-      expect(result.routes![0]!.agent).toBe('Fenster');
+      expect(result.routes![0]!.agent).toBe('Vassago');
       expect(result.routes![0]!.task).toBe('Fix the parser');
       expect(result.routes![0]!.context).toBe('Related to issue #42');
     });
 
     it('parses ROUTE without CONTEXT', () => {
-      const result = parseCoordinatorResponse('ROUTE: Hockney\nTASK: Run tests');
+      const result = parseCoordinatorResponse('ROUTE: Samigina\nTASK: Run tests');
       expect(result.type).toBe('route');
-      expect(result.routes![0]!.agent).toBe('Hockney');
+      expect(result.routes![0]!.agent).toBe('Samigina');
       expect(result.routes![0]!.context).toBeUndefined();
     });
 
     it('parses MULTI responses', () => {
       const result = parseCoordinatorResponse(
-        'MULTI:\n- Fenster: Implement the feature\n- Hockney: Write tests',
+        'MULTI:\n- Vassago: Implement the feature\n- Samigina: Write tests',
       );
       expect(result.type).toBe('multi');
       expect(result.routes).toHaveLength(2);
-      expect(result.routes![0]!.agent).toBe('Fenster');
-      expect(result.routes![1]!.agent).toBe('Hockney');
+      expect(result.routes![0]!.agent).toBe('Vassago');
+      expect(result.routes![1]!.agent).toBe('Samigina');
     });
 
     it('falls back to direct for unknown format', () => {
@@ -243,10 +243,10 @@ describe('Coordinator', () => {
 
     it('uses agentName prefix when present', () => {
       const agentMsgs: ShellMessage[] = [
-        { role: 'agent', agentName: 'fenster', content: 'done', timestamp: new Date() },
+        { role: 'agent', agentName: 'vassago', content: 'done', timestamp: new Date() },
       ];
       const ctx = formatConversationContext(agentMsgs);
-      expect(ctx).toContain('[fenster]: done');
+      expect(ctx).toContain('[vassago]: done');
     });
   });
 });
@@ -279,7 +279,7 @@ describe('ShellLifecycle', () => {
     await lifecycle.initialize();
     const agents = lifecycle.getDiscoveredAgents();
     expect(agents.length).toBeGreaterThanOrEqual(2);
-    expect(agents.some(a => a.name === 'Hockney')).toBe(true);
+    expect(agents.some(a => a.name === 'Samigina')).toBe(true);
   });
 
   it('registers active agents in the registry', async () => {
@@ -295,9 +295,9 @@ describe('ShellLifecycle', () => {
   });
 
   it('addAgentMessage appends with agentName', () => {
-    const msg = lifecycle.addAgentMessage('fenster', 'done');
+    const msg = lifecycle.addAgentMessage('vassago', 'done');
     expect(msg.role).toBe('agent');
-    expect(msg.agentName).toBe('fenster');
+    expect(msg.agentName).toBe('vassago');
     expect(lifecycle.getHistory()).toHaveLength(1);
   });
 
@@ -316,11 +316,11 @@ describe('ShellLifecycle', () => {
 
   it('getHistory filters by agentName', () => {
     lifecycle.addUserMessage('hi');
-    lifecycle.addAgentMessage('fenster', 'ok');
-    lifecycle.addAgentMessage('hockney', 'tests pass');
-    const filtered = lifecycle.getHistory('fenster');
+    lifecycle.addAgentMessage('vassago', 'ok');
+    lifecycle.addAgentMessage('samigina', 'tests pass');
+    const filtered = lifecycle.getHistory('vassago');
     expect(filtered).toHaveLength(1);
-    expect(filtered[0]!.agentName).toBe('fenster');
+    expect(filtered[0]!.agentName).toBe('vassago');
   });
 
   it('shutdown clears all state', async () => {
@@ -347,7 +347,7 @@ describe('StreamBridge', () => {
 
   beforeEach(() => {
     registry = new SessionRegistry();
-    registry.register('fenster', 'Core Dev');
+    registry.register('vassago', 'Core Dev');
 
     contentCalls = [];
     completeCalls = [];
@@ -365,8 +365,8 @@ describe('StreamBridge', () => {
   it('handleEvent processes message_delta events', () => {
     const delta: StreamDelta = {
       type: 'message_delta',
-      sessionId: 'fenster',
-      agentName: 'fenster',
+      sessionId: 'vassago',
+      agentName: 'vassago',
       content: 'hello',
       index: 0,
       timestamp: new Date(),
@@ -379,22 +379,22 @@ describe('StreamBridge', () => {
   it('accumulates content in getBuffer', () => {
     const mkDelta = (content: string, index: number): StreamDelta => ({
       type: 'message_delta',
-      sessionId: 'fenster',
-      agentName: 'fenster',
+      sessionId: 'vassago',
+      agentName: 'vassago',
       content,
       index,
       timestamp: new Date(),
     });
     bridge.handleEvent(mkDelta('Hello', 0));
     bridge.handleEvent(mkDelta(' world', 1));
-    expect(bridge.getBuffer('fenster')).toBe('Hello world');
+    expect(bridge.getBuffer('vassago')).toBe('Hello world');
   });
 
   it('handleEvent processes usage events', () => {
     const usage: UsageEvent = {
       type: 'usage',
-      sessionId: 'fenster',
-      agentName: 'fenster',
+      sessionId: 'vassago',
+      agentName: 'vassago',
       model: 'gpt-4',
       inputTokens: 100,
       outputTokens: 50,
@@ -410,8 +410,8 @@ describe('StreamBridge', () => {
   it('handleEvent processes reasoning_delta events', () => {
     const reasoning: ReasoningDelta = {
       type: 'reasoning_delta',
-      sessionId: 'fenster',
-      agentName: 'fenster',
+      sessionId: 'vassago',
+      agentName: 'vassago',
       content: 'thinking...',
       index: 0,
       timestamp: new Date(),
@@ -424,19 +424,19 @@ describe('StreamBridge', () => {
   it('flush emits a complete ShellMessage', () => {
     const delta: StreamDelta = {
       type: 'message_delta',
-      sessionId: 'fenster',
-      agentName: 'fenster',
+      sessionId: 'vassago',
+      agentName: 'vassago',
       content: 'result',
       index: 0,
       timestamp: new Date(),
     };
     bridge.handleEvent(delta);
-    bridge.flush('fenster');
+    bridge.flush('vassago');
     expect(completeCalls).toHaveLength(1);
     expect(completeCalls[0]!.content).toBe('result');
     expect(completeCalls[0]!.role).toBe('agent');
     // Buffer should be cleared after flush
-    expect(bridge.getBuffer('fenster')).toBe('');
+    expect(bridge.getBuffer('vassago')).toBe('');
   });
 
   it('flush does nothing for empty buffers', () => {
@@ -451,35 +451,35 @@ describe('StreamBridge', () => {
   it('clear resets all buffers', () => {
     const delta: StreamDelta = {
       type: 'message_delta',
-      sessionId: 'fenster',
+      sessionId: 'vassago',
       content: 'data',
       index: 0,
       timestamp: new Date(),
     };
     bridge.handleEvent(delta);
     bridge.clear();
-    expect(bridge.getBuffer('fenster')).toBe('');
+    expect(bridge.getBuffer('vassago')).toBe('');
   });
 
   it('marks session as streaming on delta', () => {
     const delta: StreamDelta = {
       type: 'message_delta',
-      sessionId: 'fenster',
-      agentName: 'fenster',
+      sessionId: 'vassago',
+      agentName: 'vassago',
       content: 'x',
       index: 0,
       timestamp: new Date(),
     };
     bridge.handleEvent(delta);
-    expect(registry.get('fenster')?.status).toBe('streaming');
+    expect(registry.get('vassago')?.status).toBe('streaming');
   });
 
   it('marks session as idle on usage event', () => {
-    registry.updateStatus('fenster', 'streaming');
+    registry.updateStatus('vassago', 'streaming');
     const usage: UsageEvent = {
       type: 'usage',
-      sessionId: 'fenster',
-      agentName: 'fenster',
+      sessionId: 'vassago',
+      agentName: 'vassago',
       model: 'gpt-4',
       inputTokens: 10,
       outputTokens: 5,
@@ -487,6 +487,6 @@ describe('StreamBridge', () => {
       timestamp: new Date(),
     };
     bridge.handleEvent(usage);
-    expect(registry.get('fenster')?.status).toBe('idle');
+    expect(registry.get('vassago')?.status).toBe('idle');
   });
 });

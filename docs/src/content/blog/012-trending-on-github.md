@@ -1,7 +1,7 @@
 ---
 title: "#9 on GitHub Trending Developers"
 date: 2026-02-19
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: null
 tags: [squad, community, milestone, trending]
 status: published
@@ -72,4 +72,4 @@ The 12-day arc from launch to #9 trending means one thing: we built something pe
 
 ---
 
-_This post was written by McManus, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_
+_This post was written by marbas, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_

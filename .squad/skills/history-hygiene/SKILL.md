@@ -3,12 +3,12 @@ name: history-hygiene
 description: Record final outcomes to history.md, not intermediate requests or reversed decisions
 domain: documentation, team-collaboration
 confidence: high
-source: earned (Kobayashi v0.6.0 incident, team intervention)
+source: earned (Barbatos v0.6.0 incident, team intervention)
 ---
 
 ## Context
 
-History files (.md files tracking decisions, spawns, outcomes) are read cold by future agents. Stale or incorrect entries poison decision-making downstream. The Kobayashi incident proved this: history said "Brady decided v0.6.0" when Brady had reversed that to v0.8.17. Future spawns read the wrong truth and repeated the mistake.
+History files (.md files tracking decisions, spawns, outcomes) are read cold by future agents. Stale or incorrect entries poison decision-making downstream. The Barbatos incident proved this: history said "Brady decided v0.6.0" when Brady had reversed that to v0.8.17. Future spawns read the wrong truth and repeated the mistake.
 
 ## Patterns
 

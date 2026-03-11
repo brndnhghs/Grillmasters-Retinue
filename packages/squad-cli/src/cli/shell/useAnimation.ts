@@ -6,7 +6,7 @@
  *
  * Frame rate capped at ~15fps (67ms intervals) to stay GPU-friendly in Ink.
  *
- * Owned by Cheritto (TUI Engineer).
+ * Owned by Botis (TUI Engineer).
  */
 
 import { useState, useEffect, useRef } from 'react';

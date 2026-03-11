@@ -43,12 +43,12 @@ describe('ParsedDecision: author field', () => {
   it('extracts author from **By:** line in body', () => {
     const md = `
 ### Some Decision
-**By:** Keaton
+**By:** Bael
 This decision sets the model tier.
 `;
     const { decisions } = parseDecisionsMarkdown(md);
     expect(decisions).toHaveLength(1);
-    expect(decisions[0]!.author).toBe('Keaton');
+    expect(decisions[0]!.author).toBe('Bael');
   });
 
   it('author is undefined when no **By:** line present', () => {
@@ -88,14 +88,14 @@ describe('ParsedDecision: combined new fields', () => {
   it('extracts date, author, and headingLevel together', () => {
     const md = `
 ### 2026-02-21: SDK distribution stays on GitHub
-**By:** Keaton (carried from beta)
+**By:** Bael (carried from beta)
 **What:** Distribution is npx — never move to npmjs.com.
 `;
     const { decisions } = parseDecisionsMarkdown(md);
     expect(decisions).toHaveLength(1);
     const d = decisions[0]!;
     expect(d.date).toBe('2026-02-21');
-    expect(d.author).toBe('Keaton (carried from beta)');
+    expect(d.author).toBe('Bael (carried from beta)');
     expect(d.headingLevel).toBe(3);
     expect(d.title).toBe('SDK distribution stays on GitHub');
   });
@@ -124,7 +124,7 @@ describe('ParsedAgent: aliases field (section format)', () => {
     const md = `
 ## Roster
 
-### Edie
+### Amon
 - **Role:** TypeScript Engineer
 - **Skills:** typescript, strict-mode
 - **Aliases:** ts-lead, type-master
@@ -138,7 +138,7 @@ describe('ParsedAgent: aliases field (section format)', () => {
     const md = `
 ## Roster
 
-### Fenster
+### Vassago
 - **Role:** Core Dev
 - **Skills:** typescript
 `;
@@ -155,7 +155,7 @@ describe('ParsedAgent: aliases field (table format)', () => {
 
 | Name | Role | Skills | Aliases |
 |------|------|--------|---------|
-| Edie | TS Engineer | typescript | ts-lead, type-master |
+| Amon | TS Engineer | typescript | ts-lead, type-master |
 `;
     const { agents } = parseTeamMarkdown(md);
     expect(agents).toHaveLength(1);
@@ -168,7 +168,7 @@ describe('ParsedAgent: autoAssign field', () => {
     const md = `
 ## Roster
 
-### Hockney
+### Samigina
 - **Role:** Tester
 - **Skills:** testing
 - **Auto-assign:** yes
@@ -182,7 +182,7 @@ describe('ParsedAgent: autoAssign field', () => {
     const md = `
 ## Roster
 
-### Baer
+### Gusion
 - **Role:** Security
 - **Skills:** hooks
 - **Auto-assign:** no
@@ -196,7 +196,7 @@ describe('ParsedAgent: autoAssign field', () => {
     const md = `
 ## Roster
 
-### Fenster
+### Vassago
 - **Role:** Core Dev
 - **Skills:** typescript
 `;

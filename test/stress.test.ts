@@ -1,5 +1,5 @@
 /**
- * Stress & Boundary Tests — Waingro's QA
+ * Stress & Boundary Tests — Purson's QA
  *
  * Tests system behavior under load and at boundaries:
  * - 500+ messages in MessageStream — no crash, reasonable memory
@@ -120,18 +120,18 @@ describe('Stress: MessageStream with large message counts', () => {
 // ============================================================================
 
 describe('Stress: rapid parseInput calls', () => {
-  const agents = ['Brady', 'Kovash', 'Waingro', 'Ralph', 'Agent1', 'Agent2'];
+  const agents = ['Brady', 'Eligos', 'Purson', 'Ralph', 'Agent1', 'Agent2'];
 
   it('handles 1000 sequential parseInput calls', () => {
     const inputs = [
       'hello world',
       '/status',
       '@Brady fix the bug',
-      'Kovash, review this',
+      'Eligos, review this',
       '/help',
       '🚀💥🔥 deploy now',
       '/history 50',
-      '@Waingro run tests',
+      '@Purson run tests',
       "'; DROP TABLE users; --",
       '<script>alert("xss")</script>',
     ];
@@ -160,7 +160,7 @@ describe('Stress: rapid parseInput calls', () => {
 // ============================================================================
 
 describe('Stress: extremely long inputs', () => {
-  const agents = ['Brady', 'Kovash'];
+  const agents = ['Brady', 'Eligos'];
 
   it('handles 10KB input string through parseInput', () => {
     const longInput = 'X'.repeat(10240);

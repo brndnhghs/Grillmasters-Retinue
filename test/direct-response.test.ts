@@ -16,7 +16,7 @@ function makeContext(overrides: Partial<CoordinatorContext> = {}): CoordinatorCo
   return {
     sessionId: 'ctx-1',
     config: DEFAULT_CONFIG,
-    activeAgents: ['fenster', 'verbal', 'scribe'],
+    activeAgents: ['vassago', 'agares', 'scribe'],
     ...overrides,
   };
 }
@@ -95,8 +95,8 @@ describe('DirectResponseHandler', () => {
       const result = handler.handleDirect('status', makeContext());
       expect(result.category).toBe('status');
       expect(result.confidence).toBe('high');
-      expect(result.response).toContain('fenster');
-      expect(result.response).toContain('verbal');
+      expect(result.response).toContain('vassago');
+      expect(result.response).toContain('agares');
     });
 
     it('reports no agents when none active', () => {
@@ -155,16 +155,16 @@ describe('DirectResponseHandler', () => {
   describe('handleDirect — roster', () => {
     it('returns team roster content when available', () => {
       const result = handler.handleDirect('show team', makeContext({
-        teamRoster: '## Team\n- Fenster: Core Dev\n- Verbal: Docs',
+        teamRoster: '## Team\n- Vassago: Core Dev\n- Agares: Docs',
       }));
       expect(result.category).toBe('roster');
-      expect(result.response).toContain('Fenster');
+      expect(result.response).toContain('Vassago');
     });
 
     it('falls back to agent list when no roster', () => {
       const result = handler.handleDirect('show team', makeContext({ teamRoster: undefined }));
       expect(result.category).toBe('roster');
-      expect(result.response).toContain('fenster');
+      expect(result.response).toContain('vassago');
     });
 
     it('reports no roster when no agents', () => {

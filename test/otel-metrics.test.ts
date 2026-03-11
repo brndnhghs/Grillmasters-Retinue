@@ -96,7 +96,7 @@ describe('OTel Metrics — Token Usage (#261)', () => {
     recordTokenUsage({
       type: 'usage',
       sessionId: 'sess-1',
-      agentName: 'fenster',
+      agentName: 'vassago',
       model: 'gpt-4',
       inputTokens: 100,
       outputTokens: 50,
@@ -109,10 +109,10 @@ describe('OTel Metrics — Token Usage (#261)', () => {
     const cost = getInstrument('squad.tokens.cost');
     const total = getInstrument('squad.tokens.total');
 
-    expect(input.add).toHaveBeenCalledWith(100, { 'agent.name': 'fenster', model: 'gpt-4' });
-    expect(output.add).toHaveBeenCalledWith(50, { 'agent.name': 'fenster', model: 'gpt-4' });
-    expect(cost.add).toHaveBeenCalledWith(0.003, { 'agent.name': 'fenster', model: 'gpt-4' });
-    expect(total.add).toHaveBeenCalledWith(150, { 'agent.name': 'fenster', model: 'gpt-4' });
+    expect(input.add).toHaveBeenCalledWith(100, { 'agent.name': 'vassago', model: 'gpt-4' });
+    expect(output.add).toHaveBeenCalledWith(50, { 'agent.name': 'vassago', model: 'gpt-4' });
+    expect(cost.add).toHaveBeenCalledWith(0.003, { 'agent.name': 'vassago', model: 'gpt-4' });
+    expect(total.add).toHaveBeenCalledWith(150, { 'agent.name': 'vassago', model: 'gpt-4' });
   });
 
   it('defaults agentName to "unknown" when not provided', () => {
@@ -134,7 +134,7 @@ describe('OTel Metrics — Token Usage (#261)', () => {
     recordTokenUsage({
       type: 'usage',
       sessionId: 'sess-3',
-      agentName: 'edie',
+      agentName: 'amon',
       model: 'gpt-4',
       inputTokens: 0,
       outputTokens: 0,
@@ -144,8 +144,8 @@ describe('OTel Metrics — Token Usage (#261)', () => {
 
     const input = getInstrument('squad.tokens.input');
     const total = getInstrument('squad.tokens.total');
-    expect(input.add).toHaveBeenCalledWith(0, expect.objectContaining({ 'agent.name': 'edie' }));
-    expect(total.add).toHaveBeenCalledWith(0, expect.objectContaining({ 'agent.name': 'edie' }));
+    expect(input.add).toHaveBeenCalledWith(0, expect.objectContaining({ 'agent.name': 'amon' }));
+    expect(total.add).toHaveBeenCalledWith(0, expect.objectContaining({ 'agent.name': 'amon' }));
   });
 
   it('records different models in separate calls', () => {
@@ -178,75 +178,75 @@ describe('OTel Metrics — Token Usage (#261)', () => {
 
 describe('OTel Metrics — Agent Performance (#262)', () => {
   it('recordAgentSpawn increments spawn counter and active gauge', () => {
-    recordAgentSpawn('fenster', 'background');
+    recordAgentSpawn('vassago', 'background');
 
     const spawns = getInstrument('squad.agent.spawns');
     const active = getInstrument('squad.agent.active');
 
-    expect(spawns.add).toHaveBeenCalledWith(1, { 'agent.name': 'fenster', mode: 'background' });
-    expect(active.add).toHaveBeenCalledWith(1, { 'agent.name': 'fenster' });
+    expect(spawns.add).toHaveBeenCalledWith(1, { 'agent.name': 'vassago', mode: 'background' });
+    expect(active.add).toHaveBeenCalledWith(1, { 'agent.name': 'vassago' });
   });
 
   it('recordAgentSpawn defaults mode to sync', () => {
-    recordAgentSpawn('edie');
+    recordAgentSpawn('amon');
 
     const spawns = getInstrument('squad.agent.spawns');
-    expect(spawns.add).toHaveBeenCalledWith(1, { 'agent.name': 'edie', mode: 'sync' });
+    expect(spawns.add).toHaveBeenCalledWith(1, { 'agent.name': 'amon', mode: 'sync' });
   });
 
   it('recordAgentDuration records histogram on success', () => {
-    recordAgentDuration('fenster', 1500, 'success');
+    recordAgentDuration('vassago', 1500, 'success');
 
     const duration = getInstrument('squad.agent.duration');
-    expect(duration.record).toHaveBeenCalledWith(1500, { 'agent.name': 'fenster', status: 'success' });
+    expect(duration.record).toHaveBeenCalledWith(1500, { 'agent.name': 'vassago', status: 'success' });
   });
 
   it('recordAgentDuration defaults status to success', () => {
-    recordAgentDuration('fenster', 800);
+    recordAgentDuration('vassago', 800);
 
     const duration = getInstrument('squad.agent.duration');
-    expect(duration.record).toHaveBeenCalledWith(800, { 'agent.name': 'fenster', status: 'success' });
+    expect(duration.record).toHaveBeenCalledWith(800, { 'agent.name': 'vassago', status: 'success' });
   });
 
   it('recordAgentDuration increments error counter on error status', () => {
-    recordAgentDuration('fenster', 2000, 'error');
+    recordAgentDuration('vassago', 2000, 'error');
 
     const duration = getInstrument('squad.agent.duration');
     const errors = getInstrument('squad.agent.errors');
 
-    expect(duration.record).toHaveBeenCalledWith(2000, { 'agent.name': 'fenster', status: 'error' });
-    expect(errors.add).toHaveBeenCalledWith(1, { 'agent.name': 'fenster', 'error.type': 'task_failure' });
+    expect(duration.record).toHaveBeenCalledWith(2000, { 'agent.name': 'vassago', status: 'error' });
+    expect(errors.add).toHaveBeenCalledWith(1, { 'agent.name': 'vassago', 'error.type': 'task_failure' });
   });
 
   it('recordAgentDuration does NOT increment error counter on success', () => {
-    recordAgentDuration('fenster', 500, 'success');
+    recordAgentDuration('vassago', 500, 'success');
 
     const errors = getInstrument('squad.agent.errors');
     expect(errors.add).not.toHaveBeenCalled();
   });
 
   it('recordAgentError records error with type attribute', () => {
-    recordAgentError('edie', 'RangeError');
+    recordAgentError('amon', 'RangeError');
 
     const errors = getInstrument('squad.agent.errors');
-    expect(errors.add).toHaveBeenCalledWith(1, { 'agent.name': 'edie', 'error.type': 'RangeError' });
+    expect(errors.add).toHaveBeenCalledWith(1, { 'agent.name': 'amon', 'error.type': 'RangeError' });
   });
 
   it('recordAgentDestroy decrements active gauge', () => {
-    recordAgentDestroy('fenster');
+    recordAgentDestroy('vassago');
 
     const active = getInstrument('squad.agent.active');
-    expect(active.add).toHaveBeenCalledWith(-1, { 'agent.name': 'fenster' });
+    expect(active.add).toHaveBeenCalledWith(-1, { 'agent.name': 'vassago' });
   });
 
   it('spawn + destroy lifecycle balances the gauge', () => {
-    recordAgentSpawn('fenster', 'sync');
-    recordAgentDestroy('fenster');
+    recordAgentSpawn('vassago', 'sync');
+    recordAgentDestroy('vassago');
 
     const active = getInstrument('squad.agent.active');
     expect(active.add).toHaveBeenCalledTimes(2);
-    expect(active.add).toHaveBeenNthCalledWith(1, 1, { 'agent.name': 'fenster' });
-    expect(active.add).toHaveBeenNthCalledWith(2, -1, { 'agent.name': 'fenster' });
+    expect(active.add).toHaveBeenNthCalledWith(1, 1, { 'agent.name': 'vassago' });
+    expect(active.add).toHaveBeenNthCalledWith(2, -1, { 'agent.name': 'vassago' });
   });
 
   it('creates agent instruments with correct metric names', () => {

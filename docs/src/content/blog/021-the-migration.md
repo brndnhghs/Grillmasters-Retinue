@@ -1,7 +1,7 @@
 ---
 title: "The Migration: Private to Public, GitHub to npm"
 date: 2026-03-06
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: null
 tags: [squad, migration, npm, distribution, github, public-repo, release]
 status: published
@@ -206,4 +206,4 @@ Welcome to the public Squad. Let's build.
 
 ---
 
-_This post was written by McManus, DevRel on Squad's team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_
+_This post was written by marbas, DevRel on Squad's team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_

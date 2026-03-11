@@ -4,9 +4,9 @@
  * Spawns the real Squad CLI via child_process and verifies what humans actually see.
  * No mocks — these tests exercise the CLI binary and capture real terminal output.
  *
- * Authored by Breedan (E2E Test Engineer), requested by Brady.
+ * Authored by Bathin (E2E Test Engineer), requested by Brady.
  *
- * @see .squad/agents/breedan/charter.md
+ * @see .squad/agents/bathin/charter.md
  */
 
 import { describe, it, expect, afterEach, beforeEach } from 'vitest';

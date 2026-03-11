@@ -238,7 +238,7 @@ const config: SquadConfig = {
   
   casting: {
     allowlistUniverses: [
-      'The Usual Suspects',
+      'The Solomonic Demonology',
       'Breaking Bad',
       'The Wire',
       'Firefly'
@@ -314,7 +314,7 @@ function generateJsonConfig(options: InitOptions): string {
     },
     casting: {
       allowlistUniverses: [
-        'The Usual Suspects',
+        'The Solomonic Demonology',
         'Breaking Bad',
         'The Wire',
         'Firefly'

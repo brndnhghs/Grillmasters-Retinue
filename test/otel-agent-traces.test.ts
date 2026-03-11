@@ -99,14 +99,14 @@ describe('Agent lifecycle tracing — spawn()', () => {
   });
 
   it('spawn() succeeds and returns session info', async () => {
-    const session = await manager.spawn(makeCharter('fenster'));
+    const session = await manager.spawn(makeCharter('vassago'));
     expect(session).toBeDefined();
-    expect(session.charter.name).toBe('fenster');
+    expect(session.charter.name).toBe('vassago');
     expect(session.state).toBe('active');
   });
 
   it('spawn() creates an OTel span', async () => {
-    await manager.spawn(makeCharter('fenster'));
+    await manager.spawn(makeCharter('vassago'));
     const spans = exporter.getFinishedSpans();
     const spawnSpan = spans.find(
       (s) => s.name.includes('spawn') || s.name.includes('agent'),
@@ -121,7 +121,7 @@ describe('Agent lifecycle tracing — spawn()', () => {
   });
 
   it('spawn() span includes agent name attribute', async () => {
-    await manager.spawn(makeCharter('edie'));
+    await manager.spawn(makeCharter('amon'));
     const spans = exporter.getFinishedSpans();
     const spawnSpan = spans.find(
       (s) => s.name.includes('spawn') || s.name.includes('agent'),
@@ -133,11 +133,11 @@ describe('Agent lifecycle tracing — spawn()', () => {
     const attrs = spawnSpan.attributes;
     const agentAttr =
       attrs['squad.agent.name'] ?? attrs['agent.name'] ?? attrs['agent'];
-    expect(agentAttr).toBe('edie');
+    expect(agentAttr).toBe('amon');
   });
 
   it('spawn() span includes mode attribute', async () => {
-    await manager.spawn(makeCharter('fortier'), 'lightweight');
+    await manager.spawn(makeCharter('paimon'), 'lightweight');
     const spans = exporter.getFinishedSpans();
     const spawnSpan = spans.find(
       (s) => s.name.includes('spawn') || s.name.includes('agent'),
@@ -172,14 +172,14 @@ describe('Agent lifecycle tracing — destroy()', () => {
   });
 
   it('destroy() succeeds on a spawned agent', async () => {
-    await manager.spawn(makeCharter('fenster'));
-    await expect(manager.destroy('fenster')).resolves.not.toThrow();
+    await manager.spawn(makeCharter('vassago'));
+    await expect(manager.destroy('vassago')).resolves.not.toThrow();
   });
 
   it('destroy() creates an OTel span', async () => {
-    await manager.spawn(makeCharter('fenster'));
+    await manager.spawn(makeCharter('vassago'));
     exporter.reset();
-    await manager.destroy('fenster');
+    await manager.destroy('vassago');
     const spans = exporter.getFinishedSpans();
     const destroySpan = spans.find(
       (s) => s.name.includes('destroy') || s.name.includes('agent'),
@@ -194,9 +194,9 @@ describe('Agent lifecycle tracing — destroy()', () => {
   });
 
   it('destroy() span includes agent name attribute', async () => {
-    await manager.spawn(makeCharter('edie'));
+    await manager.spawn(makeCharter('amon'));
     exporter.reset();
-    await manager.destroy('edie');
+    await manager.destroy('amon');
     const spans = exporter.getFinishedSpans();
     const destroySpan = spans.find(
       (s) => s.name.includes('destroy') || s.name.includes('agent'),
@@ -208,7 +208,7 @@ describe('Agent lifecycle tracing — destroy()', () => {
     const attrs = destroySpan.attributes;
     const agentAttr =
       attrs['squad.agent.name'] ?? attrs['agent.name'] ?? attrs['agent'];
-    expect(agentAttr).toBe('edie');
+    expect(agentAttr).toBe('amon');
   });
 });
 

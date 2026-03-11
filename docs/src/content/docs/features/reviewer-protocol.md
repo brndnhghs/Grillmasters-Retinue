@@ -10,7 +10,7 @@ Review the changes in src/auth/ and check for security issues
 
 **Try this to trigger peer review:**
 ```
-Lead, review the PR from Fenster
+Lead, review the PR from Vassago
 ```
 
 When a reviewer (Lead, Tester) rejects work, the original agent is locked out from self-revision. This prevents endless fix-retry loops and forces human oversight or reassignment.
@@ -65,11 +65,11 @@ When rejection happens, coordinator has two options:
 
 ### Reassign Example
 
-1. Fenster (Frontend) writes a React component → Lead rejects: "Accessibility issues"
-2. Fenster locked out
-3. Coordinator checks skills: Hockney (Frontend) has accessibility expertise
-4. Work reassigned to Hockney
-5. Hockney fixes and resubmits
+1. Vassago (Frontend) writes a React component → Lead rejects: "Accessibility issues"
+2. Vassago locked out
+3. Coordinator checks skills: Samigina (Frontend) has accessibility expertise
+4. Work reassigned to Samigina
+5. Samigina fixes and resubmits
 
 ### Escalate Example
 
@@ -85,7 +85,7 @@ When rejection happens, coordinator has two options:
 |-------|----------|
 | **Task-specific** | Lockout applies to the specific PR/issue, not all work |
 | **Session-persistent** | Lockout survives session restarts (stored in `.squad/orchestration-log/`) |
-| **Clearable** | User can manually unlock: "Unlock Fenster for issue #42" |
+| **Clearable** | User can manually unlock: "Unlock Vassago for issue #42" |
 
 An agent locked out of issue #42 can still work on issue #43, #44, etc. Lockout is not a global ban.
 
@@ -113,9 +113,9 @@ Other agents (Frontend, Backend, DevRel) cannot lock out peers.
 
 ## Unlocking an Agent
 
-> "Unlock Fenster for issue #42"
+> "Unlock Vassago for issue #42"
 
-Coordinator clears the lockout. Fenster can now revise the PR. Use this when:
+Coordinator clears the lockout. Vassago can now revise the PR. Use this when:
 
 - Reviewer feedback was unclear, you've provided better guidance
 - Agent legitimately misunderstood requirements
@@ -126,11 +126,11 @@ Coordinator clears the lockout. Fenster can now revise the PR. Use this when:
 Lockouts are recorded in `.squad/orchestration-log/`:
 
 ```
-[2024-01-15 15:45:30] REVIEW: Lead rejected PR #12 (author: Fenster)
-[2024-01-15 15:45:31] LOCKOUT: Fenster locked out for issue #42
-[2024-01-15 15:45:35] REASSIGN: Issue #42 → Hockney (accessibility expertise)
-[2024-01-15 16:20:10] REVIEW: Lead approved PR #13 (author: Hockney)
-[2024-01-15 16:20:11] UNLOCK: Fenster unlocked (issue #42 resolved)
+[2024-01-15 15:45:30] REVIEW: Lead rejected PR #12 (author: Vassago)
+[2024-01-15 15:45:31] LOCKOUT: Vassago locked out for issue #42
+[2024-01-15 15:45:35] REASSIGN: Issue #42 → Samigina (accessibility expertise)
+[2024-01-15 16:20:10] REVIEW: Lead approved PR #13 (author: Samigina)
+[2024-01-15 16:20:11] UNLOCK: Vassago unlocked (issue #42 resolved)
 ```
 
 ## Sample Prompts
@@ -141,19 +141,19 @@ Lead, review PR #15
 Triggers review. Lead evaluates code and either approves (merge + unlock) or rejects (lockout original author).
 
 ```
-Why is Fenster locked out?
+Why is Vassago locked out?
 ```
-Coordinator explains: "Fenster was locked out for issue #42 after Lead rejected PR #15 due to security concerns."
+Coordinator explains: "Vassago was locked out for issue #42 after Lead rejected PR #15 due to security concerns."
 
 ```
-Unlock Fenster for issue #42 — I've given him better guidance
+Unlock Vassago for issue #42 — I've given him better guidance
 ```
-Clears lockout. Fenster can now revise the PR with your additional context.
+Clears lockout. Vassago can now revise the PR with your additional context.
 
 ```
-Reassign issue #42 from Fenster to Hockney
+Reassign issue #42 from Vassago to Samigina
 ```
-Manual reassignment. Fenster remains locked out, Hockney takes over the work.
+Manual reassignment. Vassago remains locked out, Samigina takes over the work.
 
 ```
 Escalate issue #42 to me — the team is stuck

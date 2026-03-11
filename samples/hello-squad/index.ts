@@ -51,18 +51,18 @@ async function main(): Promise<void> {
   console.log(`   resolveSquad() → ${resolved ?? '(not found)'}`);
 
   // ── Step 2: Cast a team of 4 agents ──────────────────────────────
-  hr('Step 2 — Cast a team from "The Usual Suspects"');
+  hr('Step 2 — Cast a team from "The Solomonic Demonology"');
 
   const engine = new CastingEngine();
   const roles: AgentRole[] = ['lead', 'developer', 'tester', 'scribe'];
 
   const team: CastMember[] = engine.castTeam({
-    universe: 'usual-suspects',
+    universe: 'solomonic-demonology',
     teamSize: roles.length,
     requiredRoles: roles,
   });
 
-  console.log(`\n  Universe: The Usual Suspects`);
+  console.log(`\n  Universe: The Solomonic Demonology`);
   console.log(`  Team size: ${team.length}\n`);
 
   for (const member of team) {
@@ -118,7 +118,7 @@ async function main(): Promise<void> {
   const history = new CastingHistory();
 
   // Record our first cast
-  const config = { universe: 'usual-suspects' as const, teamSize: 4, requiredRoles: roles };
+  const config = { universe: 'solomonic-demonology' as const, teamSize: 4, requiredRoles: roles };
   history.recordCast(team, config);
 
   // Cast the same config again — names are deterministic
@@ -138,8 +138,8 @@ async function main(): Promise<void> {
   console.log(`  Records in history: ${serialized.records.length}`);
 
   // Query history for a specific agent
-  const keyserHistory = history.getAgentHistory('Keyser');
-  console.log(`  Keyser appeared in ${keyserHistory.length} cast(s)`);
+  const baelHistory = history.getAgentHistory('Bael');
+  console.log(`  Bael appeared in ${baelHistory.length} cast(s)`);
 
   hr('Done! 🎉');
 }

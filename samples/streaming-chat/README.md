@@ -2,7 +2,7 @@
 
 > Interactive multi-agent streaming chat — Squad SDK sample for MVP Summit.
 
-Three agents (Backend, Frontend, Tester) cast from the **Usual Suspects** universe. Type a message, watch the right agent respond token-by-token in real time.
+Three agents (Backend, Frontend, Tester) cast from the **Solomonic Demonology** universe. Type a message, watch the right agent respond token-by-token in real time.
 
 ## Quick Start
 
@@ -25,7 +25,7 @@ npx tsx index.ts
 | SDK Feature | Usage |
 |---|---|
 | **SquadClientWithPool** | Connection lifecycle + integrated session pool |
-| **CastingEngine** | Casts 3 agents from the `usual-suspects` universe |
+| **CastingEngine** | Casts 3 agents from the `solomonic-demonology` universe |
 | **SessionPool** | One session per agent, managed by the pool |
 | **EventBus** | Cross-session event pub/sub wired to client events |
 | **StreamingPipeline** | Token-by-token output via `onDelta()` handlers |
@@ -40,9 +40,9 @@ npx tsx index.ts
 
 ## Routing Keywords
 
-- **Backend (McManus):** `api`, `server`, `database`, `backend`, `endpoint`, `rest`, `sql`, `auth`
-- **Frontend (Kobayashi):** `ui`, `frontend`, `component`, `css`, `react`, `style`, `layout`, `ux`
-- **Tester (Fenster):** `test`, `bug`, `qa`, `coverage`, `assert`, `fixture`, `mock`, `spec`
+- **Backend (marbas):** `api`, `server`, `database`, `backend`, `endpoint`, `rest`, `sql`, `auth`
+- **Frontend (Barbatos):** `ui`, `frontend`, `component`, `css`, `react`, `style`, `layout`, `ux`
+- **Tester (Vassago):** `test`, `bug`, `qa`, `coverage`, `assert`, `fixture`, `mock`, `spec`
 
 Messages that don't match any keyword are routed to Backend by default.
 

@@ -1,7 +1,7 @@
 ---
 title: "First Video Coverage: Jeff Fritz's Squad Demo"
 date: 2026-02-11
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: null
 tags: [squad, community, video, first-coverage]
 status: published
@@ -59,4 +59,4 @@ Thank you to [@csharpfritz](https://github.com/csharpfritz) for being the first 
 
 ---
 
-_This post was written by McManus, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_
+_This post was written by marbas, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_

@@ -30,7 +30,7 @@ The Squad CLI is approaching its first public beta. A full-team review of 9 scre
 
 ### 4.1 — Blank Screen During Loading (P0 — Bug)
 **Images:** 003  
-**Owner:** Cheritto 🖥️ / Marquez 🎨  
+**Owner:** Botis 🖥️ / Zepar 🎨  
 **Problem:** Between operations, the terminal shows a completely blank screen with zero visual feedback. Users don't know if the CLI is working, frozen, or crashed.  
 **Proposed Solution:**  
 - Always render the header banner and agent status bar, even during initial SDK connection.
@@ -39,7 +39,7 @@ The Squad CLI is approaching its first public beta. A full-team review of 9 scre
 
 ### 4.2 — Static Spinner During Long Waits (P0 — UX)
 **Images:** 002, 007, 008  
-**Owner:** Cheritto 🖥️ / Verbal 🧠  
+**Owner:** Botis 🖥️ / Agares 🧠  
 **Problem:** The ThinkingIndicator shows "Routing to agent..." for 40–45 seconds. This is the same message the entire time. Competing CLIs (GitHub Copilot CLI, Claude CLI) rotate through interesting messages.  
 **Proposed Solution:**  
 - Rotate the activity hint text every ~3 seconds.
@@ -54,7 +54,7 @@ The Squad CLI is approaching its first public beta. A full-team review of 9 scre
 
 ### 4.3 — Input Text Duplication (P0 — Bug)
 **Images:** 006  
-**Owner:** Cheritto 🖥️  
+**Owner:** Botis 🖥️  
 **Problem:** User input text appears twice — once in the input prompt area and again duplicated below it. Likely a race condition in the paste detection or input buffering logic.  
 **Proposed Solution:**  
 - Audit `InputPrompt.tsx` paste debounce logic (the 10ms `setTimeout` on Enter).
@@ -63,7 +63,7 @@ The Squad CLI is approaching its first public beta. A full-team review of 9 scre
 
 ### 4.4 — Empty Space Above Content (P1 — UX)
 **Images:** 002, 004  
-**Owner:** Cheritto 🖥️  
+**Owner:** Botis 🖥️  
 **Problem:** After the header, there's a massive empty gap before content appears. The response text is pushed to the bottom of the viewport, leaving most of the screen blank.  
 **Proposed Solution:**  
 - Investigate Ink's `Static` component scroll behavior — items may be rendering at the bottom of the terminal viewport.
@@ -72,7 +72,7 @@ The Squad CLI is approaching its first public beta. A full-team review of 9 scre
 
 ### 4.5 — Markdown Table Wrapping (P1 — UX)
 **Images:** 005, 006  
-**Owner:** Cheritto 🖥️  
+**Owner:** Botis 🖥️  
 **Problem:** Markdown tables rendered in agent responses break awkwardly when lines wrap. Pipe characters (`|`) end up mid-line, and alignment is lost.  
 **Proposed Solution:**  
 - Detect table blocks in rendered markdown and apply terminal-width-aware formatting.
@@ -81,7 +81,7 @@ The Squad CLI is approaching its first public beta. A full-team review of 9 scre
 
 ### 4.6 — No Experimental/Alpha Banner (P0 — Ship Blocker)
 **Images:** All  
-**Owner:** McManus 📣 / Marquez 🎨  
+**Owner:** marbas 📣 / Zepar 🎨  
 **Problem:** Nothing in the CLI communicates that this is an early release. Users need to know "here there be dragons."  
 **Proposed Solution:**  
 - Add a line in the header box: `⚠️  Experimental preview — file issues at github.com/bradygaster/squad`
@@ -90,7 +90,7 @@ The Squad CLI is approaching its first public beta. A full-team review of 9 scre
 
 ### 4.7 — Input Box Redesign (P2 — Future)
 **Images:** 009  
-**Owner:** Marquez 🎨 / Cheritto 🖥️  
+**Owner:** Zepar 🎨 / Botis 🖥️  
 **Problem:** Brady noted he'd prefer the input box squared off and bottom-anchored, similar to GitHub Copilot CLI and Claude CLI. Not a today problem, but flagged for future design work.  
 **Proposed Solution:**  
 - Research Copilot CLI and Claude CLI input affordances.
@@ -100,7 +100,7 @@ The Squad CLI is approaching its first public beta. A full-team review of 9 scre
 
 ### 4.8 — Separator Line Styling (P2 — Polish)
 **Images:** 005, 006, 009  
-**Owner:** Redfoot 🎨  
+**Owner:** Sitri 🎨  
 **Problem:** Turn separators are plain repeated `─` characters. They're functional but could be more expressive.  
 **Proposed Solution:**  
 - Options: gradient fade-out separators, thin/thick alternation, or subtle color.
@@ -109,7 +109,7 @@ The Squad CLI is approaching its first public beta. A full-team review of 9 scre
 
 ### 4.9 — Color Contrast / Accessibility (P1 — Accessibility)
 **Images:** 005  
-**Owner:** Nate ♿  
+**Owner:** Sallos ♿  
 **Problem:** Dim text (`dimColor`) may be hard to read on some terminals, especially for users with low vision. The team table's "What They Do For You" column uses standard dim text.  
 **Proposed Solution:**  
 - Audit all `dimColor` usage against WCAG contrast guidelines for terminal themes (dark and light).
@@ -119,7 +119,7 @@ The Squad CLI is approaching its first public beta. A full-team review of 9 scre
 
 ### 4.10 — Response Duration Prominence (P2 — Polish)
 **Images:** 007, 008  
-**Owner:** Marquez 🎨  
+**Owner:** Zepar 🎨  
 **Problem:** The response duration `(42.2s)` and `(45.9s)` are shown but very subtle (dimColor). For an alpha, making timing visible helps set user expectations.  
 **Proposed Solution:**  
 - Make duration slightly more prominent for long responses (>10s).

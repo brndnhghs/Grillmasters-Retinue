@@ -56,13 +56,13 @@ function setupLegacyProject(dir: string): void {
 
 ## Roster
 
-### Fenster
+### Vassago
 - **Role:** Core Dev
 - **Skills:** TypeScript, Testing, Architecture
 - **Model:** claude-sonnet-4.5
 - **Status:** active
 
-### Kujan
+### Valefor
 - **Role:** SDK Expert
 - **Skills:** API Design, Documentation
 - **Model:** claude-sonnet-4
@@ -78,19 +78,19 @@ function setupLegacyProject(dir: string): void {
 
 | Work Type | Route To | Examples |
 |-----------|----------|----------|
-| feature-dev | fenster | new feature, implement |
-| documentation | kujan | docs, readme |
+| feature-dev | vassago | new feature, implement |
+| documentation | valefor | docs, readme |
 `,
   );
 
   writeFileSync(
-    join(dir, '.github', 'agents', 'fenster.agent.md'),
-    '# Fenster\n\nCore developer agent.\n\n## Skills\n- TypeScript\n- Testing\n',
+    join(dir, '.github', 'agents', 'vassago.agent.md'),
+    '# Vassago\n\nCore developer agent.\n\n## Skills\n- TypeScript\n- Testing\n',
   );
 
   writeFileSync(
-    join(dir, '.github', 'agents', 'kujan.agent.md'),
-    '# Kujan\n\nSDK expert agent.\n\n## Skills\n- API Design\n- Documentation\n',
+    join(dir, '.github', 'agents', 'valefor.agent.md'),
+    '# Valefor\n\nSDK expert agent.\n\n## Skills\n- API Design\n- Documentation\n',
   );
 
   writeFileSync(
@@ -110,8 +110,8 @@ function setupSquadProject(dir: string, config?: Partial<SquadConfig>): void {
   );
 
   writeFileSync(
-    join(dir, '.github', 'agents', 'fenster.agent.md'),
-    '# Fenster\n\nCore developer.\n',
+    join(dir, '.github', 'agents', 'vassago.agent.md'),
+    '# Vassago\n\nCore developer.\n',
   );
 }
 
@@ -181,8 +181,8 @@ describe('full migration: .ai-team → .squad', () => {
     const teamMd = readFileSync(join(SRC_DIR, '.ai-team', 'team.md'), 'utf-8');
     const { agents } = parseTeamMarkdown(teamMd);
     expect(agents.length).toBeGreaterThanOrEqual(2);
-    expect(agents.find((a) => a.name === 'fenster')).toBeTruthy();
-    expect(agents.find((a) => a.name === 'kujan')).toBeTruthy();
+    expect(agents.find((a) => a.name === 'vassago')).toBeTruthy();
+    expect(agents.find((a) => a.name === 'valefor')).toBeTruthy();
   });
 
   it('should parse routing.md into routing rules', () => {
@@ -233,9 +233,9 @@ describe('full migration: .ai-team → .squad', () => {
     setupLegacyProject(SRC_DIR);
     const teamMd = readFileSync(join(SRC_DIR, '.ai-team', 'team.md'), 'utf-8');
     const { agents } = parseTeamMarkdown(teamMd);
-    const fenster = agents.find((a) => a.name === 'fenster');
-    expect(fenster).toBeTruthy();
-    expect(fenster!.skills.length).toBeGreaterThan(0);
+    const vassago = agents.find((a) => a.name === 'vassago');
+    expect(vassago).toBeTruthy();
+    expect(vassago!.skills.length).toBeGreaterThan(0);
   });
 });
 
@@ -296,10 +296,10 @@ describe('legacy squad.agent.md → typed config roundtrip', () => {
   it('should parse agent charter from markdown', () => {
     setupLegacyProject(SRC_DIR);
     const charter = readFileSync(
-      join(SRC_DIR, '.github', 'agents', 'fenster.agent.md'),
+      join(SRC_DIR, '.github', 'agents', 'vassago.agent.md'),
       'utf-8',
     );
-    expect(charter).toContain('Fenster');
+    expect(charter).toContain('Vassago');
     expect(charter).toContain('Skills');
   });
 
@@ -482,7 +482,7 @@ describe('partial migration (some files missing)', () => {
     mkdirSync(join(SRC_DIR, '.ai-team'), { recursive: true });
     writeFileSync(
       join(SRC_DIR, '.ai-team', 'team.md'),
-      '# Team\n\n## fenster — Dev\n- **Skills:** TS\n',
+      '# Team\n\n## vassago — Dev\n- **Skills:** TS\n',
     );
 
     const teamMd = readFileSync(join(SRC_DIR, '.ai-team', 'team.md'), 'utf-8');
@@ -495,7 +495,7 @@ describe('partial migration (some files missing)', () => {
     mkdirSync(join(SRC_DIR, '.ai-team'), { recursive: true });
     writeFileSync(
       join(SRC_DIR, '.ai-team', 'routing.md'),
-      '# Routing\n\n## feature-dev → fenster\n',
+      '# Routing\n\n## feature-dev → vassago\n',
     );
 
     const routingMd = readFileSync(join(SRC_DIR, '.ai-team', 'routing.md'), 'utf-8');

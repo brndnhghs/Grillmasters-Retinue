@@ -39,7 +39,7 @@ Be specific about scope. Tell the team what's in, what's out, what's next. Use b
 | When | Do this | Example |
 |------|---------|---------|
 | Parallel/cross-functional | Say "Team" | `Team, build the checkout flow` |
-| Sequential/specialized | Name the agent | `Keaton, review this PR` |
+| Sequential/specialized | Name the agent | `Bael, review this PR` |
 | Don't care who | Just describe it | `Add error logging to the API` |
 
 ---

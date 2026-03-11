@@ -46,7 +46,7 @@ async function main(): Promise<void> {
   const allowedCtx: PreToolUseContext = {
     toolName: 'create',
     arguments: { path: 'src/utils/helper.ts' },
-    agentName: 'McManus',
+    agentName: 'marbas',
     sessionId: 'session-001',
   };
 
@@ -57,7 +57,7 @@ async function main(): Promise<void> {
   const blockedCtx: PreToolUseContext = {
     toolName: 'edit',
     arguments: { path: '/etc/passwd' },
-    agentName: 'McManus',
+    agentName: 'marbas',
     sessionId: 'session-001',
   };
 
@@ -77,7 +77,7 @@ async function main(): Promise<void> {
     toolName: 'bash',
     arguments: { command: 'git log --oneline' },
     result: 'Deploy fix by brady@example.com — cc: alice@company.io, bob@test.org',
-    agentName: 'Verbal',
+    agentName: 'Agares',
     sessionId: 'session-002',
   };
 
@@ -90,7 +90,7 @@ async function main(): Promise<void> {
     toolName: 'read_file',
     arguments: { path: 'contacts.json' },
     result: { name: 'Brady', email: 'brady@example.com', notes: 'reach out to alice@company.io' },
-    agentName: 'Verbal',
+    agentName: 'Agares',
     sessionId: 'session-002',
   };
 
@@ -146,7 +146,7 @@ async function main(): Promise<void> {
     const askCtx: PreToolUseContext = {
       toolName: 'ask_user',
       arguments: { question: `Clarification #${i}?` },
-      agentName: 'Fenster',
+      agentName: 'Vassago',
       sessionId: 'session-004',
     };
 

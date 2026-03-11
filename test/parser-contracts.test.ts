@@ -30,7 +30,7 @@ describe('Return shape contracts', () => {
 
 | Name | Role | Skills | Model |
 |------|------|--------|-------|
-| Keaton | Lead | architecture, design | claude-opus-4.5 |
+| Bael | Lead | architecture, design | claude-opus-4.5 |
 `;
     const result = parseTeamMarkdown(md);
 
@@ -92,11 +92,11 @@ This decision sets the model tier for architecture reviews.
   });
 
   it('parseCharterMarkdown returns object with identity object + fullContent string', () => {
-    const md = `# Fenster
+    const md = `# Vassago
 
 ## Identity
 
-**Name:** Fenster
+**Name:** Vassago
 **Role:** Core Developer
 **Expertise:** TypeScript
 **Style:** Precise
@@ -163,12 +163,12 @@ describe('Edge cases', () => {
 
 | Name | Role | Skills | Model |
 |------|------|--------|-------|
-| Keaton | Lead | architecture | |
-| Keaton | Developer | typescript | |
+| Bael | Lead | architecture | |
+| Bael | Developer | typescript | |
 `;
     const { agents } = parseTeamMarkdown(md);
     expect(agents.length).toBeGreaterThanOrEqual(2);
-    const keatons = agents.filter(a => a.name === 'keaton');
+    const keatons = agents.filter(a => a.name === 'bael');
     expect(keatons.length).toBe(2);
   });
 
@@ -315,16 +315,16 @@ describe('Snapshot tests', () => {
 
 | Name | Role | Skills | Model |
 |------|------|--------|-------|
-| Keaton | Lead | architecture, design, planning | claude-opus-4.5 |
-| Fenster | Core Dev | typescript, node, testing | claude-sonnet-4.5 |
-| Hockney | Tester | testing, edge-cases, vitest | claude-sonnet-4.5 |
+| Bael | Lead | architecture, design, planning | claude-opus-4.5 |
+| Vassago | Core Dev | typescript, node, testing | claude-sonnet-4.5 |
+| Samigina | Tester | testing, edge-cases, vitest | claude-sonnet-4.5 |
 `;
 
-  const CANONICAL_CHARTER_MD = `# Keaton
+  const CANONICAL_CHARTER_MD = `# Bael
 
 ## Identity
 
-**Name:** Keaton
+**Name:** Bael
 **Role:** Lead
 **Expertise:** Architecture, system design, coordination
 **Style:** Decisive and structured
@@ -344,7 +344,7 @@ Do not modify test files or CI configuration.
 
 ## Collaboration
 
-Coordinate with Fenster on implementation, Hockney on test plans.
+Coordinate with Vassago on implementation, Samigina on test plans.
 `;
 
   const CANONICAL_ROUTING_MD = `# Work Routing
@@ -353,10 +353,10 @@ Coordinate with Fenster on implementation, Hockney on test plans.
 
 | Work Type | Route To | Examples |
 |-----------|----------|----------|
-| architecture | Keaton | System design, proposals |
-| feature-dev | Fenster | New features, refactoring |
-| testing | Hockney | Unit tests, integration tests |
-| bug-fix | Fenster, Hockney | Bug fixes, regressions |
+| architecture | Bael | System design, proposals |
+| feature-dev | Vassago | New features, refactoring |
+| testing | Samigina | Unit tests, integration tests |
+| bug-fix | Vassago, Samigina | Bug fixes, regressions |
 `;
 
   it('snapshot: parseTeamMarkdown against canonical team.md', () => {

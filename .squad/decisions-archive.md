@@ -1,6 +1,6 @@
 # Decisions Archive
 
-> Archived from decisions.md on 2026-02-28 by Keaton (Lead).
+> Archived from decisions.md on 2026-02-28 by Bael (Lead).
 > These entries are historical record - superseded, completed, or one-time decisions.
 > Active decisions remain in decisions.md.
 
@@ -11,52 +11,52 @@
 > Team decisions that all agents must respect. Managed by Scribe.
 
 ### 2026-02-21: SDK distribution stays on GitHub
-**By:** Keaton (carried from beta)
+**By:** Bael (carried from beta)
 **What:** Distribution is `npx github:bradygaster/squad` — never move to npmjs.com.
 **Why:** GitHub-native distribution aligns with the Copilot ecosystem. No registry dependency.
 
 ### 2026-02-21: v1 docs are internal only
-**By:** Keaton (carried from beta)
+**By:** Bael (carried from beta)
 **What:** No published docs site for v1. Documentation is team-facing only.
 **Why:** Ship the runtime first. Public docs come later when the API surface stabilizes.
 
 ### 2026-02-21: Type safety — strict mode non-negotiable
-**By:** Edie (carried from beta)
+**By:** Amon (carried from beta)
 **What:** `strict: true`, `noUncheckedIndexedAccess: true`, no `@ts-ignore` allowed.
 **Why:** Types are contracts. If it compiles, it works. Strict mode catches entire categories of bugs.
 
 ### 2026-02-21: Hook-based governance over prompt instructions
-**By:** Baer (carried from beta)
+**By:** Gusion (carried from beta)
 **What:** Security, PII, and file-write guards are implemented via the hooks module, NOT prompt instructions.
 **Why:** Prompts can be ignored or overridden. Hooks are code — they execute deterministically.
 
 ### 2026-02-21: Node.js ≥20, ESM-only, streaming-first
-**By:** Fortier (carried from beta)
+**By:** Paimon (carried from beta)
 **What:** Runtime target is Node.js 20+. ESM-only (no CJS shims, no dual-package hazards). Async iterators over buffers.
 **Why:** Modern Node.js features enable cleaner async patterns. ESM-only eliminates CJS interop complexity.
 
-### 2026-02-21: Casting — The Usual Suspects, permanent
+### 2026-02-21: Casting — The Solomonic Demonology, permanent
 **By:** Squad Coordinator (carried from beta)
-**What:** Team names drawn from The Usual Suspects (1995). Scribe is always Scribe. Ralph is always Ralph. Names persist across repos and replatforms.
+**What:** Team names drawn from The Solomonic Demonology (1995). Scribe is always Scribe. Ralph is always Ralph. Names persist across repos and replatforms.
 **Why:** Names are team identity. The team rebuilt Squad beta with these names.
 
 ### 2026-02-21: Proposal-first workflow
-**By:** Keaton (carried from beta)
+**By:** Bael (carried from beta)
 **What:** Meaningful changes require a proposal in `docs/proposals/` before execution.
 **Why:** Proposals create alignment before code is written. Cheaper to change a doc than refactor code.
 
 ### 2026-02-21: Tone ceiling — always enforced
-**By:** McManus (carried from beta)
+**By:** marbas (carried from beta)
 **What:** No hype, no hand-waving, no claims without citations. Every public-facing statement must be substantiated.
 **Why:** Trust is earned through accuracy, not enthusiasm.
 
 ### 2026-02-21: Zero-dependency scaffolding preserved
-**By:** Rabin (carried from beta)
+**By:** Buer (carried from beta)
 **What:** CLI remains thin (`cli.js`), runtime stays modular. Zero runtime dependencies for the CLI scaffolding path.
 **Why:** Users should be able to run `npx` without downloading a dependency tree.
 
 ### 2026-02-21: Merge driver for append-only files
-**By:** Kobayashi (carried from beta)
+**By:** Barbatos (carried from beta)
 **What:** `.gitattributes` uses `merge=union` for `.squad/decisions.md`, `agents/*/history.md`, `log/**`, `orchestration-log/**`.
 **Why:** Enables conflict-free merging of team state across branches. Both sides only append content.
 
@@ -74,7 +74,7 @@
 
 ### 2026-02-21T21:35:22Z: User directive — CLI command naming: `squad loop`
 **By:** Brady (via Copilot)
-**What:** The work monitor CLI command should be `squad loop`, not `squad ralph` or `squad monitor`. "Loop" is universally understood — no Squad lore needed. Finalized preference (supersedes Keaton's recommendations in favor of `squad monitor`). Update issue #269 accordingly.
+**What:** The work monitor CLI command should be `squad loop`, not `squad ralph` or `squad monitor`. "Loop" is universally understood — no Squad lore needed. Finalized preference (supersedes Bael's recommendations in favor of `squad monitor`). Update issue #269 accordingly.
 **Why:** User request — final naming decision. Brady prefers `squad loop` for clarity and universal understanding.
 
 ### 2026-02-21T21:35:22Z: User directive — `squad hire` CLI command
@@ -83,18 +83,18 @@
 **Why:** User request — Brady wants CLI commands that feel natural and match Squad's identity.
 
 ### 2026-02-21: CLI rename — `watch` → `triage` (recommended) (consolidated)
-**By:** Keaton (Lead)
+**By:** Bael (Lead)
 **What:** Rename `squad watch` to `squad triage`. Keep `watch` as silent alias for backward compatibility. Explicitly recommend against `squad ralph` as a CLI command. Suggest `squad monitor` or `squad loop` instead to describe the persistent monitoring function.
 **Why:** "Triage" is 40% more semantically accurate (matches GitHub's own terminology and incident-management patterns). "Ralph" is internal lore — opaque to new users and violates CLI UX conventions (all user-facing commands are action verbs or domain nouns). `squad monitor` is self-describing and professional.
 **Details:** Change is low-risk. Silent alias prevents breakage. Confidence 85% for triage rename, 90% confidence Ralph shouldn't be user-facing.
-**Reference:** Keaton analysis in `.squad/decisions/inbox/keaton-cli-rename.md`
+**Reference:** Bael analysis in `.squad/decisions/inbox/bael-cli-rename.md`
 
 ### 2026-02-21: SDK M0 blocker — upgrade from `file:` to npm reference (resolved)
-**By:** Kujan (SDK Expert), Edie (implementation)
+**By:** Valefor (SDK Expert), Amon (implementation)
 **What:** Change `optionalDependencies` from `file:../copilot-sdk/nodejs` to `"@github/copilot-sdk": "^0.1.25"`. The SDK is published on npm (28 versions, SLSA attestations). This one-line change unblocks npm publish and removes CI dependency on sibling directory.
-**Why:** The `file:` reference is the only M0 blocker. Squad's SDK surface is minimal (1 runtime import: `CopilotClient`). Keep SDK in `optionalDependencies` to preserve zero-dependency scaffolding guarantee (Rabin decision).
+**Why:** The `file:` reference is the only M0 blocker. Squad's SDK surface is minimal (1 runtime import: `CopilotClient`). Keep SDK in `optionalDependencies` to preserve zero-dependency scaffolding guarantee (Buer decision).
 **Verified:** Build passes (0 errors), all 1592 tests pass with npm reference. No tests require live Copilot CLI server. PR #271 merged successfully.
-**Reference:** Kujan audit + Edie implementation in `.squad/decisions/inbox/edie-sdk-swap.md`
+**Reference:** Valefor audit + Amon implementation in `.squad/decisions/inbox/amon-sdk-swap.md`
 **Closes:** #190, #193, #194
 
 ### 2026-02-21T21:35:22Z: User directive — no temp/memory files in repo root
@@ -103,7 +103,7 @@
 **Why:** User request — hard rule. Captured for all agents.
 
 ### 2026-02-21: npm workspace protocol for monorepo
-**By:** Edie (TypeScript Engineer)
+**By:** Amon (TypeScript Engineer)
 **Date:** 2026-02-21
 **PR:** #274
 **What:** Use npm-native workspace resolution (version-string references like `"0.6.0-alpha.0"`) instead of `workspace:*` protocol for cross-package dependencies.
@@ -111,7 +111,7 @@
 **Impact:** All future inter-package dependencies in `packages/*/package.json` should use the actual version string, not `workspace:*`.
 
 ### 2026-02-21: Resolution module placement and API separation
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Date:** 2026-02-21
 **Re:** #210, #211
 **What:**
@@ -123,7 +123,7 @@
 **Impact:** Low. When packages split happens, move `src/resolution.ts` into `packages/squad-sdk/src/`. The public API shape stays the same.
 
 ### 2026-02-21: Changesets setup — independent versioning for squad-sdk and squad-cli
-**By:** Kobayashi (Git & Release)
+**By:** Barbatos (Git & Release)
 **Date:** 2026-02-21
 **Re:** #208
 **What:** Installed and configured @changesets/cli v2 for independent package versioning across the monorepo.
@@ -138,7 +138,7 @@
 **Next Steps:** Contributors use `npx changeset add` before merge; release workflow runs `changeset publish` to GitHub.
 
 ### 2026-02-21: --global flag and status command pattern
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Date:** 2026-02-21
 **Re:** #212, #213
 **What:**
@@ -152,7 +152,7 @@
 **Impact:** Low. Single-file change to `src/index.ts`. No changes to resolution algorithms or init/upgrade internals.
 
 ### 2026-02-21: No repo root clutter — ensureSquadPath() guard
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Date:** 2026-02-21
 **Re:** #273
 
@@ -171,7 +171,7 @@ Brady's hard rule: ALL squad scratch/temp/state files MUST go in `.squad/` only.
 **Impact:** Low. Additive-only change. Existing behavior unchanged. Future code that writes temp/scratch files should call `ensureSquadPath()` before writing.
 
 ### 2026-02-21: CLI routing logic is testable via composition, not process spawning
-**By:** Hockney (Tester)
+**By:** Samigina (Tester)
 **Date:** 2026-02-21
 **Re:** #214
 
@@ -185,7 +185,7 @@ Brady's hard rule: ALL squad scratch/temp/state files MUST go in `.squad/` only.
 **Impact:** Low. Sets a pattern for future CLI integration tests: test the logic, not the process.
 
 ### 2026-02-21: Ink + React dependency versions
-**By:** Edie (TypeScript Engineer)
+**By:** Amon (TypeScript Engineer)
 **Date:** 2026-02-21
 **Re:** #233
 **PR:** #281
@@ -201,7 +201,7 @@ Brady's hard rule: ALL squad scratch/temp/state files MUST go in `.squad/` only.
 **Impact:** Low. No source changes — dependency additions only. Build passes (tsc strict), all 1621 tests pass.
 
 ### 2026-02-21: GitHub-native distribution deprecated in favor of npm
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Date:** 2026-02-21
 **Re:** #219
 
@@ -212,12 +212,12 @@ Brady's hard rule: ALL squad scratch/temp/state files MUST go in `.squad/` only.
 
 **Why:** The `@bradygaster/squad-cli` and `@bradygaster/squad-sdk` packages are now published to npm. The GitHub-native distribution (`npx github:bradygaster/squad`) was the original entry point but is now superseded. This deprecation notice gives users a migration path before the GitHub-native entry point is eventually removed.
 
-**Supersedes:** The earlier "SDK distribution stays on GitHub" decision (Keaton, carried from beta). npm is now the primary distribution channel.
+**Supersedes:** The earlier "SDK distribution stays on GitHub" decision (Bael, carried from beta). npm is now the primary distribution channel.
 
 **Impact:** Low. Additive-only change to the bundled `cli.js`. No behavior change — just a stderr warning.
 
 ### 2026-02-21: Shell chrome patterns and session registry design
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Date:** 2026-02-21
 **Re:** #236, #237
 
@@ -230,7 +230,7 @@ Brady's hard rule: ALL squad scratch/temp/state files MUST go in `.squad/` only.
 **Impact:** Low. Two files changed. No API surface changes outside the shell module. SessionRegistry is exported for future consumption but has no current consumers.
 
 ### 2026-02-21: TSX compilation enabled in root tsconfig
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Date:** 2026-02-21
 **Re:** #242, #243, #244
 
@@ -249,7 +249,7 @@ All components are pure presentational — no SDK calls, no side effects. State 
 **Impact:** Low. Only affects `.tsx` files. No existing `.ts` files are impacted. The setting is compatible with strict mode and NodeNext module resolution.
 
 ### 2026-02-21: Shell module structure and entry point routing
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Date:** 2026-02-21
 **Re:** #234, #235
 **PR:** #282
@@ -267,7 +267,7 @@ All components are pure presentational — no SDK calls, no side effects. State 
 **Impact:** Low. No existing tests broken (1621/1621 pass). The only behavior change is `squad` (no args) prints a shell header and exits instead of running init. `squad init` and `squad --help` / `squad help` continue to work as before.
 
 ### 2026-02-21: Agent spawn infrastructure pattern
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Date:** 2026-02-21
 **Re:** #238
 
@@ -286,7 +286,7 @@ SDK session creation (CopilotClient) is intentionally stubbed. The spawn infrast
 **Impact:** Low. Additive-only. No existing behavior changed. Two files modified: `spawn.ts` (new), `index.ts` (barrel exports added).
 
 ### 2026-02-21: Session lifecycle owns team discovery
-**By:** Fortier (Node.js Runtime)
+**By:** Paimon (Node.js Runtime)
 **Date:** 2026-02-21
 **Re:** #240
 
@@ -300,7 +300,7 @@ SDK session creation (CopilotClient) is intentionally stubbed. The spawn infrast
 **Impact:** Low. Additive-only. Future shell features (command routing, agent spawning) should call `lifecycle.getDiscoveredAgents()` instead of re-parsing `team.md`.
 
 ### 2026-02-21: StreamBridge is an event sink, not a subscriber
-**By:** Fortier (Node.js Runtime)
+**By:** Paimon (Node.js Runtime)
 **Date:** 2026-02-21
 **Re:** #239
 
@@ -314,7 +314,7 @@ SDK session creation (CopilotClient) is intentionally stubbed. The spawn infrast
 **Impact:** Low. Pattern applies to all future bridges between the pipeline and UI layers (ink components, web sockets, etc.).
 
 ### 2026-02-21: Shell module test patterns — fixtures over mocks
-**By:** Hockney (Tester)
+**By:** Samigina (Tester)
 **Date:** 2026-02-21
 **Re:** #248
 
@@ -328,7 +328,7 @@ SDK session creation (CopilotClient) is intentionally stubbed. The spawn infrast
 **Impact:** Low. Establishes fixture patterns for future shell module tests. test-fixtures/.squad/ is now a shared test resource.
 
 ### 2026-02-21: Branch protection configuration
-**By:** Kobayashi (Git & Release)
+**By:** Barbatos (Git & Release)
 **Date:** 2026-02-21
 **Re:** #209
 
@@ -341,7 +341,7 @@ SDK session creation (CopilotClient) is intentionally stubbed. The spawn infrast
 **Note:** Status check context name is `"build"` — must match the exact check name from CI workflow. If CI workflow renames the check, branch protection must be updated to match.
 
 ### 2026-02-21: Insider publish package scaffolds
-**By:** Kobayashi (Git & Release)
+**By:** Barbatos (Git & Release)
 **Date:** 2026-02-21
 **Re:** #215
 **PR:** #283
@@ -367,7 +367,7 @@ SDK session creation (CopilotClient) is intentionally stubbed. The spawn infrast
 **Impact:** Low. Does not migrate real source code — these are placeholders. Does not add tests for workspace packages (nothing to test yet).
 
 ### 2026-02-21: Distribution moves to npm for production
-**By:** Rabin (Distribution)
+**By:** Buer (Distribution)
 **Date:** 2026-02-21
 **Re:** #216
 
@@ -380,7 +380,7 @@ SDK session creation (CopilotClient) is intentionally stubbed. The spawn infrast
 **Impact:** Users install via `npm install @bradygaster/squad-cli` (or `npx @bradygaster/squad-cli`). The GitHub-native `npx github:bradygaster/squad` path may still work but is no longer the primary distribution channel.
 
 ### 2026-02-21: Coordinator prompt structure — three routing modes
-**By:** Verbal (Prompt Engineer)
+**By:** Agares (Prompt Engineer)
 **Date:** 2026-02-21
 **Re:** #241
 
@@ -398,7 +398,7 @@ The parser (`parseCoordinatorResponse()`) extracts a `RoutingDecision` from the 
 
 **Impact:** Low. Additive module. No changes to existing shell behavior. Future work will wire this into the readline loop and SDK session.
 ### 2026-02-21: CRLF normalization — single utility, applied at parser entry points
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Re:** #220, #221 (Epic #181)
 
 **What:**
@@ -415,7 +415,7 @@ Always normalize at the *entry* of the parsing function, not at the file-read ca
 Low. Additive-only. No test changes needed. Existing tests pass because test strings are already LF-only. The guard is transparent for LF inputs.
 
 ### 2026-02-21: CLI entry point split — src/index.ts is a pure barrel
-**By:** Edie (TypeScript Engineer)
+**By:** Amon (TypeScript Engineer)
 **Re:** #187
 
 **What:**
@@ -434,7 +434,7 @@ Low. Two files changed. Build passes (tsc strict), all 1683 tests pass. No chang
 When source migrates to `packages/squad-cli/`, the CLI entry point moves with it. The barrel (`packages/squad-sdk/src/index.ts`) stays side-effect-free.
 
 ### 2026-02-21: Process.exit() refactor — library-safe CLI functions
-**By:** Kujan (SDK Expert)
+**By:** Valefor (SDK Expert)
 **Re:** #189
 
 **What:**
@@ -462,12 +462,12 @@ Medium. Changes error handling contract for all functions that used `fatal()`. B
 **Why:** User request — captured for team memory
 
 ### 2026-02-23: Aspire Dashboard Scenario Documentation
-**By:** Saul (Aspire & Observability)
+**By:** Leraje (Aspire & Observability)
 **Date:** 2026-02-23
 **Status:** COMPLETED
 
 ### 2026-02-23: Make sendAndWait timeout configurable
-**Author:** Cheritto (TUI Engineer)
+**Author:** Botis (TUI Engineer)
 **Date:** 2026-02-23
 **Status:** Implemented
 **Issue:** #325
@@ -476,7 +476,7 @@ Medium. Changes error handling contract for all functions that used `fatal()`. B
 Added `TIMEOUTS.SESSION_RESPONSE_MS` to `packages/squad-sdk/src/runtime/constants.ts` — default 600,000ms (10 minutes), overridable via `SQUAD_SESSION_TIMEOUT_MS` env var. Updated `packages/squad-cli/src/cli/shell/index.ts` to use the constant instead of hard-coded 120,000ms timeout. All 41 streaming tests pass. Users can now set `SQUAD_SESSION_TIMEOUT_MS=900000` for 15-minute timeouts.
 
 ### 2026-02-23: E2E Test Coverage Expansion
-**By:** Breedan (E2E Test Engineer)
+**By:** Bathin (E2E Test Engineer)
 **Date:** 2026-02-23
 **Status:** Accepted
 **PR:** #348 (closes #326)
@@ -484,14 +484,14 @@ Added `TIMEOUTS.SESSION_RESPONSE_MS` to `packages/squad-sdk/src/runtime/constant
 Added 14 new Gherkin scenarios across 6 new feature files, bringing total to 21 acceptance scenarios + 6 UX gate tests (27 total). New harness capabilities: `cwd` option on `spawnWithArgs()`, absolute path resolution, `mkdtempSync` temp dir creation, negative assertion step. Coverage areas: init-command, status-extended, doctor-extended, help-comprehensive, error-paths, exit-codes.
 
 ### 2026-02-23: Hostile QA Bug Catalog — Issue #327
-**By:** Waingro
+**By:** Purson
 **Date:** 2026-02-23
 **Status:** Reported — awaiting triage
 
 Found 2 P1/P2 bugs: (1) `--version` output omits "squad" prefix (P1, location: packages/squad-cli/src/cli-entry.ts:48), (2) Empty/whitespace args launch interactive shell in non-TTY (P2, location: packages/squad-cli/src/cli-entry.ts:102). Added 32 hostile QA Gherkin scenarios across 7 feature files and 80+ adversarial string corpus. All corrupt config scenarios handled gracefully; unicode edge cases pass cleanly.
 
 ### 2026-02-23: Accessibility Audit — Squad CLI
-**By:** Nate (Accessibility Reviewer)
+**By:** Sallos (Accessibility Reviewer)
 **Date:** 2026-02-23
 **Issue:** #328 — Accessibility Audit
 **Verdict:** CONDITIONAL PASS
@@ -518,7 +518,7 @@ Summary: 2 passes (Keyboard Navigation ✅, Help Text ✅), 2 failures (Color Co
 **Why:** Brady requested a "try it now" guide for Aspire integration — single doc that covers launch AND connection, written for immediate action. This replaces scattered documentation and provides a clean entry point for developers wanting to observe Squad telemetry in real time.
 
 ### 2026-02-22: SDK/CLI File Split Plan — Definitive Mapping
-**By:** Keaton (Lead)
+**By:** Bael (Lead)
 **Status:** Decision
 **Scope:** Monorepo restructure — move `src/` into `packages/squad-sdk/` and `packages/squad-cli/`
 
@@ -548,7 +548,7 @@ Summary: 2 passes (Keyboard Navigation ✅, Help Text ✅), 2 failures (Color Co
 
 ### 2026-02-22: CharterCompiler reuses parseCharterMarkdown — no duplicate parsing
 
-**By:** Edie
+**By:** Amon
 
 **What:** `CharterCompiler.compile()` delegates to the existing `parseCharterMarkdown()` function from `charter-compiler.ts` rather than implementing its own markdown parser. The legacy class is a thin filesystem wrapper around the already-tested parsing logic.
 
@@ -556,7 +556,7 @@ Summary: 2 passes (Keyboard Navigation ✅, Help Text ✅), 2 failures (Color Co
 
 ### 2026-02-22: AgentSessionManager uses optional EventBus injection
 
-**By:** Edie
+**By:** Amon
 
 **What:** `AgentSessionManager` constructor accepts an optional `EventBus` parameter. When present, `spawn()` emits `session.created` and `destroy()` emits `session.destroyed`. When absent, the manager works silently (no events).
 
@@ -564,7 +564,7 @@ Summary: 2 passes (Keyboard Navigation ✅, Help Text ✅), 2 failures (Color Co
 
 ### 2026-02-22: Ink Shell Wiring — ShellApi callback pattern
 
-**By:** Fenster
+**By:** Vassago
 
 **Date:** 2026-02-22
 
@@ -584,7 +584,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 
 ### 2026-02-22: Runtime EventBus as canonical bus for orchestration classes
 
-**By:** Fortier
+**By:** Paimon
 
 **Date:** 2026-02-22
 
@@ -605,7 +605,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 
 ### 2026-02-22: Runtime Module Test Patterns
 
-**By:** Hockney (Tester)
+**By:** Samigina (Tester)
 
 **Date:** 2026-02-22
 
@@ -638,7 +638,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 **Why:** One-way dependency graphs enable independent package evolution. SDK stays pure library; CLI stays thin consumer. Future features only touch the relevant package.
 
 ### 2026-02-22: Version Alignment — 0.7.0 stubs → 0.8.0 real packages
-**By:** Kobayashi (Git & Release)
+**By:** Barbatos (Git & Release)
 **Status:** APPROVED & EXECUTED
 
 **Context:**
@@ -657,7 +657,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 **Verification:** ✅ All version strings aligned, CLI dependency on SDK pinned, root marked private.
 
 ### 2026-02-22: Defer test import migration until root src/ removal
-**By:** Hockney (Tester)
+**By:** Samigina (Tester)
 **Status:** Proposed
 
 **Context:** After SDK/CLI workspace split, all 56 test files still import from root `../src/`. Build and all 1719 tests pass cleanly because root `src/` still exists.
@@ -673,7 +673,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 **When to revisit:** When root `src/` is deleted (blocker at that point). Options: expand exports maps, add vitest resolve.alias, or move tests into workspace packages.
 
 ### 2026-02-22: Build System Migration — tsconfig + package.json
-**By:** Edie (TypeScript Engineer)
+**By:** Amon (TypeScript Engineer)
 **Status:** Decision
 **Scope:** Monorepo build configuration for SDK/CLI workspace packages
 
@@ -692,7 +692,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 **Verified:** Both packages compile with zero errors. All dist artifacts (`.js`, `.d.ts`, `.d.ts.map`) emitted correctly.
 
 ### 2026-02-22: Subpath exports in @bradygaster/squad-sdk
-**By:** Edie (TypeScript Engineer)
+**By:** Amon (TypeScript Engineer)
 **Issue:** #227
 
 **What:** `packages/squad-sdk/package.json` declares 18 subpath exports (`.`, `./parsers`, `./types`, and 15 module paths). Each uses types-first condition ordering.
@@ -706,7 +706,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 - Adding a new subpath requires both source barrel and exports entry; removing one without the other breaks resolution
 
 ### 2026-02-22: Barrel file conventions for parsers and types
-**By:** Kujan (SDK Expert)
+**By:** Valefor (SDK Expert)
 **Issues:** #225, #226 (Epic #181)
 
 **What:**
@@ -722,7 +722,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 **Impact:** Low. Two new files, no changes to existing source. Build passes, all 1683 tests pass.
 
 ### 2026-02-22: Use npm-native workspace resolution (not pnpm `workspace:*`)
-**By:** Edie (TypeScript Engineer)
+**By:** Amon (TypeScript Engineer)
 **Date:** 2026-02-22
 **Status:** Applied
 
@@ -733,7 +733,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 **Trade-off:** `"*"` will be published as-is to npm (unlike pnpm's `workspace:*` which gets replaced with the real version at publish time). Before publishing the CLI package, the SDK dependency version should be pinned to the actual release version. A `prepublishOnly` script or CI step could automate this.
 
 ### 2026-02-22: Test import migration to workspace packages
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Date:** 2026-02-22
 **Status:** Implemented
 
@@ -748,7 +748,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 **Consequence:** Zero `grep -r "from '../src/" test/` results. All 1727 tests pass. SDK has 26 subpath exports, CLI has 17.
 
 ### 2026-02-22: CI/CD & Release Readiness Assessment
-**By:** Kobayashi (Git & Release)
+**By:** Barbatos (Git & Release)
 **Date:** 2026-02-22
 **Status:** ASSESSMENT COMPLETE
 
@@ -772,7 +772,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 **Recommendation:** Version alignment (SDK 0.8.0, CLI 0.8.0) simplifies CHANGELOG during pre-1.0. Separate versioning can be deferred post-1.0 if needed.
 
 ### 2026-02-22: Fix npx bin resolution for squad-cli
-**By:** Rabin (Distribution)
+**By:** Buer (Distribution)
 **Date:** 2026-02-22
 **Status:** Implemented & Published
 
@@ -794,7 +794,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 
 
 ### OpenTelemetry version alignment: pin core packages to 1.30.x line
-**By:** Edie
+**By:** Amon
 **Issue:** #254
 **What:** All OTel optional dependencies in `packages/squad-sdk/package.json` must stay version-aligned: `sdk-node@^0.57.x` requires `sdk-trace-base@^1.30.0`, `sdk-trace-node@^1.30.0`, `sdk-metrics@^1.30.0`, `resources@^1.30.0`. These must be explicit optional dependencies, not left to transitive resolution.
 **Why:** Without explicit pins, npm hoists the latest versions (2.x) of `sdk-trace-base`, `sdk-metrics`, and `resources` to the top-level `node_modules`. The 2.x types are structurally incompatible with the 1.x types that `sdk-node@0.57.x` transitively depends on, causing TS2345/TS2741 type errors (e.g., missing `instrumentationScope` on `ReadableSpan`, missing `getRawAttributes` on `Resource`). Explicit pins at `^1.30.0` force npm to deduplicate on the 1.x line, eliminating the type conflicts.
@@ -803,7 +803,7 @@ This keeps the Ink component decoupled from StreamBridge internals — the compo
 # Decision: OpenTelemetry Tracing for Agent Lifecycle & Coordinator Routing
 
 **Date:** 2026-02-22  
-**By:** Fenster  
+**By:** Vassago  
 **Issues:** #257, #258  
 **Status:** Implemented
 
@@ -833,7 +833,7 @@ Added OpenTelemetry trace instrumentation to four files in `packages/squad-sdk/s
 
 # Decision: OTel Foundation — NodeSDK over individual providers
 
-**Author:** Fortier (Node.js Runtime)
+**Author:** Paimon (Node.js Runtime)
 **Date:** 2026-02-22
 **Issues:** #255, #256
 **Status:** Implemented
@@ -877,7 +877,7 @@ NOT added (bundled via `sdk-node`):
 
 ### Decision: StreamingPipeline.markMessageStart() as explicit latency tracking entry point
 
-**By:** Fortier (Node.js Runtime)
+**By:** Paimon (Node.js Runtime)
 **Date:** 2026-02-22
 **Issues:** #259, #264
 
@@ -892,7 +892,7 @@ NOT added (bundled via `sdk-node`):
 
 ### 2026-02-22: Tool trace enhancements + agent metric wiring conventions
 
-**By:** Fenster
+**By:** Vassago
 **What:** Established patterns for OTel tool span attributes and agent metric wiring:
 
 1. **`sanitizeArgs()`** strips fields matching `/token|secret|password|key|auth/i` before recording as span attributes. Truncates to 1024 chars. Exported from `tools/index.ts` for reuse.
@@ -908,7 +908,7 @@ NOT added (bundled via `sdk-node`):
 
 # Decision: OTel Metric Wiring Pattern (#261, #263)
 
-**Author:** Edie  
+**Author:** Amon  
 **Date:** 2026-02-22  
 **Status:** Implemented  
 
@@ -932,7 +932,7 @@ Metric calls are no-ops when OTel is not configured (the meter returns no-op ins
 
 # Decision: OTel metrics test pattern — spy meter mock
 
-**By:** Hockney (Tester)
+**By:** Samigina (Tester)
 **Date:** 2026-02-23
 **Status:** Implemented
 
@@ -953,7 +953,7 @@ OTel metrics tests use a spy-meter pattern: mock `getMeter()` to return a fake m
 
 ## 2026-02-22: Security Review: PR #300 — Upstream Inheritance
 
-**By:** Baer (Security)
+**By:** Gusion (Security)
 **Status:** 🛑 BLOCK — Critical finding must be resolved before merge
 
 PR #300 introduces a significant trust boundary expansion. The feature design is sound, but the implementation has a **critical command injection vulnerability** and several high/medium issues that must be addressed.
@@ -1013,7 +1013,7 @@ Findings 5 (Prompt Injection) — Medium, Finding 6 (Size Limits) — Low, Findi
 
 ## 2026-02-22: Code Quality Review: PR #300 — Upstream Inheritance
 
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Status:** ⚠️ APPROVE WITH REQUIRED FIXES — 5 items before merge
 
 Clean architecture, correct SDK/CLI separation, good test coverage. Five items must be fixed before merge.
@@ -1034,11 +1034,11 @@ The `upstream` command is not wired into the CLI entry point. Users cannot invok
 
 **Fix required:** Add the route to `cli-entry.ts`.
 
-### Finding 3: `execSync` command injection — CRITICAL (confirms Baer)
+### Finding 3: `execSync` command injection — CRITICAL (confirms Gusion)
 
 **File:** `packages/squad-cli/src/cli/commands/upstream.ts:148, 238, 242`
 
-Baer already flagged this. Confirmed: the `ref` value is interpolated unquoted into shell command strings. Must use `execFileSync('git', [...args])` with array-based invocation.
+Gusion already flagged this. Confirmed: the `ref` value is interpolated unquoted into shell command strings. Must use `execFileSync('git', [...args])` with array-based invocation.
 
 ### Finding 4: Test imports use relative source paths — CONVENTION VIOLATION
 
@@ -1075,7 +1075,7 @@ Uses `(org.castingPolicy as any).universe_allowlist`. Should use `as Record<stri
 
 ## 2026-02-22: Test Coverage Requirements: PR #300 Upstream Inheritance
 
-**By:** Hockney (Tester)
+**By:** Samigina (Tester)
 **Status:** BLOCKED — Cannot review what doesn't exist
 
 **Finding:** PR #300 does not exist. No pull request, branch, source files, or test files were found in the repository. All referenced artifacts are missing:
@@ -1123,7 +1123,7 @@ Uses `(org.castingPolicy as any).universe_allowlist`. Should use `as Record<stri
 
 ## 2026-02-22: Architecture Review: PR #300 — Upstream Inheritance
 
-**By:** Keaton (Lead)
+**By:** Bael (Lead)
 **Status:** REQUEST CHANGES
 
 The upstream inheritance concept is **architecturally sound** — the Org → Team → Repo hierarchy is a real need, the module boundaries are correct (SDK types + resolver, CLI commands), and `.squad/upstream.json` is the right config location. But several issues must be resolved before this merges.
@@ -1136,7 +1136,7 @@ Team decision: "Meaningful changes require a proposal in `docs/proposals/` befor
 
 #### 2. Type safety — `castingPolicy: Record<string, unknown>` is unacceptable
 
-Team decision (Edie): strict mode, no loose types. The casting module exports `CastingConfig`, `CastingEntry`, and `CastingUniverse` — real types with real contracts. Using `Record<string, unknown>` for `castingPolicy` in `ResolvedUpstream` breaks the type chain. Import and use the actual casting types.
+Team decision (Amon): strict mode, no loose types. The casting module exports `CastingConfig`, `CastingEntry`, and `CastingUniverse` — real types with real contracts. Using `Record<string, unknown>` for `castingPolicy` in `ResolvedUpstream` breaks the type chain. Import and use the actual casting types.
 
 #### 3. Missing sanitization on inherited content
 
@@ -1182,7 +1182,7 @@ The architecture compounds correctly — this makes org-level governance, team-l
 **Why:** User request — captured for team memory
 
 
-### Aspire + Observer patterns — Fenster (2026-02-22)
+### Aspire + Observer patterns — Vassago (2026-02-22)
 
 **Context:** OTel Phase 4 — Issues #265, #268
 
@@ -1199,7 +1199,7 @@ The architecture compounds correctly — this makes org-level governance, team-l
 5. **Debounce at 200ms default** to avoid flooding spans on rapid file saves (e.g., editor autosave). Configurable via `debounceMs` option.
 
 ### REPL Shell Coordinator Wiring — Architecture Decision
-**By:** Fortier
+**By:** Paimon
 **Date:** 2026-02-22
 **Issue:** #303
 
@@ -1215,7 +1215,7 @@ The architecture compounds correctly — this makes org-level governance, team-l
 
 # Decision: OTel SDK v2 test patterns
 
-**By:** Hockney
+**By:** Samigina
 **Date:** 2026-02-23
 **Issue:** #267
 
@@ -1237,7 +1237,7 @@ All agents writing OTel tests must follow these patterns or tests will silently 
 
 # Cleanup Audit Report — Issue #306
 
-**Auditor:** Keaton (Lead)  
+**Auditor:** Bael (Lead)  
 **Date:** 2026-02-22  
 **Branch:** `squad/wave1-remaining`  
 **Scope:** Full codebase audit for hardcoded values, code quality, and test gaps  
@@ -1454,7 +1454,7 @@ import { success, warn, info, error as fatal } from '../core/output.js';
 | `packages/squad-cli/src/cli/core/workflows.ts` | Similar | Template placeholders | LOW |
 
 **Suggested Fix:**
-- Spawn.ts TODO: Create GitHub issue #XXX, link in comment, assign to Fenster
+- Spawn.ts TODO: Create GitHub issue #XXX, link in comment, assign to Vassago
 - Tools.ts TODO: Create GitHub issue, mark as P1 (blocking telemetry)
 - Upgrade/workflows.ts: These are **template literals for users** (not code debt); safe to leave as-is
 
@@ -1480,7 +1480,7 @@ import { success, warn, info, error as fatal } from '../core/output.js';
 
 | File | Line | Universes | Priority |
 |------|------|-----------|----------|
-| `packages/squad-sdk/src/runtime/config.ts` | 349-365 | 15 universes hardcoded: "The Usual Suspects", "Breaking Bad", "The Wire", etc. | MEDIUM |
+| `packages/squad-sdk/src/runtime/config.ts` | 349-365 | 15 universes hardcoded: "The Solomonic Demonology", "Breaking Bad", "The Wire", etc. | MEDIUM |
 
 **Issue:** When team decides to adopt a different universe (e.g., "The Office"), config must be edited and redeployed. No one-off override.
 
@@ -1708,10 +1708,10 @@ Use Node.js `debug` package (lightweight, zero-runtime cost if disabled).
 
 | Task | Suggested Owner | Reason |
 |------|-----------------|--------|
-| Command injection fixes + upstream refactor | Fenster (CLI Expert) | Runtime code, sensitive CLI logic |
-| Model/timeout/role config extraction | Edie (TypeScript/Config) | Type-safe refactoring, config schema |
-| Health monitor + fallback executor tests | Hockney (Test Expert) | Complex test scenarios, mocking |
-| Error messaging & UX improvements | Baer (Security/UX) | User-facing text, error handling patterns |
+| Command injection fixes + upstream refactor | Vassago (CLI Expert) | Runtime code, sensitive CLI logic |
+| Model/timeout/role config extraction | Amon (TypeScript/Config) | Type-safe refactoring, config schema |
+| Health monitor + fallback executor tests | Samigina (Test Expert) | Complex test scenarios, mocking |
+| Error messaging & UX improvements | Gusion (Security/UX) | User-facing text, error handling patterns |
 | Documentation of changes | Ralph (Scribe) | Record decisions, update team knowledge |
 
 ---
@@ -1779,7 +1779,7 @@ Use Node.js `debug` package (lightweight, zero-runtime cost if disabled).
 
 ## How to Use This Report
 
-1. **Review:** Lead (Keaton) — Strategy & trade-offs
+1. **Review:** Lead (Bael) — Strategy & trade-offs
 2. **Assign:** Use Agent Assignment table above to assign specific cleanup tasks
 3. **Track:** Create GitHub issues for each finding (link in .squad/decisions.md)
 4. **Execute:** Follow recommended Phase sequencing
@@ -1788,7 +1788,7 @@ Use Node.js `debug` package (lightweight, zero-runtime cost if disabled).
 
 # Decision: OTel 3-Layer Public API Export
 
-**By:** Kujan (SDK Expert)
+**By:** Valefor (SDK Expert)
 **Date:** 2025-07-19
 **Issue:** #266
 
@@ -1824,7 +1824,7 @@ If no `TracerProvider` / `MeterProvider` is registered, `@opentelemetry/api` ret
 
 # Decision: Aspire Dashboard Playwright Integration Tests
 
-**By:** Saul (Aspire & Observability)
+**By:** Leraje (Aspire & Observability)
 **Date:** 2026-02-22
 **Requested by:** Brady
 
@@ -1863,7 +1863,7 @@ Created `test/aspire-integration.test.ts` — a Playwright + Vitest integration 
 
 # Decision: Coverage Gap Audit — 114 New Tests
 
-**By:** Hockney (Tester)
+**By:** Samigina (Tester)
 **Date:** 2026-02-23
 **Status:** Implemented
 
@@ -1897,7 +1897,7 @@ Audit identified these as the highest-risk untested paths. Shell integration had
 
 # Decision: REPL Shell Polish Architecture
 
-**By:** Fortier
+**By:** Paimon
 **Date:** 2026-02-22
 **Scope:** Shell UI components (`App.tsx`, `AgentPanel.tsx`, `MessageStream.tsx`, `InputPrompt.tsx`, `lifecycle.ts`)
 
@@ -1919,7 +1919,7 @@ Role emoji mapping and welcome data loading live in `lifecycle.ts` alongside tea
 
 
 ### 2026-02-22: spawn.ts wired to SquadClient — self-contained agent spawning
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Status:** IMPLEMENTED
 
 **What:** `spawnAgent()` in `packages/squad-cli/src/cli/shell/spawn.ts` now accepts an optional `client: SquadClient` via `SpawnOptions`. When a client is provided, it creates a real SDK session (streaming, system prompt from charter, working directory), sends the task message, accumulates streamed `message_delta` events, closes the session, and returns the full response in `SpawnResult`.
@@ -1934,7 +1934,7 @@ Role emoji mapping and welcome data loading live in `lifecycle.ts` alongside tea
 **Error handling audit (same PR):**
 - `plugin.ts`: Removed unused `error` import from output.ts (was dead code, `fatal()` from errors.ts already used correctly).
 - `upgrade.ts`: Removed unused `error as errorMsg` import from output.ts (same pattern).
-- `upstream.ts`: Has `import { error as fatal } from output.ts` bug — **not touched** (Baer owns it).
+- `upstream.ts`: Has `import { error as fatal } from output.ts` bug — **not touched** (Gusion owns it).
 - **Convention:** For CLI-exiting errors, use `fatal()` from `cli/core/errors.ts` (throws `SquadError`, returns `never`). For non-fatal operational warnings, `error()` from `output.ts` is fine.
 
 **Files changed:**
@@ -1947,7 +1947,7 @@ Role emoji mapping and welcome data loading live in `lifecycle.ts` alongside tea
 
 # Decision: Extract hardcoded values to central constants
 
-**Author:** Edie (TypeScript Engineer)
+**Author:** Amon (TypeScript Engineer)
 **Date:** 2026-02-22
 **Status:** Implemented
 
@@ -1976,7 +1976,7 @@ Created `packages/squad-sdk/src/runtime/constants.ts` as the canonical source fo
 | `index.ts` | Named exports: `MODELS`, `TIMEOUTS`, `AGENT_ROLES` |
 | `package.json` | Added `./runtime/constants` subpath export |
 
-**Not touched:** `upstream.ts` (Baer owns), `benchmarks.ts` (synthetic simulation data, not config).
+**Not touched:** `upstream.ts` (Gusion owns), `benchmarks.ts` (synthetic simulation data, not config).
 
 ## Rationale
 
@@ -1994,7 +1994,7 @@ Created `packages/squad-sdk/src/runtime/constants.ts` as the canonical source fo
 # Decision: Fix CWE-78 Command Injection in upstream.ts
 
 **Date:** 2026-02-22
-**Author:** Baer (Security)
+**Author:** Gusion (Security)
 **Requested by:** Brady
 **Status:** IMPLEMENTED
 
@@ -2027,10 +2027,10 @@ Security audit of `packages/squad-cli/src/cli/commands/upstream.ts` identified 3
 
 ---
 
-## Kobayashi Decision: Version Alignment Release 0.8.2 (2026-02-22)
+## Barbatos Decision: Version Alignment Release 0.8.2 (2026-02-22)
 
 **Status:** ✅ EXECUTED  
-**Decided by:** Kobayashi (Git & Release engineer)  
+**Decided by:** Barbatos (Git & Release engineer)  
 **Requested by:** Brady  
 **Context:** Independent feature development caused version drift. Explicit alignment required to unblock publish workflows and establish clear release checkpoint.
 
@@ -2073,7 +2073,7 @@ Independent versioning via changesets remains correct between releases. CLI and 
 
 ### Precedent
 
-Earlier decision (2026-02-21, Kobayashi) stated that SDK 0.8.0 and CLI 0.8.1 skew was "intentional and appropriate for pre-1.0 development." That decision is superseded by this explicit release checkpoint decision. The skew served its purpose during development; now the workspace synchronizes for v0.8.2 release.
+Earlier decision (2026-02-21, Barbatos) stated that SDK 0.8.0 and CLI 0.8.1 skew was "intentional and appropriate for pre-1.0 development." That decision is superseded by this explicit release checkpoint decision. The skew served its purpose during development; now the workspace synchronizes for v0.8.2 release.
 
 
 ### 2026-02-23T02:01:23Z: User directive
@@ -2084,7 +2084,7 @@ Earlier decision (2026-02-21, Kobayashi) stated that SDK 0.8.0 and CLI 0.8.1 ske
 # Decision: squad doctor command — diagnostic conventions
 
 **Date:** 2026-02-22
-**By:** Edie
+**By:** Amon
 **Issue:** #312
 **Status:** Implemented
 
@@ -2107,7 +2107,7 @@ Inspired by Shayne Boyer's PR #131. Teams need a quick way to validate their .sq
 # Decision: Dual-root ensureSquadPath write validation (#314)
 
 **Date:** 2026-02-23  
-**Author:** Edie  
+**Author:** Amon  
 **Issue:** #314  
 **Depends on:** #311 (dual-root resolver)  
 **Status:** Implemented
@@ -2139,7 +2139,7 @@ Changed from "outside the .squad/ directory" to "outside both squad roots" so ca
 
 # Decision: Eliminate unsafe casts in adapter layer
 
-**By:** Edie
+**By:** Amon
 **Date:** 2026-02-23
 **Closes:** #318, #320, #321, #322
 
@@ -2194,7 +2194,7 @@ Verified: `resumeSession()` already wraps in `CopilotSessionAdapter`. No change 
 # Decision: Dual-root path resolution (projectDir / teamDir)
 
 **Date:** 2026-02-23  
-**Author:** Fenster  
+**Author:** Vassago  
 **Issue:** #311  
 **Status:** Implemented
 
@@ -2234,7 +2234,7 @@ Added `resolveSquadPaths()` alongside the existing `resolveSquad()` in `packages
 # Decision: Adapter Event Name Mapping and Data Normalization
 
 **Date:** 2026-02-22  
-**By:** Fenster (Core Dev)  
+**By:** Vassago (Core Dev)  
 **Issues:** #316, #317, #319  
 **Status:** Implemented
 
@@ -2264,10 +2264,10 @@ The `CopilotSessionAdapter` in `packages/squad-sdk/src/adapter/client.ts` mapped
 
 
 ### 2026-02-23: GitHub Pages publishing architecture (consolidated)
-**By:** Keaton (Lead), Fenster (Core Dev), McManus (DevRel)
+**By:** Bael (Lead), Vassago (Core Dev), marbas (DevRel)
 **Date:** 2026-02-23  
 **Status:** Ready for implementation
-**Related:** Keaton analysis (architecture), Fenster plan (build tooling), McManus recommendation (content structure)
+**Related:** Bael analysis (architecture), Vassago plan (build tooling), marbas recommendation (content structure)
 
 ## What
 
@@ -2275,13 +2275,13 @@ Establish GitHub Pages publishing for squad-pr documentation and blog, building 
 
 ### Three complementary decisions:
 
-1. **Architecture (Keaton):** Ship with current setup — no changes needed. Squad-PR's docs infrastructure is production-ready and lighter than the old repo.
+1. **Architecture (Bael):** Ship with current setup — no changes needed. Squad-PR's docs infrastructure is production-ready and lighter than the old repo.
    - Use existing .github/workflows/squad-docs.yml (identical to old repo, already configured)
    - Use docs/build.js (lightweight, ESM-native, zero npm deps)
    - Use docs/guide/ markdown files (8 guides ready to publish, plus 1 audit document)
    - Defer blog support to future wave
 
-2. **Build & Deploy (Fenster):** Upgrade markdown library and establish deployment workflow.
+2. **Build & Deploy (Vassago):** Upgrade markdown library and establish deployment workflow.
    - Add markdown-it + markdown-it-anchor as devDependencies (better HTML output, syntax highlighting, auto-generated anchor IDs)
    - Refactor docs/build.js (~10-15 lines) to use markdown-it
    - Add npm script: "docs": "node docs/build.js --out dist/docs"
@@ -2289,7 +2289,7 @@ Establish GitHub Pages publishing for squad-pr documentation and blog, building 
    - Add --base CLI argument support for subpath deployment (recommend --base /squad-pr)
    - Configure GitHub Pages in repo settings (deployment source: GitHub Actions)
 
-3. **Content (McManus):** Publish existing guides + audits; recreate blog with fresh v1 content.
+3. **Content (marbas):** Publish existing guides + audits; recreate blog with fresh v1 content.
    - Publish /docs/guide/ (14 guides, all sections: Getting Started, Core, Reference, Troubleshooting) — Ready as-is
    - Publish /docs/audits/ (technical transparency builds trust)
    - Keep /docs/launch/ internal only (release notes canonical in CHANGELOG.md per v1 internal-only docs decision)
@@ -2308,14 +2308,14 @@ Establish GitHub Pages publishing for squad-pr documentation and blog, building 
 
 ## How
 
-1. **Immediate (Keaton validation):**
+1. **Immediate (Bael validation):**
    - Test local build: 
 ode docs/build.js
    - Verify output in docs/dist/
    - Enable GitHub Pages in repo settings (if not already done)
    - Verify deployment to https://bradygaster.github.io/squad-pr/
 
-2. **Build phase (Fenster implementation):**
+2. **Build phase (Vassago implementation):**
    - Add markdown-it + markdown-it-anchor to package.json devDeps
    - Refactor docs/build.js to use markdown-it converter
    - Add npm script "docs"
@@ -2325,17 +2325,17 @@ ode docs/build.js
 pm run docs
    - Test workflow with push to feature branch
 
-3. **Content phase (McManus guidance):**
+3. **Content phase (marbas guidance):**
    - Determine v1 blog cadence (start with v1.0.0 launch or earlier?)
    - Draft first blog posts (origin story, team integration guide)
-   - Set up navigation structure per McManus recommendation
+   - Set up navigation structure per marbas recommendation
    - Review SEO requirements (if any)
 
 ## Timeline
 
 - **Now:** Research complete. Decisions ready for team alignment.
-- **Week 1:** Fenster implements build tooling + workflow
-- **Week 2:** McManus drafts first blog posts
+- **Week 1:** Vassago implements build tooling + workflow
+- **Week 2:** marbas drafts first blog posts
 - **Week 3:** Full site tested, Pages deployed live
 
 ## Impact
@@ -2343,7 +2343,7 @@ pm run docs
 - Zero breaking changes to existing codebase
 - Docs publishing operational end-to-end
 - Blog infrastructure ready for v1 narrative
-- Team has clear content ownership (McManus) and technical ownership (Fenster)
+- Team has clear content ownership (marbas) and technical ownership (Vassago)
 
 ## Notes
 
@@ -2355,7 +2355,7 @@ pm run docs
 # Decision: Remote Squad Mode Awareness in Coordinator Prompt
 
 **Date:** 2025-07-18
-**Author:** Verbal
+**Author:** Agares
 **Related:** #313
 
 ## Context
@@ -2377,7 +2377,7 @@ The SDK is adding remote squad mode — where team identity files (agents, casti
 
 # 2026-02-23: sendMessage REPL Bug — Fixed via SDK Version Pin + Test Suite
 
-**By:** Fenster, Hockney, Kujan  
+**By:** Vassago, Samigina, Valefor  
 **Date:** 2026-02-23  
 **Status:** ✅ Complete (SDK pinned, tests added, audit complete)  
 **Issues:** REPL `sendMessage is not a function` error
@@ -2402,8 +2402,8 @@ Both packages versioned at 0.8.2 and published together as a matched set. Exact 
 
 ## Verification
 
-- **Tests:** Hockney created 110 new comprehensive tests in `test/cli-shell-comprehensive.test.ts` covering all 9 shell modules (coordinator, spawn, lifecycle, router, sessions, commands, memory, autocomplete, sendMessage validation). All 110 passing.
-- **Audit:** Kujan audited the full adapter chain. Confirmed `CopilotSessionAdapter` correctly maps `sendMessage` → `send`. Identified that published 0.8.2 npm package has the old unsafe cast, but the fix exists in current codebase (not yet published).
+- **Tests:** Samigina created 110 new comprehensive tests in `test/cli-shell-comprehensive.test.ts` covering all 9 shell modules (coordinator, spawn, lifecycle, router, sessions, commands, memory, autocomplete, sendMessage validation). All 110 passing.
+- **Audit:** Valefor audited the full adapter chain. Confirmed `CopilotSessionAdapter` correctly maps `sendMessage` → `send`. Identified that published 0.8.2 npm package has the old unsafe cast, but the fix exists in current codebase (not yet published).
 
 ## Impact
 
@@ -2434,7 +2434,7 @@ Both packages versioned at 0.8.2 and published together as a matched set. Exact 
 User request — captured for team memory. Brady wants docs that feel like original beta content, not enterprise documentation. Publication freeze prevents premature rollout while redesign is underway.
 
 ### 2026-02-23: Use sendAndWait for streaming dispatch
-**By:** Kovash (REPL Expert)
+**By:** Eligos (REPL Expert)
 **Date:** 2026-02-23
 **Scope:** Shell dispatch pipeline (`packages/squad-cli/src/cli/shell/index.ts`)
 
@@ -2474,7 +2474,7 @@ Created `test/repl-streaming.test.ts` (13 tests). All 2351 tests pass.
 # Decision: SQUAD_DEBUG Diagnostic Logging for REPL Streaming
 
 **Date:** 2026-02-23
-**Author:** Kovash (REPL & Interactive Shell)
+**Author:** Eligos (REPL & Interactive Shell)
 **Status:** Implemented
 
 ## Context
@@ -2508,9 +2508,9 @@ The `@github/copilot-sdk` `_dispatchEvent` method wraps every handler call in `t
 Brady should run with `SQUAD_DEBUG=1` and share the stderr output. The logs will tell us exactly where the pipeline breaks down.
 
 
-# Streaming Bug Report — Hockney
+# Streaming Bug Report — Samigina
 
-**Filed by:** Hockney (Tester)
+**Filed by:** Samigina (Tester)
 **Date:** 2026-02-22
 
 ## Bug 1: Empty coordinator response — the "silent swallow"
@@ -2542,7 +2542,7 @@ Brady should run with `SQUAD_DEBUG=1` and share the stderr output. The logs will
 
 # Decision: extractDelta field priority — deltaContent first
 
-**Author:** Kovash (REPL & Interactive Shell Expert)
+**Author:** Eligos (REPL & Interactive Shell Expert)
 **Date:** 2026-02-23
 **Status:** Implemented
 
@@ -2559,14 +2559,14 @@ The old `extractDelta()` checked only `delta` and `content`, silently returning 
 3. **Tests updated:** All mock sessions and `simulateDispatch` now use `deltaContent`. Added legacy `delta` key test for backward compat coverage.
 
 ### 2026-02-24: Ghost Command Aliasing Strategy
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Closes:** #501, #503, #504, #507, #509
 **What:** Five undocumented commands now wire as aliases: `hire` → `init`, `heartbeat` → `doctor`, `shell` → explicit `runShell()`, `loop` → `triage`, `run` → stub with "coming soon".
 **Why:** Minimal code change (1-2 lines per alias). All alias targets are existing implementations. `run` deferred pending session lifecycle changes. Backwards compatible.
 **Impact:** CLI help updated. Users can now use documented command names. `squad run` will need real implementation in future PR.
 
 ### Per-command --help/-h: intercept-before-dispatch pattern
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Date:** 2026-02-14
 **PR:** #533
 **Closes:** #511, #512
@@ -2575,7 +2575,7 @@ The old `extractDelta()` checked only `delta` and `content`, silently returning 
 **Convention:** New CLI commands MUST have a `getCommandHelp()` entry with usage, 1-2 sentence description, options, and 2+ examples.
 
 ### 2026-02-25: REPL cancellation and configurable timeout
-**By:** Kovash (REPL & Interactive Shell Expert)
+**By:** Eligos (REPL & Interactive Shell Expert)
 **PR:** #538
 **Closes:** #500, #502
 **What:** (1) Ctrl+C immediately resets `processing` state so InputPrompt re-enables instantly. (2) Timeout config uses `SQUAD_REPL_TIMEOUT` env var (seconds); precedence: `SQUAD_REPL_TIMEOUT` → `SQUAD_SESSION_TIMEOUT_MS` (SDK-level, ms) → 600000ms default. CLI `--timeout` flag sets env var before shell launch.
@@ -2583,7 +2583,7 @@ The old `extractDelta()` checked only `delta` and `content`, silently returning 
 **Impact:** Shell components (InputPrompt, ThinkingIndicator) affected. CLI entry point gains `--timeout` flag. SDK unchanged (fallback preserved).
 
 ### 2026-02-24: Shell Observability Metrics Design
-**By:** Saul (Aspire & Observability)
+**By:** Leraje (Aspire & Observability)
 **Closes:** #508, #520, #526, #530, #531
 **What:** Four new metrics under `squad.shell.*` namespace: `session_count` (counter), `session_duration_ms` (histogram), `agent_response_latency_ms` (histogram from first visible token), `error_count` (counter). All gated behind `SQUAD_TELEMETRY=1` (stronger privacy guarantee than SDK-level metrics).
 **Why:** User-facing shell metrics describe behavior patterns and require explicit consent. Separate gate stronger than just OTLP endpoint activation.
@@ -2599,7 +2599,7 @@ The old `extractDelta()` checked only `delta` and `content`, silently returning 
 
 # Decision: Wire OpenTelemetry into the REPL shell startup
 
-**Author:** Kovash (Copilot SDK Expert / Backend Dev)
+**Author:** Eligos (Copilot SDK Expert / Backend Dev)
 **Date:** 2026-02-23
 **Status:** Implemented
 
@@ -2626,7 +2626,7 @@ Brady has the Aspire dashboard running in Docker (port 4317 reachable), but the 
 
 # Decision: Switch OTel exporters from HTTP to gRPC
 
-**Author:** Saul (Aspire & Observability)  
+**Author:** Leraje (Aspire & Observability)  
 **Date:** 2026-02-XX  
 **Status:** Implemented  
 
@@ -2659,7 +2659,7 @@ Three compounding bugs:
 # Decision: Personal Squad Tutorial Added to Guide Section
 
 **Date:** 2026-02-23
-**Author:** McManus (DevRel)
+**Author:** marbas (DevRel)
 **Requested by:** Brady
 
 ## What
@@ -2688,32 +2688,32 @@ Brady's directive: write the tutorial on personal squads. This is the first user
 
 
 ### 2026-02-23: E2E Test Harness Design
-**By:** Breedan
+**By:** Bathin
 **Summary:** Implemented child_process-based terminal harness for CLI acceptance testing instead of node-pty, providing cross-platform compatibility and CI-friendly execution without native compilation.
 **Details:** See orchestration log for full context.
 
 ### 2026-02-23: REPL UX Test Suite Patterns
-**By:** Hockney
+**By:** Samigina
 **Summary:** Created 40-test suite using ink-testing-library to validate visual REPL behavior across 6 categories (thinking indicator, agent panel, message stream, input prompt, welcome, never-dead requirement).
 **Details:** See orchestration log for full context.
 
 ### 2026-02-24: REPL UX Overhaul
-**By:** Kovash
+**By:** Eligos
 **Summary:** Implemented visual improvements including elapsed-time tracking, pulsing agent indicators, response timestamps, and animated spinners to ensure the interface never appears dead during processing.
 **Details:** See orchestration log for full context.
 
 ### 2026-02-23: Initial CLI UX Audit
-**By:** Marquez
+**By:** Zepar
 **Summary:** Comprehensive audit of Squad CLI identified 21 issues ranging from P0 blockers (80-char violations, unclear errors) to P2 polish opportunities, with 6 UX gates defined for quality enforcement.
 **Details:** See orchestration log for full context.
 
 ### 2026-02-23: SQUAD_DEBUG auto-enables OTel diagnostics
-**By:** Saul
+**By:** Leraje
 **Summary:** OTel SDK now auto-enables DiagConsoleLogger at WARN level when SQUAD_DEBUG=1 is set, surfacing gRPC transport errors that were previously invisible to operators.
 **Details:** See orchestration log for full context.
 # Decision: Testing Epic PRD Structure
 
-**Author:** Keaton (Lead)  
+**Author:** Bael (Lead)  
 **Date:** 2026-02-24  
 **Status:** Awaiting Brady Approval  
 
@@ -2721,7 +2721,7 @@ Brady's directive: write the tutorial on personal squads. This is the first user
 
 Brady's CLI died after 2 minutes due to hard-coded timeout in `packages/squad-cli/src/cli/shell/index.ts:123`. He wants the CLI to be "take-your-breath-away-good" with engaging feedback during long waits, Claude-style thinking words, Copilot-style action display, and never feel dead.
 
-New agents joined: Cheritto (TUI), Breedan (E2E tests), Waingro (hostile QA), Nate (accessibility), Marquez (UX design). Marquez delivered 21-item UX audit, Breedan designed E2E harness, Kovash shipped REPL UX overhaul, Hockney has 40 REPL UX tests.
+New agents joined: Botis (TUI), Bathin (E2E tests), Purson (hostile QA), Sallos (accessibility), Zepar (UX design). Zepar delivered 21-item UX audit, Bathin designed E2E harness, Eligos shipped REPL UX overhaul, Samigina has 40 REPL UX tests.
 
 ## Decision
 
@@ -2731,12 +2731,12 @@ Created 3-phase epic PRD with 21 numbered items:
 - Fix 2-minute timeout → configurable via env var, 10-minute default
 - Dogfood CLI with 4 repo types (fresh init, existing squad, monorepo, solo)
 - Expand E2E test coverage (10+ new Gherkin scenarios)
-- Hostile QA (Waingro breaks it in 7+ conditions: tiny terminals, no config, rapid Ctrl+C, etc.)
-- Accessibility audit (Nate reviews keyboard nav, color contrast, error guidance)
-- Fix P0 UX blockers from Marquez (5 items: help text overflow, version format, error remediation, empty states, init flags)
+- Hostile QA (Purson breaks it in 7+ conditions: tiny terminals, no config, rapid Ctrl+C, etc.)
+- Accessibility audit (Sallos reviews keyboard nav, color contrast, error guidance)
+- Fix P0 UX blockers from Zepar (5 items: help text overflow, version format, error remediation, empty states, init flags)
 
 ### Phase 2: Improvement Phase (5 items)
-- Implement P1 UX polish from Marquez (8 items: verb consistency, focus indicator, keyboard hints, etc.)
+- Implement P1 UX polish from Zepar (8 items: verb consistency, focus indicator, keyboard hints, etc.)
 - Engaging thinking feedback (Claude-style phrases + Copilot-style action display)
 - Ghost response detection + retry logic (3 attempts, user feedback)
 - Fix all P0 bugs from Phase 1 testing
@@ -2748,7 +2748,7 @@ Created 3-phase epic PRD with 21 numbered items:
 - Animations & transitions (spinners, pulsing dots, color transitions, smooth status changes)
 - Copy polish (human, fun, action-oriented — not stuffy)
 - Accessibility hardening (keyboard-first, NO_COLOR mode, focus indicators, guidelines doc)
-- P2 nice-to-haves from Marquez (6 items: remove "you:" prefix, separator consistency, etc.)
+- P2 nice-to-haves from Zepar (6 items: remove "you:" prefix, separator consistency, etc.)
 - The "wow moment" — first `squad init` feels magical
 
 ## Key Architectural Decisions
@@ -2781,23 +2781,23 @@ Created 3-phase epic PRD with 21 numbered items:
 
 ## Agent Assignment Strategy
 
-**Cheritto (TUI)** owns the most work (9 items across all phases):
+**Botis (TUI)** owns the most work (9 items across all phases):
 - Phase 1: 1.1 (timeout), 1.6 (P0 UX)
 - Phase 2: 2.1 (P1 UX), 2.2 (thinking), 2.3 (ghost), 2.5 (errors)
 - Phase 3: 3.1 (progress), 3.2 (adaptivity), 3.3 (animations), 3.6 (P2 UX), 3.7 (wow)
 
 **Testing specialists:**
-- Breedan: 1.3 (E2E expansion)
-- Waingro: 1.2 (dogfood), 1.4 (hostile QA)
-- Hockney: 2.5 (error tests)
+- Bathin: 1.3 (E2E expansion)
+- Purson: 1.2 (dogfood), 1.4 (hostile QA)
+- Samigina: 2.5 (error tests)
 
 **UX specialists:**
-- Marquez: 1.6, 2.1, 3.1, 3.4, 3.6, 3.7 (review/design)
-- Nate: 1.5 (audit), 3.2 (review), 3.5 (hardening)
-- Kovash: 2.2 (review), 3.3 (review)
+- Zepar: 1.6, 2.1, 3.1, 3.4, 3.6, 3.7 (review/design)
+- Sallos: 1.5 (audit), 3.2 (review), 3.5 (hardening)
+- Eligos: 2.2 (review), 3.3 (review)
 
 **Tone review:**
-- McManus: 3.4 (copy polish tone review)
+- marbas: 3.4 (copy polish tone review)
 
 ## Dependencies Mapped
 
@@ -2839,11 +2839,11 @@ Created 3-phase epic PRD with 21 numbered items:
 
 **21 numbered items, not open-ended:** Clear scope, clear ownership, clear dependencies. Each item can become a GitHub sub-issue with its own acceptance criteria.
 
-**Agent assignments upfront:** Cheritto is load-balanced (9 items but spread across all phases). Specialists are focused (Breedan E2E, Waingro QA, Nate accessibility). Avoids "who's doing what?" confusion.
+**Agent assignments upfront:** Botis is load-balanced (9 items but spread across all phases). Specialists are focused (Bathin E2E, Purson QA, Sallos accessibility). Avoids "who's doing what?" confusion.
 
 **Dependencies explicit:** No item starts before its dependencies are done. Prevents rework (e.g., P0 UX must be fixed before P1 UX, timeout must work before testing long-wait feedback).
 
-**Success gates concrete:** Not "improve UX" but "all P0 items fixed + Marquez approves + UX gates pass". Not "make it better" but "Brady says breathtaking".
+**Success gates concrete:** Not "improve UX" but "all P0 items fixed + Zepar approves + UX gates pass". Not "make it better" but "Brady says breathtaking".
 
 ## Pattern for Future Epics
 
@@ -2865,7 +2865,7 @@ When writing multi-phase epics:
 # Decision: ThinkingIndicator two-layer architecture
 
 **Date:** 2026-02-24
-**By:** Cheritto (TUI Engineer)
+**By:** Botis (TUI Engineer)
 **Issue:** #331 — Engaging thinking feedback
 **PR:** #351
 
@@ -2884,14 +2884,14 @@ Extracted the inline ThinkingIndicator from MessageStream.tsx into a standalone 
 
 ## Team impact
 
-- **Marquez:** May want to adjust phrase list or rotation timing — both are exported constants
-- **Kovash:** MessageStream interface now has optional `activityHint` prop
-- **Breedan:** 16 new tests in `test/repl-ux.test.ts` sections 7 + 8
+- **Zepar:** May want to adjust phrase list or rotation timing — both are exported constants
+- **Eligos:** MessageStream interface now has optional `activityHint` prop
+- **Bathin:** 16 new tests in `test/repl-ux.test.ts` sections 7 + 8
 - **Foundation for 3.1 (rich progress):** ThinkingIndicator can be extended with progress bars, sub-task tracking
 
 # Decision: P0 Bug Fixes from Phase 1 Testing
 
-**By:** Hockney (Tester)
+**By:** Samigina (Tester)
 **Date:** 2026-02-23
 **Issue:** #333
 **PR:** #351
@@ -2904,7 +2904,7 @@ Extracted the inline ThinkingIndicator from MessageStream.tsx into a standalone 
 **Implementation:** Trim `args[0]` early; if raw arg was provided but trims to empty, show help instead of routing to shell or command dispatch.
 
 ### BUG-1: --version bare semver is correct
-**Decision:** No code change needed. Bare semver from `--version` is intentional per Cheritto's P0 UX fix (PR #349) and Marquez's audit.
+**Decision:** No code change needed. Bare semver from `--version` is intentional per Botis's P0 UX fix (PR #349) and Zepar's audit.
 **Action:** Updated `version.feature` acceptance test which still asserted `output contains "squad"` — this conflicted with the `ux-gates.test.ts` gate that explicitly verifies no "squad" prefix.
 
 ### version.feature was stale
@@ -2912,11 +2912,11 @@ Extracted the inline ThinkingIndicator from MessageStream.tsx into a standalone 
 **Recommendation:** Run both acceptance AND ux-gates tests in CI as a single quality gate to catch drift.
 
 ## For Team Awareness
-- 3 pre-existing test failures in `repl-ux.test.ts` (AgentPanel empty-state rendering). Not introduced by this PR — Kovash's component changes made the old assertions stale. Someone should update those tests.
+- 3 pre-existing test failures in `repl-ux.test.ts` (AgentPanel empty-state rendering). Not introduced by this PR — Eligos's component changes made the old assertions stale. Someone should update those tests.
 
 # Decision: Dual-mode OTel telemetry (Issue #343)
 
-**By:** Saul
+**By:** Leraje
 **Date:** 2026-02-24
 **PR:** #352
 
@@ -2941,7 +2941,7 @@ Brady wants telemetry from both CLI and Copilot agent surfaces. The two modes ne
 # Decision: ThinkingIndicator two-layer architecture
 
 **Date:** 2026-02-24
-**By:** Cheritto (TUI Engineer)
+**By:** Botis (TUI Engineer)
 **Issue:** #331 — Engaging thinking feedback
 **PR:** #351
 
@@ -2960,14 +2960,14 @@ Extracted the inline ThinkingIndicator from MessageStream.tsx into a standalone 
 
 ## Team impact
 
-- **Marquez:** May want to adjust phrase list or rotation timing — both are exported constants
-- **Kovash:** MessageStream interface now has optional `activityHint` prop
-- **Breedan:** 16 new tests in `test/repl-ux.test.ts` sections 7 + 8
+- **Zepar:** May want to adjust phrase list or rotation timing — both are exported constants
+- **Eligos:** MessageStream interface now has optional `activityHint` prop
+- **Bathin:** 16 new tests in `test/repl-ux.test.ts` sections 7 + 8
 - **Foundation for 3.1 (rich progress):** ThinkingIndicator can be extended with progress bars, sub-task tracking
 
 # Decision: Ghost response retry pattern
 
-**By:** Cheritto (TUI Engineer)
+**By:** Botis (TUI Engineer)
 **Date:** 2026-02-25
 **PR:** squad/332-ghost-response
 **Closes:** #332
@@ -2994,7 +2994,7 @@ The SDK occasionally fires `session.idle` before `assistant.message`, causing `s
 
 
 ### 2026-02-25: P1 UX polish — visual language standardization
-**By:** Cheritto (TUI Engineer)
+**By:** Botis (TUI Engineer)
 **PR:** #356 (branch `squad/330-p1-ux-polish`)
 **What:** Standardized 8 visual/interaction patterns across the shell:
 - System prefix is now `▸` (small triangle) — team should use this for all system-level messages
@@ -3002,12 +3002,12 @@ The SDK occasionally fires `session.idle` before `assistant.message`, causing `s
 - Prompt stays cyan in all states (active + disabled) — yellow is reserved for warnings/processing indicators only
 - Focus indicator uses text label `▶ Active` alongside pulsing dot — accessibility over decoration
 - @-addressing is reinforced in placeholder text — key interaction model should be visible at all times
-**Why:** Marquez audit identified 8 P1 inconsistencies. Standardizing now prevents divergence as we add features.
+**Why:** Zepar audit identified 8 P1 inconsistencies. Standardizing now prevents divergence as we add features.
 **Impact:** Any new components rendering separators or system messages should follow these patterns.
 
 # Decision: Rich Progress Indicators (#335)
 
-**Author:** Cheritto (TUI Engineer)
+**Author:** Botis (TUI Engineer)
 **Date:** 2026-02-23
 **Status:** Proposed
 
@@ -3021,7 +3021,7 @@ Two complementary progress surfaces:
    - Uses existing `AgentSession` type extended with `activityHint?: string`
    - SessionRegistry manages hints alongside status
 
-2. **MessageStream activity feed** — `📋 Keaton is reading file...`
+2. **MessageStream activity feed** — `📋 Bael is reading file...`
    - New `agentActivities` Map prop on MessageStream
    - Renders between message list and ThinkingIndicator
    - Backward compatible (no prop = no feed)
@@ -3041,7 +3041,7 @@ Two complementary progress surfaces:
 # Decision: Terminal Adaptivity Strategy (3-tier responsive layout)
 
 **Issue:** #336 — Terminal adaptivity 40→120 col range
-**Author:** Cheritto (TUI Engineer)
+**Author:** Botis (TUI Engineer)
 **Date:** 2026-02-23
 **Status:** Proposed (PR #360)
 
@@ -3084,7 +3084,7 @@ Implemented a 3-tier responsive system based on terminal width:
 # Decision: Copy Polish — Human, Fun, Action-Oriented (Issue #338)
 
 **Date:** 2026-02-24  
-**Author:** McManus (DevRel)  
+**Author:** marbas (DevRel)  
 **Status:** Complete  
 **Related Issue:** #338  
 **Related PR:** #358  
@@ -3180,7 +3180,7 @@ Rewrite every user-facing message in the CLI to be:
 
 # Decision: Accessibility Hardening (#339)
 
-**Author:** Nate (Accessibility & Ergonomics Reviewer)
+**Author:** Sallos (Accessibility & Ergonomics Reviewer)
 **Date:** 2025-07-18
 **Status:** Implemented
 **Issue:** #339
@@ -3211,7 +3211,7 @@ Implement full NO_COLOR/TERM=dumb compliance using a shared `isNoColor()` utilit
 
 # Decision: Animation Architecture — setState-during-render for synchronous transitions
 
-**Author:** Cheritto (TUI Engineer)
+**Author:** Botis (TUI Engineer)
 **Date:** 2026-02-26
 **Issue:** #337 — Animations and transitions
 **Status:** Implemented
@@ -3253,14 +3253,14 @@ All animations use `dimColor` toggle (single re-render) or `useTypewriter` (~15f
 
 # Decision: P2 UX Polish — Text over Emoji, Simplicity over Fidget
 
-**Author:** Cheritto (TUI Engineer)
+**Author:** Botis (TUI Engineer)
 **Date:** 2026-02-26
 **Issue:** #340
 **PR:** #364
 
 ## Context
 
-Marquez's UX audit flagged 6 P2 items — all "polish" tier. The theme across all 6: reduce visual noise, prefer text+ANSI over emoji, and simplify where rotation/variety adds no value.
+Zepar's UX audit flagged 6 P2 items — all "polish" tier. The theme across all 6: reduce visual noise, prefer text+ANSI over emoji, and simplify where rotation/variety adds no value.
 
 ## Decisions Made
 
@@ -3287,7 +3287,7 @@ Low. All changes are visual-only. No behavioral or architectural changes. Tests 
 
 # Decision: First-run wow moment architecture
 
-**Author:** Cheritto (TUI Engineer)
+**Author:** Botis (TUI Engineer)
 **Date:** 2026-02-26
 **Issue:** #341
 **PR:** #362
@@ -3327,7 +3327,7 @@ All animation gated on `isInitNoColor()` which checks `NO_COLOR`, `TERM=dumb`, a
 
 ## Quality Assessment: UX Audit (2026-02-24)
 
-**Author:** Marquez (UX Auditor)  
+**Author:** Zepar (UX Auditor)  
 **Date:** 2026-02-24  
 **Grade:** B
 
@@ -3348,7 +3348,7 @@ UX consistency and user trust depend on clear, structured help and hidden unfini
 
 # Decision: ASCII-only separators and NO_COLOR exit message
 
-**By:** Cheritto
+**By:** Botis
 **Date:** 2026-02-27
 **Context:** Fixing #405, #404, #407
 
@@ -3365,7 +3365,7 @@ Any future banner or status text should use ASCII hyphens for separators. Keep e
 
 # Decision: Version format canonical standard
 
-**Author:** Fenster  
+**Author:** Vassago  
 **Date:** 2026-02-24  
 **PR:** #447  
 **Issues:** #431, #429
@@ -3391,7 +3391,7 @@ All three entry points now produce identical version output:
 
 # Decision: REPL Experience Audit — Comprehensive Timeout, UX, and Test Coverage Analysis
 
-**By:** Kovash (REPL & Interactive Shell Expert)
+**By:** Eligos (REPL & Interactive Shell Expert)
 **Date:** 2026-02-24
 **Context:** Brady directive — "I'm shocked there are no REPL end-to-end integration tests." Full audit of the 2-minute timeout and dead air moments.
 
@@ -3412,12 +3412,12 @@ Conducted comprehensive REPL audit focusing on timeout handling, SDK connection 
 
 All issues filed with detailed technical analysis. Framework in place for all downstream fixes. Reference architectures documented for timeout tiers, streaming visibility, test harness, and cancellation.
 
-**Signed:** Kovash (REPL & Interactive Shell Expert)
+**Signed:** Eligos (REPL & Interactive Shell Expert)
 **Date:** 2026-02-24
 
 # Decision: First 30 Seconds UX Standard
 
-**By:** Marquez (CLI UX Designer)
+**By:** Zepar (CLI UX Designer)
 **Date:** 2026-02-24
 **Status:** Proposed
 
@@ -3457,10 +3457,10 @@ All P0 issues must be resolved before v1.0 release.
 
 ## Team Impact
 
-- **Cheritto:** Welcome animation, spinner context
-- **Fenster/Edie:** Help text structure
-- **Kujan:** SDK connection status
-- **Marquez:** UX review approval on PRs that touch first-run experience
+- **Botis:** Welcome animation, spinner context
+- **Vassago/Amon:** Help text structure
+- **Valefor:** SDK connection status
+- **Zepar:** UX review approval on PRs that touch first-run experience
 
 # Decision: Help text: Progressive disclosure over overwhelming defaults
 
@@ -3495,10 +3495,10 @@ All P0 issues must be resolved before v1.0 release.
 
 https://github.com/bradygaster/squad-pr/pull/438
 
-# Decision: First 30 Seconds UX Standards (Waingro Hostile QA Assessment)
+# Decision: First 30 Seconds UX Standards (Purson Hostile QA Assessment)
 
 **Date:** 2026-02-24  
-**Author:** Waingro (Hostile QA)  
+**Author:** Purson (Hostile QA)  
 **Status:** Proposed
 
 ## Context
@@ -3587,14 +3587,14 @@ Establish UX standards for the critical first 30 seconds:
 
 ## Review Requested
 
-- **Marquez** (UX design) — approve help tier structure
-- **Keaton** (Architect) — approve entry point consolidation strategy
-- **Cheritto** (CLI lead) — implement loading indicators
+- **Zepar** (UX design) — approve help tier structure
+- **Bael** (Architect) — approve entry point consolidation strategy
+- **Botis** (CLI lead) — implement loading indicators
 
 
 ### 2026-02-24T21:46:00Z: Unified status vocabulary
 
-**By:** Marquez (CLI UX Designer)
+**By:** Zepar (CLI UX Designer)
 
 **Decision:** Adopt the /agents command vocabulary — `[WORK]` / `[STREAM]` / `[ERR]` / `[IDLE]` — as the standard across ALL status surfaces. Replace AgentPanel's lowercase "streaming"/"working" and `[Active]` with this vocabulary.
 
@@ -3628,7 +3628,7 @@ The /agents vocabulary wins because:
 
 ### 2026-02-24T21:45:00Z: Pick one tagline
 
-**By:** Marquez (CLI UX Designer)
+**By:** Zepar (CLI UX Designer)
 
 **Decision:** Use "Team of AI agents at your fingertips" everywhere.
 
@@ -3652,14 +3652,14 @@ The action tagline ("Add an AI agent team...") feels like feature description, n
 ---
 
 ### 2026-02-24: Wave D Readiness & Batch 1 Prioritization
-**By:** Keaton
-**What:** Wave D (Delight) is ready to define. 13 P1–P2 gaps from Marquez UX and Waingro fragility catalogs, plus dogfood closure (#324) identified. Batch 1 prioritizes 3 P1 UX items (unified status display, adaptive keyboard hints, error recovery guidance) + 3 P2 hardening items (message history cap, per-agent streaming, streamBuffer cleanup). Batch 2 adds polish features. Batch 3 defers long-term hardening if timeline tight.
+**By:** Bael
+**What:** Wave D (Delight) is ready to define. 13 P1–P2 gaps from Zepar UX and Purson fragility catalogs, plus dogfood closure (#324) identified. Batch 1 prioritizes 3 P1 UX items (unified status display, adaptive keyboard hints, error recovery guidance) + 3 P2 hardening items (message history cap, per-agent streaming, streamBuffer cleanup). Batch 2 adds polish features. Batch 3 defers long-term hardening if timeline tight.
 **Why:** Solid foundation (Waves A–C complete). Wave D turns it into something users *love* through precision, certainty, and memory safety hardening.
-**Details:** See keaton-wave-d-assessment.md. Total effort: 20–25 hrs for Batch 1 (~4–5 PRs, 1 week). Dogfood testing closes last blocker before launch.
+**Details:** See bael-wave-d-assessment.md. Total effort: 20–25 hrs for Batch 1 (~4–5 PRs, 1 week). Dogfood testing closes last blocker before launch.
 **Closes:** #410 (via PR #487)
 
 ## 2026-02-24: Public Readiness Assessment (consolidated)
-**By:** Keaton, Fenster, Hockney, McManus, Rabin, Baer, Edie
+**By:** Bael, Vassago, Samigina, marbas, Buer, Gusion, Amon
 
 ### Context
 Brady requested comprehensive public readiness assessment for Squad SDK + CLI source release. All 7 agents conducted independent reviews (architecture, code quality, testing, documentation, distribution, security, types).
@@ -3669,19 +3669,19 @@ Brady requested comprehensive public readiness assessment for Squad SDK + CLI so
 
 ### Key Findings (Consolidated)
 
-**Architecture & Core Dev (Keaton, Fenster):**
+**Architecture & Core Dev (Bael, Vassago):**
 - Architecture is mature, production-grade, well-typed
 - Feature set sufficient for v1 public release
 - 2930 tests passing, builds clean
 - P1 issue: 3 console.log statements in coordinator/index.ts (gate behind SQUAD_DEBUG env var or remove)
 
-**Testing & Quality (Hockney):**
+**Testing & Quality (Samigina):**
 - Test quality is genuine: 2930 passing tests, 90.68% branch coverage
 - Critical issue: CI workflow runs wrong test runner (node --test vs npm test) — false green
 - Missing: real Copilot SDK integration tests (all tests mock CopilotClient)
 - Action: Fix CI workflow, verify coverage config, add 1 integration test
 
-**Documentation & Messaging (McManus):**
+**Documentation & Messaging (marbas):**
 - Docs strong: README comprehensive, getting-started clear, API documented
 - Tone clean: no hype, no overclaiming
 - 3 critical issues (30 min to fix):
@@ -3689,39 +3689,39 @@ Brady requested comprehensive public readiness assessment for Squad SDK + CLI so
   2. Status contradiction: README badge says "alpha", Status section says "Production"
   3. Broken link: CONTRIBUTING.md references non-existent CONTRIBUTORS.md
 
-**Distribution & Packaging (Rabin):**
+**Distribution & Packaging (Buer):**
 - Package metadata complete and correct
 - Files field clean (no test fixtures, no src leakage)
 - Security: zero npm audit vulnerabilities
 - Nice-to-have: add homepage/bugs fields to package.json
 
-**Security & Compliance (Baer):**
+**Security & Compliance (Gusion):**
 - No hardcoded secrets, no PII leaks
 - Hook-based governance solid (file-write guards, shell restrictions, PII scrubbing all code-enforced)
 - Dev dependency warning (minimatch ReDoS) is not in production code
 - Action: Run npm audit fix after v0.8.5.1 published to npm
 
-**Type System & Public API (Edie):**
+**Type System & Public API (Amon):**
 - Strict mode enforced, zero @ts-ignore suppressions
 - ESM-only, no CJS pollution
 - 43 named exports, 18 subpath exports, clean public API
 - Missing: noUncheckedIndexedAccess (acceptable for M1, add in M2)
 
 ### Must-Fixes (Consensus)
-1. **LICENSE file** (McManus) — Create LICENSE at repo root with MIT text
-2. **CI workflow** (Hockney) — Change .github/workflows/squad-ci.yml line 24 from 
+1. **LICENSE file** (marbas) — Create LICENSE at repo root with MIT text
+2. **CI workflow** (Samigina) — Change .github/workflows/squad-ci.yml line 24 from 
 ode --test test/*.test.js to 
 pm test
-3. **Debug console.logs** (Fenster) — Gate 3 coordinator console.log statements (lines 117, 122, 127) behind SQUAD_DEBUG env var or remove
+3. **Debug console.logs** (Vassago) — Gate 3 coordinator console.log statements (lines 117, 122, 127) behind SQUAD_DEBUG env var or remove
 
 ### Nice-to-Have (Post-M1)
 - Add homepage/bugs fields to packages/squad-sdk/package.json and packages/squad-cli/package.json
 - Add 
-oUncheckedIndexedAccess: true to tsconfig.json (Edie, M2)
-- Tighten coordinator config types (Edie, post-M1)
-- Add architecture overview doc (Keaton, 15-20 min)
-- Document breaking change policy (Keaton)
-- Close #324 dogfood testing (Keaton blocker, must close before Wave E)
+oUncheckedIndexedAccess: true to tsconfig.json (Amon, M2)
+- Tighten coordinator config types (Amon, post-M1)
+- Add architecture overview doc (Bael, 15-20 min)
+- Document breaking change policy (Bael)
+- Close #324 dogfood testing (Bael blocker, must close before Wave E)
 
 ### Risk Assessment
 - **Low risk:** Code quality, architecture, security posture all solid
@@ -3744,7 +3744,7 @@ oUncheckedIndexedAccess: true to tsconfig.json (Edie, M2)
 **Why:** User request — captured for team memory
 
 ### 2026-02-24: Documentation readiness for public alpha release
-**By:** McManus (DevRel)
+**By:** marbas (DevRel)
 **What:** Standardized documentation for public alpha release:
 1. Created MIT LICENSE file at repo root with Brady Gaster and contributors as copyright holders
 2. Added experimental/alpha warnings to all CLI docs (installation, shell, vscode) with consistent blockquote banner
@@ -3757,7 +3757,7 @@ oUncheckedIndexedAccess: true to tsconfig.json (Edie, M2)
 
 # Decision: Ghost Command Aliasing Strategy
 
-**Author:** Fenster
+**Author:** Vassago
 **Date:** 2026-02-24
 **Issues:** #501, #503, #504, #507, #509
 
@@ -3793,7 +3793,7 @@ Wire them as aliases to existing functionality rather than building new features
 
 
 ### Per-command --help/-h: intercept-before-dispatch pattern
-**By:** Fenster (Core Dev)
+**By:** Vassago (Core Dev)
 **Date:** 2025-07-14
 **PR:** #533
 **Closes:** #511, #512
@@ -3804,13 +3804,13 @@ Wire them as aliases to existing functionality rather than building new features
 
 **Convention:** Any new CLI command added to the router MUST have a corresponding entry in the `getCommandHelp()` map in `cli-entry.ts`. Help text should include: usage line, 1-2 sentence description, options, and at least 2 examples.
 
-**Source:** Draft help text from `.squad/agents/fenster/cli-command-inventory.md`.
+**Source:** Draft help text from `.squad/agents/vassago/cli-command-inventory.md`.
 
 
 # Decision: Watch uses SDK triage subpath
 
 - Date: 2026-02-27
-- Owner: Fenster
+- Owner: Vassago
 - Context: packages/squad-cli/src/cli/commands/watch.ts needed to adopt routing-aware triage from SDK.
 
 ## Decision
@@ -3825,7 +3825,7 @@ Use direct SDK subpath import @bradygaster/squad-sdk/ralph/triage and add ./ralp
 # Decision: Ralph Smart Triage Module — Architecture Review
 
 **Date:** 2026-02-25
-**Author:** Keaton (Lead)
+**Author:** Bael (Lead)
 **Verdict:** ✅ APPROVED
 
 ## Files Reviewed
@@ -3851,9 +3851,9 @@ Use direct SDK subpath import @bradygaster/squad-sdk/ralph/triage and add ./ralp
 
 ## Minor Suggestions (Non-blocking)
 
-1. **Emoji in RoutingRule.agentName:** `parseRoutingRules` stores raw values like `"Fenster 🔧"` — normalization only happens during `findMember`. Consider stripping emoji at parse time so stored values are clean.
+1. **Emoji in RoutingRule.agentName:** `parseRoutingRules` stores raw values like `"Vassago 🔧"` — normalization only happens during `findMember`. Consider stripping emoji at parse time so stored values are clean.
 2. **GhPullRequest missing `createdAt`/`updatedAt`:** Ralph will need these for staleness detection. Add in next iteration.
-3. **`findRoleKeywordMatch` takes first match:** If multiple members share a role keyword (e.g., Hockney=Tester, Breedan=E2E Test Engineer), first wins. Acceptable since routing rules (higher priority) catch specific cases.
+3. **`findRoleKeywordMatch` takes first match:** If multiple members share a role keyword (e.g., Samigina=Tester, Bathin=E2E Test Engineer), first wins. Acceptable since routing rules (higher priority) catch specific cases.
 4. **Role keyword matching is hardcoded to frontend/backend/test:** Doesn't leverage project-specific roles (Prompt Engineer, SDK Expert). Fine as a fallback — routing rules handle specifics.
 
 ## Decision
@@ -3865,14 +3865,14 @@ Approved for merge. Architecture compounds — pure parsing + typed decisions + 
 # Replatform Readiness Assessment (Brady Handoff)
 
 **Date:** 2026-02-27T23:30:00Z  
-**Author:** Keaton (Lead)  
+**Author:** Bael (Lead)  
 **Status:** DECISION — Ready to ship v1 public alpha  
 
 ---
 
 ## Context
 
-Brady asked: "We gotta get this thing moved over" — meaning the v1 replatform from squad-beta to squad-pr as public alpha. Keaton assessed full project state: codebase, tests, open issues, open PRs, readiness to launch.
+Brady asked: "We gotta get this thing moved over" — meaning the v1 replatform from squad-beta to squad-pr as public alpha. Bael assessed full project state: codebase, tests, open issues, open PRs, readiness to launch.
 
 ---
 
@@ -3908,7 +3908,7 @@ Brady asked: "We gotta get this thing moved over" — meaning the v1 replatform 
 **Git History**
 - HEAD = dev (same as origin/main).
 - 6 recent commits (samples, docs, CLI help, ghost commands, OTel, Ctrl+C). All shipped.
-- No open PRs on main. Workspace clean (only .squad/agents/kobayashi/history.md unstaged — non-blocking).
+- No open PRs on main. Workspace clean (only .squad/agents/barbatos/history.md unstaged — non-blocking).
 
 **Architecture**
 - SDK/CLI split complete. Clean one-way DAG (CLI → SDK → @github/copilot-sdk).
@@ -3921,16 +3921,16 @@ Brady asked: "We gotta get this thing moved over" — meaning the v1 replatform 
 ### 2. Open Issues (2 total, 1 is BLOCKER) ⚠️
 
 **#532 — Dogfood REPL against real-world repositories (P0) — 🔴 BLOCKER**
-- **Assigned:** Waingro + Hockney
+- **Assigned:** Purson + Samigina
 - **What:** Test REPL against 4 repo types: fresh init, existing squadded, monorepo, solo.
 - **Why critical:** Only open issue blocking replatform confidence. No other issues pending.
-- **Recommendation:** Close this week. Brady + Waingro priority.
+- **Recommendation:** Close this week. Brady + Purson priority.
 
 **#542 — GitHub Project Board automation (P1-ish) — 🟡 NICE-TO-HAVE**
-- **Assigned:** Hockney
+- **Assigned:** Samigina
 - **What:** `squad board` CLI command + `sync-board.yml` workflow. 6 board columns. Well-designed.
 - **Why defer:** Scope is clean but not critical to replatform launch. Wave E feature.
-- **Recommendation:** Queue for Wave E. Hockney can start after replatform stabilizes.
+- **Recommendation:** Queue for Wave E. Samigina can start after replatform stabilizes.
 
 ---
 
@@ -3940,7 +3940,7 @@ Brady asked: "We gotta get this thing moved over" — meaning the v1 replatform 
 - **Scope:** 12596 additions, 32 files, -10061 net deletions (refactor).
 - **What:** Ralph's heartbeat + watch now read routing.md (smart triage, no dumb keywords).
 - **Tests:** 57 tests across 3 files. All passing.
-- **Quality:** High. Reviewed by Keaton. Code is solid. Unblocks Ralph for real work.
+- **Quality:** High. Reviewed by Bael. Code is solid. Unblocks Ralph for real work.
 - **Recommendation:** Merge today. Safe and valuable.
 
 **#553 — Personal Squad Consult Mode (James Sturtevant) — 🟡 SHIP IN WAVE E**
@@ -4002,7 +4002,7 @@ Brady asked: "We gotta get this thing moved over" — meaning the v1 replatform 
 ### BLOCKER: #532 (Dogfood) 🔴
 - **Must close before replatform launch.**
 - **Impact:** Without dogfooding, we ship to public without confidence in real-world usage.
-- **Mitigation:** Brady + Waingro close this week (Feb 28). Test against 4 repo types. Document findings.
+- **Mitigation:** Brady + Purson close this week (Feb 28). Test against 4 repo types. Document findings.
 - **Confidence gate:** "We've tested on fresh projects, monorepos, and existing squadded repos — all work."
 
 ### Secondary Risk: Observer Effects from External PRs
@@ -4011,7 +4011,7 @@ Brady asked: "We gotta get this thing moved over" — meaning the v1 replatform 
 
 ### Post-Launch Risks (Not Blockers)
 - **Observability:** OTel integration is not critical for alpha. Plan for Wave F (production use case).
-- **UX debt:** Marquez's UX audit findings + dogfood findings will drive Wave E. Expected and healthy.
+- **UX debt:** Zepar's UX audit findings + dogfood findings will drive Wave E. Expected and healthy.
 - **Community feedback:** Assume 15-20 issues will surface in first week of public use. Plan to triage + prioritize.
 
 ---
@@ -4019,8 +4019,8 @@ Brady asked: "We gotta get this thing moved over" — meaning the v1 replatform 
 ## Concrete Timeline
 
 ### Today (Feb 27)
-- Merge #552 (Ralph triage). Safe. Tests pass. Keaton reviewed.
-- Start #532 (dogfood). Brady + Waingro begin testing against 4 repo types.
+- Merge #552 (Ralph triage). Safe. Tests pass. Bael reviewed.
+- Start #532 (dogfood). Brady + Purson begin testing against 4 repo types.
 
 ### Tomorrow (Feb 28)
 - Close #532. Document findings.
@@ -4034,7 +4034,7 @@ Brady asked: "We gotta get this thing moved over" — meaning the v1 replatform 
 
 ### Wave E (Post-Launch, 1-2 weeks)
 - Dogfood findings triage.
-- Marquez UX audit implementation.
+- Zepar UX audit implementation.
 - Community feedback iteration.
 - Merge #553 + #547 (personal consult + remote control).
 - Plan observability (Wave F).
@@ -4048,7 +4048,7 @@ Brady asked: "We gotta get this thing moved over" — meaning the v1 replatform 
 **Contingency:** #532 (dogfood) must close first. No other blockers.
 
 **Scope:**
-- Close #532 (Waingro/Brady).
+- Close #532 (Purson/Brady).
 - Merge #552 (Boyer's Ralph triage).
 - Ship v0.8.5.1 public alpha.
 - Queue #553 + #547 for Wave E.
@@ -4086,7 +4086,7 @@ Brady asked: "We gotta get this thing moved over" — meaning the v1 replatform 
 
 # Decision: REPL cancellation and configurable timeout
 
-**Author:** Kovash  
+**Author:** Eligos  
 **Date:** 2026-02-25  
 **PR:** #538  
 **Issues:** #500, #502
@@ -4111,7 +4111,7 @@ The REPL had two UX friction points: (1) Ctrl+C during streaming left the shell 
 
 # Decision: Shell Observability Metrics Design
 
-**Author:** Saul (Aspire & Observability)
+**Author:** Leraje (Aspire & Observability)
 **Date:** 2026-02-24
 **Issues:** #508, #520, #526, #530, #531
 
@@ -4155,9 +4155,9 @@ Five overlapping issues requested telemetry instrumentation of the REPL shell: s
 - Compatible with existing Aspire dashboard — metrics appear under `squad-shell` meter
 
 ### 2026-02-25: Issue #532 Analysis: Dogfooding Gap — REPL Testing Against Real-World Repos
-**By:** Keaton (Lead)
+**By:** Bael (Lead)
 **Issue:** #532 — Resolve dogfooding gap — test REPL against real-world repositories
-**Labels:** squad:hockney, squad:waingro, go:needs-research
+**Labels:** squad:samigina, squad:purson, go:needs-research
 **Status:** ANALYSIS COMPLETE — Ready for decomposition into sub-tasks
 **Created:** 2026-02-25
 
@@ -4177,17 +4177,17 @@ Issue #532 is correctly scoped as a **research + testing initiative**, NOT a fea
 
 - **5–8 real-world repositories** (Python, Node, Go, monorepo, mixed-language, edge cases)
 - **Test harness** created (	est/repl-dogfood.test.ts)
-- **Manual dogfood execution** (Waingro + Hockney)
+- **Manual dogfood execution** (Purson + Samigina)
 - **Metrics capture** (response time, tokens, errors)
 - **Effort estimate:** ~10–12 hours (2–3 people, 2–3 days)
 
 ## Routing
 
-Assign to **Waingro** (primary dogfooder) + **Hockney** (test implementation).
+Assign to **Purson** (primary dogfooder) + **Samigina** (test implementation).
 
 ### 2026-02-24: Decision: Dogfood Test Fixtures Architecture
 **Date:** 2026-02-24
-**Author:** Waingro (Hostile QA)
+**Author:** Purson (Hostile QA)
 **Issue:** #532 (Resolve dogfooding gap — test REPL against real-world repositories)
 **Branch:** squad/532-dogfood-repl
 

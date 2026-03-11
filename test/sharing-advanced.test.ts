@@ -64,7 +64,7 @@ function makeConfig(overrides: Partial<SquadConfig> = {}): SquadConfig {
       defaultTier: 'standard',
       tiers: { standard: ['claude-sonnet-4'], fast: ['claude-haiku-4.5'] },
     },
-    agents: overrides.agents ?? [{ name: 'verbal', role: 'prompt-engineer' }],
+    agents: overrides.agents ?? [{ name: 'agares', role: 'prompt-engineer' }],
   };
 }
 
@@ -98,27 +98,27 @@ describe('Versioning (M5-6)', () => {
 
   describe('pinAgentVersion', () => {
     it('should create a version pin with correct fields', () => {
-      const pin = pinAgentVersion('verbal', 'abc123');
-      expect(pin.agentId).toBe('verbal');
+      const pin = pinAgentVersion('agares', 'abc123');
+      expect(pin.agentId).toBe('agares');
       expect(pin.sha).toBe('abc123');
       expect(pin.source).toBe('local');
       expect(typeof pin.timestamp).toBe('number');
     });
 
     it('should store pin in version history', () => {
-      pinAgentVersion('verbal', 'sha1');
-      pinAgentVersion('verbal', 'sha2');
-      const history = getVersionHistory('verbal');
+      pinAgentVersion('agares', 'sha1');
+      pinAgentVersion('agares', 'sha2');
+      const history = getVersionHistory('agares');
       expect(history).toHaveLength(2);
     });
 
     it('should support github source', () => {
-      const pin = pinAgentVersion('verbal', 'abc', 'github');
+      const pin = pinAgentVersion('agares', 'abc', 'github');
       expect(pin.source).toBe('github');
     });
 
     it('should support "latest" as special SHA', () => {
-      const pin = pinAgentVersion('verbal', 'latest');
+      const pin = pinAgentVersion('agares', 'latest');
       expect(pin.sha).toBe('latest');
     });
   });
@@ -146,30 +146,30 @@ describe('Versioning (M5-6)', () => {
 
   describe('resolveVersion', () => {
     it('should resolve a pinned version via resolver', async () => {
-      const agent = makeAgent({ name: 'verbal' });
+      const agent = makeAgent({ name: 'agares' });
       const resolver: AgentVersionResolver = vi.fn(async () => agent);
-      const pin = pinAgentVersion('verbal', 'abc123');
+      const pin = pinAgentVersion('agares', 'abc123');
 
       const result = await resolveVersion(pin, resolver);
       expect(result).toBe(agent);
-      expect(resolver).toHaveBeenCalledWith('verbal', 'abc123');
+      expect(resolver).toHaveBeenCalledWith('agares', 'abc123');
     });
 
     it('should resolve "latest" via headResolver', async () => {
-      const agent = makeAgent({ name: 'verbal' });
+      const agent = makeAgent({ name: 'agares' });
       const resolver: AgentVersionResolver = vi.fn(async () => agent);
       const headResolver = vi.fn(async () => 'head-sha');
-      const pin = pinAgentVersion('verbal', 'latest');
+      const pin = pinAgentVersion('agares', 'latest');
 
       const result = await resolveVersion(pin, resolver, headResolver);
       expect(result).toBe(agent);
-      expect(headResolver).toHaveBeenCalledWith('verbal');
-      expect(resolver).toHaveBeenCalledWith('verbal', 'head-sha');
+      expect(headResolver).toHaveBeenCalledWith('agares');
+      expect(resolver).toHaveBeenCalledWith('agares', 'head-sha');
     });
 
     it('should return null for "latest" without headResolver', async () => {
       const resolver: AgentVersionResolver = vi.fn(async () => null);
-      const pin = pinAgentVersion('verbal', 'latest');
+      const pin = pinAgentVersion('agares', 'latest');
 
       const result = await resolveVersion(pin, resolver);
       expect(result).toBeNull();
@@ -178,18 +178,18 @@ describe('Versioning (M5-6)', () => {
 
   describe('compareAgentVersions', () => {
     it('should detect changed fields between versions', async () => {
-      const agentA = makeAgent({ name: 'verbal', role: 'prompter', charter: 'v1' });
-      const agentB = makeAgent({ name: 'verbal', role: 'engineer', charter: 'v2' });
+      const agentA = makeAgent({ name: 'agares', role: 'prompter', charter: 'v1' });
+      const agentB = makeAgent({ name: 'agares', role: 'engineer', charter: 'v2' });
       const resolver: AgentVersionResolver = vi.fn(async (_id, sha) =>
         sha === 'sha1' ? agentA : agentB,
       );
-      const pinA: VersionPin = { agentId: 'verbal', sha: 'sha1', timestamp: 1, source: 'local' };
-      const pinB: VersionPin = { agentId: 'verbal', sha: 'sha2', timestamp: 2, source: 'local' };
+      const pinA: VersionPin = { agentId: 'agares', sha: 'sha1', timestamp: 1, source: 'local' };
+      const pinB: VersionPin = { agentId: 'agares', sha: 'sha2', timestamp: 2, source: 'local' };
 
       const diff = await compareAgentVersions(pinA, pinB, resolver);
       expect(diff.fields).toContain('role');
       expect(diff.fields).toContain('charter');
-      expect(diff.agentId).toBe('verbal');
+      expect(diff.agentId).toBe('agares');
     });
 
     it('should return __unresolvable__ when agents cannot be resolved', async () => {
@@ -272,10 +272,10 @@ describe('Agent Repo (M5-7)', () => {
   describe('listRepoAgents', () => {
     it('should list agents from repo', async () => {
       const ops = makeOps(
-        [{ name: 'verbal', type: 'dir' }, { name: 'fenster', type: 'dir' }],
+        [{ name: 'agares', type: 'dir' }, { name: 'vassago', type: 'dir' }],
         {
-          '.squad/agents/verbal/charter.md': CHARTER,
-          '.squad/agents/fenster/charter.md': '## Identity\n**Name:** Fenster\n**Role:** Architect',
+          '.squad/agents/agares/charter.md': CHARTER,
+          '.squad/agents/vassago/charter.md': '## Identity\n**Name:** Vassago\n**Role:** Architect',
         },
       );
       const config = configureAgentRepo({ owner: 'acme', repo: 'squad' });
@@ -332,7 +332,7 @@ describe('Agent Repo (M5-7)', () => {
     it('should push agent charter to repo', async () => {
       const ops = makeOps();
       const config = configureAgentRepo({ owner: 'acme', repo: 'squad' });
-      const agent = makeAgent({ name: 'verbal', charter: '# Verbal charter' });
+      const agent = makeAgent({ name: 'agares', charter: '# Agares charter' });
 
       const result = await pushAgent(config, agent, ops);
       expect(result.success).toBe(true);

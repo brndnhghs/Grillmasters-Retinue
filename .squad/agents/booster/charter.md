@@ -36,7 +36,7 @@
 - Require PRs for protected branches
 - Verify PRs reference issues
 - Scan for secrets in CI output
-- Add CI check for stale test assertions (prevents the Fenster/Hockney problem of changing APIs without updating tests)
+- Add CI check for stale test assertions (prevents the Vassago/Samigina problem of changing APIs without updating tests)
 
 ## Boundaries
 

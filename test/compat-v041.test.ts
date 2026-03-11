@@ -82,11 +82,11 @@ function tmpDir(): string {
 
 describe('Compat v0.4.1: Routing Parity', () => {
   const RULES = [
-    { workType: 'feature-dev', agents: ['fenster'], examples: ['new feature', 'implement', 'add'], confidence: 'high' as const },
-    { workType: 'bug-fix', agents: ['fenster'], examples: ['fix bug', 'patch', 'broken'], confidence: 'high' as const },
-    { workType: 'testing', agents: ['hockney'], examples: ['test', 'coverage', 'spec'], confidence: 'high' as const },
-    { workType: 'documentation', agents: ['verbal', 'scribe'], examples: ['docs', 'readme', 'changelog'], confidence: 'medium' as const },
-    { workType: 'refactoring', agents: ['fenster', 'mcmanus'], examples: ['refactor', 'clean up', 'restructure'], confidence: 'medium' as const },
+    { workType: 'feature-dev', agents: ['vassago'], examples: ['new feature', 'implement', 'add'], confidence: 'high' as const },
+    { workType: 'bug-fix', agents: ['vassago'], examples: ['fix bug', 'patch', 'broken'], confidence: 'high' as const },
+    { workType: 'testing', agents: ['samigina'], examples: ['test', 'coverage', 'spec'], confidence: 'high' as const },
+    { workType: 'documentation', agents: ['agares', 'scribe'], examples: ['docs', 'readme', 'changelog'], confidence: 'medium' as const },
+    { workType: 'refactoring', agents: ['vassago', 'marbas'], examples: ['refactor', 'clean up', 'restructure'], confidence: 'medium' as const },
   ];
 
   let router: CompiledRouter;
@@ -95,24 +95,24 @@ describe('Compat v0.4.1: Routing Parity', () => {
     router = compileRoutingRules({ rules: RULES });
   });
 
-  it('routes "implement a new feature" to fenster', () => {
+  it('routes "implement a new feature" to vassago', () => {
     const match = matchRoute('implement a new feature for the API', router);
-    expect(match.agents).toContain('fenster');
+    expect(match.agents).toContain('vassago');
   });
 
-  it('routes "fix a broken test" to fenster (bug-fix)', () => {
+  it('routes "fix a broken test" to vassago (bug-fix)', () => {
     const match = matchRoute('fix a broken build in CI', router);
-    expect(match.agents).toContain('fenster');
+    expect(match.agents).toContain('vassago');
   });
 
-  it('routes "test coverage for the spec suite" to hockney', () => {
+  it('routes "test coverage for the spec suite" to samigina', () => {
     const match = matchRoute('improve test coverage for the spec suite', router);
-    expect(match.agents).toContain('hockney');
+    expect(match.agents).toContain('samigina');
   });
 
-  it('routes "write the changelog docs" to verbal and scribe', () => {
+  it('routes "write the changelog docs" to agares and scribe', () => {
     const match = matchRoute('write the changelog docs for the release', router);
-    expect(match.agents).toContain('verbal');
+    expect(match.agents).toContain('agares');
     expect(match.agents).toContain('scribe');
   });
 
@@ -135,15 +135,15 @@ describe('Compat v0.4.1: Routing Parity', () => {
 
 | Work Type | Route To | Examples |
 |-----------|----------|----------|
-| feature-dev | fenster | new feature, implement |
-| bug-fix | fenster | fix bug, patch |
-| testing | hockney | test, coverage |
+| feature-dev | vassago | new feature, implement |
+| bug-fix | vassago | fix bug, patch |
+| testing | samigina | test, coverage |
 `;
     const config = parseRoutingMarkdown(md);
     expect(config.rules.length).toBe(3);
     expect(config.rules[0].workType).toBe('feature-dev');
-    expect(config.rules[0].agents).toContain('fenster');
-    expect(config.rules[2].agents).toContain('hockney');
+    expect(config.rules[0].agents).toContain('vassago');
+    expect(config.rules[2].agents).toContain('samigina');
   });
 });
 
@@ -158,30 +158,30 @@ describe('Compat v0.4.1: Casting Parity', () => {
     engine = new CastingEngine();
   });
 
-  it('usual-suspects default cast has lead, developer, tester', () => {
-    const team = engine.castTeam({ universe: 'usual-suspects' });
+  it('solomonic-demonology default cast has lead, developer, tester', () => {
+    const team = engine.castTeam({ universe: 'solomonic-demonology' });
     const roles = team.map((m) => m.role);
     expect(roles).toContain('lead');
     expect(roles).toContain('developer');
     expect(roles).toContain('tester');
   });
 
-  it('usual-suspects lead is Keyser', () => {
-    const team = engine.castTeam({ universe: 'usual-suspects' });
+  it('solomonic-demonology lead is Bael', () => {
+    const team = engine.castTeam({ universe: 'solomonic-demonology' });
     const lead = team.find((m) => m.role === 'lead');
-    expect(lead?.name).toBe('Keyser');
+    expect(lead?.name).toBe('Bael');
   });
 
-  it('usual-suspects developer is McManus', () => {
-    const team = engine.castTeam({ universe: 'usual-suspects' });
+  it('solomonic-demonology developer is marbas', () => {
+    const team = engine.castTeam({ universe: 'solomonic-demonology' });
     const dev = team.find((m) => m.role === 'developer');
-    expect(dev?.name).toBe('McManus');
+    expect(dev?.name).toBe('marbas');
   });
 
-  it('usual-suspects tester is Fenster', () => {
-    const team = engine.castTeam({ universe: 'usual-suspects' });
+  it('solomonic-demonology tester is Vassago', () => {
+    const team = engine.castTeam({ universe: 'solomonic-demonology' });
     const tester = team.find((m) => m.role === 'tester');
-    expect(tester?.name).toBe('Fenster');
+    expect(tester?.name).toBe('Vassago');
   });
 
   it('oceans-eleven lead is Danny', () => {
@@ -191,7 +191,7 @@ describe('Compat v0.4.1: Casting Parity', () => {
   });
 
   it('display name format is preserved', () => {
-    const team = engine.castTeam({ universe: 'usual-suspects' });
+    const team = engine.castTeam({ universe: 'solomonic-demonology' });
     for (const m of team) {
       expect(m.displayName).toBe(`${m.name} — ${formatRole(m.role)}`);
     }
@@ -314,7 +314,7 @@ describe('Compat v0.4.1: Hook Pipeline', () => {
     const result = await pipeline.runPreToolHooks({
       toolName: 'edit',
       arguments: { path: 'secrets/keys.json' },
-      agentName: 'fenster',
+      agentName: 'vassago',
       sessionId: 's1',
     });
     vi.restoreAllMocks();
@@ -326,7 +326,7 @@ describe('Compat v0.4.1: Hook Pipeline', () => {
     const result = await pipeline.runPreToolHooks({
       toolName: 'edit',
       arguments: { path: 'src/config/schema.ts' },
-      agentName: 'fenster',
+      agentName: 'vassago',
       sessionId: 's1',
     });
     expect(result.action).toBe('allow');
@@ -337,7 +337,7 @@ describe('Compat v0.4.1: Hook Pipeline', () => {
     vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     const ctx: PreToolUseContext = {
-      toolName: 'ask_user', arguments: {}, agentName: 'fenster', sessionId: 's1',
+      toolName: 'ask_user', arguments: {}, agentName: 'vassago', sessionId: 's1',
     };
     await pipeline.runPreToolHooks(ctx); // 1
     await pipeline.runPreToolHooks(ctx); // 2
@@ -348,9 +348,9 @@ describe('Compat v0.4.1: Hook Pipeline', () => {
 
   it('reviewer lockout blocks locked-out agent from artifact', () => {
     const lockout = new ReviewerLockoutHook();
-    lockout.lockout('src/auth.ts', 'fenster');
-    expect(lockout.isLockedOut('src/auth.ts', 'fenster')).toBe(true);
-    expect(lockout.isLockedOut('src/auth.ts', 'verbal')).toBe(false);
+    lockout.lockout('src/auth.ts', 'vassago');
+    expect(lockout.isLockedOut('src/auth.ts', 'vassago')).toBe(true);
+    expect(lockout.isLockedOut('src/auth.ts', 'agares')).toBe(false);
   });
 });
 
@@ -371,13 +371,13 @@ describe('Compat v0.4.1: Event Bus Shape', () => {
     await bus.emit({
       type: 'session:created',
       sessionId: 'abc-123',
-      agentName: 'fenster',
+      agentName: 'vassago',
       payload: { model: 'claude-sonnet-4.5' },
       timestamp: new Date(),
     });
     expect(events[0].type).toBe('session:created');
     expect(events[0].sessionId).toBe('abc-123');
-    expect(events[0].agentName).toBe('fenster');
+    expect(events[0].agentName).toBe('vassago');
     expect(events[0].timestamp).toBeInstanceOf(Date);
     expect(events[0].payload).toEqual({ model: 'claude-sonnet-4.5' });
   });
@@ -544,7 +544,7 @@ describe('Compat v0.4.1: Streaming Pipeline', () => {
     await pipeline.processEvent({
       type: 'usage',
       sessionId: 's1',
-      agentName: 'fenster',
+      agentName: 'vassago',
       model: 'claude-sonnet-4.5',
       inputTokens: 500,
       outputTokens: 200,
@@ -558,7 +558,7 @@ describe('Compat v0.4.1: Streaming Pipeline', () => {
     expect(typeof summary.estimatedCost).toBe('number');
     expect(summary.byAgent).toBeInstanceOf(Map);
     // Verify values
-    const agentUsage = summary.byAgent.get('fenster')!;
+    const agentUsage = summary.byAgent.get('vassago')!;
     expect(agentUsage.model).toBe('claude-sonnet-4.5');
     expect(agentUsage.turnCount).toBe(1);
   });

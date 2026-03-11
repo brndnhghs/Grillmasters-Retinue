@@ -77,7 +77,7 @@ describe('saveSession', () => {
 
     session.messages.push({
       role: 'agent',
-      agentName: 'baer',
+      agentName: 'gusion',
       content: 'response',
       timestamp: new Date(),
     });

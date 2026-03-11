@@ -65,9 +65,9 @@ function scaffoldSquadDir(root: string, opts?: { firstRun?: boolean }): void {
 
 | Name | Role | Charter | Status |
 |------|------|---------|--------|
-| Keaton | Lead | \`.squad/agents/keaton/charter.md\` | ✅ Active |
-| Fenster | Core Dev | \`.squad/agents/fenster/charter.md\` | ✅ Active |
-| Hockney | Tester | \`.squad/agents/hockney/charter.md\` | ✅ Active |
+| Bael | Lead | \`.squad/agents/bael/charter.md\` | ✅ Active |
+| Vassago | Core Dev | \`.squad/agents/vassago/charter.md\` | ✅ Active |
+| Samigina | Tester | \`.squad/agents/samigina/charter.md\` | ✅ Active |
 `);
 
   writeFileSync(join(identityDir, 'now.md'), `---
@@ -178,7 +178,7 @@ describe('Journey 2: My first conversation (welcome banner)', () => {
 
     expect(data).not.toBeNull();
     expect(data!.agents.length).toBe(3);
-    expect(data!.agents.map(a => a.name)).toEqual(['Keaton', 'Fenster', 'Hockney']);
+    expect(data!.agents.map(a => a.name)).toEqual(['Bael', 'Vassago', 'Samigina']);
     expect(data!.agents[0]!.role).toBe('Lead');
   });
 
@@ -358,28 +358,28 @@ describe('Journey 4: Something went wrong (errors)', () => {
 // ═══════════════════════════════════════════════════════════════════════════
 
 describe('Journey 5: Talk to a specific agent (@Agent routing)', () => {
-  const knownAgents = ['Keaton', 'Fenster', 'Hockney', 'Kovash'];
+  const knownAgents = ['Bael', 'Vassago', 'Samigina', 'Eligos'];
 
   it('@AgentName routes to the correct agent', () => {
-    const parsed = parseInput('@Keaton fix the build', knownAgents);
+    const parsed = parseInput('@Bael fix the build', knownAgents);
 
     expect(parsed.type).toBe('direct_agent');
-    expect(parsed.agentName).toBe('Keaton');
+    expect(parsed.agentName).toBe('Bael');
     expect(parsed.content).toBe('fix the build');
   });
 
   it('case-insensitive matching works (humans are sloppy typists)', () => {
-    const parsed = parseInput('@keaton fix the build', knownAgents);
+    const parsed = parseInput('@bael fix the build', knownAgents);
 
     expect(parsed.type).toBe('direct_agent');
-    expect(parsed.agentName).toBe('Keaton'); // canonical casing
+    expect(parsed.agentName).toBe('Bael'); // canonical casing
   });
 
   it('"AgentName, do this" comma syntax works too', () => {
-    const parsed = parseInput('Fenster, refactor the parser', knownAgents);
+    const parsed = parseInput('Vassago, refactor the parser', knownAgents);
 
     expect(parsed.type).toBe('direct_agent');
-    expect(parsed.agentName).toBe('Fenster');
+    expect(parsed.agentName).toBe('Vassago');
     expect(parsed.content).toBe('refactor the parser');
   });
 
@@ -398,11 +398,11 @@ describe('Journey 5: Talk to a specific agent (@Agent routing)', () => {
   });
 
   it('@Agent with no message still routes correctly', () => {
-    const parsed = parseInput('@Keaton', knownAgents);
+    const parsed = parseInput('@Bael', knownAgents);
 
     // Should still be direct_agent type, content may be undefined
     expect(parsed.type).toBe('direct_agent');
-    expect(parsed.agentName).toBe('Keaton');
+    expect(parsed.agentName).toBe('Bael');
   });
 });
 
@@ -418,8 +418,8 @@ describe('Journey 6: Power user (slash commands)', () => {
   beforeEach(() => {
     registry = new SessionRegistry();
     renderer = new ShellRenderer();
-    registry.register('Keaton', 'Lead');
-    registry.register('Fenster', 'Core Dev');
+    registry.register('Bael', 'Lead');
+    registry.register('Vassago', 'Core Dev');
   });
 
   function runCommand(input: string, messageHistory: ShellMessage[] = []) {
@@ -452,8 +452,8 @@ describe('Journey 6: Power user (slash commands)', () => {
     const result = runCommand('/agents');
 
     expect(result.handled).toBe(true);
-    expect(result.output).toContain('Keaton');
-    expect(result.output).toContain('Fenster');
+    expect(result.output).toContain('Bael');
+    expect(result.output).toContain('Vassago');
     expect(result.output).toContain('Lead');
     expect(result.output).toContain('Core Dev');
   });
@@ -468,13 +468,13 @@ describe('Journey 6: Power user (slash commands)', () => {
   it('/history with messages shows recent conversation', () => {
     const history: ShellMessage[] = [
       { role: 'user', content: 'hello team', timestamp: new Date() },
-      { role: 'agent', agentName: 'Keaton', content: 'Hey! Ready to work.', timestamp: new Date() },
+      { role: 'agent', agentName: 'Bael', content: 'Hey! Ready to work.', timestamp: new Date() },
     ];
     const result = runCommand('/history', history);
 
     expect(result.handled).toBe(true);
     expect(result.output).toContain('hello team');
-    expect(result.output).toContain('Keaton');
+    expect(result.output).toContain('Bael');
   });
 
   it('/quit signals exit', () => {
@@ -523,12 +523,12 @@ describe('Journey 7: Came back the next day (persistence)', () => {
 
     const data = loadWelcomeData(tempDir);
     expect(data!.agents.length).toBe(3);
-    expect(data!.agents[0]!.name).toBe('Keaton');
+    expect(data!.agents[0]!.name).toBe('Bael');
 
     // Simulate "next day" — load again
     const dataNextDay = loadWelcomeData(tempDir);
     expect(dataNextDay!.agents.length).toBe(3);
-    expect(dataNextDay!.agents[0]!.name).toBe('Keaton');
+    expect(dataNextDay!.agents[0]!.name).toBe('Bael');
   });
 
   it('focus area persists between sessions', () => {

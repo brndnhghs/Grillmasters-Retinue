@@ -44,7 +44,7 @@ const squadPath = resolveSquad();
 const config = loadConfig(squadPath);
 
 // Cast the team
-const casting = new CastingEngine({ universe: 'usual-suspects', agentCount: 5 });
+const casting = new CastingEngine({ universe: 'solomonic-demonology', agentCount: 5 });
 const cast = casting.castTeam({ 
   roles: ['lead', 'frontend', 'backend', 'tester', 'scribe'] 
 });
@@ -251,11 +251,11 @@ setInterval(renderDashboard, 2000);
    └─────────────────────────────────────────┘
 
    👥 Team:
-      Keaton       3 tasks  $0.0045
-      McManus      2 tasks  $0.0012
-      Verbal       4 tasks  $0.0089
-      Fenster      1 task   $0.0003
-      Kobayashi    1 task   $0.0001
+      Bael       3 tasks  $0.0045
+      marbas      2 tasks  $0.0012
+      Agares       4 tasks  $0.0089
+      Vassago      1 task   $0.0003
+      Barbatos    1 task   $0.0001
 
    💰 Cost Tracking:
       Total Spend: $0.0150

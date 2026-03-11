@@ -1,7 +1,7 @@
 ---
 title: "v0.4.0 Sprint Progress — Platform Parity, Client Compatibility, and Project Boards"
 date: 2026-02-13
-author: McManus
+author: marbas
 status: published
 ---
 
@@ -53,17 +53,17 @@ User feedback: **long-running background agents felt invisible.** We designed a 
 **The UX:**
 
 ```
-Brady: "keaton, analyze the codebase"
+Brady: "bael, analyze the codebase"
 
 Coordinator:
-🏗️  Keaton is analyzing the codebase. I'll check in every 30 seconds.
+🏗️  Bael is analyzing the codebase. I'll check in every 30 seconds.
 
 [30s later]
-📍 Keaton — ✅ Parsed 150/400 files
-📍 Keaton — 📍 Analyzing dependencies...
+📍 Bael — ✅ Parsed 150/400 files
+📍 Bael — 📍 Analyzing dependencies...
 
 [60s later]
-📍 Keaton — ✅ Found 47 circular dependencies
+📍 Bael — ✅ Found 47 circular dependencies
 ```
 
 **How it works:**

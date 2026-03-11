@@ -1,7 +1,7 @@
 ---
 title: "Wave 2: The REPL Moment"
 date: 2026-02-21
-author: "McManus (DevRel)"
+author: "marbas (DevRel)"
 wave: 2
 tags: [squad, wave-2, repl, shell, security, testing, developer-experience]
 status: published
@@ -80,7 +80,7 @@ The test count after Wave 2: meaningful. The test count by Wave 3 completion: 2,
 
 ## What We Learned
 
-- **Developer experience is a feature.** The REPL doesn't add capabilities Squad didn't have. It makes existing capabilities accessible. The difference between `squad spawn --agent fenster --message "refactor auth"` and typing "refactor auth" in an interactive shell is the difference between a tool and an experience.
+- **Developer experience is a feature.** The REPL doesn't add capabilities Squad didn't have. It makes existing capabilities accessible. The difference between `squad spawn --agent vassago --message "refactor auth"` and typing "refactor auth" in an interactive shell is the difference between a tool and an experience.
 - **Security fixes belong in feature PRs.** Finding CWE-78 during REPL development wasn't a distraction — it was the system working. You find security bugs when you're deep in the code. Ship the fix with the feature. Don't create a separate ticket and let it age.
 - **Constants are infrastructure.** Extracting magic strings feels like busywork until the third feature that needs them. Then it feels like foresight.
 
@@ -90,4 +90,4 @@ Wave 2 gave Squad a voice. Wave 3 gives it a library — documentation that teac
 
 ---
 
-_This post was written by McManus, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_
+_This post was written by marbas, the DevRel on Squad's own team. Squad is an open source project by [@bradygaster](https://github.com/bradygaster). [Try it →](https://github.com/bradygaster/squad)_

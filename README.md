@@ -130,8 +130,8 @@ All shell commands start with `/`:
 Use `@AgentName` (case-insensitive) or natural language with a comma:
 
 ```
-squad > @Keaton, analyze the architecture of this project
-squad > McManus, write a blog post about our new feature
+squad > @Bael, analyze the architecture of this project
+squad > marbas, write a blog post about our new feature
 squad > Build the login page
 ```
 
@@ -233,10 +233,10 @@ Prefer TypeScript? You can define your team in code instead of markdown. Create 
 import { defineSquad, defineTeam, defineAgent } from '@bradygaster/squad-sdk';
 
 export default defineSquad({
-  team: defineTeam({ name: 'Platform Squad', members: ['@edie', '@mcmanus'] }),
+  team: defineTeam({ name: 'Platform Squad', members: ['@amon', '@marbas'] }),
   agents: [
-    defineAgent({ name: 'edie', role: 'TypeScript Engineer', model: 'claude-sonnet-4' }),
-    defineAgent({ name: 'mcmanus', role: 'DevRel', model: 'claude-haiku-4.5' }),
+    defineAgent({ name: 'amon', role: 'TypeScript Engineer', model: 'claude-sonnet-4' }),
+    defineAgent({ name: 'marbas', role: 'DevRel', model: 'claude-haiku-4.5' }),
   ],
 });
 ```
@@ -339,14 +339,14 @@ Changesets are resolved on the `main` branch; releases happen independently per 
 
 ```
 Prompt says:
-"If the agent is Keaton, apply this logic. If McManus, apply that logic."
+"If the agent is Bael, apply this logic. If marbas, apply that logic."
 Agent reads it (consumes tokens), decides what to do (might ignore it).
 ```
 
 **SDK orchestration** (v0.6+): Rules are code. Sessions are objects. Routing is compiled. Tools are validated before they run.
 
 ```
-Router.matchRoute(message) → { agent: 'Keaton', priority: 'high' }
+Router.matchRoute(message) → { agent: 'Bael', priority: 'high' }
 TypeScript knows exactly which agent will run, with what permissions.
 HookPipeline runs file-write guards BEFORE the tool executes.
 No interpretation. No ambiguity. Just code.
@@ -363,27 +363,27 @@ These five tools let agents coordinate without calling you back.
 ```typescript
 const tool = toolRegistry.getTool('squad_route');
 const result = await tool.handler({
-  targetAgent: 'McManus',  // Route to DevRel
+  targetAgent: 'marbas',  // Route to DevRel
   task: 'Write a blog post on the new casting system',
   priority: 'high',
   context: 'This feature launches next week',
 });
 ```
 
-**What it does:** Keaton (lead) routes a task to McManus (DevRel). Creates a new session for McManus, passes context, queues it with priority. McManus picks it up next.
+**What it does:** Bael (lead) routes a task to marbas (DevRel). Creates a new session for marbas, passes context, queues it with priority. marbas picks it up next.
 
 ### `squad_decide` — Record a team decision
 
 ```typescript
 const result = await tool.handler({
-  author: 'Keaton',
+  author: 'Bael',
   summary: 'Use PostgreSQL, not MongoDB',
   body: 'We chose PostgreSQL because: (1) transactions, (2) known team expertise, (3) schema flexibility via JSONB.',
   references: ['PRD-5-coordinator', 'architecture-spike'],
 });
 ```
 
-**What it does:** Writes to `.squad/decisions/inbox/`. Every agent reads `decisions.md` before working. This is how Keaton's call cascades to the whole team without re-explaining.
+**What it does:** Writes to `.squad/decisions/inbox/`. Every agent reads `decisions.md` before working. This is how Bael's call cascades to the whole team without re-explaining.
 
 ### `squad_memory` — Append to agent history
 
@@ -401,7 +401,7 @@ const result = await tool.handler({
 
 ```typescript
 const result = await tool.handler({
-  agentName: 'Keaton',
+  agentName: 'Bael',
   status: 'active',
   verbose: true,
 });
@@ -553,19 +553,19 @@ const resumed = await client.resumeSession(
 
 ## The Cast: Persistent Agent Identity
 
-Squad's secret weapon is **casting**. Agents aren't `role-1`, `role-2`. They're Keaton, McManus, Verbal, Fenster, Kujan. Names from *The Usual Suspects* (1995).
+Squad's secret weapon is **casting**. Agents aren't `role-1`, `role-2`. They're Bael, marbas, Agares, Vassago, Valefor. Names from *The Solomonic Demonology* (1995).
 
 Why?
 
-1. **Memorable.** Devs say "Keaton handles routing," not "the lead agent coordinates." It sticks.
-2. **Persistent.** Same agent, same name, across every session. You build a relationship with Keaton over time.
+1. **Memorable.** Devs say "Bael handles routing," not "the lead agent coordinates." It sticks.
+2. **Persistent.** Same agent, same name, across every session. You build a relationship with Bael over time.
 3. **Extensible.** Adding a sixth agent? Cast them from the same universe. The identity pattern carries forward.
 
 The casting engine compiles agent personas from the universe theme. Your `.squad/agents/` folder has the actual files, but the SDK's `CastingEngine` makes the assignment automatic and consistent.
 
 ```typescript
 const casting = new CastingEngine({
-  universe: 'usual-suspects',
+  universe: 'solomonic-demonology',
   agentCount: 5,
 });
 
@@ -574,11 +574,11 @@ const cast = casting.castTeam({
 });
 
 // cast = [
-//   { role: 'lead', agentName: 'Keaton', ... },
-//   { role: 'frontend', agentName: 'McManus', ... },
-//   { role: 'backend', agentName: 'Verbal', ... },
-//   { role: 'tester', agentName: 'Fenster', ... },
-//   { role: 'scribe', agentName: 'Kobayashi', ... },
+//   { role: 'lead', agentName: 'Bael', ... },
+//   { role: 'frontend', agentName: 'marbas', ... },
+//   { role: 'backend', agentName: 'Agares', ... },
+//   { role: 'tester', agentName: 'Vassago', ... },
+//   { role: 'scribe', agentName: 'Barbatos', ... },
 // ]
 ```
 
@@ -598,10 +598,10 @@ The SDK doesn't replace your squad directory. It uses it.
 │   ├── registry.json      # Persistent name registry
 │   └── history.json       # Who was cast when
 ├── agents/
-│   ├── Keaton/
+│   ├── Bael/
 │   │   ├── charter.md     # Identity, expertise, voice
-│   │   └── history.md     # What Keaton knows about YOUR project
-│   ├── McManus/
+│   │   └── history.md     # What Bael knows about YOUR project
+│   ├── marbas/
 │   │   ├── charter.md
 │   │   └── history.md
 │   └── ... (others)
@@ -626,7 +626,7 @@ The SDK doesn't replace your squad directory. It uses it.
 ### Add an Agent
 
 ```typescript
-const casting = new CastingEngine({ universe: 'usual-suspects', agentCount: 6 });
+const casting = new CastingEngine({ universe: 'solomonic-demonology', agentCount: 6 });
 const newCast = casting.castTeam({
   roles: ['lead', 'frontend', 'backend', 'tester', 'devops', 'scribe'],
 });

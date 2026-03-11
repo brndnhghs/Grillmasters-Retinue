@@ -111,9 +111,9 @@ function makeConfig(overrides: Partial<SquadConfig> = {}): SquadConfig {
       ...DEFAULT_CONFIG.routing,
       ...overrides.routing,
       rules: overrides.routing?.rules ?? [
-        { workType: 'feature-dev', agents: ['fenster'], confidence: 'high' as const },
+        { workType: 'feature-dev', agents: ['vassago'], confidence: 'high' as const },
         { workType: 'testing', agents: ['tester'], confidence: 'high' as const },
-        { workType: 'documentation', agents: ['verbal', 'scribe'], confidence: 'medium' as const },
+        { workType: 'documentation', agents: ['agares', 'scribe'], confidence: 'medium' as const },
       ],
     },
     models: {
@@ -127,7 +127,7 @@ function makeContext(overrides: Partial<CoordinatorContext> = {}): CoordinatorCo
   return {
     sessionId: 'test-session',
     config: makeConfig(),
-    activeAgents: ['fenster', 'verbal', 'tester'],
+    activeAgents: ['vassago', 'agares', 'tester'],
     ...overrides,
   };
 }
@@ -150,7 +150,7 @@ describe('Feature Parity: Coordinator Pipeline', () => {
   it('routes a feature request through full pipeline', async () => {
     const router = compileRoutingRules({
       rules: [
-        { workType: 'feature-dev', agents: ['fenster'], examples: ['new feature', 'implement'], confidence: 'high' },
+        { workType: 'feature-dev', agents: ['vassago'], examples: ['new feature', 'implement'], confidence: 'high' },
       ],
     });
     const coord = new SquadCoordinator({
@@ -160,7 +160,7 @@ describe('Feature Parity: Coordinator Pipeline', () => {
     });
     const result = await coord.handleMessage('implement a new auth feature', makeContext());
     expect(result.strategy).toBe('single');
-    expect(result.routing!.agents).toContain('fenster');
+    expect(result.routing!.agents).toContain('vassago');
   });
 
   it('direct-responds to help without spawning', async () => {
@@ -175,7 +175,7 @@ describe('Feature Parity: Coordinator Pipeline', () => {
     const coord = new SquadCoordinator({ config: makeConfig(), eventBus });
     const result = await coord.handleMessage('status', makeContext());
     expect(result.strategy).toBe('direct');
-    expect(result.directResponse!.response).toContain('fenster');
+    expect(result.directResponse!.response).toContain('vassago');
   });
 
   it('direct-responds to greetings', async () => {
@@ -188,7 +188,7 @@ describe('Feature Parity: Coordinator Pipeline', () => {
   it('routes multi-agent doc requests', async () => {
     const router = compileRoutingRules({
       rules: [
-        { workType: 'documentation', agents: ['verbal', 'scribe'], examples: ['docs', 'readme'], confidence: 'medium' },
+        { workType: 'documentation', agents: ['agares', 'scribe'], examples: ['docs', 'readme'], confidence: 'medium' },
       ],
     });
     const coord = new SquadCoordinator({ config: makeConfig(), compiledRouter: router, eventBus });
@@ -232,8 +232,8 @@ describe('Feature Parity: Casting', () => {
     engine = new CastingEngine();
   });
 
-  it('casts a team from usual-suspects universe', () => {
-    const team = engine.castTeam({ universe: 'usual-suspects' });
+  it('casts a team from solomonic-demonology universe', () => {
+    const team = engine.castTeam({ universe: 'solomonic-demonology' });
     expect(team.length).toBeGreaterThanOrEqual(3);
     expect(team.some((m) => m.role === 'lead')).toBe(true);
     expect(team.some((m) => m.role === 'developer')).toBe(true);
@@ -248,7 +248,7 @@ describe('Feature Parity: Casting', () => {
 
   it('fills required roles first', () => {
     const team = engine.castTeam({
-      universe: 'usual-suspects',
+      universe: 'solomonic-demonology',
       requiredRoles: ['lead', 'developer', 'security'],
     });
     const roles = team.map((m) => m.role);
@@ -258,7 +258,7 @@ describe('Feature Parity: Casting', () => {
   });
 
   it('generates display names in correct format', () => {
-    const team = engine.castTeam({ universe: 'usual-suspects' });
+    const team = engine.castTeam({ universe: 'solomonic-demonology' });
     for (const member of team) {
       expect(member.displayName).toMatch(/.+ — .+/);
     }
@@ -277,13 +277,13 @@ describe('Feature Parity: Casting', () => {
   });
 
   it('clamps team size to available characters', () => {
-    const team = engine.castTeam({ universe: 'usual-suspects', teamSize: 100 });
-    expect(team.length).toBeLessThanOrEqual(8); // usual-suspects has 8 characters
+    const team = engine.castTeam({ universe: 'solomonic-demonology', teamSize: 100 });
+    expect(team.length).toBeLessThanOrEqual(8); // solomonic-demonology has 8 characters
   });
 
   it('lists available universes', () => {
     const universes = engine.getUniverses();
-    expect(universes).toContain('usual-suspects');
+    expect(universes).toContain('solomonic-demonology');
     expect(universes).toContain('oceans-eleven');
   });
 });
@@ -441,7 +441,7 @@ describe('Feature Parity: Streaming', () => {
     await pipeline.processEvent({
       type: 'usage',
       sessionId: 'session-1',
-      agentName: 'fenster',
+      agentName: 'vassago',
       model: 'claude-sonnet-4.5',
       inputTokens: 1000,
       outputTokens: 500,
@@ -453,7 +453,7 @@ describe('Feature Parity: Streaming', () => {
     expect(summary.totalInputTokens).toBe(1000);
     expect(summary.totalOutputTokens).toBe(500);
     expect(summary.estimatedCost).toBe(0.05);
-    expect(summary.byAgent.get('fenster')!.turnCount).toBe(1);
+    expect(summary.byAgent.get('vassago')!.turnCount).toBe(1);
   });
 
   it('aggregates usage across multiple sessions', async () => {
@@ -637,7 +637,7 @@ describe('Feature Parity: Backwards Compatibility', () => {
 
     // Config's feature-dev rule wins
     const featureRule = merged.routing.rules.find((r) => r.workType === 'feature-dev');
-    expect(featureRule!.agents).toContain('fenster');
+    expect(featureRule!.agents).toContain('vassago');
     // Legacy's docs rule fills gap
     const docsRule = merged.routing.rules.find((r) => r.workType === 'docs');
     expect(docsRule).toBeDefined();
@@ -681,7 +681,7 @@ describe('Feature Parity: Model Fallback', () => {
       source: 'task-auto',
       fallbackChain: ['claude-sonnet-4.5', 'gpt-5.2-codex'],
     };
-    const result = await executor.execute(resolved, 'fenster', async () => 'ok');
+    const result = await executor.execute(resolved, 'vassago', async () => 'ok');
     expect(result.value).toBe('ok');
     expect(result.didFallback).toBe(false);
   });
@@ -695,7 +695,7 @@ describe('Feature Parity: Model Fallback', () => {
       source: 'task-auto',
       fallbackChain: ['claude-sonnet-4.5', 'gpt-5.2-codex', 'claude-sonnet-4'],
     };
-    const result = await executor.execute(resolved, 'fenster', async (model) => {
+    const result = await executor.execute(resolved, 'vassago', async (model) => {
       callCount++;
       if (callCount === 1) throw new Error('rate limit');
       return `ok-${model}`;
@@ -756,9 +756,9 @@ describe('Feature Parity: Direct Response', () => {
   });
 
   it('returns active agents in status response', () => {
-    const result = handler.handleDirect('status', makeContext({ activeAgents: ['fenster', 'verbal'] }));
-    expect(result.response).toContain('fenster');
-    expect(result.response).toContain('verbal');
+    const result = handler.handleDirect('status', makeContext({ activeAgents: ['vassago', 'agares'] }));
+    expect(result.response).toContain('vassago');
+    expect(result.response).toContain('agares');
   });
 
   it('supports custom patterns', () => {
@@ -835,11 +835,11 @@ describe('Feature Parity: Event Bus Integration', () => {
     await bus.emit({
       type: 'session:created',
       sessionId: 's1',
-      payload: { agentName: 'fenster' },
+      payload: { agentName: 'vassago' },
       timestamp: new Date(),
     });
     expect(events.length).toBe(1);
-    expect(events[0].payload.agentName).toBe('fenster');
+    expect(events[0].payload.agentName).toBe('vassago');
   });
 
   it('event bus wildcard subscriptions receive all events', async () => {
@@ -868,7 +868,7 @@ describe('Feature Parity: Hooks Pipeline', () => {
     const result = await pipeline.runPreToolHooks({
       toolName: 'bash',
       arguments: { command: 'rm -rf /' },
-      agentName: 'fenster',
+      agentName: 'vassago',
       sessionId: 's1',
     });
     expect(result.action).toBe('block');
@@ -879,7 +879,7 @@ describe('Feature Parity: Hooks Pipeline', () => {
     const result = await pipeline.runPreToolHooks({
       toolName: 'bash',
       arguments: { command: 'ls -la' },
-      agentName: 'fenster',
+      agentName: 'vassago',
       sessionId: 's1',
     });
     expect(result.action).toBe('allow');
@@ -891,7 +891,7 @@ describe('Feature Parity: Hooks Pipeline', () => {
       toolName: 'read',
       arguments: {},
       result: 'Contact: user@example.com for info',
-      agentName: 'fenster',
+      agentName: 'vassago',
       sessionId: 's1',
     });
     expect(result.result).toContain('[EMAIL_REDACTED]');

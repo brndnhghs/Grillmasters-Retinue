@@ -24,7 +24,7 @@ npm start
 
 **Expected:**
 - Step 1: `.squad/` directory created in a temp directory
-- Step 2: 4 agents cast from "The Usual Suspects" — Keyser (lead), McManus (developer), Fenster (tester), Verbal (scribe)
+- Step 2: 4 agents cast from "The Solomonic Demonology" — Bael (lead), marbas (developer), Vassago (tester), Agares (scribe)
 - Step 3: Each agent onboarded with charter + history files
 - Step 4: Team roster printed in a table
 - Step 5: Casting history shows 2 records; names match across both casts

@@ -54,4 +54,4 @@ Both packages will be live at:
 Repository will be bumped to v0.8.23-preview.1 for continued development.
 
 ---
-*Prepared by: Rabin (Distribution)*
+*Prepared by: Buer (Distribution)*
